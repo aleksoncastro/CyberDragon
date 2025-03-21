@@ -11,7 +11,7 @@ export class UsuarioService {
 
   constructor(private httpClient: HttpClient) { }
 
-  insertUsarioCliente(usuario : Usuario): Observable<Usuario>{
+  insertUsuarioCliente(usuario : Usuario): Observable<Usuario>{
     return this.httpClient.post<Usuario>(this.baseUrl, usuario);
   }
 }

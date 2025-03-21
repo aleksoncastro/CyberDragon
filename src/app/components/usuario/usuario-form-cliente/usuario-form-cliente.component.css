@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     display: flex;
     justify-content: center;
@@ -38,3 +39,42 @@ body {
     align-self: center;
     width: 100%;
   }
+=======
+/* Estiliza o container do formulário */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Faz com que ocupe toda a altura da tela */
+    background-color: #f4f4f4; /* Fundo suave */
+  }
+  
+  /* Caixa do formulário */
+  .form-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 400px; /* Define a largura máxima */
+    width: 100%; /* Faz com que se ajuste à tela */
+    text-align: center; /* Centraliza os textos */
+  }
+  
+  /* Ajusta os campos para preencherem a largura da caixa */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  /* Botão de salvar com espaçamento */
+  button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  /* Ajusta o botão de visibilidade da senha */
+  mat-icon-button {
+    margin-right: 8px;
+  }
+  
+>>>>>>> 5c51689 (Crud do Usuario)

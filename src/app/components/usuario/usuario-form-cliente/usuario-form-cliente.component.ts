@@ -14,7 +14,7 @@ import { matchPasswordsValidator } from '../../../validators/match-passwords.val
   selector: 'app-usuario-form-cliente',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-      MatButtonModule, MatToolbarModule, MatIconModule],
+    MatButtonModule, MatToolbarModule, MatIconModule],
   templateUrl: './usuario-form-cliente.component.html',
   styleUrl: './usuario-form-cliente.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,11 +23,16 @@ export class UsuarioFormClienteComponent {
   formGroup: FormGroup;
   hidePassword: boolean = true;
   hideConfirmPassword: boolean = true;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c51689 (Crud do Usuario)
 
   constructor(private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private router: Router) {
 
+<<<<<<< HEAD
       this.formGroup = this.formBuilder.group({
         username: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
@@ -35,24 +40,43 @@ export class UsuarioFormClienteComponent {
         senha: ['', [Validators.required, Validators.minLength(6)]],
         confirmarSenha: ['', Validators.required]
       }, { validator: matchPasswordsValidator });
+=======
+    this.formGroup = this.formBuilder.group({
+      username: ['', Validators.required],
+      email: ['', Validators.required],
+      cpf: ['', Validators.required],
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+      confirmarSenha: ['', Validators.required]
+    }, { validator: matchPasswordsValidator });
+
+>>>>>>> 5c51689 (Crud do Usuario)
   }
 
-  togglePasswordVisibility(){
+  togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
 
+<<<<<<< HEAD
   toggleConfirmPasswordVisibility(){
     this.hideConfirmPassword = !this.hideConfirmPassword;
   }
   
   getConfirmPasswordErrorMessage(){
     return this.formGroup.hasError('senhaNaoConfere') ? 'As senhas não coincidem': '';
+=======
+  toggleConfirmPasswordVisibility() {
+    this.hideConfirmPassword = !this.hideConfirmPassword;
+>>>>>>> 5c51689 (Crud do Usuario)
   }
 
-  onSubmit(){
-    if(this.formGroup.valid){
+  getConfirmPasswordErrorMessage() {
+    return this.formGroup.hasError('senhaNaoConfere') ? 'As senhas não coincidem' : '';
+  }
+
+  onSubmit() {
+    if (this.formGroup.valid) {
       const novoUsuario = this.formGroup.value;
-      this.usuarioService.insertUsarioCliente(novoUsuario).subscribe({
+      this.usuarioService.insertUsuarioCliente(novoUsuario).subscribe({
         next: (usuarioCadastrado) => {
           console.log(JSON.stringify(usuarioCadastrado));
           this.router.navigate(['/login']);

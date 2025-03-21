@@ -3,6 +3,10 @@
     <mat-card>
         <mat-card-content>
             <form [formGroup]="formGroup">
+<<<<<<< HEAD
+=======
+                <!-- Nome do Município -->
+>>>>>>> 8703f7b (Municpio atualizado)
                 <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Nome</mat-label>
                     <input matInput type="text" formControlName="nome">
@@ -10,6 +14,7 @@
                         O nome é obrigatório.
                     </mat-error>
                 </mat-form-field>
+<<<<<<< HEAD
                 
                 <mat-form-field appearance="fill">
                     <mat-label>Estado</mat-label>
@@ -26,9 +31,39 @@
             <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="formGroup.invalid">
                 Salvar
             </button>
+=======
+
+                <!-- Seleção de Estado -->
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="estado">
+                        <mat-option *ngFor="let estado of estados" [value]="estado.id">
+                            {{ estado.nome }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formGroup.get('estado')?.invalid && formGroup.get('estado')?.touched">
+                        O estado é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+
+        <!-- Botões de ação -->
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+                Salvar
+            </button>
+            <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+                Excluir
+            </button>
+>>>>>>> 8703f7b (Municpio atualizado)
             <button mat-raised-button routerLink="/municipios">
                 Cancelar
             </button>
         </mat-card-actions>
     </mat-card>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> 8703f7b (Municpio atualizado)

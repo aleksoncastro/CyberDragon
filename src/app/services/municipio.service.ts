@@ -26,8 +26,13 @@ export class MunicipioService {
     };
     return this.httpClient.post<Municipio>(this.baseUrl, data);
   }
+<<<<<<< HEAD
   
   update(municipio: Municipio): Observable<Municipio> {
+=======
+
+  update(municipio: Municipio): Observable<any> {
+>>>>>>> 8703f7b (Municpio atualizado)
     const data = {
       nome: municipio.nome,
       idEstado: municipio.estado.id

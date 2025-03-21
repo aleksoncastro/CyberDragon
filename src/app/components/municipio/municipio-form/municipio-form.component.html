@@ -1,0 +1,23 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput type="text" formControlName="nome">
+        <mat-error *ngIf="formGroup.get('nome')?.invalid && formGroup.get('nome')?.touched">
+            O nome é obrigatório.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estadoId">
+            <mat-option *ngFor="let estado of estados" [value]="estado.id">
+                {{ estado.nome }}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formGroup.get('estadoId')?.invalid && formGroup.get('estadoId')?.touched">
+            O estado é obrigatório.
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>

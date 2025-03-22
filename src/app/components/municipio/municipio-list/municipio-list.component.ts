@@ -18,6 +18,7 @@ export class MunicipioListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'estado', 'acao'];
   municipios: Municipio[] = [];
 
+
   constructor(private municipioService: MunicipioService) {}
 
   ngOnInit(): void {

@@ -20,13 +20,21 @@ export class MunicipioService {
   }
 
   insert(municipio: Municipio): Observable<Municipio> {
-    return this.httpClient.post<Municipio>(this.baseUrl, municipio);
+    const data = {
+      nome: municipio.nome,
+      idEstado: municipio.estado.id
+    };
+    return this.httpClient.post<Municipio>(this.baseUrl, data);
   }
-
-  update(municipio: Municipio): Observable<any> {
-    return this.httpClient.put<Municipio>(`${this.baseUrl}/${municipio.id}`, municipio);
+  
+  update(municipio: Municipio): Observable<Municipio> {
+    const data = {
+      nome: municipio.nome,
+      idEstado: municipio.estado.id
+    };
+    return this.httpClient.put<Municipio>(`${this.baseUrl}/${municipio.id}`, data);
   }
-
+  
   delete(municipio: Municipio): Observable<any> {
     return this.httpClient.delete<Municipio>(`${this.baseUrl}/${municipio.id}`);
   }

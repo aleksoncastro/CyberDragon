@@ -1,94 +1,68 @@
-<<<<<<< HEAD
 <div class="wrapper">
   <div class="container">
     <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-=======
-<div class="form-container">
-  <div class="form-box">
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-      <!-- Username -->
->>>>>>> 5c51689 (Crud do Usuario)
-      <mat-form-field appearance="fill">
-        <mat-label>Username</mat-label>
-        <input matInput type="text" formControlName="username">
-        <mat-error *ngIf="formGroup.get('username')?.invalid && formGroup.get('username')?.touched">
-          O username é obrigatório.
-        </mat-error>
-      </mat-form-field>
-<<<<<<< HEAD
       
-=======
+      <div class="form-container">
+        
+        <div class="form-box">
+          <mat-toolbar color="primary" class="toolbar-title">Cadastro de Usuario</mat-toolbar>
+          <!-- Username -->
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" formControlName="username">
+            <mat-error *ngIf="formGroup.get('username')?.invalid && formGroup.get('username')?.touched">
+              O username é obrigatório.
+            </mat-error>
+          </mat-form-field>
 
-      <!-- Email -->
->>>>>>> 5c51689 (Crud do Usuario)
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email">
-        <mat-error *ngIf="formGroup.get('email')?.invalid && formGroup.get('email')?.touched">
-<<<<<<< HEAD
-          O email é obrigatório e deve ser válido.
-        </mat-error>
-      </mat-form-field>
-      
-=======
-          O email é obrigatório.
-        </mat-error>
-      </mat-form-field>
+          <!-- Email -->
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error *ngIf="formGroup.get('email')?.invalid && formGroup.get('email')?.touched">
+              O email é obrigatório e deve ser válido.
+            </mat-error>
+          </mat-form-field>
 
-      <!-- CPF -->
->>>>>>> 5c51689 (Crud do Usuario)
-      <mat-form-field appearance="fill">
-        <mat-label>CPF</mat-label>
-        <input matInput type="text" formControlName="cpf">
-        <mat-error *ngIf="formGroup.get('cpf')?.invalid && formGroup.get('cpf')?.touched">
-          O CPF é obrigatório.
-        </mat-error>
-      </mat-form-field>
-<<<<<<< HEAD
-      
-=======
+          <!-- CPF -->
+          <mat-form-field appearance="fill">
+            <mat-label>CPF</mat-label>
+            <input matInput type="text" formControlName="cpf">
+            <mat-error *ngIf="formGroup.get('cpf')?.invalid && formGroup.get('cpf')?.touched">
+              O CPF é obrigatório.
+            </mat-error>
+          </mat-form-field>
 
-      <!-- Senha -->
->>>>>>> 5c51689 (Crud do Usuario)
-      <mat-form-field appearance="fill">
-        <mat-label>Senha</mat-label>
-        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha">
-        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
-          <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-        </button>
-        <mat-error *ngIf="formGroup.get('senha')?.invalid && formGroup.get('senha')?.touched">
-<<<<<<< HEAD
-          A senha é obrigatória (mínimo 6 caracteres).
-        </mat-error>
-      </mat-form-field>
-      
-=======
-          A senha é obrigatória.
-        </mat-error>
-      </mat-form-field>
+          <!-- Senha -->
+          <mat-form-field appearance="fill">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha">
+            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+              <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="formGroup.get('senha')?.invalid && formGroup.get('senha')?.touched">
+              A senha é obrigatória (mínimo 6 caracteres).
+            </mat-error>
+          </mat-form-field>
 
-      <!-- Confirmar Senha -->
->>>>>>> 5c51689 (Crud do Usuario)
-      <mat-form-field appearance="fill">
-        <mat-label>Confirmar Senha</mat-label>
-        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmarSenha">
-        <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
-          <mat-icon>{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-        </button>
-        <mat-error *ngIf="formGroup.get('confirmarSenha')?.invalid && formGroup.get('confirmarSenha')?.touched">
-          {{ getConfirmPasswordErrorMessage() }}
-        </mat-error>
-      </mat-form-field>
-<<<<<<< HEAD
-      
-      <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
-=======
+          <!-- Confirmar Senha -->
+          <mat-form-field appearance="fill">
+            <mat-label>Confirmar Senha</mat-label>
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmarSenha">
+            <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
+              <mat-icon>{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="formGroup.get('confirmarSenha')?.invalid && formGroup.get('confirmarSenha')?.touched">
+              {{ getConfirmPasswordErrorMessage() }}
+            </mat-error>
+          </mat-form-field>
 
-      <!-- Botão de Salvar -->
-      <button mat-raised-button color="primary" type="submit">
->>>>>>> 5c51689 (Crud do Usuario)
-        Salvar
-      </button>
+          <!-- Botão de Salvar -->
+          <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
+            Salvar
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

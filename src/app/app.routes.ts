@@ -5,6 +5,7 @@ import { UsuarioFormClienteComponent } from './components/usuario/usuario-form-c
 import { MunicipioListComponent } from './components/municipio/municipio-list/municipio-list.component';
 import { MunicipioFormComponent } from './components/municipio/municipio-form/municipio-form.component';
 import { estadoResolver } from './components/estado/estado-resolver';
+import { UsuarioFormFuncionarioComponent } from './components/usuario/usuario-form-funcionario/usuario-form-funcionario.component';
 
 export const routes: Routes = [
     {path: 'estados', component: EstadoListComponent, title: 'Lista de Estados'},
@@ -13,4 +14,5 @@ export const routes: Routes = [
     {path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente'},
     {path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municípios'},
     {path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Município'},
+    {path: 'usuarios-funcionario/new', component: UsuarioFormFuncionarioComponent, title: 'Novo Funcionario'},
 ];

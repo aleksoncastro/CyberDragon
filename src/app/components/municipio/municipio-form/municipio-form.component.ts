@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MunicipioService } from '../../../services/municipio.service';
 import { EstadoService } from '../../../services/estado.service';
@@ -21,24 +21,10 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './municipio-form.component.html',
   styleUrl: './municipio-form.component.css'
 })
-export class MunicipioFormComponent implements OnInit {
+export class MunicipioFormComponent {
   formGroup: FormGroup;
   estados: Estado[] = [];
 
-<<<<<<< HEAD
-  constructor(
-    private formBuilder: FormBuilder,
-    private municipioService: MunicipioService,
-    private estadoService: EstadoService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {
-    // Inicializando
-    this.formGroup = this.formBuilder.group({
-      id: [null],
-      nome: ['', Validators.required],
-      estado: [null]
-=======
   constructor(private formBuilder: FormBuilder,
               private municipioService: MunicipioService,
               private estadoService: EstadoService,
@@ -50,34 +36,8 @@ export class MunicipioFormComponent implements OnInit {
      id:[null],
      nome: ['', Validators.required],
      estado: [null]
->>>>>>> 8703f7b (Municpio atualizado)
     });
-  }
-  
-  
-  
-  ngOnInit(): void {
-    this.estadoService.findAll().subscribe(estados => {
-      this.estados = estados;
-      console.log('Estados carregados:', this.estados);
-      this.initializeForm();
-    });
-  }
-  
-  initializeForm(){
-   const municipio: Municipio = this.activatedRoute.snapshot.data['municipio'];
 
-<<<<<<< HEAD
-   //selecionando o estado
-   const estado = this.estados.find(e => e.id === (municipio?.estado?.id || null));
-
-   this.formGroup = this.formBuilder.group({
-    id: [(municipio && municipio.id) ? municipio.id : null],
-    nome: [(municipio && municipio.nome) ? municipio.nome : '', Validators.required],
-    estado:[estado],
-   })
-    
-=======
   }
 
 
@@ -87,7 +47,6 @@ export class MunicipioFormComponent implements OnInit {
       console.log("Estados carregados:", this.estados); // 🛠 Depuração
       this.initializeForm();
     });
->>>>>>> 8703f7b (Municpio atualizado)
   }
   
 
@@ -110,32 +69,6 @@ export class MunicipioFormComponent implements OnInit {
 
   salvar(): void {
     if (this.formGroup.valid) {
-<<<<<<< HEAD
-      // Busca o estado selecionado a partir do ID
-      const estadoSelecionado = this.estados.find(e => e.id === this.formGroup.value.estado);
-  
-      if (!estadoSelecionado) {
-        console.error('Erro: Estado não encontrado!');
-        return;
-      }
-  
-      const municipio: Municipio = {
-        id: this.formGroup.value.id,
-        nome: this.formGroup.value.nome,
-        estado: estadoSelecionado // ✅ Agora enviamos o objeto completo
-      };
-  
-      console.log('Enviando para API:', municipio); // ✅ Confirmação dos dados
-  
-      this.municipioService.insert(municipio).subscribe({
-        next: (municipioCadastrado) => console.log('Sucesso:', municipioCadastrado),
-        error: (e) => console.error('Erro ao gravar:', e)
-      });
-    }
-  }
-  
-  
-=======
       const municipio: Municipio = {
         id: this.formGroup.value.id,
         nome: this.formGroup.value.nome,
@@ -170,7 +103,6 @@ export class MunicipioFormComponent implements OnInit {
       }
     }
   }
->>>>>>> 8703f7b (Municpio atualizado)
   
 }
 

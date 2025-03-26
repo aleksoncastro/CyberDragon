@@ -8,6 +8,8 @@ import { estadoResolver } from './components/estado/estado-resolver';
 import { UsuarioFormFuncionarioComponent } from './components/usuario/usuario-form-funcionario/usuario-form-funcionario.component';
 import { FornecedorListComponent } from './components/fornecedores/fornecedor-list/fornecedor-list.component';
 import { FornecedorFormComponent } from './components/fornecedores/fornecedor-form/fornecedor-form.component';
+import { PlacadevideoListComponent } from './components/placadevideo/placadevideo-list/placadevideo-list.component';
+import { PlacaDeVideoFormComponent } from './components/placadevideo/placadevideo-form/placadevideo-form.component';
 
 export const routes: Routes = [
     { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
@@ -17,7 +19,9 @@ export const routes: Routes = [
     { path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municípios' },
     { path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Município' },
     { path: 'usuarios-funcionario/new', component: UsuarioFormFuncionarioComponent, title: 'Novo Funcionario' },
-    { path: 'fornecedores', component: FornecedorListComponent },
-    { path: 'fornecedores/new', component: FornecedorFormComponent },
-    { path: 'fornecedores/edit/:id', component: FornecedorFormComponent },
+    { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
+    { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor'},
+    { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, title: 'Edit de Fornecedor'},
+    { path: 'placasdevideo', component: PlacadevideoListComponent, title: 'Lista de Placas de Video'},
+    { path: 'placasdevideo/new', component: PlacaDeVideoFormComponent, title: 'Nova Placas de Video'},
 ];

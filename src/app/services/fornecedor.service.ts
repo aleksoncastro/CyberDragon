@@ -12,17 +12,21 @@ export class FornecedorService {
   constructor(private httpClient: HttpClient) {
   }
 
-  findAll(page?: number, pageSize?: number): Observable<Fornecedor[]> {
-    let params = {};
+  findAll(page?:number, pageSize?:number): Observable<Fornecedor[]> {
+    let params={};
 
     if (page !== undefined && pageSize !== undefined) {
       params = {
         page: page.toString(),
-        pageSize: pageSize.toString()
+        page_size: pageSize.toString()
       }
     }
 
-    return this.httpClient.get<Fornecedor[]>(this.baseUrl, { params });
+    console.log(this.baseUrl);
+    console.log({params});
+
+    return this.httpClient.get<Fornecedor[]>(this.baseUrl, {params});
+
   }
 
   count(): Observable<number> {

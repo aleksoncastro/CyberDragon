@@ -12,18 +12,23 @@ export class EstadoService {
   constructor(private httpClient: HttpClient) { 
   }
 
-  findAll(page?: number, pageSize?: number): Observable<Estado[]> {
+  findAll(page?:number, pageSize?:number): Observable<Estado[]> {
     let params={};
 
-    if(page !== undefined && pageSize !== undefined){
+    if (page !== undefined && pageSize !== undefined) {
       params = {
         page: page.toString(),
-        pageSize: pageSize.toString()
+        page_size: pageSize.toString()
       }
     }
 
+    console.log(this.baseUrl);
+    console.log({params});
+
     return this.httpClient.get<Estado[]>(this.baseUrl, {params});
+
   }
+
 
   count(): Observable<number>{
     return this.httpClient.get<number>(`${this.baseUrl}/count`);

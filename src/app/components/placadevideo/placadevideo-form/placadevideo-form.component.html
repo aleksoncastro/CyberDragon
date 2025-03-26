@@ -1,0 +1,160 @@
+<mat-toolbar color="primary" class="toolbar-title">Cadastro de Placa de Vídeo</mat-toolbar>
+<div class="form-container">
+    <mat-card>
+        <mat-card-content>
+            <form [formGroup]="formGroup">
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Modelo</mat-label>
+                    <input matInput type="text" formControlName="modelo">
+                    <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
+                        O modelo é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Categoria</mat-label>
+                    <input matInput type="text" formControlName="categoria">
+                    <mat-error *ngIf="formGroup.get('categoria')?.invalid && formGroup.get('categoria')?.touched">
+                        A categoria é obrigatória.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Preço</mat-label>
+                    <input matInput type="number" formControlName="preco">
+                    <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
+                        O preço é obrigatório e deve ser maior que zero.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Resolução</mat-label>
+                    <input matInput type="text" formControlName="resolucao">
+                    <mat-error *ngIf="formGroup.get('resolucao')?.invalid && formGroup.get('resolucao')?.touched">
+                        A resolução é obrigatória.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Energia (W)</mat-label>
+                    <input matInput type="number" formControlName="energia">
+                    <mat-error *ngIf="formGroup.get('energia')?.invalid && formGroup.get('energia')?.touched">
+                        O consumo de energia é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Descrição</mat-label>
+                    <textarea matInput formControlName="descricao"></textarea>
+                    <mat-error *ngIf="formGroup.get('descricao')?.invalid && formGroup.get('descricao')?.touched">
+                        A descrição é obrigatória.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Compatibilidade</mat-label>
+                    <input matInput type="text" formControlName="compatibilidade">
+                    <mat-error
+                        *ngIf="formGroup.get('compatibilidade')?.invalid && formGroup.get('compatibilidade')?.touched">
+                        O campo de compatibilidade é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Clock Base (MHz)</mat-label>
+                    <input matInput type="number" formControlName="clockBase">
+                    <mat-error *ngIf="formGroup.get('clockBase')?.invalid && formGroup.get('clockBase')?.touched">
+                        O clock base é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Clock Boost (MHz)</mat-label>
+                    <input matInput type="number" formControlName="clockBoost">
+                    <mat-error *ngIf="formGroup.get('clockBoost')?.invalid && formGroup.get('clockBoost')?.touched">
+                        O clock boost é obrigatório.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-checkbox formControlName="suporteRayTracing">Suporte a Ray Tracing</mat-checkbox>
+
+                <h3>Memória</h3>
+                <div formGroupName="memoria">
+                    <mat-form-field appearance="fill" class="full-width-input">
+                        <mat-label>Tipo</mat-label>
+                        <input matInput type="text" formControlName="tipo">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="full-width-input">
+                        <mat-label>Capacidade (GB)</mat-label>
+                        <input matInput type="number" formControlName="capacidade">
+                    </mat-form-field>
+                </div>
+
+
+                <h3>Fornecedor</h3>
+                <div formGroupName="fornecedor">
+                    <mat-form-field appearance="fill" class="full-width-input">
+                        <mat-label>Nome do Fornecedor</mat-label>
+                        <input matInput type="text" formControlName="nome">
+                        <mat-error
+                            *ngIf="formGroup.get('fornecedor.nome')?.invalid && formGroup.get('fornecedor.nome')?.touched">
+                            O nome do fornecedor é obrigatório.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+
+                <h3>Dimensões</h3>
+<div formGroupName="tamanho">
+    <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Largura (mm)</mat-label>
+        <input matInput type="number" formControlName="largura">
+        <mat-error *ngIf="formGroup.get('tamanho.largura')?.invalid && formGroup.get('tamanho.largura')?.touched">
+            A largura é obrigatória.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width-input">
+        <mat-label>Altura (mm)</mat-label>
+        <input matInput type="number" formControlName="altura">
+        <mat-error *ngIf="formGroup.get('tamanho.altura')?.invalid && formGroup.get('tamanho.altura')?.touched">
+            A altura é obrigatória.
+        </mat-error>
+    </mat-form-field>
+</div>
+
+
+                <h3>Saídas de Vídeo</h3>
+                <div formArrayName="saidas">
+                    <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
+                        <mat-form-field appearance="fill" class="full-width-input">
+                            <mat-label>Tipo</mat-label>
+                            <input matInput type="text" formControlName="tipo">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="full-width-input">
+                            <mat-label>Quantidade</mat-label>
+                            <input matInput type="number" formControlName="quantidade">
+                        </mat-form-field>
+                        <button mat-icon-button color="warn" (click)="removerSaida(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
+
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+                Salvar
+            </button>
+            <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+                Excluir
+            </button>
+            <button mat-raised-button routerLink="/placadevideo">
+                Cancelar
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>

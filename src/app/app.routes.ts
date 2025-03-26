@@ -6,6 +6,8 @@ import { MunicipioListComponent } from './components/municipio/municipio-list/mu
 import { MunicipioFormComponent } from './components/municipio/municipio-form/municipio-form.component';
 import { estadoResolver } from './components/estado/estado-resolver';
 import { UsuarioFormFuncionarioComponent } from './components/usuario/usuario-form-funcionario/usuario-form-funcionario.component';
+import { FornecedoresComponent } from './components/fornecedores/fornecedor-list/fornecedor-list.component';
+import { FornecedoresFormComponent } from './components/fornecedores/fornecedor-form/fornecedor-form.component';
 
 export const routes: Routes = [
     {path: 'estados', component: EstadoListComponent, title: 'Lista de Estados'},
@@ -15,4 +17,7 @@ export const routes: Routes = [
     {path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municípios'},
     {path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Município'},
     {path: 'usuarios-funcionario/new', component: UsuarioFormFuncionarioComponent, title: 'Novo Funcionario'},
+    { path: 'fornecedores', component: FornecedoresComponent },
+    { path: 'fornecedores/new', component: FornecedoresFormComponent },
+    { path: 'fornecedores/:id', component: FornecedoresFormComponent },
 ];

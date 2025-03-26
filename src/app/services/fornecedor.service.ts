@@ -7,27 +7,42 @@ import { Fornecedor } from '../models/fornecedor.model';
   providedIn: 'root'
 })
 export class FornecedorService {
-  private apiUrl = 'http://localhost:8080/fornecedores'; // Ajuste conforme necessário
+  private baseUrl: string = 'http://localhost:8080/fornecedores';
 
-  constructor(private http: HttpClient) {}
-
-  listar(): Observable<Fornecedor[]> {
-    return this.http.get<Fornecedor[]>(this.apiUrl);
+  constructor(private httpClient: HttpClient) {
   }
 
-  buscarPorId(id: number): Observable<Fornecedor> {
-    return this.http.get<Fornecedor>(`${this.apiUrl}/${id}`);
+  findAll(page?: number, pageSize?: number): Observable<Fornecedor[]> {
+    let params = {};
+
+    if (page !== undefined && pageSize !== undefined) {
+      params = {
+        page: page.toString(),
+        pageSize: pageSize.toString()
+      }
+    }
+
+    return this.httpClient.get<Fornecedor[]>(this.baseUrl, { params });
   }
 
-  salvar(fornecedor: Fornecedor): Observable<Fornecedor> {
-    return this.http.post<Fornecedor>(this.apiUrl, fornecedor);
+  count(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
-  atualizar(id: number, fornecedor: Fornecedor): Observable<Fornecedor> {
-    return this.http.put<Fornecedor>(`${this.apiUrl}/${id}`, fornecedor);
+  findById(id: string): Observable<Fornecedor> {
+    return this.httpClient.get<Fornecedor>(`${this.baseUrl}/${id}`);
   }
 
-  excluir(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  insert(fornecedor: Fornecedor): Observable<Fornecedor> {
+    return this.httpClient.post<Fornecedor>(this.baseUrl, fornecedor);
   }
+
+  update(fornecedor: Fornecedor): Observable<any> {
+    return this.httpClient.put<Fornecedor>(`${this.baseUrl}/${fornecedor.id}`, fornecedor);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
 }

@@ -1,26 +1,79 @@
-<mat-card>
+<mat-toolbar color="primary" class="toolbar-title">Cadastro de Fornecedores</mat-toolbar>
+<div class="form-container">
+  <mat-card>
     <mat-card-content>
       <form [formGroup]="formGroup">
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Nome</mat-label>
-          <input matInput formControlName="nome">
+          <input matInput type="text" formControlName="nome">
+          <mat-error *ngIf="formGroup.get('nome') && 
+                                formGroup.get('nome')?.invalid &&
+                                formGroup.get('nome')?.touched">
+            O nome é obrigatório.
+          </mat-error>
         </mat-form-field>
-  
+        
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>CNPJ</mat-label>
-          <input matInput formControlName="cnpj">
+          <input matInput type="text" formControlName="cnpj">
+          <mat-error *ngIf="formGroup.get('cnpj') && 
+                                formGroup.get('cnpj')?.invalid &&
+                                formGroup.get('cnpj')?.touched">
+            O CNPJ é obrigatório.
+          </mat-error>
         </mat-form-field>
-  
+
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email">
+          <input matInput type="text" formControlName="email">
+          <mat-error *ngIf="formGroup.get('email') && 
+                                formGroup.get('email')?.invalid &&
+                                formGroup.get('email')?.touched">
+            O email é obrigatório.
+          </mat-error>
         </mat-form-field>
+
+        <!-- Campos de Telefone -->
+        <div formArrayName="telefones">
+          <div *ngFor="let telefone of telefones.controls; let i = index" [formGroupName]="i">
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>Código de Área</mat-label>
+              <input matInput type="text" formControlName="codigoArea">
+              <mat-error *ngIf="telefone.get('codigoArea')?.invalid && telefone.get('codigoArea')?.touched">
+                O código de área é obrigatório.
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>Número</mat-label>
+              <input matInput type="text" formControlName="numero">
+              <mat-error *ngIf="telefone.get('numero')?.invalid && telefone.get('numero')?.touched">
+                O número de telefone é obrigatório.
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-icon-button color="warn" (click)="removeTelefone(i)">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button mat-raised-button color="accent" (click)="addTelefone()">
+          Adicionar Telefone
+        </button>
       </form>
     </mat-card-content>
-  
+
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">Salvar</button>
-      <button mat-raised-button routerLink="/fornecedores">Cancelar</button>
+      <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+        Salvar
+      </button>
+      <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+        Excluir
+      </button>
+      <button mat-raised-button routerLink="/estados">
+        Cancelar
+      </button>
     </mat-card-actions>
   </mat-card>
-  
+</div>

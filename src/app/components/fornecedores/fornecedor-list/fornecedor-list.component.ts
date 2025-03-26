@@ -5,36 +5,74 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { Fornecedor } from '../../../models/fornecedor.model';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-fornecedor-list',
-  imports: [RouterLink, MatIconModule, MatCardModule, MatTableModule, MatToolbar],
+  imports: [MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
-export class FornecedoresComponent implements OnInit {
-  fornecedores: Fornecedor[] = [];
+export class FornecedorListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'cnpj', 'email', 'acao'];
+  fornecedores: Fornecedor[] = [];
 
-  constructor(private fornecedorService: FornecedorService) {}
+  // variaveis de controle de paginação
+  totalRecords = 0;
+  pageSize = 10;
+  page = 0;
+
+
+  constructor(private fornecedorService: FornecedorService) { }
 
   ngOnInit(): void {
-    this.carregarFornecedores();
+    this.fornecedorService.findAll(this.page, this.pageSize).subscribe(
+      data => {
+        console.log('Dados recebidos:', data);  // Adicione um log para verificar os dados recebidos
+        this.fornecedores = data;
+      },
+      error => {
+        console.error('Erro ao carregar fornecedores:', error);  // Verifique se há erro na chamada
+      }
+    );
+    this.fornecedorService.count().subscribe(
+      data => {
+        this.totalRecords = data;
+      },
+      error => {
+        console.error('Erro ao carregar o total de fornecedores:', error);  // Verifique se há erro ao contar
+      }
+    );
   }
 
-  carregarFornecedores(): void {
-    this.fornecedorService.listar().subscribe((dados) => {
-      this.fornecedores = dados;
+  loadFornecedores(): void {
+    this.fornecedorService.findAll(this.page, this.pageSize).subscribe(data => {
+      this.fornecedores = data;
+    });
+    this.fornecedorService.count().subscribe(data => {
+      this.totalRecords = data;
     });
   }
 
+  paginar(event: PageEvent): void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    //chamando pra executar novamente a consulta
+    //caso tenha outras execucoes no ngOnit .. eh interessante criar um metodo de consulta
+    this.loadFornecedores();
+  }
+
   excluir(id: number): void {
-    if (confirm('Tem certeza que deseja excluir este fornecedor?')) {
-      this.fornecedorService.excluir(id).subscribe(() => {
-        this.carregarFornecedores();
+    if (confirm('Tem certeza de que deseja excluir este fornecedor?')) {
+      this.fornecedorService.delete(id).subscribe(() => {
+        this.loadFornecedores(); // Recarrega a lista de fornecedores após exclusão
+      }, error => {
+        console.error('Erro ao excluir fornecedor:', error);
+        alert('Erro ao excluir fornecedor.');
       });
     }
   }
+
 }

@@ -19,22 +19,27 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 export class EstadoListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nome', 'sigla', 'acao'];
   estados: Estado[] = [];
-
   // variaveis de controle de paginação
   totalRecords= 0;
   pageSize = 10;
   page =0;
 
 
-  constructor(private estadoService: EstadoService) { }
+  constructor(
+    private estadoService: EstadoService,
+    //private dialogService: DialogService,
+    //private snackbarService: SnackBarService,
+  ) { }
 
   ngOnInit(): void {
+   this.loadEstados();
+  }
+
+  loadEstados(): void {
     this.estadoService.findAll(this.page, this.pageSize).subscribe(data => {
-      this.estados = data;
+      this.estados = data.results;
+      this.totalRecords = data.count;
     });
-    this.estadoService.count().subscribe(data => {
-      this.totalRecords = data;
-    })
   }
 
   paginar(event: PageEvent): void {

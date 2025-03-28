@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Estado } from '../models/estado.model';
+import { PageResponse } from '../interfaces/pageresponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +13,21 @@ export class EstadoService {
   constructor(private httpClient: HttpClient) { 
   }
 
-  findAll(page?:number, pageSize?:number): Observable<Estado[]> {
-    let params={};
-
+  findAll(page?: number, pageSize?: number): Observable<PageResponse<Estado>> {
+    let params: any = {};
+  
     if (page !== undefined && pageSize !== undefined) {
       params = {
         page: page.toString(),
         page_size: pageSize.toString()
-      }
+      };
     }
+     // console.log(this.baseUrl);
+    //  console.log({params});
 
-    console.log(this.baseUrl);
-    console.log({params});
-
-    return this.httpClient.get<Estado[]>(this.baseUrl, {params});
-
+    return this.httpClient.get<PageResponse<Estado>>(`${this.baseUrl}/estados`, { params });
   }
+  
 
 
   count(): Observable<number>{

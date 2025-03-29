@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Municipio } from '../../../models/municipio.model';
 import { MatCardModule } from '@angular/material/card';
+import { PageResponse } from '../../../interfaces/pageresponse';
 
 @Component({
   selector: 'app-municipio-form',
@@ -42,12 +43,12 @@ export class MunicipioFormComponent {
 
 
   ngOnInit(): void {
-    this.estadoService.findAll().subscribe(data => {
-      this.estados = data;
-      console.log("Estados carregados:", this.estados); // 🛠 Depuração
+    this.estadoService.findAll().subscribe((data: PageResponse<Estado>) => {
+      this.estados = data.results;  // Agora, estamos acessando 'results' para obter o array de Estados
+      console.log("Estados carregados:", this.estados); // Verifique se os estados estão sendo carregados corretamente
       this.initializeForm();
     });
-  }
+  }  
   
 
   initializeForm(): void {

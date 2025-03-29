@@ -21,8 +21,10 @@ export class EstadoListComponent implements OnInit {
   estados: Estado[] = [];
   // variaveis de controle de paginação
   totalRecords= 0;
-  pageSize = 10;
+  pageSize = 4;
   page =0;
+  formGroup: any;
+  router: any;
 
 
   constructor(
@@ -47,7 +49,20 @@ export class EstadoListComponent implements OnInit {
     this.pageSize = event.pageSize;
     //chamando pra executar novamente a consulta
     //caso tenha outras execucoes no ngOnit .. eh interessante criar um metodo de consulta
-    this.ngOnInit();
+    this.loadEstados();
+  }
+
+  excluir(estado: Estado): void {
+    if (estado.id != null) {
+      this.estadoService.delete(estado).subscribe({
+        next: () => {
+          this.loadEstados();  // Recarregar os estados após exclusão
+        },
+        error: (erroResponse) => {
+          console.log('Erro ao excluir', JSON.stringify(erroResponse));
+        },
+      });
+    }
   }
 
 }

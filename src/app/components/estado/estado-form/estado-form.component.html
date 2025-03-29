@@ -9,7 +9,11 @@
                     <mat-error *ngIf="formGroup.get('nome') && 
                                     formGroup.get('nome')?.invalid &&
                                     formGroup.get('nome')?.touched">
-                        O nome é obrigatório.
+                        {{getErrorMessage('nome', formGroup.get('nome')?.errors)}}
+
+                        @if (formGroup.get('nome')?.hasError('apiError')) {
+                        <span>{{ formGroup.get('nome')?.getError('apiError') }}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width-input">
@@ -18,29 +22,26 @@
                     <mat-error *ngIf="formGroup.get('sigla') && 
                                     formGroup.get('sigla')?.invalid &&
                                     formGroup.get('sigla')?.touched">
-                        A sigla é obrigatória.
+                        {{getErrorMessage('sigla', formGroup.get('sigla')?.errors)}}
+
+                        @if (formGroup.get('sigla')?.hasError('apiError')) {
+                        <span>{{ formGroup.get('sigla')?.getError('apiError') }}</span>
+                        }
                     </mat-error>
                 </mat-form-field>
-            
+
             </form>
         </mat-card-content>
-            <mat-card-actions>
-                <button mat-raised-button
-                color="primary"
-                (click)="salvar()"
-                [disabled]="formGroup.invalid">
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="salvar()">
                 Salvar
-                </button>
-                <button mat-raised-button
-                color="warn"
-                (click)="excluir()"
-                [disabled]="formGroup.invalid">
+            </button>
+            <button mat-raised-button color="warn" (click)="excluir()">
                 Excluir
-                </button>
-                <button mat-raised-button
-                routerLink="/estados">
+            </button>
+            <button mat-raised-button routerLink="/estados">
                 Cancelar
-                </button>
-            </mat-card-actions>
+            </button>
+        </mat-card-actions>
     </mat-card>
 </div>

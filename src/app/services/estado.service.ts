@@ -25,7 +25,7 @@ export class EstadoService {
      // console.log(this.baseUrl);
     //  console.log({params});
 
-    return this.httpClient.get<PageResponse<Estado>>(`${this.baseUrl}/estados`, { params });
+    return this.httpClient.get<PageResponse<Estado>>(`${this.baseUrl}`, { params });
   }
   
 

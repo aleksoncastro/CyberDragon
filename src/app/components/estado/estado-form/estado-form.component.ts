@@ -11,8 +11,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { NgIf } from '@angular/common';
 import { Estado } from '../../../models/estado.model';
-import { max } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-estado-form',
@@ -37,24 +37,22 @@ export class EstadoFormComponent {
     private formBuilder: FormBuilder,
     private estadoService: EstadoService,
     private router: Router,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private snackbarService: SnackbarService
   ) {
-
     const estado: Estado = this.activateRoute.snapshot.data['estado'];
 
     this.formGroup = this.formBuilder.group({
       id: [(estado && estado.id) ? estado.id : null],
       nome: [(estado && estado.nome) ? estado.nome : '', 
-        Validators.compose([Validators.required, 
-          Validators.maxLength(60)])],
+        Validators.compose([Validators.required, Validators.maxLength(60)])],
       sigla: [(estado && estado.sigla) ? estado.sigla : '', 
-        Validators.compose([Validators.required, 
-          Validators.maxLength(2)])],
+        Validators.compose([Validators.required, Validators.maxLength(2)])],
     });
   }
 
   salvar() {
-    this.formGroup.markAllAsTouched(); // Marca todos os campos como tocados para mostrar as mensagens de erro
+    this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       const estado = this.formGroup.value;
 
@@ -64,10 +62,28 @@ export class EstadoFormComponent {
 
       operacao.subscribe({
         next: () => {
+          this.snackbarService.showMessage('Operação realizada com sucesso!', true);
           this.router.navigateByUrl('/estados');
         },
         error: (erroResponse) => {
+          this.snackbarService.showMessage('Erro ao salvar o estado!', false);
           console.log('Erro ao salvar', JSON.stringify(erroResponse));
+        },
+      });
+    }
+  }
+
+  excluir() {
+    const estado = this.formGroup.value;
+    if (estado.id != null) {
+      this.estadoService.delete(estado).subscribe({
+        next: () => {
+          this.snackbarService.showMessage('Estado excluído com sucesso!', true);
+          this.router.navigateByUrl('/estados');
+        },
+        error: (erroResponse) => {
+          this.snackbarService.showMessage('Erro ao excluir o estado!', false);
+          console.log('Erro ao excluir', JSON.stringify(erroResponse));
         },
       });
     }
@@ -81,33 +97,16 @@ export class EstadoFormComponent {
           if (formControl) {
             formControl.setErrors({ apiError: ValidationError.message });
           }
-      });
-    }
-    else {
-      alert(httpError.error?.message || 'Erro não mapeado no servidor.');
-    }
-  }
-}
-
-  excluir() {
-    if (this.formGroup.valid) {
-      const estado = this.formGroup.value;
-      if (estado.id != null) {
-        this.estadoService.delete(estado).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/estados');
-          },
-          error: (erroResponse) => {
-            console.log('Erro ao excluir', JSON.stringify(erroResponse));
-          },
         });
+      } else {
+        this.snackbarService.showMessage(httpError.error?.message || 'Erro não mapeado no servidor.');
       }
     }
   }
 
   getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
     if (!errors || !this.errorMessages[controlName]) {
-      return 'invalid field';
+      return 'Campo inválido';
     }
 
     for (const errorName in errors) {
@@ -115,10 +114,9 @@ export class EstadoFormComponent {
         return this.errorMessages[controlName][errorName];
       }
     }
-    return 'invalid field';
+    return 'Campo inválido';
   }
 
-  // é proximo ao Map do java
   errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
     nome: {
       required: 'O nome deve ser informado.',
@@ -132,6 +130,5 @@ export class EstadoFormComponent {
       maxlength: 'A sigla deve ter no máximo 2 caracteres.',
       apiError: '',
     },
-
   }
 }

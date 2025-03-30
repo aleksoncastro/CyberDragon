@@ -35,3 +35,5 @@ button[mat-raised-button]:not(:last-child) {
     margin-right: 1rem;
     /* adiciona margem à direita de todos os botões, exceto o último */
 }
+  
+  

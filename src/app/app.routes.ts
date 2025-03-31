@@ -10,6 +10,8 @@ import { FornecedorListComponent } from './components/fornecedores/fornecedor-li
 import { FornecedorFormComponent } from './components/fornecedores/fornecedor-form/fornecedor-form.component';
 import { PlacadevideoListComponent } from './components/placadevideo/placadevideo-list/placadevideo-list.component';
 import { PlacaDeVideoFormComponent } from './components/placadevideo/placadevideo-form/placadevideo-form.component';
+import { LoteFormComponent } from './components/lote/lote-form/lote-form.component';
+import { LoteListComponent } from './components/lote/lote-list/lote-list.component';
 
 export const routes: Routes = [
     { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
@@ -24,4 +26,6 @@ export const routes: Routes = [
     { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, title: 'Edit de Fornecedor'},
     { path: 'placasdevideo', component: PlacadevideoListComponent, title: 'Lista de Placas de Video'},
     { path: 'placasdevideo/new', component: PlacaDeVideoFormComponent, title: 'Nova Placas de Video'},
+    { path: 'lotes', component: LoteListComponent, title: 'Lista de Lotes'},
+    { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote'},
 ];

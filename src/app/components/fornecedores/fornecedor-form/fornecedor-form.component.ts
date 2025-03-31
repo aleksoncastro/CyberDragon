@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Fornecedor } from '../../../models/fornecedor.model';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-fornecedor-form',
@@ -25,7 +26,8 @@ export class FornecedorFormComponent {
   constructor(private formBuilder: FormBuilder,
     private fornecedorService: FornecedorService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService) {
 
     const fornecedor: Fornecedor = this.activatedRoute.snapshot.data['fornecedor'];
 
@@ -67,16 +69,19 @@ export class FornecedorFormComponent {
       const fornecedor = this.formGroup.value;
       if (fornecedor.id == null) {
         this.fornecedorService.insert(fornecedor).subscribe({
-          next: (fornecedorCadastrado) => {
+          next: () => {
+            this.snackbarService.showMessage('Fornecedor Salvo!', true);
             this.router.navigateByUrl('/fornecedores');
           },
           error: (errorResponse) => {
+            this.snackbarService.showMessage('Erro ao excluir o fornecedor!', false);
             console.log('Erro ao incluir' + JSON.stringify(errorResponse));
           }
         });
       } else {
         this.fornecedorService.update(fornecedor).subscribe({
           next: (fornecedorAlterado) => {
+            this.snackbarService.showMessage('Fornecedor Atualizado!', true);
             this.router.navigateByUrl('/fornecedores');
           }
         });

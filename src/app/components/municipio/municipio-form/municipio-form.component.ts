@@ -14,11 +14,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { Municipio } from '../../../models/municipio.model';
 import { MatCardModule } from '@angular/material/card';
 import { PageResponse } from '../../../interfaces/pageresponse';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-municipio-form',
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-      MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, MatCardModule, CommonModule],
+    MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, MatCardModule, CommonModule],
   templateUrl: './municipio-form.component.html',
   styleUrl: './municipio-form.component.css'
 })
@@ -27,16 +28,17 @@ export class MunicipioFormComponent {
   estados: Estado[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private municipioService: MunicipioService,
-              private estadoService: EstadoService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
+    private municipioService: MunicipioService,
+    private estadoService: EstadoService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService) {
 
     // incicializando
     this.formGroup = this.formBuilder.group({
-     id:[null],
-     nome: ['', Validators.required],
-     estado: [null]
+      id: [null],
+      nome: ['', Validators.required],
+      estado: [null]
     });
 
   }
@@ -48,25 +50,25 @@ export class MunicipioFormComponent {
       console.log("Estados carregados:", this.estados); // Verifique se os estados estão sendo carregados corretamente
       this.initializeForm();
     });
-  }  
-  
+  }
+
 
   initializeForm(): void {
     const municipio: Municipio = this.activatedRoute.snapshot.data['municipio'] || { id: null, nome: '', estado: null };
-  
+
     if (municipio.estado) {
       console.log("Município carregado:", municipio);
     }
-  
+
     this.formGroup = this.formBuilder.group({
       id: [municipio.id],
       nome: [municipio.nome, Validators.required],
       estado: [municipio.estado ? municipio.estado.id : null, Validators.required], // Armazena apenas o ID do estado
     });
-  
+
     console.log("Formulário inicializado:", this.formGroup.value);
   }
-  
+
 
   salvar(): void {
     if (this.formGroup.valid) {
@@ -75,19 +77,21 @@ export class MunicipioFormComponent {
         nome: this.formGroup.value.nome,
         estado: this.estados.find(e => e.id === this.formGroup.value.estado)!, // Converte ID de volta para objeto Estado
       };
-  
+
       if (municipio.id) {
         this.municipioService.update(municipio).subscribe(() => {
+          this.snackbarService.showMessage('Municipio Atualizado!', true);
           this.router.navigate(['/municipios']);
         });
       } else {
         this.municipioService.insert(municipio).subscribe(() => {
+          this.snackbarService.showMessage('Municipio Adicionado!', true);
           this.router.navigate(['/municipios']);
         });
       }
     }
   }
-  
+
 
   excluir() {
     if (this.formGroup.valid) {
@@ -95,6 +99,7 @@ export class MunicipioFormComponent {
       if (municipios.id != null) {
         this.municipioService.delete(municipios).subscribe({
           next: () => {
+            this.snackbarService.showMessage('Erro ao excluir o municipio!', false);
             this.router.navigateByUrl('/municipioss');
           },
           error: (err) => {
@@ -104,6 +109,6 @@ export class MunicipioFormComponent {
       }
     }
   }
-  
+
 }
 

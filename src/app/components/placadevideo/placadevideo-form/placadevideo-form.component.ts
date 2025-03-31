@@ -11,12 +11,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
+import { SnackbarService } from '../../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-placadevideo-form',
   standalone: true,
-  imports: [NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule, 
-            MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
+  imports: [NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
+    MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
   templateUrl: './placadevideo-form.component.html',
   styleUrl: './placadevideo-form.component.css'
 })
@@ -24,10 +25,11 @@ export class PlacaDeVideoFormComponent {
   formGroup: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private placaDeVideoService: PlacaDeVideoService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
-    
+    private placaDeVideoService: PlacaDeVideoService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService) {
+
     const placaDeVideo: PlacaDeVideo = this.activatedRoute.snapshot.data['placadevideo'];
 
     this.formGroup = this.formBuilder.group({
@@ -89,12 +91,21 @@ export class PlacaDeVideoFormComponent {
       const placaDeVideo = this.formGroup.value;
       if (placaDeVideo.id == null) {
         this.placaDeVideoService.insert(placaDeVideo).subscribe({
-          next: () => this.router.navigateByUrl('/placadevideo'),
-          error: (errorResponse) => console.log('Erro ao incluir' + JSON.stringify(errorResponse))
+          next: () => {
+            this.router.navigateByUrl('/placadevideo')
+            this.snackbarService.showMessage('Placa de Vídeo Salva!', true);
+          },
+          error: (errorResponse) => {
+            this.snackbarService.showMessage('Erro ao incluir a placa de vídeo!', false);
+            console.log('Erro ao incluir' + JSON.stringify(errorResponse))
+          }
         });
       } else {
         this.placaDeVideoService.update(placaDeVideo).subscribe({
-          next: () => this.router.navigateByUrl('/placadevideo')
+          next: () => {
+            this.snackbarService.showMessage('Placa de Vídeo Atualizada!', true);
+            this.router.navigateByUrl('/placadevideo')
+          }
         });
       }
     }
@@ -104,8 +115,14 @@ export class PlacaDeVideoFormComponent {
     const placaDeVideo = this.formGroup.value;
     if (placaDeVideo.id != null) {
       this.placaDeVideoService.delete(placaDeVideo).subscribe({
-        next: () => this.router.navigateByUrl('/placadevideo'),
-        error: (err) => console.log('Erro ao excluir' + JSON.stringify(err))
+        next: () => {
+          this.snackbarService.showMessage('Placa de Vídeo Excluída!', true);
+          this.router.navigateByUrl('/placadevideo')
+        },
+        error: (err) => {
+          this.snackbarService.showMessage('Erro ao excluir a placa de vídeo!', false);
+          console.log('Erro ao excluir' + JSON.stringify(err))
+        }
       });
     }
   }

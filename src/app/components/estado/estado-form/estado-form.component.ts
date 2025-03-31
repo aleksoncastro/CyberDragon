@@ -62,7 +62,7 @@ export class EstadoFormComponent {
 
       operacao.subscribe({
         next: () => {
-          this.snackbarService.showMessage('Operação realizada com sucesso!', true);
+          this.snackbarService.showMessage('Estado Salvo!', true);
           this.router.navigateByUrl('/estados');
         },
         error: (erroResponse) => {
@@ -78,7 +78,7 @@ export class EstadoFormComponent {
     if (estado.id != null) {
       this.estadoService.delete(estado).subscribe({
         next: () => {
-          this.snackbarService.showMessage('Estado excluído com sucesso!', true);
+          this.snackbarService.showMessage('Estado Excluído!', true);
           this.router.navigateByUrl('/estados');
         },
         error: (erroResponse) => {

@@ -31,7 +31,8 @@ import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 export class LoteFormComponent implements OnInit {
   formGroup!: FormGroup;
   lotes: Lote[] = [];
-  placadevideo: any[] = []; // Array para armazenar as placas de vídeo
+  placadevideo: any[] = []; 
+  idPlacaSelecionada: number | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,19 +45,20 @@ export class LoteFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Obter o lote se estiver editando
+    
     const lote: Lote = this.activatedRoute.snapshot.data['lote'];
-
+    
+    
     // Inicializando o formulário com valores, caso existam
     this.formGroup = this.formBuilder.group({
       id: [lote ? lote.id : null],
       codigo: [lote ? lote.codigo : '', Validators.required],
       estoque: [lote ? lote.estoque : '', [Validators.required, Validators.min(1)]],
       dataFabricacao: [lote ? lote.dataFabricacao : '', Validators.required],
-      placaDeVideo: [lote ? lote.idPlacaDeVideo : null, Validators.required]
- // Corrigido para usar o ID da placa
+      placaDeVideo: [lote?.idPlacaDeVideo ?? '', Validators.required]
     });
-
+    console.log("Lote inicializado:", this.formGroup.value);
+    console.log("Placas de vídeo carregadas:", this.placadevideo);
     this.placaDeVideoService.findAll().subscribe({
       next: (placas) => {
         this.placadevideo = placas;
@@ -68,47 +70,65 @@ export class LoteFormComponent implements OnInit {
     
   }
 
+  atualizarIdPlaca(id: number) {
+    this.idPlacaSelecionada = id;
+    this.formGroup.patchValue({ placaDeVideo: id }); // Atualiza o formGroup
+    console.log("Placa selecionada:", this.idPlacaSelecionada);
+    console.log("Valor atualizado no formGroup:", this.formGroup.value);
+  }
+
   salvar() {
-    if (this.formGroup.valid) {
-      const formValue = this.formGroup.value;
-
-      const lote: Lote = {
-        id: formValue.id,
-        codigo: formValue.codigo,
-        estoque: formValue.estoque,
-        dataFabricacao: formValue.dataFabricacao,
-        idPlacaDeVideo: formValue.placaDeVideo
-      };
-      
-      if (lote.id == null) {
-        // Chamar o serviço para criar um novo lote
-        console.log('JSON enviado para o backend:', JSON.stringify(lote, null, 2));
-
-        this.loteService.insert(lote).subscribe({
-          next: () => {
-            this.snackbarService.showMessage('Lote Salvo!', true);
-            this.router.navigateByUrl('/lotes');
-          },
-          error: (errorResponse) => {
-            this.snackbarService.showMessage('Erro ao salvar o lote!', false);
-            console.log('Erro ao salvar' + JSON.stringify(errorResponse));
-          }
-        });
-      } else {
-        // Chamar o serviço para atualizar o lote existente
-        this.loteService.update(lote).subscribe({
-          next: () => {
-            this.snackbarService.showMessage('Lote Atualizado!', true);
-            this.router.navigateByUrl('/lotes');
-          },
-          error: (errorResponse) => {
-            this.snackbarService.showMessage('Erro ao atualizar o lote!', false);
-            console.log('Erro ao atualizar' + JSON.stringify(errorResponse));
-          }
-        });
-      }
+    console.log("Método salvar() chamado!");
+  
+    if (!this.formGroup.valid) {
+      console.warn("Formulário inválido! Verifique os campos.");
+      return;
+    }
+  
+    const formValue = this.formGroup.value;
+  
+    console.log("Valores do formulário:", formValue);
+    console.log("ID da placa selecionada:", this.idPlacaSelecionada);
+  
+    const lote: Lote = {
+      id: formValue.id,
+      codigo: formValue.codigo,
+      estoque: formValue.estoque,
+      dataFabricacao: formValue.dataFabricacao,
+      idPlacaDeVideo: this.idPlacaSelecionada ?? 0 // Usa 0 se estiver nulo
+    };
+  
+    console.log("Lote a ser enviado:", JSON.stringify(lote, null, 2));
+  
+    if (lote.id == null) {
+      console.log("Chamando API para INSERIR novo lote...");
+      this.loteService.insert(lote).subscribe({
+        next: () => {
+          console.log("Lote salvo com sucesso!");
+          this.snackbarService.showMessage("Lote Salvo!", true);
+          this.router.navigateByUrl("/lotes");
+        },
+        error: (errorResponse) => {
+          console.error("Erro ao salvar o lote:", errorResponse);
+          this.snackbarService.showMessage("Erro ao salvar o lote!", false);
+        }
+      });
+    } else {
+      console.log("Chamando API para ATUALIZAR lote...");
+      this.loteService.update(lote).subscribe({
+        next: () => {
+          console.log("Lote atualizado com sucesso!");
+          this.snackbarService.showMessage("Lote Atualizado!", true);
+          this.router.navigateByUrl("/lotes");
+        },
+        error: (errorResponse) => {
+          console.error("Erro ao atualizar o lote:", errorResponse);
+          this.snackbarService.showMessage("Erro ao atualizar o lote!", false);
+        }
+      });
     }
   }
+  
 
   excluir() {
     if (this.formGroup.valid) {

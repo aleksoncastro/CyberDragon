@@ -43,7 +43,8 @@ export class PlacaDeVideoFormComponent {
       compatibilidade: [placaDeVideo?.compatibilidade || '', [Validators.required, Validators.min(1)]],
       clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
       clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
-      suporteRayTracing: [placaDeVideo?.suporteRayTracing || false, Validators.required],
+      suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
+      fan: [placaDeVideo?.fan || '', [Validators.required, Validators.min(1)]],
       memoria: this.formBuilder.group({
         tipo: [placaDeVideo?.memoria?.tipo || '', Validators.required],
         capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],

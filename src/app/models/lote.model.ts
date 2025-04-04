@@ -5,5 +5,5 @@ export class Lote {
   codigo!: string;
   estoque!: number;
   dataFabricacao!: string; 
-  placaDeVideo!: PlacaDeVideo;  
+  idPlacaDeVideo!: number; 
 }

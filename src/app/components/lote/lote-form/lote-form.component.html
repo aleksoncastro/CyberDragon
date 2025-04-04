@@ -39,28 +39,27 @@
           </mat-error>
         </mat-form-field>
 
-        <!-- Campo Placa de Vídeo -->
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Placa de Vídeo</mat-label>
           <mat-select formControlName="placaDeVideo">
-            <mat-option *ngFor="let placa of placasDeVideo" [value]="placa.id">{{ placa.modelo }}</mat-option>
+            <mat-option *ngFor="let placa of placadevideo" [value]="placa.id">
+              {{ placa.modelo }}
+            </mat-option>
           </mat-select>
-          <mat-error *ngIf="formGroup.get('placaDeVideo') && 
-                                formGroup.get('placaDeVideo')?.invalid &&
-                                formGroup.get('placaDeVideo')?.touched">
+          <mat-error *ngIf="formGroup.get('placaDeVideo')?.invalid && formGroup.get('placaDeVideo')?.touched">
             A placa de vídeo é obrigatória.
           </mat-error>
-        </mat-form-field>
+        </mat-form-field>        
 
       </form>
     </mat-card-content>
 
     <mat-card-actions>
       <!-- Botões de Ação -->
-      <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+      <button mat-raised-button color="primary" (click)="salvar()">
         Salvar
       </button>
-      <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+      <button mat-raised-button color="warn" (click)="excluir()">
         Excluir
       </button>
       <button mat-raised-button routerLink="/lotes">

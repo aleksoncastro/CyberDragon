@@ -4,7 +4,6 @@ import { LoteService } from '../../../services/lote.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { Lote } from '../../../models/lote.model';
-import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { NgIf, CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -16,12 +15,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-
+import { MatSelectModule } from '@angular/material/select';
+import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 
 @Component({
   selector: 'app-lote-form',
   imports: [NgIf, CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule],
+    MatButtonModule, MatToolbarModule, MatIconModule, MatCardModule, MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatSelectModule],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }  // Para datas no formato brasileiro
   ],
@@ -31,21 +31,18 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 export class LoteFormComponent implements OnInit {
   formGroup!: FormGroup;
   lotes: Lote[] = [];
-  placasDeVideo: PlacaDeVideo[] = [];
+  placadevideo: any[] = []; // Array para armazenar as placas de vídeo
 
   constructor(
     private formBuilder: FormBuilder,
     private loteService: LoteService,
     private router: Router,
+    private placaDeVideoService: PlacaDeVideoService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService
   ) { }
 
   ngOnInit(): void {
-    // Carregar a lista de placas de vídeo
-    this.loteService.findAll().subscribe(data => {
-      this.lotes = data;
-    });
 
     // Obter o lote se estiver editando
     const lote: Lote = this.activatedRoute.snapshot.data['lote'];
@@ -56,15 +53,37 @@ export class LoteFormComponent implements OnInit {
       codigo: [lote ? lote.codigo : '', Validators.required],
       estoque: [lote ? lote.estoque : '', [Validators.required, Validators.min(1)]],
       dataFabricacao: [lote ? lote.dataFabricacao : '', Validators.required],
-      placaDeVideo: [lote ? lote.placaDeVideo.id : '', Validators.required]
+      placaDeVideo: [lote ? lote.idPlacaDeVideo : null, Validators.required]
+ // Corrigido para usar o ID da placa
     });
+
+    this.placaDeVideoService.findAll().subscribe({
+      next: (placas) => {
+        this.placadevideo = placas;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar placas de vídeo', err);
+      }
+    });
+    
   }
 
   salvar() {
     if (this.formGroup.valid) {
-      const lote = this.formGroup.value;
+      const formValue = this.formGroup.value;
+
+      const lote: Lote = {
+        id: formValue.id,
+        codigo: formValue.codigo,
+        estoque: formValue.estoque,
+        dataFabricacao: formValue.dataFabricacao,
+        idPlacaDeVideo: formValue.placaDeVideo
+      };
+      
       if (lote.id == null) {
         // Chamar o serviço para criar um novo lote
+        console.log('JSON enviado para o backend:', JSON.stringify(lote, null, 2));
+
         this.loteService.insert(lote).subscribe({
           next: () => {
             this.snackbarService.showMessage('Lote Salvo!', true);

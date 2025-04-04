@@ -20,6 +20,14 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="full-width-input">
+                    <mat-label>Quantidade de Fans</mat-label>
+                    <input matInput type="number" formControlName="fan">
+                    <mat-error *ngIf="formGroup.get('fan')?.invalid && formGroup.get('fan')?.touched">
+                        A quantidade de fans é obrigatória.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Preço</mat-label>
                     <input matInput type="number" formControlName="preco">
                     <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
@@ -106,23 +114,25 @@
 
 
                 <h3>Dimensões</h3>
-<div formGroupName="tamanho">
-    <mat-form-field appearance="fill" class="full-width-input">
-        <mat-label>Largura (mm)</mat-label>
-        <input matInput type="number" formControlName="largura">
-        <mat-error *ngIf="formGroup.get('tamanho.largura')?.invalid && formGroup.get('tamanho.largura')?.touched">
-            A largura é obrigatória.
-        </mat-error>
-    </mat-form-field>
+                <div formGroupName="tamanho">
+                    <mat-form-field appearance="fill" class="full-width-input">
+                        <mat-label>Largura (mm)</mat-label>
+                        <input matInput type="number" formControlName="largura">
+                        <mat-error
+                            *ngIf="formGroup.get('tamanho.largura')?.invalid && formGroup.get('tamanho.largura')?.touched">
+                            A largura é obrigatória.
+                        </mat-error>
+                    </mat-form-field>
 
-    <mat-form-field appearance="fill" class="full-width-input">
-        <mat-label>Altura (mm)</mat-label>
-        <input matInput type="number" formControlName="altura">
-        <mat-error *ngIf="formGroup.get('tamanho.altura')?.invalid && formGroup.get('tamanho.altura')?.touched">
-            A altura é obrigatória.
-        </mat-error>
-    </mat-form-field>
-</div>
+                    <mat-form-field appearance="fill" class="full-width-input">
+                        <mat-label>Altura (mm)</mat-label>
+                        <input matInput type="number" formControlName="altura">
+                        <mat-error
+                            *ngIf="formGroup.get('tamanho.altura')?.invalid && formGroup.get('tamanho.altura')?.touched">
+                            A altura é obrigatória.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
 
 
                 <h3>Saídas de Vídeo</h3>
@@ -146,10 +156,10 @@
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+            <button mat-raised-button color="primary" (click)="salvar()">
                 Salvar
             </button>
-            <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+            <button mat-raised-button color="warn" (click)="excluir()">
                 Excluir
             </button>
             <button mat-raised-button routerLink="/placadevideo">

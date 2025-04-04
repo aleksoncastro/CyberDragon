@@ -1,4 +1,5 @@
 export interface PlacaDeVideo {
+    fan: number;
     id?: number;
     modelo: string;
     categoria: string;

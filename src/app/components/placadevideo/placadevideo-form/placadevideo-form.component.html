@@ -100,17 +100,14 @@
                 </div>
 
 
-                <h3>Fornecedor</h3>
-                <div formGroupName="fornecedor">
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Nome do Fornecedor</mat-label>
-                        <input matInput type="text" formControlName="nome">
-                        <mat-error
-                            *ngIf="formGroup.get('fornecedor.nome')?.invalid && formGroup.get('fornecedor.nome')?.touched">
-                            O nome do fornecedor é obrigatório.
-                        </mat-error>
-                    </mat-form-field>
-                </div>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Fornecedor</mat-label>
+                    <mat-select [value]="idFornecedorSelecionado" (selectionChange)="atualizarIdFornecedor($event.value)">
+                      <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+                        {{ fornecedor.nome }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>                                                      
 
 
                 <h3>Dimensões</h3>
@@ -162,7 +159,7 @@
             <button mat-raised-button color="warn" (click)="excluir()">
                 Excluir
             </button>
-            <button mat-raised-button routerLink="/placadevideo">
+            <button mat-raised-button routerLink="/admin/placadevideo">
                 Cancelar
             </button>
         </mat-card-actions>

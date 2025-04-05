@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FornecedorService } from '../../../services/fornecedor.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,25 +13,39 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { SnackbarService } from '../../snackbar/snackbar.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-placadevideo-form',
   standalone: true,
   imports: [NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
+    MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule, MatOptionModule, MatSelectModule],
   templateUrl: './placadevideo-form.component.html',
   styleUrl: './placadevideo-form.component.css'
 })
 export class PlacaDeVideoFormComponent {
+  fornecedores: any[] = [];
   formGroup: FormGroup;
+  idFornecedorSelecionado: number | null = null;
+
 
   constructor(private formBuilder: FormBuilder,
     private placaDeVideoService: PlacaDeVideoService,
     private router: Router,
+    private fornecedorService: FornecedorService,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService) {
 
     const placaDeVideo: PlacaDeVideo = this.activatedRoute.snapshot.data['placadevideo'];
+
+    this.fornecedorService.findAll().subscribe(data => {
+      this.fornecedores = data;
+
+      if (placaDeVideo?.fornecedor?.id) {
+        this.idFornecedorSelecionado = placaDeVideo.fornecedor.id;
+      }
+    });
 
     this.formGroup = this.formBuilder.group({
       id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
@@ -53,10 +68,7 @@ export class PlacaDeVideoFormComponent {
         largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
         altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
       }),
-      fornecedor: this.formBuilder.group({
-        id: [placaDeVideo?.fornecedor?.id || null, Validators.required],
-        nome: [placaDeVideo?.fornecedor?.nome || '', Validators.required],
-      }),
+      fornecedor: [placaDeVideo?.fornecedor?.id ?? '', [Validators.required, Validators.min(1)]],
       saidas: this.formBuilder.array(
         placaDeVideo?.saidas?.map(saida => this.createSaidaFormGroup(saida)) || []
       )
@@ -71,6 +83,12 @@ export class PlacaDeVideoFormComponent {
   }
   getSaidas(): FormArray {
     return this.formGroup.get('saidas') as FormArray;
+  }
+
+  atualizarIdFornecedor(id: number) {
+    this.idFornecedorSelecionado = id;
+    this.formGroup.patchValue({ fornecedor: id }); // Atualiza o campo no formulário
+    console.log('Fornecedor selecionado:', id);
   }
 
   // Método para adicionar uma nova saída de vídeo ao array
@@ -88,24 +106,41 @@ export class PlacaDeVideoFormComponent {
   }
 
   salvar() {
+    console.log(this.formGroup.valid);
+    console.log(this.formGroup.value);
+
     if (this.formGroup.valid) {
-      const placaDeVideo = this.formGroup.value;
+      // Extrai os dados do formulário
+      const formValue = this.formGroup.value;
+
+      // Garante que o ID do fornecedor seja um número válido
+      const fornecedorId = Number(formValue.fornecedor);
+
+      // Validação extra: se o ID não for positivo, não envia
+      const fornecedorObj = fornecedorId > 0 ? { id: fornecedorId } : null;
+
+      // Monta o objeto final
+      const placaDeVideo = {
+        ...formValue,
+        fornecedor: fornecedorObj
+      };
+
       if (placaDeVideo.id == null) {
         this.placaDeVideoService.insert(placaDeVideo).subscribe({
           next: () => {
-            this.router.navigateByUrl('/placadevideo')
+            this.router.navigateByUrl('/placadevideo');
             this.snackbarService.showMessage('Placa de Vídeo Salva!', true);
           },
           error: (errorResponse) => {
             this.snackbarService.showMessage('Erro ao incluir a placa de vídeo!', false);
-            console.log('Erro ao incluir' + JSON.stringify(errorResponse))
+            console.log('Erro ao incluir: ' + JSON.stringify(errorResponse));
           }
         });
       } else {
         this.placaDeVideoService.update(placaDeVideo).subscribe({
           next: () => {
             this.snackbarService.showMessage('Placa de Vídeo Atualizada!', true);
-            this.router.navigateByUrl('/placadevideo')
+            this.router.navigateByUrl('/placadevideo');
           }
         });
       }

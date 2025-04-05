@@ -1,0 +1,22 @@
+<mat-drawer-container class="container">
+    <mat-drawer #drawer mode="over" opened>
+        <mat-toolbar>
+            <span>Menu</span>
+        </mat-toolbar>
+        <mat-nav-list>
+            <mat-list-item>Home</mat-list-item>
+            <mat-list-item routerLink="/admin/usuarios-funcionario/new">Novo Funcionário</mat-list-item>
+            <mat-list-item routerLink="/admin/estados">Controle de Estados</mat-list-item>
+            <mat-list-item routerLink="/admin/municipios">Controle de Municipios</mat-list-item>
+            <mat-list-item routerLink="/admin/fornecedores">Controle de Fornecedores</mat-list-item>
+            <mat-list-item routerLink="/admin/placasdevideo">Controle de Placas de Vídeo</mat-list-item>
+            <mat-list-item routerLink="/admin/lotes">Controle de Lotes</mat-list-item>
+        </mat-nav-list>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <router-outlet>
+
+        </router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

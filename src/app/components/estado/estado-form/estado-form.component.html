@@ -33,10 +33,10 @@
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()">
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
                 Salvar
             </button>
-            <button mat-raised-button color="warn" (click)="excluir()">
+            <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
                 Excluir
             </button>
             <button mat-raised-button routerLink="/admin/estados">

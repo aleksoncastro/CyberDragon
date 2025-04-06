@@ -70,7 +70,9 @@ export class PlacaDeVideoFormComponent {
       }),
       fornecedor: [placaDeVideo?.fornecedor?.id ?? '', [Validators.required, Validators.min(1)]],
       saidas: this.formBuilder.array(
-        placaDeVideo?.saidas?.map(saida => this.createSaidaFormGroup(saida)) || []
+        (placaDeVideo?.saidas && placaDeVideo.saidas.length > 0)
+          ? placaDeVideo.saidas.map(saida => this.createSaidaFormGroup(saida))
+          : [this.createSaidaFormGroup()] // <-- cria uma saída se estiver vazio
       )
     });
   }

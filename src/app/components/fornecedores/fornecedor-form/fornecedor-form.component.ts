@@ -71,7 +71,7 @@ export class FornecedorFormComponent {
         this.fornecedorService.insert(fornecedor).subscribe({
           next: () => {
             this.snackbarService.showMessage('Fornecedor Salvo!', true);
-            this.router.navigateByUrl('/fornecedores');
+            this.router.navigateByUrl('/admin/fornecedores');
           },
           error: (errorResponse) => {
             this.snackbarService.showMessage('Erro ao excluir o fornecedor!', false);
@@ -82,7 +82,7 @@ export class FornecedorFormComponent {
         this.fornecedorService.update(fornecedor).subscribe({
           next: (fornecedorAlterado) => {
             this.snackbarService.showMessage('Fornecedor Atualizado!', true);
-            this.router.navigateByUrl('/fornecedores');
+            this.router.navigateByUrl('/admin/fornecedores');
           }
         });
       }
@@ -95,7 +95,7 @@ export class FornecedorFormComponent {
       if (fornecedor.id != null) {
         this.fornecedorService.delete(fornecedor).subscribe({
           next: () => {
-            this.router.navigateByUrl('/fornecedores');
+            this.router.navigateByUrl('/admin/fornecedores');
           },
           error: (err) => {
             console.log('Erro ao excluir' + JSON.stringify(err));

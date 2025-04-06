@@ -102,12 +102,13 @@
 
                 <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Fornecedor</mat-label>
-                    <mat-select [value]="idFornecedorSelecionado" (selectionChange)="atualizarIdFornecedor($event.value)">
-                      <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
-                        {{ fornecedor.nome }}
-                      </mat-option>
+                    <mat-select [value]="idFornecedorSelecionado"
+                        (selectionChange)="atualizarIdFornecedor($event.value)">
+                        <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">
+                            {{ fornecedor.nome }}
+                        </mat-option>
                     </mat-select>
-                  </mat-form-field>                                                      
+                </mat-form-field>
 
 
                 <h3>Dimensões</h3>
@@ -131,7 +132,6 @@
                     </mat-form-field>
                 </div>
 
-
                 <h3>Saídas de Vídeo</h3>
                 <div formArrayName="saidas">
                     <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
@@ -143,7 +143,7 @@
                             <mat-label>Quantidade</mat-label>
                             <input matInput type="number" formControlName="quantidade">
                         </mat-form-field>
-                        <button mat-icon-button color="warn" (click)="removerSaida(i)">
+                        <button mat-icon-button color="warn" (click)="removerSaida(i)" *ngIf="getSaidas().length > 1">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
@@ -153,10 +153,10 @@
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()">
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
                 Salvar
             </button>
-            <button mat-raised-button color="warn" (click)="excluir()">
+            <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
                 Excluir
             </button>
             <button mat-raised-button routerLink="/admin/placadevideo">

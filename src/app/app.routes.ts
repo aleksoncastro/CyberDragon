@@ -12,20 +12,32 @@ import { PlacadevideoListComponent } from './components/placadevideo/placadevide
 import { PlacaDeVideoFormComponent } from './components/placadevideo/placadevideo-form/placadevideo-form.component';
 import { LoteFormComponent } from './components/lote/lote-form/lote-form.component';
 import { LoteListComponent } from './components/lote/lote-list/lote-list.component';
+import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 
 export const routes: Routes = [
-    { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
-    { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado' },
-    { path: 'estados/edit/:id', component: EstadoFormComponent, resolve: { estado: estadoResolver } },
+
+    {
+        path: 'admin',
+        component: AdminTemplateComponent,
+        title: 'Administrativo',
+        children: [
+            { path: '', pathMatch: 'full', redirectTo: 'estados' },
+            { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
+            { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado' },
+            { path: 'estados/edit/:id', component: EstadoFormComponent, resolve: { estado: estadoResolver } },
+            { path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municípios' },
+            { path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Município' },
+            { path: 'usuarios-funcionario/new', component: UsuarioFormFuncionarioComponent, title: 'Novo Funcionario' },
+            { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
+            { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor' },
+            { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, title: 'Edit de Fornecedor' },
+            { path: 'placasdevideo', component: PlacadevideoListComponent, title: 'Lista de Placas de Video' },
+            { path: 'placasdevideo/new', component: PlacaDeVideoFormComponent, title: 'Nova Placas de Video' },
+            { path: 'lotes', component: LoteListComponent, title: 'Lista de Lotes' },
+            { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote' },
+        ]
+    },
+
     { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
-    { path: 'municipios', component: MunicipioListComponent, title: 'Lista de Municípios' },
-    { path: 'municipios/new', component: MunicipioFormComponent, title: 'Novo Município' },
-    { path: 'usuarios-funcionario/new', component: UsuarioFormFuncionarioComponent, title: 'Novo Funcionario' },
-    { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
-    { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor'},
-    { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, title: 'Edit de Fornecedor'},
-    { path: 'placasdevideo', component: PlacadevideoListComponent, title: 'Lista de Placas de Video'},
-    { path: 'placasdevideo/new', component: PlacaDeVideoFormComponent, title: 'Nova Placas de Video'},
-    { path: 'lotes', component: LoteListComponent, title: 'Lista de Lotes'},
-    { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote'},
+
 ];

@@ -103,11 +103,7 @@
                         <input matInput type="number" formControlName="larguraBanda">
                     </mat-form-field>
 
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Velocidade da Memória (MHz)</mat-label>
-                        <input matInput type="number" formControlName="velocidadeMemoria">
-                    </mat-form-field>
-                </div>
+ 
 
 
 
@@ -145,7 +141,6 @@
                     </mat-form-field>
                 </div>
 
-
                 <h3>Saídas de Vídeo</h3>
                 <div formArrayName="saidas">
                     <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
@@ -157,7 +152,7 @@
                             <mat-label>Quantidade</mat-label>
                             <input matInput type="number" formControlName="quantidade">
                         </mat-form-field>
-                        <button mat-icon-button color="warn" (click)="removerSaida(i)">
+                        <button mat-icon-button color="warn" (click)="removerSaida(i)" *ngIf="getSaidas().length > 1">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </div>
@@ -167,15 +162,11 @@
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()">
+            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
                 Salvar
             </button>
-            <button *ngIf="formGroup.value.id" mat-raised-button color="warn" (click)="excluir()">
-                Excluir
-              </button>              
-            <button mat-raised-button routerLink="/placadevideo">
-                Cancelar
-            </button>
+            
+
         </mat-card-actions>
     </mat-card>
 </div>

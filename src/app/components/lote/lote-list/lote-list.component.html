@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <div class="flex-container">
       <span class="toolbar-title">Controle de Lotes</span>
-      <button mat-fab class="accent" routerLink="/lotes/new">
+      <button mat-fab class="accent" routerLink="/admin/lotes/new">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -30,13 +30,13 @@
   
     <ng-container matColumnDef="placaDeVideo">
       <th mat-header-cell *matHeaderCellDef>Placa de Vídeo</th>
-      <td mat-cell *matCellDef="let element">{{ element.placaDeVideo?.nome }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.placaDeVideo?.modelo }}</td>
     </ng-container>
   
     <ng-container matColumnDef="acao">
       <th mat-header-cell *matHeaderCellDef>Ação</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" routerLink="/lotes/edit/{{ element.id }}">
+        <button mat-icon-button color="primary" routerLink="/admin/lotes/edit/{{ element.id }}">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button color="warn" (click)="excluir(element.id)">

@@ -12,20 +12,26 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { SnackbarService } from '../../snackbar/snackbar.component';
+import { Fornecedor } from '../../../models/fornecedor.model';
+import { FornecedorService } from '../../../services/fornecedor.service';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-placadevideo-form',
   standalone: true,
   imports: [NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
+    MatButtonModule, MatSelectModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
   templateUrl: './placadevideo-form.component.html',
   styleUrl: './placadevideo-form.component.css'
 })
 export class PlacaDeVideoFormComponent {
+  fornecedor: any[] = [];
   formGroup: FormGroup;
+  idFornecedorSelecionado: number | null = null;
 
   constructor(private formBuilder: FormBuilder,
     private placaDeVideoService: PlacaDeVideoService,
+    private fornecedorService: FornecedorService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService) {
@@ -44,28 +50,45 @@ export class PlacaDeVideoFormComponent {
       clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
       clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
       suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
-      fan: [placaDeVideo?.fan || '', [Validators.required, Validators.min(1)]],
+      idFan: [placaDeVideo?.idFan || '', [Validators.required, Validators.min(1)]],
+      idFornecedor: [placaDeVideo?.idFornecedor ?? '', Validators.required],
       memoria: this.formBuilder.group({
-        tipo: [placaDeVideo?.memoria?.tipo || '', Validators.required],
+        tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
         capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
+        larguraBanda: [placaDeVideo?.memoria?.larguraBanda || '', [Validators.required, Validators.min(1)]],
+        velocidadeMemoria: [placaDeVideo?.memoria?.velocidadeMemoria || '', [Validators.required, Validators.min(1)]],
       }),
       tamanho: this.formBuilder.group({
         largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
         altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
-      }),
-      fornecedor: this.formBuilder.group({
-        id: [placaDeVideo?.fornecedor?.id || null, Validators.required],
-        nome: [placaDeVideo?.fornecedor?.nome || '', Validators.required],
+        comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
       }),
       saidas: this.formBuilder.array(
         placaDeVideo?.saidas?.map(saida => this.createSaidaFormGroup(saida)) || []
       )
     });
+    console.log("PlacaDeVideo inicializada:", this.formGroup.value);
+    this.fornecedorService.findAll().subscribe({
+      next: (fornecedores) => {
+        this.fornecedor = fornecedores;
+        console.log("Fornecedores carregados:", this.fornecedor);
+      },
+      error: (err) => {
+        console.error('Erro ao buscar fornecedores', err);
+      }
+    });
+  }
+
+  atualizarIdFornecedor(id: number) {
+    this.idFornecedorSelecionado = id;
+    this.formGroup.patchValue({idFornecedor : id});
+    console.log("Fornecedor selecionado: ", this.idFornecedorSelecionado);
+    console.log("Valor atualizado no formGroup: ", this.formGroup.value);
   }
 
   createSaidaFormGroup(saida?: any): FormGroup {
     return this.formBuilder.group({
-      tipo: [saida?.tipo || '', Validators.required],
+      tipoMemoria: [saida?.tipoMemoria || '', Validators.required],
       quantidade: [saida?.quantidade || '', [Validators.required, Validators.min(1)]],
     });
   }
@@ -77,7 +100,7 @@ export class PlacaDeVideoFormComponent {
   adicionarSaida(): void {
     this.getSaidas().push(
       this.formBuilder.group({
-        tipo: ['', Validators.required],
+        tipoMemoria: ['', Validators.required],
         quantidade: [0, Validators.required]
       })
     );
@@ -88,29 +111,73 @@ export class PlacaDeVideoFormComponent {
   }
 
   salvar() {
-    if (this.formGroup.valid) {
-      const placaDeVideo = this.formGroup.value;
-      if (placaDeVideo.id == null) {
-        this.placaDeVideoService.insert(placaDeVideo).subscribe({
-          next: () => {
-            this.router.navigateByUrl('/placadevideo')
-            this.snackbarService.showMessage('Placa de Vídeo Salva!', true);
-          },
-          error: (errorResponse) => {
-            this.snackbarService.showMessage('Erro ao incluir a placa de vídeo!', false);
-            console.log('Erro ao incluir' + JSON.stringify(errorResponse))
-          }
-        });
-      } else {
-        this.placaDeVideoService.update(placaDeVideo).subscribe({
-          next: () => {
-            this.snackbarService.showMessage('Placa de Vídeo Atualizada!', true);
-            this.router.navigateByUrl('/placadevideo')
-          }
-        });
-      }
+    console.log("Método salvar() da Placa de Vídeo chamado!");
+  
+    if (!this.formGroup.valid) {
+      console.warn("Formulário inválido! Verifique os campos.");
+      return;
+    }
+  
+    const formValue = this.formGroup.value;
+    console.log("Valores do formulário:", formValue);
+  
+    const placaDeVideo: PlacaDeVideo = {
+      id: formValue.id,
+      modelo: formValue.modelo,
+      categoria: formValue.categoria,
+      preco: formValue.preco,
+      resolucao: formValue.resolucao,
+      energia: formValue.energia,
+      descricao: formValue.descricao,
+      compatibilidade: formValue.compatibilidade,
+      clockBase: formValue.clockBase,
+      clockBoost: formValue.clockBoost,
+      suporteRayTracing: formValue.suporteRayTracing,
+      idFan: formValue.idFan, // CORRIGIDO: era ididFan
+      idFornecedor: formValue.idFornecedor, // CORRIGIDO: era idFornecedor
+      memoria: {
+        tipoMemoria: formValue.memoria.tipoMemoria, // CORRIGIDO: tipoMemoriaMemoria → tipoMemoria
+        capacidade: formValue.memoria.capacidade,
+        larguraBanda: formValue.memoria.larguraBanda,
+        velocidadeMemoria: formValue.memoria.velocidadeMemoria,
+      },
+      tamanho: {
+        largura: formValue.tamanho.largura,
+        altura: formValue.tamanho.altura,
+        comprimento: formValue.tamanho.comprimento,
+      },
+      saidas: formValue.saidas,
+      listaImagem: []
+    };
+  
+    console.log("Objeto PlacaDeVideo a ser enviado:", JSON.stringify(placaDeVideo, null, 2));
+  
+    if (placaDeVideo.id == null) {
+      console.log("Chamando API para INSERIR nova placa de vídeo...");
+      this.placaDeVideoService.insert(placaDeVideo).subscribe({
+        next: () => {
+          console.log("Placa de vídeo salva com sucesso!");
+          this.router.navigateByUrl("/placadevideo");
+        },
+        error: (errorResponse) => {
+          console.error("Erro ao salvar a placa de vídeo:", errorResponse);
+        }
+      });
+    } else {
+      console.log("Chamando API para ATUALIZAR placa de vídeo...");
+      this.placaDeVideoService.update(placaDeVideo).subscribe({
+        next: () => {
+          console.log("Placa de vídeo atualizada com sucesso!");
+          this.router.navigateByUrl("/placadevideo");
+        },
+        error: (errorResponse) => {
+          console.error("Erro ao atualizar a placa de vídeo:", errorResponse);
+        }
+      });
     }
   }
+  
+  
 
   excluir() {
     const placaDeVideo = this.formGroup.value;

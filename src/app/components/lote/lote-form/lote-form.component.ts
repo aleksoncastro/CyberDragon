@@ -73,8 +73,8 @@ export class LoteFormComponent implements OnInit {
   atualizarIdPlaca(id: number) {
     this.idPlacaSelecionada = id;
     this.formGroup.patchValue({ placaDeVideo: id }); // Atualiza o formGroup
-    console.log("Placa selecionada:", this.idPlacaSelecionada);
-    console.log("Valor atualizado no formGroup:", this.formGroup.value);
+    console.log("Placa selecionada: ", this.idPlacaSelecionada);
+    console.log("Valor atualizado no formGroup: ", this.formGroup.value);
   }
 
   salvar() {

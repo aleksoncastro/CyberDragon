@@ -88,7 +88,7 @@ export class PlacaDeVideoFormComponent {
 
   createSaidaFormGroup(saida?: any): FormGroup {
     return this.formBuilder.group({
-      tipoMemoria: [saida?.tipoMemoria || '', Validators.required],
+      tipo: [saida?.tipo || '', Validators.required],
       quantidade: [saida?.quantidade || '', [Validators.required, Validators.min(1)]],
     });
   }
@@ -100,7 +100,7 @@ export class PlacaDeVideoFormComponent {
   adicionarSaida(): void {
     this.getSaidas().push(
       this.formBuilder.group({
-        tipoMemoria: ['', Validators.required],
+        tipo: ['', Validators.required],
         quantidade: [0, Validators.required]
       })
     );

@@ -1,172 +1,167 @@
 <mat-toolbar color="primary" class="toolbar-title">Cadastro de Placa de Vídeo</mat-toolbar>
 <div class="form-container">
-    <mat-card>
-        <mat-card-content>
-            <form [formGroup]="formGroup">
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Modelo</mat-label>
-                    <input matInput type="text" formControlName="modelo">
-                    <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
-                        O modelo é obrigatório.
-                    </mat-error>
-                </mat-form-field>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Modelo</mat-label>
+          <input matInput type="text" formControlName="modelo">
+          <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
+            O modelo é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Categoria</mat-label>
-                    <input matInput type="text" formControlName="categoria">
-                    <mat-error *ngIf="formGroup.get('categoria')?.invalid && formGroup.get('categoria')?.touched">
-                        A categoria é obrigatória.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Categoria</mat-label>
+          <input matInput type="text" formControlName="categoria">
+          <mat-error *ngIf="formGroup.get('categoria')?.invalid && formGroup.get('categoria')?.touched">
+            A categoria é obrigatória.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Quantidade de idFans</mat-label>
-                    <input matInput type="number" formControlName="idFan">
-                    <mat-error *ngIf="formGroup.get('idFan')?.invalid && formGroup.get('idFan')?.touched">
-                        A quantidade de idFans é obrigatória.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Quantidade de idFans</mat-label>
+          <input matInput type="number" formControlName="idFan">
+          <mat-error *ngIf="formGroup.get('idFan')?.invalid && formGroup.get('idFan')?.touched">
+            A quantidade de idFans é obrigatória.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Preço</mat-label>
-                    <input matInput type="number" formControlName="preco">
-                    <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
-                        O preço é obrigatório e deve ser maior que zero.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Preço</mat-label>
+          <input matInput type="number" formControlName="preco">
+          <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
+            O preço é obrigatório e deve ser maior que zero.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Resolução</mat-label>
-                    <input matInput type="text" formControlName="resolucao">
-                    <mat-error *ngIf="formGroup.get('resolucao')?.invalid && formGroup.get('resolucao')?.touched">
-                        A resolução é obrigatória.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Resolução</mat-label>
+          <input matInput type="text" formControlName="resolucao">
+          <mat-error *ngIf="formGroup.get('resolucao')?.invalid && formGroup.get('resolucao')?.touched">
+            A resolução é obrigatória.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Energia (W)</mat-label>
-                    <input matInput type="number" formControlName="energia">
-                    <mat-error *ngIf="formGroup.get('energia')?.invalid && formGroup.get('energia')?.touched">
-                        O consumo de energia é obrigatório.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Energia (W)</mat-label>
+          <input matInput type="number" formControlName="energia">
+          <mat-error *ngIf="formGroup.get('energia')?.invalid && formGroup.get('energia')?.touched">
+            O consumo de energia é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Descrição</mat-label>
-                    <textarea matInput formControlName="descricao"></textarea>
-                    <mat-error *ngIf="formGroup.get('descricao')?.invalid && formGroup.get('descricao')?.touched">
-                        A descrição é obrigatória.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Descrição</mat-label>
+          <textarea matInput formControlName="descricao"></textarea>
+          <mat-error *ngIf="formGroup.get('descricao')?.invalid && formGroup.get('descricao')?.touched">
+            A descrição é obrigatória.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Compatibilidade</mat-label>
-                    <input matInput type="number" formControlName="compatibilidade">
-                    <mat-error
-                        *ngIf="formGroup.get('compatibilidade')?.invalid && formGroup.get('compatibilidade')?.touched">
-                        O campo de compatibilidade é obrigatório.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Compatibilidade</mat-label>
+          <input matInput type="number" formControlName="compatibilidade">
+          <mat-error *ngIf="formGroup.get('compatibilidade')?.invalid && formGroup.get('compatibilidade')?.touched">
+            O campo de compatibilidade é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Clock Base (MHz)</mat-label>
-                    <input matInput type="number" formControlName="clockBase">
-                    <mat-error *ngIf="formGroup.get('clockBase')?.invalid && formGroup.get('clockBase')?.touched">
-                        O clock base é obrigatório.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Clock Base (MHz)</mat-label>
+          <input matInput type="number" formControlName="clockBase">
+          <mat-error *ngIf="formGroup.get('clockBase')?.invalid && formGroup.get('clockBase')?.touched">
+            O clock base é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Clock Boost (MHz)</mat-label>
-                    <input matInput type="number" formControlName="clockBoost">
-                    <mat-error *ngIf="formGroup.get('clockBoost')?.invalid && formGroup.get('clockBoost')?.touched">
-                        O clock boost é obrigatório.
-                    </mat-error>
-                </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Clock Boost (MHz)</mat-label>
+          <input matInput type="number" formControlName="clockBoost">
+          <mat-error *ngIf="formGroup.get('clockBoost')?.invalid && formGroup.get('clockBoost')?.touched">
+            O clock boost é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
-                <mat-checkbox formControlName="suporteRayTracing">Suporte a Ray Tracing</mat-checkbox>
+        <mat-checkbox formControlName="suporteRayTracing">Suporte a Ray Tracing</mat-checkbox>
 
-                <h3>Memória</h3>
-                <div formGroupName="memoria">
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>tipoMemoria</mat-label>
-                        <input matInput type="text" formControlName="tipoMemoria">
-                    </mat-form-field>
+        <h3>Memória</h3>
+        <div formGroupName="memoria">
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>tipoMemoria</mat-label>
+            <input matInput type="text" formControlName="tipoMemoria">
+          </mat-form-field>
 
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Capacidade (GB)</mat-label>
-                        <input matInput type="number" formControlName="capacidade">
-                    </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Capacidade (GB)</mat-label>
+            <input matInput type="number" formControlName="capacidade">
+          </mat-form-field>
 
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Largura de Banda (GB/s)</mat-label>
-                        <input matInput type="number" formControlName="larguraBanda">
-                    </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Largura de Banda (GB/s)</mat-label>
+            <input matInput type="number" formControlName="larguraBanda">
+          </mat-form-field>
 
- 
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Velocidade da Memória (MHz)</mat-label>
+            <input matInput type="number" formControlName="velocidadeMemoria">
+          </mat-form-field>
+        </div> <!-- ✅ Fechando grupo de memória -->
 
+        <h3>Fornecedor</h3>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Fornecedor</mat-label>
+          <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)">
+            <mat-option *ngFor="let forne of fornecedor" [value]="forne.id">
+              {{ forne.nome }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('idFornecedor')?.invalid && formGroup.get('idFornecedor')?.touched">
+            O nome do fornecedor é obrigatório.
+          </mat-error>
+        </mat-form-field>
 
+        <h3>Dimensões</h3>
+        <div formGroupName="tamanho">
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Largura (mm)</mat-label>
+            <input matInput type="number" formControlName="largura">
+          </mat-form-field>
 
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Altura (mm)</mat-label>
+            <input matInput type="number" formControlName="altura">
+          </mat-form-field>
 
-                <h3>Fornecedor</h3>
-                <mat-form-field appearance="fill" class="full-width-input">
-                    <mat-label>Fornecedor</mat-label>
-                    <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)">
-                        <mat-option *ngFor="let forne of fornecedor" [value]="forne.id">
-                            {{ forne.nome }}
-                        </mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="formGroup.get('idFornecedor')?.invalid && formGroup.get('idFornecedor')?.touched">
-                        O nome do fornecedor é obrigatório.
-                    </mat-error>
-                </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Comprimento (mm)</mat-label>
+            <input matInput type="number" formControlName="comprimento">
+          </mat-form-field>
+        </div>
 
-
-
-                <h3>Dimensões</h3>
-                <div formGroupName="tamanho">
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Largura (mm)</mat-label>
-                        <input matInput type="number" formControlName="largura">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Altura (mm)</mat-label>
-                        <input matInput type="number" formControlName="altura">
-                    </mat-form-field>
-
-                    <mat-form-field appearance="fill" class="full-width-input">
-                        <mat-label>Comprimento (mm)</mat-label>
-                        <input matInput type="number" formControlName="comprimento">
-                    </mat-form-field>
-                </div>
-
-                <h3>Saídas de Vídeo</h3>
-                <div formArrayName="saidas">
-                    <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
-                        <mat-form-field appearance="fill" class="full-width-input">
-                            <mat-label>Tipo</mat-label>
-                            <input matInput type="text" formControlName="tipoMemoria">
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" class="full-width-input">
-                            <mat-label>Quantidade</mat-label>
-                            <input matInput type="number" formControlName="quantidade">
-                        </mat-form-field>
-                        <button mat-icon-button color="warn" (click)="removerSaida(i)" *ngIf="getSaidas().length > 1">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
-
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
-                Salvar
+        <h3>Saídas de Vídeo</h3>
+        <div formArrayName="saidas">
+          <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>Tipo</mat-label>
+              <input matInput type="text" formControlName="tipo">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>Quantidade</mat-label>
+              <input matInput type="number" formControlName="quantidade">
+            </mat-form-field>
+            <button mat-icon-button color="warn" (click)="removerSaida(i)" *ngIf="getSaidas().length > 1">
+              <mat-icon>delete</mat-icon>
             </button>
-            
-
-        </mat-card-actions>
-    </mat-card>
+          </div>
+        </div>
+        <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
+        Salvar
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>

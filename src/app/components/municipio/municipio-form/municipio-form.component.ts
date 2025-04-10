@@ -81,12 +81,12 @@ export class MunicipioFormComponent {
       if (municipio.id) {
         this.municipioService.update(municipio).subscribe(() => {
           this.snackbarService.showMessage('Municipio Atualizado!', true);
-          this.router.navigate(['/municipios']);
+          this.router.navigate(['/admin/municipios']);
         });
       } else {
         this.municipioService.insert(municipio).subscribe(() => {
           this.snackbarService.showMessage('Municipio Adicionado!', true);
-          this.router.navigate(['/municipios']);
+          this.router.navigate(['/admin/municipios']);
         });
       }
     }
@@ -100,7 +100,7 @@ export class MunicipioFormComponent {
         this.municipioService.delete(municipios).subscribe({
           next: () => {
             this.snackbarService.showMessage('Erro ao excluir o municipio!', false);
-            this.router.navigateByUrl('/municipioss');
+            this.router.navigateByUrl('/admin/municipioss');
           },
           error: (err) => {
             console.log('Erro ao excluir' + JSON.stringify(err));

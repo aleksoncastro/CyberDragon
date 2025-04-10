@@ -31,7 +31,7 @@ export class LoteService {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
-  findById(id: number): Observable<Lote> {
+  findById(id: string): Observable<Lote> {
     return this.httpClient.get<Lote>(`${this.baseUrl}/${id}`);
   }
 

@@ -63,7 +63,7 @@ export class EstadoFormComponent {
       operacao.subscribe({
         next: () => {
           this.snackbarService.showMessage('Estado Salvo!', true);
-          this.router.navigateByUrl('/estados');
+          this.router.navigateByUrl('/admin/estados');
         },
         error: (erroResponse) => {
           this.snackbarService.showMessage('Erro ao salvar o estado!', false);
@@ -79,7 +79,7 @@ export class EstadoFormComponent {
       this.estadoService.delete(estado).subscribe({
         next: () => {
           this.snackbarService.showMessage('Estado Excluído!', true);
-          this.router.navigateByUrl('/estados');
+          this.router.navigateByUrl('/admin/estados');
         },
         error: (erroResponse) => {
           this.snackbarService.showMessage('Erro ao excluir o estado!', false);
@@ -87,6 +87,10 @@ export class EstadoFormComponent {
         },
       });
     }
+  }
+
+  cancelar() {
+    this.router.navigateByUrl('/admin/estados');
   }
 
   tratarErros(httpError: HttpErrorResponse): void {

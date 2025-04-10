@@ -28,8 +28,6 @@ export class EstadoService {
     return this.httpClient.get<PageResponse<Estado>>(`${this.baseUrl}`, { params });
   }
   
-
-
   count(): Observable<number>{
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }

@@ -157,7 +157,7 @@ export class PlacaDeVideoFormComponent {
       this.placaDeVideoService.insert(placaDeVideo).subscribe({
         next: () => {
           console.log("Placa de vídeo salva com sucesso!");
-          this.router.navigateByUrl("/placadevideo");
+          this.router.navigateByUrl("/admin/placasdevideo");
         },
         error: (errorResponse) => {
           console.error("Erro ao salvar a placa de vídeo:", errorResponse);
@@ -168,7 +168,7 @@ export class PlacaDeVideoFormComponent {
       this.placaDeVideoService.update(placaDeVideo).subscribe({
         next: () => {
           console.log("Placa de vídeo atualizada com sucesso!");
-          this.router.navigateByUrl("/placadevideo");
+          this.router.navigateByUrl("/admin/placasdevideo");
         },
         error: (errorResponse) => {
           console.error("Erro ao atualizar a placa de vídeo:", errorResponse);
@@ -176,7 +176,11 @@ export class PlacaDeVideoFormComponent {
       });
     }
   }
+
   
+  cancelar() {
+    this.router.navigateByUrl('/admin/placasdevideo');
+  }
   
 
   excluir() {
@@ -185,7 +189,7 @@ export class PlacaDeVideoFormComponent {
       this.placaDeVideoService.delete(placaDeVideo).subscribe({
         next: () => {
           this.snackbarService.showMessage('Placa de Vídeo Excluída!', true);
-          this.router.navigateByUrl('/placadevideo')
+          this.router.navigateByUrl('/admin/placasdevideo')
         },
         error: (err) => {
           this.snackbarService.showMessage('Erro ao excluir a placa de vídeo!', false);

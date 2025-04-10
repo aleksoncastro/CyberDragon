@@ -39,7 +39,7 @@
             <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
                 Excluir
             </button>
-            <button mat-raised-button routerLink="/admin/estados">
+            <button mat-raised-button (click)="cancelar()">
                 Cancelar
             </button>
         </mat-card-actions>

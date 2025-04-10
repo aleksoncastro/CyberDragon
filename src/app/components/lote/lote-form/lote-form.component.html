@@ -1,70 +1,67 @@
-<mat-toolbar color="primary" class="toolbar-title">Cadastro de Lotes</mat-toolbar>
-<div class="form-container">
-  <mat-card>
-    <mat-card-content>
-      <form [formGroup]="formGroup">
-        
-        <!-- Campo Código do Lote -->
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Código</mat-label>
-          <input matInput type="text" formControlName="codigo">
-          <mat-error *ngIf="formGroup.get('codigo') && 
-                                formGroup.get('codigo')?.invalid &&
-                                formGroup.get('codigo')?.touched">
-            O código do lote é obrigatório.
-          </mat-error>
-        </mat-form-field>
+<ng-container *ngIf="formGroup">
+  <mat-toolbar color="primary" class="toolbar-title">Cadastro de Lotes</mat-toolbar>
+  <div class="form-container">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="formGroup">
 
-        <!-- Campo Estoque -->
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Estoque</mat-label>
-          <input matInput type="number" formControlName="estoque">
-          <mat-error *ngIf="formGroup.get('estoque') && 
-                                formGroup.get('estoque')?.invalid &&
-                                formGroup.get('estoque')?.touched">
-            O estoque do lote é obrigatório e deve ser maior que 0.
-          </mat-error>
-        </mat-form-field>
+          <!-- Campo Código do Lote -->
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Código</mat-label>
+            <input matInput type="text" formControlName="codigo">
+            <mat-error *ngIf="formGroup.get('codigo')?.invalid && formGroup.get('codigo')?.touched">
+              O código do lote é obrigatório.
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Campo Data de Fabricação -->
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Data de Fabricação</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dataFabricacao" placeholder="Escolha uma data">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          <mat-error *ngIf="formGroup.get('dataFabricacao') && 
-                                formGroup.get('dataFabricacao')?.invalid &&
-                                formGroup.get('dataFabricacao')?.touched">
-            A data de fabricação é obrigatória.
-          </mat-error>
-        </mat-form-field>
+          <!-- Campo Estoque -->
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Estoque</mat-label>
+            <input matInput type="number" formControlName="estoque">
+            <mat-error *ngIf="formGroup.get('estoque')?.invalid && formGroup.get('estoque')?.touched">
+              O estoque do lote é obrigatório e deve ser maior que 0.
+            </mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width-input">
-          <mat-label>Placa de Vídeo</mat-label>
-          <mat-select formControlName="placaDeVideo" (selectionChange)="atualizarIdPlaca($event.value)">
-            <mat-option *ngFor="let placa of placadevideo" [value]="placa.id">
-              {{ placa.modelo }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="formGroup.get('placaDeVideo')?.invalid && formGroup.get('placaDeVideo')?.touched">
-            A placa de vídeo é obrigatória.
-          </mat-error>
-        </mat-form-field>       
+          <!-- Campo Data de Fabricação -->
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Data de Fabricação</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataFabricacao" placeholder="Escolha uma data">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="formGroup.get('dataFabricacao')?.invalid && formGroup.get('dataFabricacao')?.touched">
+              A data de fabricação é obrigatória.
+            </mat-error>
+          </mat-form-field>
 
-      </form>
-    </mat-card-content>
+          <!-- Campo Placa de Vídeo -->
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Placa de Vídeo</mat-label>
+            <mat-select formControlName="placaDeVideo">
+              <mat-option *ngFor="let placa of placadevideo" [value]="placa.id">
+                {{ placa.modelo }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="formGroup.get('placaDeVideo')?.invalid && formGroup.get('placaDeVideo')?.touched">
+              A placa de vídeo é obrigatória.
+            </mat-error>
+          </mat-form-field>
 
-    <mat-card-actions>
-      <!-- Botões de Ação -->
-      <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
-        Salvar
-      </button>
-      <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid" routerLink="/admin/placadevideo">
-        Excluir
-      </button>
-      <button mat-raised-button routerLink="/admin/lotes">
-        Cancelar
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <!-- Botões de Ação -->
+        <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">
+          Salvar
+        </button>
+        <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">
+          Excluir
+        </button>
+        <button mat-raised-button (click)="cancelar()">
+          Cancelar
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>

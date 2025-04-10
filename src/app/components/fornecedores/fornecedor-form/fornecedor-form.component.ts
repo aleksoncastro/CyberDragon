@@ -89,6 +89,10 @@ export class FornecedorFormComponent {
     }
   }
 
+  cancelar() {
+    this.router.navigateByUrl('/admin/fornecedores');
+  }
+
   excluir() {
     if (this.formGroup.valid) {
       const fornecedor = this.formGroup.value;

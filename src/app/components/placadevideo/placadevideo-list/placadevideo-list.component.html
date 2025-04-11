@@ -7,7 +7,16 @@
   </div>
 </mat-toolbar>
 
-<table mat-table [dataSource]="placasDeVideo" class="mat-elevation-z8 demo-table">
+<!-- Campo de pesquisa -->
+<mat-form-field appearance="outline" style="margin: 16px; width: 300px;">
+  <mat-label>Pesquisar</mat-label>
+  <input matInput (keyup)="filtrar($event)">
+  <button mat-icon-button matSuffix disabled>
+      <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+
+<table mat-table [dataSource]="placasDeVideoFiltradas" class="mat-elevation-z8 demo-table">
 
   <!-- ID Column -->
   <ng-container matColumnDef="id">

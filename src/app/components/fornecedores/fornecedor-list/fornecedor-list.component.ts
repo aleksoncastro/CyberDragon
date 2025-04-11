@@ -8,10 +8,11 @@ import { Fornecedor } from '../../../models/fornecedor.model';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-fornecedor-list',
-  imports: [MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
+  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
@@ -27,11 +28,13 @@ export class FornecedorListComponent implements OnInit {
 
   constructor(private fornecedorService: FornecedorService) { }
 
+  fornecedoresFiltrados: Fornecedor[] = [];
+
   ngOnInit(): void {
     this.fornecedorService.findAll(this.page, this.pageSize).subscribe(
       data => {
         console.log('Dados recebidos:', data);  // Adicione um log para verificar os dados recebidos
-        this.fornecedores = data;
+        this.fornecedoresFiltrados = data;
       },
       error => {
         console.error('Erro ao carregar fornecedores:', error);  // Verifique se há erro na chamada
@@ -50,10 +53,18 @@ export class FornecedorListComponent implements OnInit {
   loadFornecedores(): void {
     this.fornecedorService.findAll(this.page, this.pageSize).subscribe(data => {
       this.fornecedores = data;
+      this.fornecedoresFiltrados = data;
     });
     this.fornecedorService.count().subscribe(data => {
       this.totalRecords = data;
     });
+  }
+
+  filtrar(event: any): void {
+    const valor = event.target.value.toLowerCase();
+    this.fornecedoresFiltrados = this.fornecedores.filter(e =>
+      e.nome.toLowerCase().includes(valor) || e.cnpj.toLowerCase().includes(valor)
+    );
   }
 
   paginar(event: PageEvent): void {

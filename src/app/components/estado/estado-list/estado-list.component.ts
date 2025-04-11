@@ -9,10 +9,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-estado-list',
-  imports: [ MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
+  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
   templateUrl: './estado-list.component.html',
   styleUrl: './estado-list.component.css'
 })
@@ -33,6 +34,8 @@ export class EstadoListComponent implements OnInit {
     //private snackbarService: SnackBarService,
   ) { }
 
+  estadosFiltrados: Estado[] = [];
+
   ngOnInit(): void {
    this.loadEstados();
   }
@@ -40,8 +43,16 @@ export class EstadoListComponent implements OnInit {
   loadEstados(): void {
     this.estadoService.findAll(this.page, this.pageSize).subscribe(data => {
       this.estados = data.results;
+      this.estadosFiltrados = this.estados;
       this.totalRecords = data.count;
     });
+  }
+
+  filtrar(event: any): void {
+    const valor = event.target.value.toLowerCase();
+    this.estadosFiltrados = this.estados.filter(e =>
+      e.nome.toLowerCase().includes(valor) || e.sigla.toLowerCase().includes(valor)
+    );
   }
 
   paginar(event: PageEvent): void {

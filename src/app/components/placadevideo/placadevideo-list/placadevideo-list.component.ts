@@ -8,11 +8,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-placadevideo-list',
   standalone: true,
-  imports: [ MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule],
+  imports: [ MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule],
   templateUrl: './placadevideo-list.component.html',
   styleUrl: './placadevideo-list.component.css'
 })
@@ -38,6 +39,7 @@ export class PlacadevideoListComponent implements OnInit {
     'acao'
   ];
   placasDeVideo: PlacaDeVideo[] = [];
+  placasDeVideoFiltradas: PlacaDeVideo[] = [];
 
   // variáveis de controle de paginação
   totalRecords = 0;
@@ -53,10 +55,18 @@ export class PlacadevideoListComponent implements OnInit {
   carregarPlacasDeVideo(): void {
     this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
       this.placasDeVideo = data;
+      this.placasDeVideoFiltradas = data; // Inicializa a lista filtrada com todos os dados
     });
     this.placaDeVideoService.count().subscribe(data => {
       this.totalRecords = data;
     });
+  }
+
+  filtrar(event: any): void {
+    const valor = event.target.value.toLowerCase();
+    this.placasDeVideoFiltradas = this.placasDeVideo.filter(e =>
+      e.modelo.toLowerCase().includes(valor) || e.categoria.toLowerCase().includes(valor)
+    );
   }
 
   paginar(event: PageEvent): void {

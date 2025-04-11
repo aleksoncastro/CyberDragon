@@ -8,10 +8,11 @@ import { Lote } from '../../../models/lote.model';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-lote-list',
-  imports: [MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
+  imports: [ MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
   templateUrl: './lote-list.component.html',
   styleUrls: ['./lote-list.component.css']
 })
@@ -26,11 +27,14 @@ export class LoteListComponent implements OnInit {
 
   constructor(private loteService: LoteService) { }
 
+  lotesFiltrados: Lote[] = [];
+
   ngOnInit(): void {
     this.loteService.findAll(this.page, this.pageSize).subscribe(
       data => {
         console.log('Dados recebidos:', data);  // Adicione um log para verificar os dados recebidos
         this.lotes = data;
+        this.lotesFiltrados = data;  // Inicializa a lista filtrada com todos os lotes
       },
       error => {
         console.error('Erro ao carregar lotes:', error);  // Verifique se há erro na chamada
@@ -49,10 +53,19 @@ export class LoteListComponent implements OnInit {
   loadLotes(): void {
     this.loteService.findAll(this.page, this.pageSize).subscribe(data => {
       this.lotes = data;
+      this.lotesFiltrados = data;
     });
     this.loteService.count().subscribe(data => {
       this.totalRecords = data;
     });
+  }
+
+  filtrar(event: any): void {
+    const valor = event.target.value.toLowerCase();
+    this.lotesFiltrados = this.lotes.filter(e =>
+      e.codigo.toLowerCase().includes(valor) || e.estoque.toString().toLowerCase().includes(valor)
+      || e.dataFabricacao.toString().toLowerCase().includes(valor) 
+    );
   }
 
   paginar(event: PageEvent): void {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Fornecedor } from '../../../models/fornecedor.model';
 import { SnackbarService } from '../../../services/snackbar.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-fornecedor-form',
@@ -33,11 +34,12 @@ export class FornecedorFormComponent {
 
     this.formGroup = this.formBuilder.group({
       id: [(fornecedor && fornecedor.id) ? fornecedor.id : null],
-      nome: ['', Validators.required],
-      cnpj: ['', Validators.required],
-      email: ['', Validators.required],
+      nome: ['', [Validators.required, Validators.maxLength(100)]], // max opcional
+      cnpj: ['', [Validators.required, Validators.pattern(/^\d{14}$/)]],
+      email: ['', [Validators.required, Validators.email]],
       telefones: this.formBuilder.array([]),
-    })
+    });
+    
 
     if (fornecedor) {
       this.formGroup.patchValue({
@@ -64,13 +66,50 @@ export class FornecedorFormComponent {
       codigoArea: [codigoArea, Validators.required],
       numero: [numero, Validators.required]
     });
-
+  
     this.telefones.push(telefoneGroup);
   }
+  
 
   removeTelefone(index: number) {
     this.telefones.removeAt(index);
   }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors || !this.errorMessages[controlName]) {
+      return 'Campo inválido';
+    }
+  
+    for (const errorName in errors) {
+      if (this.errorMessages[controlName][errorName]) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Campo inválido';
+  }
+  
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+    nome: {
+      required: 'O nome é obrigatório.',
+      apiError: ''
+    },
+    cnpj: {
+      required: 'O CNPJ é obrigatório.',
+      pattern: 'O CNPJ deve conter exatamente 14 dígitos.',
+      apiError: ''
+    },
+    email: {
+      required: 'O email é obrigatório.',
+      email: 'Formato de e-mail inválido.',
+      apiError: ''
+    },
+    codigoArea: {
+      required: 'O código de área é obrigatório.'
+    },
+    numero: {
+      required: 'O número de telefone é obrigatório.'
+    }
+  };
 
   salvar() {
     if (this.formGroup.valid) {
@@ -97,6 +136,19 @@ export class FornecedorFormComponent {
     }
   }
 
+  tratarErros(httpError: HttpErrorResponse): void {
+    if (httpError.status === 400 && httpError.error?.errors) {
+      httpError.error.errors.forEach((ValidationError: any) => {
+        const formControl = this.formGroup.get(ValidationError.fieldName);
+        if (formControl) {
+          formControl.setErrors({ apiError: ValidationError.message });
+        }
+      });
+    } else {
+      this.snackbarService.showMessage(httpError.error?.message || 'Erro não mapeado no servidor.');
+    }
+  }
+
   cancelar() {
     this.router.navigateByUrl('/admin/fornecedores');
   }
@@ -116,4 +168,6 @@ export class FornecedorFormComponent {
       }
     }
   }
+
+  
 }

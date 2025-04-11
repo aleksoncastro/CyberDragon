@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators, ValidationErrors } from '@angular/forms';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +15,7 @@ import { SnackbarService } from '../../snackbar/snackbar.component';
 import { Fornecedor } from '../../../models/fornecedor.model';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { MatSelectModule } from '@angular/material/select';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-placadevideo-form',
@@ -69,7 +70,9 @@ export class PlacaDeVideoFormComponent {
             comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
           }),
           saidas: this.formBuilder.array(
-            placaDeVideo?.saidas?.map(saida => this.createSaidaFormGroup(saida)) || []
+            placaDeVideo?.saidas?.length
+              ? placaDeVideo.saidas.map(saida => this.createSaidaFormGroup(saida))
+              : [this.createSaidaFormGroup()]
           )
         });
         console.log("PlacaDeVideo inicializada:", this.formGroup.value);
@@ -103,9 +106,12 @@ export class PlacaDeVideoFormComponent {
     this.getSaidas().push(
       this.formBuilder.group({
         tipo: ['', Validators.required],
-        quantidade: [0, Validators.required]
-      })
-    );
+        quantidade: [0, Validators.required],}
+      ));
+  }
+
+  get saidasFormArray(): FormArray {
+    return this.formGroup.get('saidas') as FormArray;
   }
 
   removerSaida(index: number) {
@@ -183,6 +189,127 @@ export class PlacaDeVideoFormComponent {
   cancelar() {
     this.router.navigateByUrl('/admin/placasdevideo');
   }
+
+  tratarErros(httpError: HttpErrorResponse): void {
+
+    if (httpError.status === 400) {
+      if(httpError.error?.errors){
+        httpError.error.errors.forEach((validationError: any)  => {
+          const formControl = this.formGroup.get(validationError.fieldName);
+          if (formControl) {
+            formControl.setErrors({apiError: validationError.message})
+          }
+        });
+      }
+    } else {
+      alert(httpError.error?.message || "Erro não mapeado do servidor.");
+    }
+
+  }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined) : string {
+    if (!errors || !this.errorMessages[controlName]) {
+      return 'invalid field';
+    }
+
+    for(const errorName in errors) {
+      console.log(errorName);
+      if (this.errorMessages[controlName][errorName]){
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'invalid field';
+  }
+
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+    modelo: {
+      required: 'O modelo deve ser informado.',
+      apiError: ' '
+    },
+    categoria: {
+      required: 'A categoria deve ser informada.',
+      apiError: ' '
+    },
+    preco: {
+      required: 'O preço deve ser informado.',
+      min: 'O preço não pode ser negativo.',
+      apiError: ' '
+    },
+    resolucao: {
+      required: 'A resolução deve ser informada.',
+      apiError: ' '
+    },
+    energia: {
+      required: 'O consumo de energia deve ser informado.',
+      min: 'A energia não pode ser negativa.',
+      apiError: ' '
+    },
+    descricao: {
+      required: 'A descrição deve ser informada.',
+      apiError: ' '
+    },
+    compatibilidade: {
+      required: 'A compatibilidade deve ser informada.',
+      min: 'Informe pelo menos um item de compatibilidade.',
+      apiError: ' '
+    },
+    clockBase: {
+      required: 'O clock base deve ser informado.',
+      min: 'O clock base deve ser maior ou igual a 0.',
+      apiError: ' '
+    },
+    clockBoost: {
+      required: 'O clock boost deve ser informado.',
+      min: 'O clock boost deve ser maior ou igual a 0.',
+      apiError: ' '
+    },
+    idFan: {
+      required: 'O fan deve ser informado.',
+      min: 'Selecione um fan válido.',
+      apiError: ' '
+    },
+    idFornecedor: {
+      required: 'O fornecedor deve ser informado.',
+      apiError: ' '
+    },
+    // memória
+    'memoria.tipoMemoria': {
+      required: 'O tipo de memória deve ser informado.',
+      apiError: ' '
+    },
+    'memoria.capacidade': {
+      required: 'A capacidade da memória deve ser informada.',
+      min: 'A capacidade da memória deve ser maior que 0.',
+      apiError: ' '
+    },
+    'memoria.larguraBanda': {
+      required: 'A largura de banda deve ser informada.',
+      min: 'A largura de banda deve ser maior que 0.',
+      apiError: ' '
+    },
+    'memoria.velocidadeMemoria': {
+      required: 'A velocidade da memória deve ser informada.',
+      min: 'A velocidade da memória deve ser maior que 0.',
+      apiError: ' '
+    },
+    // tamanho
+    'tamanho.largura': {
+      required: 'A largura deve ser informada.',
+      min: 'A largura deve ser maior que 0.',
+      apiError: ' '
+    },
+    'tamanho.altura': {
+      required: 'A altura deve ser informada.',
+      min: 'A altura deve ser maior que 0.',
+      apiError: ' '
+    },
+    'tamanho.comprimento': {
+      required: 'O comprimento deve ser informado.',
+      min: 'O comprimento deve ser maior que 0.',
+      apiError: ' '
+    }
+    // Campos da lista `saidas` podem ser tratados separadamente se necessário
+  };
 
 
   excluir() {

@@ -20,6 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule } from '@angular/material/core';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-lote-form',
@@ -118,7 +119,52 @@ export class LoteFormComponent implements OnInit {
         this.snackbarService.showMessage(msg, false);
       }
     });
+  } 
+
+  tratarErros(httpError: HttpErrorResponse): void {
+      if (httpError.status === 400 && httpError.error?.errors) {
+        httpError.error.errors.forEach((ValidationError: any) => {
+          const formControl = this.formGroup.get(ValidationError.fieldName);
+          if (formControl) {
+            formControl.setErrors({ apiError: ValidationError.message });
+          }
+        });
+      } else {
+        this.snackbarService.showMessage(httpError.error?.message || 'Erro não mapeado no servidor.');
+      }
+    }
+
+  getErrorMessage(controlName: string, errors: any): string {
+    if (!errors || !this.errorMessages[controlName]) return 'Campo inválido.';
+  
+    for (const error in errors) {
+      if (this.errorMessages[controlName][error]) {
+        return this.errorMessages[controlName][error];
+      }
+    }
+    return 'Campo inválido.';
   }
+  
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+    codigo: {
+      required: 'O código do lote é obrigatório.',
+      apiError: ''
+    },
+    estoque: {
+      required: 'O estoque é obrigatório.',
+      min: 'O estoque deve ser maior que zero.',
+      apiError: ''
+    },
+    dataFabricacao: {
+      required: 'A data de fabricação é obrigatória.',
+      matDatepickerParse: 'Data inválida.',
+      apiError: ''
+    },
+    placaDeVideo: {
+      required: 'A placa de vídeo é obrigatória.',
+      apiError: ''
+    }
+  };
 
   excluir() {
     const lote = this.formGroup.value;

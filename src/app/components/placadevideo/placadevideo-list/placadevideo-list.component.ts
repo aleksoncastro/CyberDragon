@@ -32,7 +32,6 @@ export class PlacadevideoListComponent implements OnInit {
     'clockBoost', 
     'suporteRayTracing', 
     'memoria', 
-    'saidas', 
     'tamanho', 
     'fornecedor', 
     'listaImagem', 

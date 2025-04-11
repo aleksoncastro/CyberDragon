@@ -39,11 +39,19 @@ export class FornecedorFormComponent {
       telefones: this.formBuilder.array([]),
     })
 
-    if (fornecedor && fornecedor.telefones) {
-      fornecedor.telefones.forEach(telefone => this.addTelefone(telefone.codigoArea, telefone.numero));
-    } else {
+    if (fornecedor) {
+      this.formGroup.patchValue({
+        nome: fornecedor.nome,
+        cnpj: fornecedor.cnpj,
+        email: fornecedor.email
+      });
 
-      this.addTelefone();
+      if (fornecedor && fornecedor.telefones) {
+        fornecedor.telefones.forEach(telefone => this.addTelefone(telefone.codigoArea, telefone.numero));
+      } else {
+
+        this.addTelefone();
+      }
     }
   }
 

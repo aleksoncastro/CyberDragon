@@ -25,6 +25,7 @@ export class PlacadevideoListComponent implements OnInit {
     'resolucao', 
     'energia', 
     'descricao', 
+    'idFan',
     'compatibilidade', 
     'clockBase', 
     'clockBoost', 

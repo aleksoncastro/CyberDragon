@@ -26,7 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 })
 export class PlacaDeVideoFormComponent {
   fornecedor: any[] = [];
-  formGroup: FormGroup;
+  formGroup!: FormGroup;
   idFornecedorSelecionado: number | null = null;
 
   constructor(private formBuilder: FormBuilder,
@@ -36,42 +36,44 @@ export class PlacaDeVideoFormComponent {
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService) {
 
-    const placaDeVideo: PlacaDeVideo = this.activatedRoute.snapshot.data['placadevideo'];
-
-    this.formGroup = this.formBuilder.group({
-      id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
-      modelo: [placaDeVideo?.modelo || '', Validators.required],
-      categoria: [placaDeVideo?.categoria || '', Validators.required],
-      preco: [placaDeVideo?.preco || '', [Validators.required, Validators.min(0)]],
-      resolucao: [placaDeVideo?.resolucao || '', Validators.required],
-      energia: [placaDeVideo?.energia || '', [Validators.required, Validators.min(0)]],
-      descricao: [placaDeVideo?.descricao || '', Validators.required],
-      compatibilidade: [placaDeVideo?.compatibilidade || '', [Validators.required, Validators.min(1)]],
-      clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
-      clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
-      suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
-      idFan: [placaDeVideo?.idFan || '', [Validators.required, Validators.min(1)]],
-      idFornecedor: [placaDeVideo?.idFornecedor ?? '', Validators.required],
-      memoria: this.formBuilder.group({
-        tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
-        capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
-        larguraBanda: [placaDeVideo?.memoria?.larguraBanda || '', [Validators.required, Validators.min(1)]],
-        velocidadeMemoria: [placaDeVideo?.memoria?.velocidadeMemoria || '', [Validators.required, Validators.min(1)]],
-      }),
-      tamanho: this.formBuilder.group({
-        largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
-        altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
-        comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
-      }),
-      saidas: this.formBuilder.array(
-        placaDeVideo?.saidas?.map(saida => this.createSaidaFormGroup(saida)) || []
-      )
-    });
-    console.log("PlacaDeVideo inicializada:", this.formGroup.value);
     this.fornecedorService.findAll().subscribe({
       next: (fornecedores) => {
         this.fornecedor = fornecedores;
         console.log("Fornecedores carregados:", this.fornecedor);
+
+        const placaDeVideo: PlacaDeVideo = this.activatedRoute.snapshot.data['placadevideo'];
+
+        this.formGroup = this.formBuilder.group({
+          id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
+          modelo: [placaDeVideo?.modelo || '', Validators.required],
+          categoria: [placaDeVideo?.categoria || '', Validators.required],
+          preco: [placaDeVideo?.preco || '', [Validators.required, Validators.min(0)]],
+          resolucao: [placaDeVideo?.resolucao || '', Validators.required],
+          energia: [placaDeVideo?.energia || '', [Validators.required, Validators.min(0)]],
+          descricao: [placaDeVideo?.descricao || '', Validators.required],
+          compatibilidade: [placaDeVideo?.compatibilidade || '', [Validators.required, Validators.min(1)]],
+          clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
+          clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
+          suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
+          idFan: [placaDeVideo?.idFan ?? '', [Validators.required, Validators.min(1)]],
+          idFornecedor: [placaDeVideo?.idFornecedor ?? '', Validators.required],
+          memoria: this.formBuilder.group({
+            tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
+            capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
+            larguraBanda: [placaDeVideo?.memoria?.larguraBanda || '', [Validators.required, Validators.min(1)]],
+            velocidadeMemoria: [placaDeVideo?.memoria?.velocidadeMemoria || '', [Validators.required, Validators.min(1)]],
+          }),
+          tamanho: this.formBuilder.group({
+            largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
+            altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
+            comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
+          }),
+          saidas: this.formBuilder.array(
+            placaDeVideo?.saidas?.map(saida => this.createSaidaFormGroup(saida)) || []
+          )
+        });
+        console.log("PlacaDeVideo inicializada:", this.formGroup.value);
+        this.idFornecedorSelecionado = placaDeVideo?.idFornecedor ?? null;
       },
       error: (err) => {
         console.error('Erro ao buscar fornecedores', err);
@@ -81,7 +83,7 @@ export class PlacaDeVideoFormComponent {
 
   atualizarIdFornecedor(id: number) {
     this.idFornecedorSelecionado = id;
-    this.formGroup.patchValue({idFornecedor : id});
+    this.formGroup.patchValue({ idFornecedor: id });
     console.log("Fornecedor selecionado: ", this.idFornecedorSelecionado);
     console.log("Valor atualizado no formGroup: ", this.formGroup.value);
   }
@@ -112,15 +114,15 @@ export class PlacaDeVideoFormComponent {
 
   salvar() {
     console.log("Método salvar() da Placa de Vídeo chamado!");
-  
+
     if (!this.formGroup.valid) {
       console.warn("Formulário inválido! Verifique os campos.");
       return;
     }
-  
+
     const formValue = this.formGroup.value;
     console.log("Valores do formulário:", formValue);
-  
+
     const placaDeVideo: PlacaDeVideo = {
       id: formValue.id,
       modelo: formValue.modelo,
@@ -149,9 +151,9 @@ export class PlacaDeVideoFormComponent {
       saidas: formValue.saidas,
       listaImagem: []
     };
-  
+
     console.log("Objeto PlacaDeVideo a ser enviado:", JSON.stringify(placaDeVideo, null, 2));
-  
+
     if (placaDeVideo.id == null) {
       console.log("Chamando API para INSERIR nova placa de vídeo...");
       this.placaDeVideoService.insert(placaDeVideo).subscribe({
@@ -177,11 +179,11 @@ export class PlacaDeVideoFormComponent {
     }
   }
 
-  
+
   cancelar() {
     this.router.navigateByUrl('/admin/placasdevideo');
   }
-  
+
 
   excluir() {
     const placaDeVideo = this.formGroup.value;

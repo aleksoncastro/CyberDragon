@@ -1,37 +1,74 @@
+/* Título na toolbar */
 .toolbar-title {
     display: flex;
     justify-content: center;
-    font-size: x-large;
-}
-
-/* mat-form-field */
-.full-width-input {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-mat-card {
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    height: 64px;
+  }
+  
+  /* Container principal do formulário */
+  .form-container {
+    padding: 2rem;
+  }
+  
+  /* Cartão centralizado com largura máxima */
+  mat-card {
     max-width: 800px;
     margin: 2rem auto;
-    /* Centraliza horizontalmente */
-}
-
-mat-card-actions {
+    padding: 1rem;
+  }
+  
+  /* Campos de formulário ocupando toda a largura */
+  .full-width-input {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Ações do cartão alinhadas à direita */
+  mat-card-actions {
     display: flex;
     justify-content: flex-end;
-}
-
-/* para a div */
-.form-container {
-    padding: 2rem;
-}
-
-button[mat-raised-button] {
-    width: 120px;
-    /* tamanho do botão */
-}
-
-button[mat-raised-button]:not(:last-child) {
-    margin-right: 1rem;
-    /* adiciona margem à direita de todos os botões, exceto o último */
-}
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  /* Botões */
+  button[mat-raised-button] {
+    min-width: 120px;
+  }
+  
+  /* Botão para remover telefone */
+  button[mat-icon-button] {
+    margin-top: 1.2rem;
+    margin-left: 0.5rem;
+    height: 40px;
+    width: 40px;
+    vertical-align: bottom;
+  }
+  
+  /* Responsividade básica para dispositivos menores */
+  @media (max-width: 600px) {
+    .form-container {
+      padding: 1rem;
+    }
+  
+    mat-card {
+      margin: 1rem;
+    }
+  
+    mat-card-actions {
+      justify-content: center;
+    }
+  
+    button[mat-raised-button] {
+      width: 100%;
+    }
+  
+    button[mat-icon-button] {
+      margin-left: 0;
+    }
+  }
+  

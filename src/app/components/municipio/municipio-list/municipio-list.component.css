@@ -1,17 +1,23 @@
-.toolbar-title {
-    flex: 1;
-    text-align: center;
-}
-
+/* Container do topo */
 .flex-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
+    padding: 0 16px;
 }
 
-.demo-table {
+.toolbar-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* Tabela */
+table {
     width: 100%;
-  }
+}
 
 .mat-column-id {
     width: 5em;
@@ -21,15 +27,27 @@
 }
 
 .mat-column-nome {
-    width: 70%;
+    width: 40%;
 }
 
-.mat-column-sigla {
-    width: 5em;
-    text-align: center;
+.mat-column-estado {
+    width: 35%;
 }
 
 .mat-column-acao {
     width: 10em;
     text-align: center;
+}
+
+/* Campo de pesquisa */
+mat-form-field {
+    margin: 16px;
+    width: 300px;
+}
+
+/* Alinhamento geral */
+mat-header-cell,
+mat-cell {
+    padding: 8px;
+    word-wrap: break-word;
 }

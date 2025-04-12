@@ -17,10 +17,35 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatOptionModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MatOptionModule } from '@angular/material/core';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
+
+// No topo do componente, fora da classe:
+function dataNaoFuturaValidator() {
+  return (control: any) => {
+    const hoje = new Date();
+    const valor = control.value;
+
+    if (valor && new Date(valor) > hoje) {
+      return { dataFutura: true };
+    }
+    return null;
+  };
+}
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
 
 @Component({
   selector: 'app-lote-form',
@@ -32,7 +57,8 @@ import { HttpErrorResponse } from '@angular/common/http';
     MatDatepickerModule, MatOptionModule, MatNativeDateModule, MatSelectModule
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
   ],
   templateUrl: './lote-form.component.html',
   styleUrls: ['./lote-form.component.css']
@@ -47,10 +73,12 @@ export class LoteFormComponent implements OnInit {
     private router: Router,
     private placaDeVideoService: PlacaDeVideoService,
     private activatedRoute: ActivatedRoute,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dateAdapter: DateAdapter<any>
   ) {}
 
   ngOnInit(): void {
+    this.dateAdapter.setLocale('pt-BR');
     const lote: Lote = this.activatedRoute.snapshot.data['lote'];
 
     this.placaDeVideoService.findAll().subscribe({
@@ -66,7 +94,7 @@ export class LoteFormComponent implements OnInit {
           id: [lote?.id ?? null],
           codigo: [lote?.codigo ?? '', Validators.required],
           estoque: [lote?.estoque ?? '', [Validators.required, Validators.min(1)]],
-          dataFabricacao: [lote?.dataFabricacao ?? '', Validators.required],
+          dataFabricacao: [lote?.dataFabricacao ?? '', [Validators.required, dataNaoFuturaValidator()]],
           placaDeVideo: [idPlaca, Validators.required]
         });
 
@@ -158,6 +186,7 @@ export class LoteFormComponent implements OnInit {
     dataFabricacao: {
       required: 'A data de fabricação é obrigatória.',
       matDatepickerParse: 'Data inválida.',
+      dataFutura: 'A data não pode ser no futuro.',
       apiError: ''
     },
     placaDeVideo: {

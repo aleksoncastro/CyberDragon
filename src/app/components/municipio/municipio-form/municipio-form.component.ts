@@ -110,5 +110,9 @@ export class MunicipioFormComponent {
     }
   }
 
+  cancelar() {
+    this.router.navigateByUrl('/admin/municipios');
+  }
+
 }
 

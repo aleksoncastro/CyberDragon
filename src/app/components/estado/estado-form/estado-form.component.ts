@@ -47,7 +47,7 @@ export class EstadoFormComponent {
       nome: [(estado && estado.nome) ? estado.nome : '', 
         Validators.compose([Validators.required, Validators.maxLength(60)])],
       sigla: [(estado && estado.sigla) ? estado.sigla : '', 
-        Validators.compose([Validators.required, Validators.maxLength(2)])],
+        Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2)])],
     });
   }
 

@@ -68,7 +68,7 @@
 
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="salvar()" [disabled]="formGroup.invalid">Salvar</button>
-      <button mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">Excluir</button>
+      <button *ngIf="formGroup.get('id')?.value" mat-raised-button color="warn" (click)="excluir()" [disabled]="formGroup.invalid">Excluir</button>
       <button mat-raised-button (click)="cancelar()">Cancelar</button>
     </mat-card-actions>
   </mat-card>

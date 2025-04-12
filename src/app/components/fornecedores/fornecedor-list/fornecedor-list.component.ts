@@ -26,7 +26,7 @@ export class FornecedorListComponent implements OnInit {
   page = 0;
 
 
-  constructor(private fornecedorService: FornecedorService) { }
+  constructor(private fornecedorService : FornecedorService) { }
 
   fornecedoresFiltrados: Fornecedor[] = [];
 

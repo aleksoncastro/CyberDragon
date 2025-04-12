@@ -14,7 +14,7 @@
             }
           </mat-error>
         </mat-form-field>
-
+        
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>CNPJ</mat-label>
           <input matInput type="text" formControlName="cnpj">
@@ -25,7 +25,7 @@
             }
           </mat-error>
         </mat-form-field>
-
+        
         <mat-form-field appearance="fill" class="full-width-input">
           <mat-label>Email</mat-label>
           <input matInput type="text" formControlName="email">
@@ -36,26 +36,31 @@
             }
           </mat-error>
         </mat-form-field>
-
         <!-- Telefones -->
         <div formArrayName="telefones">
           <div *ngFor="let telefone of telefones.controls; let i = index" [formGroupName]="i">
+            
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Código de Área</mat-label>
               <input matInput type="text" formControlName="codigoArea">
               <mat-error *ngIf="telefone.get('codigoArea')?.invalid && telefone.get('codigoArea')?.touched">
                 {{ getErrorMessage('codigoArea', telefone.get('codigoArea')?.errors) }}
+                @if (telefone.get('codigoArea')?.hasError('apiError')) {
+                  <span>{{ telefone.get('codigoArea')?.getError('apiError') }}</span>
+                }
               </mat-error>
             </mat-form-field>
-
+        
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Número</mat-label>
               <input matInput type="text" formControlName="numero">
               <mat-error *ngIf="telefone.get('numero')?.invalid && telefone.get('numero')?.touched">
                 {{ getErrorMessage('numero', telefone.get('numero')?.errors) }}
+                @if (telefone.get('numero')?.hasError('apiError')) {
+                  <span>{{ telefone.get('numero')?.getError('apiError') }}</span>
+                }
               </mat-error>
             </mat-form-field>
-
             <button mat-icon-button color="warn" *ngIf="telefones.length > 1" (click)="removeTelefone(i)">
               <mat-icon>remove_circle</mat-icon>
             </button>

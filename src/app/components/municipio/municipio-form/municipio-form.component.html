@@ -8,22 +8,28 @@
                     <mat-label>Nome</mat-label>
                     <input matInput type="text" formControlName="nome">
                     <mat-error *ngIf="formGroup.get('nome')?.invalid && formGroup.get('nome')?.touched">
-                        O nome é obrigatório.
+                      {{ getErrorMessage('nome', formGroup.get('nome')?.errors) }}
+                      @if (formGroup.get('nome')?.hasError('apiError')) {
+                        <span>{{ formGroup.get('nome')?.getError('apiError') }}</span>
+                      }
                     </mat-error>
-                </mat-form-field>
-
-                <!-- Seleção de Estado -->
-                <mat-form-field appearance="fill" class="full-width-input">
+                  </mat-form-field>
+          
+                  <!-- Seleção de Estado -->
+                  <mat-form-field appearance="fill" class="full-width-input">
                     <mat-label>Estado</mat-label>
                     <mat-select formControlName="estado">
-                        <mat-option *ngFor="let estado of estados" [value]="estado.id">
-                            {{ estado.nome }}
-                        </mat-option>
+                      <mat-option *ngFor="let estado of estados" [value]="estado.id">
+                        {{ estado.nome }}
+                      </mat-option>
                     </mat-select>
                     <mat-error *ngIf="formGroup.get('estado')?.invalid && formGroup.get('estado')?.touched">
-                        O estado é obrigatório.
+                      {{ getErrorMessage('estado', formGroup.get('estado')?.errors) }}
+                      @if (formGroup.get('estado')?.hasError('apiError')) {
+                        <span>{{ formGroup.get('estado')?.getError('apiError') }}</span>
+                      }
                     </mat-error>
-                </mat-form-field>
+                  </mat-form-field>
             </form>
         </mat-card-content>
 

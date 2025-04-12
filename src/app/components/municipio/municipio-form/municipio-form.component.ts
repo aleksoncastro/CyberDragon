@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MunicipioService } from '../../../services/municipio.service';
 import { EstadoService } from '../../../services/estado.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -37,9 +37,14 @@ export class MunicipioFormComponent {
     // incicializando
     this.formGroup = this.formBuilder.group({
       id: [null],
-      nome: ['', Validators.required],
-      estado: [null]
+      nome: ['', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(60)
+      ]],
+      estado: [null, Validators.required]
     });
+    
 
   }
 
@@ -109,6 +114,29 @@ export class MunicipioFormComponent {
       }
     }
   }
+
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
+    if (!errors || !this.errorMessages[controlName]) return 'Campo inválido.';
+    for (const errorName in errors) {
+      if (this.errorMessages[controlName][errorName]) {
+        return this.errorMessages[controlName][errorName];
+      }
+    }
+    return 'Campo inválido.';
+  }
+
+  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
+    nome: {
+      required: 'O campo nome deve ser informado.',
+      minlength: 'O nome deve possuir no mínimo 2 caracteres.',
+      maxlength: 'O nome deve possuir no máximo 60 caracteres.',
+      apiError: ''
+    },
+    estado: {
+      required: 'O estado deve ser selecionado.',
+      apiError: ''
+    }
+  };
 
 }
 

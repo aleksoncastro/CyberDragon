@@ -17,6 +17,7 @@ import { UsuarioFormFuncionarioComponent } from './components/usuario/usuario-fo
 import { placadevideoResolver } from './components/placadevideo/placaDeVideo.resolver';
 import { fornecedorResolver } from './components/fornecedores/fornecedor.resolver';
 import { municipioResolver } from './components/municipio/municipio.resolver';
+import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
 
 export const routes: Routes = [
 
@@ -41,8 +42,8 @@ export const routes: Routes = [
             { path: 'placasdevideo/edit/:id', component: PlacaDeVideoFormComponent, title: 'Edição de Placas de Video', resolve: {placadevideo : placadevideoResolver} },
             { path: 'lotes', component: LoteListComponent, title: 'Lista de Lotes' },
             { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote' },
-            { path: 'lotes/edit/:id', component: LoteFormComponent, title: 'Edição de Lote', resolve: { lote: loteResolver }
-            },
+            { path: 'lotes/edit/:id', component: LoteFormComponent, title: 'Edição de Lote', resolve: { lote: loteResolver }},
+            { path: 'funcionarios', component: FuncionarioListComponent, title: 'Novo Funcionário' },
         ]
     },
 

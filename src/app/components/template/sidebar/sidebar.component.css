@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+mat-drawer {
+    width: 250px;
+    transition: transform 0.3s ease-in-out;
+}
+
+mat-toolbar {
+    padding: 10px 16px;
+}
+
+mat-toolbar[color="primary"],
+mat-toolbar[color="accent"] {
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+mat-divider {
+    margin: 8px 0;
+}
+
+mat-list-item {
+    padding: 10px 16px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+mat-list-item:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+}
+
+mat-drawer-content {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    mat-drawer {
+        width: 100%;
+    }
+
+    mat-drawer-content {
+        margin-left: 0;
+    }
+}

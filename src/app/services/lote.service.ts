@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Lote } from '../models/lote.model';  
-import { PlacaDeVideo } from '../models/placadevideo.model';
 
 @Injectable({
   providedIn: 'root'

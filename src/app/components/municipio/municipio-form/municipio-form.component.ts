@@ -115,28 +115,9 @@ export class MunicipioFormComponent {
     }
   }
 
-  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
-    if (!errors || !this.errorMessages[controlName]) return 'Campo inválido.';
-    for (const errorName in errors) {
-      if (this.errorMessages[controlName][errorName]) {
-        return this.errorMessages[controlName][errorName];
-      }
-    }
-    return 'Campo inválido.';
+  cancelar() {
+    this.router.navigateByUrl('/admin/municipios');
   }
-
-  errorMessages: { [controlName: string]: { [errorName: string]: string } } = {
-    nome: {
-      required: 'O campo nome deve ser informado.',
-      minlength: 'O nome deve possuir no mínimo 2 caracteres.',
-      maxlength: 'O nome deve possuir no máximo 60 caracteres.',
-      apiError: ''
-    },
-    estado: {
-      required: 'O estado deve ser selecionado.',
-      apiError: ''
-    }
-  };
 
 }
 

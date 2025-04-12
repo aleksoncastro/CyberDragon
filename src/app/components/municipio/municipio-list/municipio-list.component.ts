@@ -7,12 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-municipio-list',
   standalone: true,
-  imports: [MatInputModule, MatTableModule, MatButtonModule, MatIconModule, MatToolbarModule, RouterLink],
+  imports: [ MatPaginatorModule, MatInputModule, MatTableModule, MatButtonModule, MatIconModule, MatToolbarModule, RouterLink],
   templateUrl: './municipio-list.component.html',
   styleUrl: './municipio-list.component.css'
 })
@@ -21,7 +21,7 @@ export class MunicipioListComponent implements OnInit {
   municipios: Municipio[] = [];
   // Variáveis de controle de paginação
   totalRecords = 0; 
-  pageSize = 2;
+  pageSize = 5;
   page = 0;
   formGroup: any;
   router: any;
@@ -31,10 +31,20 @@ export class MunicipioListComponent implements OnInit {
   municipiosFiltrados: Municipio[] = [];
 
   ngOnInit(): void {
-    this.municipioService.findAll().subscribe(data => {
+    this.municipioService.findAll(this.page, this.pageSize).subscribe(data => {
       this.municipios = data;
       this.municipiosFiltrados = data;  // Inicializa a lista filtrada com todos os municipios
     });
+    this.municipioService.count().subscribe(data => {
+      this.totalRecords = data;
+    });
+  }
+  paginar(event: PageEvent) : void {
+    this.page = event.pageIndex;
+    this.pageSize = event.pageSize;
+    // chamando para executar novamente a consulta
+    // caso tenha outras execucoes no ngOnInit .. eh interessante criar um metodo de consulta
+    this.ngOnInit();
   }
 
   loadMunicipios(): void {
@@ -49,14 +59,6 @@ export class MunicipioListComponent implements OnInit {
     this.municipiosFiltrados = this.municipios.filter(e =>
       e.nome.toLowerCase().includes(valor) || e.estado.sigla.toLowerCase().includes(valor)
     );
-  }
-
-  paginar(event: PageEvent): void {
-    this.page = event.pageIndex;
-    this.pageSize = event.pageSize;
-    //chamando pra executar novamente a consulta
-    //caso tenha outras execucoes no ngOnit .. eh interessante criar um metodo de consulta
-    this.loadMunicipios();
   }
 
   excluir(municipio: Municipio): void {

@@ -4,11 +4,12 @@ import { SidebarService } from '../../../services/sidebar.service';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatList, MatListItem, MatListModule, MatNavList } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-sidebar',
   imports: [MatSidenavModule, RouterModule, MatToolbarModule, MatDrawer,
-            MatDrawerContent, MatNavList, MatListItem, RouterOutlet, MatListModule],
+            MatDrawerContent, MatNavList, MatListItem, RouterOutlet, MatListModule, MatIconModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })

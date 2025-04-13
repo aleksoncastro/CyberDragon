@@ -1,0 +1,26 @@
+<div class="home-container">
+    <mat-toolbar color="primary" class="home-toolbar">
+      <span>Painel Administrativo</span>
+    </mat-toolbar>
+  
+    <div class="dashboard-summary">
+      <mat-card class="summary-card" *ngFor="let item of summary">
+        <mat-icon class="summary-icon">{{ item.icon }}</mat-icon>
+        <div class="summary-content">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.value }}</p>
+        </div>
+      </mat-card>
+    </div>
+  
+    <h2 class="section-title">Módulos do Sistema</h2>
+  
+    <div class="modules-grid">
+      <mat-card class="module-card" *ngFor="let mod of modules" routerLink="{{mod.link}}">
+        <mat-icon class="module-icon">{{ mod.icon }}</mat-icon>
+        <h3>{{ mod.name }}</h3>
+        <p>{{ mod.description }}</p>
+      </mat-card>
+    </div>
+  </div>
+  

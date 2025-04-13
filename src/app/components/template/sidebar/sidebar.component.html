@@ -1,25 +1,56 @@
 <mat-drawer-container class="container">
-    <mat-drawer #drawer mode="over" opened>
-        <mat-toolbar>
-            <span>Menu</span>
-        </mat-toolbar>
-        <mat-nav-list>
-            <!-- <mat-divider></mat-divider> -->
-            <mat-toolbar color="primary" style="height: 40px;">
-                <span style="font-size: 14px;">Controle</span>
-            </mat-toolbar>
-            <mat-list-item routerLink="/admin/lotes">Controle de Lotes</mat-list-item>
-            <mat-list-item routerLink="/admin/estados">Controle de Estados</mat-list-item>
-            <mat-list-item routerLink="/admin/municipios">Controle de Municípios</mat-list-item>
-            <mat-list-item routerLink="/admin/fornecedores">Controle de Fornecedores</mat-list-item>
-            <mat-list-item routerLink="/admin/placasdevideo">Controle de Placas de Vídeo</mat-list-item>
-            <mat-list-item routerLink="/admin/funcionarios">Controle de Funcionários</mat-list-item>
-        </mat-nav-list>
+    <mat-drawer #drawer mode="side" opened class="drawer">
+      <!-- <mat-toolbar color="primary" class="menu-header">
+        <mat-icon>menu</mat-icon>
+        <span class="menu-title">Menu</span>
+      </mat-toolbar> -->
+  
+      <mat-nav-list>
+  
+        <!-- Seção: Administração -->
+        <div class="menu-section">
+          <div class="section-header">Administração</div>
+          <mat-list-item routerLink="/admin/funcionarios">
+            <mat-icon matListIcon>supervisor_account</mat-icon>
+            <span>Funcionários</span>
+          </mat-list-item>
+        </div>
+  
+        <!-- Seção: Localização -->
+        <div class="menu-section">
+          <div class="section-header">Localização</div>
+          <mat-list-item routerLink="/admin/estados">
+            <mat-icon matListIcon>flag</mat-icon>
+            <span>Estados</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/admin/municipios">
+            <mat-icon matListIcon>location_city</mat-icon>
+            <span>Municípios</span>
+          </mat-list-item>
+        </div>
+  
+        <!-- Seção: Cadastros -->
+        <div class="menu-section">
+          <div class="section-header">Cadastros</div>
+          <mat-list-item routerLink="/admin/fornecedores">
+            <mat-icon matListIcon>business</mat-icon>
+            <span>Fornecedores</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/admin/placasdevideo">
+            <mat-icon matListIcon>memory</mat-icon>
+            <span>Placas de Vídeo</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/admin/lotes">
+            <mat-icon matListIcon>inventory_2</mat-icon>
+            <span>Lotes</span>
+          </mat-list-item>
+        </div>
+  
+      </mat-nav-list>
     </mat-drawer>
-
-    <mat-drawer-content>
-        <router-outlet>
-
-        </router-outlet>
+  
+    <mat-drawer-content class="content-area">
+      <router-outlet></router-outlet>
     </mat-drawer-content>
-</mat-drawer-container>
+  </mat-drawer-container>
+  

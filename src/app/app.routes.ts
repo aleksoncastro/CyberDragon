@@ -18,6 +18,7 @@ import { placadevideoResolver } from './components/placadevideo/placadevideo.res
 import { fornecedorResolver } from './components/fornecedores/fornecedor.resolver';
 import { municipioResolver } from './components/municipio/municipio.resolver';
 import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
+import { HomeComponent } from './components/home/home.component';
 
 export const routes: Routes = [
 
@@ -44,6 +45,7 @@ export const routes: Routes = [
             { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote' },
             { path: 'lotes/edit/:id', component: LoteFormComponent, title: 'Edição de Lote', resolve: { lote: loteResolver }},
             { path: 'funcionarios', component: FuncionarioListComponent, title: 'Novo Funcionário' },
+            { path: 'home', component: HomeComponent, title: 'Painel Administrativo' },
         ]
     },
 

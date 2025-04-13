@@ -1,0 +1,87 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .home-toolbar {
+    height: 64px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .section-title {
+    font-size: 20px;
+    margin: 8px 0;
+    font-weight: 600;
+    color: #444;
+  }
+  
+  /* Summary Cards */
+  .dashboard-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  
+  .summary-card {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .summary-icon {
+    font-size: 36px;
+    margin-right: 16px;
+    color: #3f51b5;
+  }
+  
+  .summary-content h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .summary-content p {
+    margin: 0;
+    color: #666;
+  }
+  
+  /* Module Cards */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  
+  .module-card {
+    padding: 20px;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .module-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .module-icon {
+    font-size: 40px;
+    color: #3f51b5;
+    margin-bottom: 10px;
+  }
+  
+  .module-card h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+  }
+  
+  .module-card p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #666;
+  }
+  

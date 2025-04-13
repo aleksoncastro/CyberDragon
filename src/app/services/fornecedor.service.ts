@@ -37,6 +37,10 @@ export class FornecedorService {
     return this.httpClient.get<Fornecedor>(`${this.baseUrl}/${id}`);
   }
 
+  findByNome(nome: string): Observable<Fornecedor> {
+    return this.httpClient.get<Fornecedor>(`${this.baseUrl}/search/${nome}`);
+  }
+
   insert(fornecedor: Fornecedor): Observable<Fornecedor> {
     return this.httpClient.post<Fornecedor>(this.baseUrl, fornecedor);
   }

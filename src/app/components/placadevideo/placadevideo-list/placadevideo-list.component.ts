@@ -44,6 +44,7 @@ export class PlacadevideoListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 10;
   page = 0;
+  
 
   constructor(private placaDeVideoService: PlacaDeVideoService) { }
 

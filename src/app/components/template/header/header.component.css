@@ -1,3 +1,103 @@
-.cyber-spacer {
+.navbar {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    background-color: rgb(37, 36, 36);
+  }
+  
+  .logo {
+    height: 155px;
+   
+  }
+
+  .logo-nome {
+    height: 250px;
+    transform: translateX(-45px);
+   
+  }
+  
+  .cyber-spacer {
     flex: 1 1 auto;
+  }
+  
+  
+  .auth-btn {
+      margin-left: 0.5rem;
+      color: rgb(255, 255, 255);
+      font-weight: 500;
+    }
+ /* Garante que o wrapper centralize e não herde cor de fundo */
+.search-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin-top: 40px;
+    width: 100%;
+  }
+  
+  /* Remove a cor de fundo do mat-form-field e deixa transparente */
+  .search-bar {
+    position: relative;
+    background-color: transparent;
+    border-radius: 4px;
+    z-index: 1; /* garante que o input fique acima da linha */
+    width: 600px;
+  }
+  
+  .search-bar::before {
+    content: '';
+    position: absolute;
+    bottom: 0; /* gruda na base */
+    left: 0;
+    height: 22px; /* altura da linha rosa */
+    width: 100%;
+    background-color: rgb(37, 36, 36);/* cor da linha */
+    border-radius: 0 0 4px 4px;
+    z-index: -1; /* fica por trás do conteúdo */
+  }
+  
+  /* Estilo específico pro input */
+  .search-bar .mat-input-element {
+    background-color: white !important;
+    color: black !important;
+    border-radius: 0 0 10px 10px;
+    padding: 6px 12px;
+  }
+  /* Remove borda cinza ou sobrescreve as cores do tema se necessário */
+  .search-bar.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: transparent;
+    border-color: transparent;
+  }
+  
+  .search-bar.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    border-color: transparent;
+  }
+  
+  /* Ícone do botão de busca */
+  .search-bar button {
+    color: black !important;
+  }
+
+  .search-background {
+    background-color: white;
+    width: 100%;
+    max-width: 600px;
+    border-left: 0px solid;
+    border-right: 0px solid;
+    border-bottom: 0px solid;
+    border-top: 0px;
+    border-radius: 10px 10px 30px 30px;
+
+  }
+
+  .search-bar.mat-form-field-appearance-outline .mat-form-field-outline,
+.search-bar.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  display: none !important;
 }
+
+.search-bar .mat-form-field-wrapper {
+    padding: 0 !important;
+  }
+  

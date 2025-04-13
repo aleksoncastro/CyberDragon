@@ -14,10 +14,11 @@ import { PlacadevideoListComponent } from './components/placadevideo/placadevide
 import { AdminTemplateComponent } from './components/template/admin-template/admin-template.component';
 import { UsuarioFormClienteComponent } from './components/usuario/usuario-form-cliente/usuario-form-cliente.component';
 import { UsuarioFormFuncionarioComponent } from './components/usuario/usuario-form-funcionario/usuario-form-funcionario.component';
-import { placadevideoResolver } from './components/placadevideo/placadevideo.resolver';
 import { fornecedorResolver } from './components/fornecedores/fornecedor.resolver';
 import { municipioResolver } from './components/municipio/municipio.resolver';
 import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
+import { placadevideoResolver } from './components/placadevideo/placaDeVideo.resolver';
+import { PlacadevideoVitrineComponent } from './components/placadevideo/placadevideo-vitrine/placadevideo-vitrine.component';
 
 export const routes: Routes = [
 
@@ -48,5 +49,6 @@ export const routes: Routes = [
     },
 
     { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
+    { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video' },
 
 ];

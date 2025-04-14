@@ -5,8 +5,8 @@
     </button>
   
     <!-- Logo -->
-    <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" />
-    <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome"/>
+    <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" [routerLink]="['/admin/home']" style="cursor: pointer;" />
+    <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" [routerLink]="['/admin/home']" style="cursor: pointer;"/>
     <!-- Espaço -->
     <span class="cyber-spacer"></span>
   
@@ -14,12 +14,12 @@
     <div class="search-wrapper">
         <div class="search-background">
           <mat-form-field class="search-bar" appearance="outline">
-            <mat-label>Buscar</mat-label>
+            <mat-label class="buscar">Buscar</mat-label>
             <input
               matInput
               placeholder="O que você procura?"
               [(ngModel)]="searchQuery"
-              (keydown.enter)="onSearch()" />
+              (keydown.enter)="onSearch()" class="input" />
             <button mat-icon-button matSuffix (click)="onSearch()" aria-label="Buscar">
               <mat-icon>search</mat-icon>
             </button>

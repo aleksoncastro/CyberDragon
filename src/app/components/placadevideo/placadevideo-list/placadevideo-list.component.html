@@ -1,110 +1,110 @@
 <mat-toolbar color="primary">
   <div class="flex-container">
     <span class="toolbar-title">Controle de Placas de Vídeo</span>
-    <button mat-fab color="accent" routerLink="/admin/placasdevideo/new">
-      <mat-icon>add</mat-icon>
+    <button mat-fab class="mais" routerLink="/admin/placasdevideo/new">
+      <mat-icon class="mais">add</mat-icon>
     </button>
   </div>
 </mat-toolbar>
 
 <!-- Campo de pesquisa -->
-<mat-form-field appearance="outline" style="margin: 16px; width: 300px;">
-  <mat-label>Pesquisar</mat-label>
-  <input matInput (keyup)="filtrar($event)">
+<mat-form-field appearance="outline" style="margin: 16px; width: 300px;" class="pesquisa">
+  <mat-label class="search-bar">Pesquisar</mat-label>
+  <input matInput (keyup)="filtrar($event)" class="input">
   <button mat-icon-button matSuffix disabled>
       <mat-icon>search</mat-icon>
   </button>
 </mat-form-field>
 
 <table mat-table [dataSource]="placasDeVideoFiltradas" class="mat-elevation-z8 demo-table">
+<!-- ID Column -->
+<ng-container matColumnDef="id" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Id </th>
+  <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+</ng-container>
 
-  <!-- ID Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-  </ng-container>
+<!-- Modelo Column -->
+<ng-container matColumnDef="modelo" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Modelo </th>
+  <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+</ng-container>
 
-  <!-- Modelo Column -->
-  <ng-container matColumnDef="modelo">
-    <th mat-header-cell *matHeaderCellDef> Modelo </th>
-    <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
-  </ng-container>
+<!-- Categoria Column -->
+<ng-container matColumnDef="categoria" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Categoria </th>
+  <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+</ng-container>
 
-  <!-- Categoria Column -->
-  <ng-container matColumnDef="categoria">
-    <th mat-header-cell *matHeaderCellDef> Categoria </th>
-    <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
-  </ng-container>
+<!-- Preço Column -->
+<ng-container matColumnDef="preco" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Preço </th>
+  <td mat-cell *matCellDef="let element"> R$ {{element.preco | number:'1.2-2'}} </td>
+</ng-container>
 
-  <!-- Preço Column -->
-  <ng-container matColumnDef="preco">
-    <th mat-header-cell *matHeaderCellDef> Preço </th>
-    <td mat-cell *matCellDef="let element"> R$ {{element.preco | number:'1.2-2'}} </td>
-  </ng-container>
+<!-- Resolução Column -->
+<ng-container matColumnDef="resolucao" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Resolução </th>
+  <td mat-cell *matCellDef="let element"> {{element.resolucao}} </td>
+</ng-container>
 
-  <!-- Resolução Column -->
-  <ng-container matColumnDef="resolucao">
-    <th mat-header-cell *matHeaderCellDef> Resolução </th>
-    <td mat-cell *matCellDef="let element"> {{element.resolucao}} </td>
-  </ng-container>
+<!-- Energia Column -->
+<ng-container matColumnDef="energia" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Energia (W) </th>
+  <td mat-cell *matCellDef="let element"> {{element.energia}} W </td>
+</ng-container>
 
-  <!-- Energia Column -->
-  <ng-container matColumnDef="energia">
-    <th mat-header-cell *matHeaderCellDef> Energia (W) </th>
-    <td mat-cell *matCellDef="let element"> {{element.energia}} W </td>
-  </ng-container>
+<!-- Descrição Column -->
+<ng-container matColumnDef="descricao" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Descrição </th>
+  <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+</ng-container>
 
-  <!-- Descrição Column -->
-  <ng-container matColumnDef="descricao">
-    <th mat-header-cell *matHeaderCellDef> Descrição </th>
-    <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
-  </ng-container>
+<!-- Quantidade de Fans Column -->
+<ng-container matColumnDef="idFan" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Fans </th>
+  <td mat-cell *matCellDef="let element"> {{element.fan?.label}} </td>
+</ng-container>
 
-  <!-- Quantidade de Fans Column -->
-  <ng-container matColumnDef="idFan">
-    <th mat-header-cell *matHeaderCellDef> Fans </th>
-    <td mat-cell *matCellDef="let element"> {{element.fan?.label}} </td>
-  </ng-container>
+<!-- Compatibilidade Column -->
+<ng-container matColumnDef="compatibilidade" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Compatibilidade </th>
+  <td mat-cell *matCellDef="let element"> {{element.compatibilidade}} </td>
+</ng-container>
 
-  <!-- Compatibilidade Column -->
-  <ng-container matColumnDef="compatibilidade">
-    <th mat-header-cell *matHeaderCellDef> Compatibilidade </th>
-    <td mat-cell *matCellDef="let element"> {{element.compatibilidade}} </td>
-  </ng-container>
+<!-- Clock Base Column -->
+<ng-container matColumnDef="clockBase" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Clock Base (MHz) </th>
+  <td mat-cell *matCellDef="let element"> {{element.clockBase | number:'1.0-0'}} MHz</td>
+</ng-container>
 
-  <!-- Clock Base Column -->
-  <ng-container matColumnDef="clockBase">
-    <th mat-header-cell *matHeaderCellDef> Clock Base (MHz) </th>
-    <td mat-cell *matCellDef="let element"> {{element.clockBase | number:'1.0-0'}} MHz</td>
-  </ng-container>
+<!-- Clock Boost Column -->
+<ng-container matColumnDef="clockBoost" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Clock Boost (MHz) </th>
+  <td mat-cell *matCellDef="let element"> {{element.clockBoost | number:'1.0-0'}} MHz</td>
+</ng-container>
 
-  <!-- Clock Boost Column -->
-  <ng-container matColumnDef="clockBoost">
-    <th mat-header-cell *matHeaderCellDef> Clock Boost (MHz) </th>
-    <td mat-cell *matCellDef="let element"> {{element.clockBoost | number:'1.0-0'}} MHz</td>
-  </ng-container>
+<!-- Suporte Ray Tracing Column -->
+<ng-container matColumnDef="suporteRayTracing" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Ray Tracing </th>
+  <td mat-cell *matCellDef="let element"> {{element.suporteRayTracing ? 'Sim' : 'Não'}} </td>
+</ng-container>
 
-  <!-- Suporte Ray Tracing Column -->
-  <ng-container matColumnDef="suporteRayTracing">
-    <th mat-header-cell *matHeaderCellDef> Ray Tracing </th>
-    <td mat-cell *matCellDef="let element"> {{element.suporteRayTracing ? 'Sim' : 'Não'}} </td>
-  </ng-container>
+<!-- Memória Column -->
+<ng-container matColumnDef="memoria" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Memória </th>
+  <td mat-cell *matCellDef="let element"> {{element.memoria.tipo}} - {{element.memoria.capacidade}} GB </td>
+</ng-container>
 
-  <!-- Memória Column -->
-  <ng-container matColumnDef="memoria">
-    <th mat-header-cell *matHeaderCellDef> Memória </th>
-    <td mat-cell *matCellDef="let element"> {{element.memoria.tipo}} - {{element.memoria.capacidade}} GB </td>
-  </ng-container>
+<!-- Saídas de Vídeo Column -->
+<ng-container matColumnDef="saidas" class="dados">
+  <th mat-header-cell *matHeaderCellDef> Saídas de Vídeo </th>
+  <td mat-cell *matCellDef="let element">
+    <span *ngFor="let saida of element.saidas; let i = index">
+      {{saida.tipo}}<span *ngIf="i < element.saidas.length - 1">, </span>
+    </span>
+  </td>
+</ng-container>
 
-  <!-- Saídas de Vídeo Column -->
-  <ng-container matColumnDef="saidas">
-    <th mat-header-cell *matHeaderCellDef> Saídas de Vídeo </th>
-    <td mat-cell *matCellDef="let element">
-      <span *ngFor="let saida of element.saidas; let i = index">
-        {{saida.tipo}}<span *ngIf="i < element.saidas.length - 1">, </span>
-      </span>
-    </td>
-  </ng-container>
 
   <!-- Tamanho Column -->
   <ng-container matColumnDef="tamanho">
@@ -130,10 +130,10 @@
   <ng-container matColumnDef="acao">
     <th mat-header-cell *matHeaderCellDef> Ação </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-icon-button color="primary" routerLink="/admin/placasdevideo/edit/{{element.id}}">
+      <button mat-icon-button color="primary" routerLink="/admin/placasdevideo/edit/{{element.id}}" class="botoes">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn">
+      <button mat-icon-button color="warn" class="botoes" >
         <mat-icon>delete</mat-icon>
       </button>
     </td>
@@ -145,5 +145,5 @@
 </table>
 
 <mat-paginator [pageSizeOptions]="[5, 10, 20, 50]" [pageSize]="pageSize" [length]="totalRecords" [pageIndex]="page"
-  (page)="paginar($event)">
+  (page)="paginar($event)" class="paginar">
 </mat-paginator>

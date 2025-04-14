@@ -1,87 +1,89 @@
 .container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  /* Drawer refinado */
+  display: flex;
+  height: 100vh;
+}
+
+/* Drawer refinado com fundo grafite escuro */
+.drawer {
+  width: 260px;
+  background-color: #2A2A2A; /* grafite escuro */
+  color: #B3B3B3; /* cinza claro */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Cabeçalho do menu */
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 64px;
+  font-weight: 600;
+  padding: 0 20px;
+  color: #FFFFFF; /* texto branco puro */
+}
+
+.menu-title {
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+
+/* Áreas de categoria */
+.menu-section {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-header {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #B3B3B3; /* cinza claro */
+  padding: 8px 20px 4px;
+}
+
+/* Lista de itens do menu */
+mat-list-item {
+  padding: 8px 20px;
+  font-size: 15px;
+  color: #C4A000; /* amarelo dourado */
+  transition: background-color 0.25s ease;
+  border-radius: 4px;
+  margin: 4px 8px;
+}
+
+mat-list-item:hover {
+  background-color: rgba(255, 215, 0, 0.1); /* hover dourado sutil */
+}
+
+mat-icon[matListIcon] {
+  margin-right: 12px;
+  color: #FFD700; /* ícones com amarelo vibrante */
+}
+
+/* Conteúdo principal */
+.content-area {
+  flex: 1;
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: #1E1E1E; /* fundo secundário */
+  overflow: auto;
+  color: #FFFFFF;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
   .drawer {
-    width: 260px;
-    background-color: #fff;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+    width: 80vw;
   }
-  
-  /* Cabeçalho do menu */
+
   .menu-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 64px;
-    font-weight: 600;
-    padding: 0 20px;
+    font-size: 16px;
   }
-  
-  .menu-title {
-    font-size: 18px;
-    letter-spacing: 0.5px;
-  }
-  
-  /* Áreas de categoria */
-  .menu-section {
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-  }
-  
+
   .section-header {
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #888;
-    padding: 8px 20px 4px;
+    font-size: 12px;
   }
-  
-  /* Lista */
-  mat-list-item {
-    padding: 8px 20px;
-    font-size: 15px;
-    color: #333;
-    transition: background-color 0.25s ease;
-    border-radius: 4px;
-    margin: 4px 8px;
-  }
-  
-  mat-list-item:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-  
-  mat-icon[matListIcon] {
-    margin-right: 12px;
-    color: #666;
-  }
-  
-  /* Conteúdo principal */
-  .content-area {
-    flex: 1;
-    padding: 24px;
-    box-sizing: border-box;
-    background-color: #f3f4f6;
-    overflow: auto;
-  }
-  
-  /* Responsivo */
-  @media (max-width: 768px) {
-    .drawer {
-      width: 80vw;
-    }
-  
-    .menu-header {
-      font-size: 16px;
-    }
-  
-    .section-header {
-      font-size: 12px;
-    }
-  }
-  
+}

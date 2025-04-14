@@ -15,4 +15,56 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #f44336 !important;
     color: white !important;
   }
+
+  .content-area {
+    padding: 0 !important;
+  }
+
+  mat-toolbar {
+    --mat-toolbar-container-background-color: #121212 !important;
+    --mat-toolbar-container-text-color: w;
+    border-bottom: 3px solid #C4A000;
+  }
   
+  
+  mat-drawer-content {
+    background-color: #121212!important;
+  }
+
+  mat-paginator, 
+  mat-paginator * {
+    color: white !important;
+  }
+
+  .mat-paginator-navigation-previous,
+  .mat-paginator-navigation-next,
+  .mat-paginator-navigation-first,
+  .mat-paginator-navigation-last {
+    color: white !important;
+    fill: white !important; /* Para ícones SVG */
+  }
+
+  .mat-icon-button.mat-paginator-navigation-button {
+    color: white !important;
+  }
+
+
+ /*
+.content-area {
+    padding: 0 !important;
+    background-color: rgb(37, 36, 36) !important;
+  }
+  
+
+  mat-drawer-content {
+    background-color: rgb(37, 36, 36) !important;
+  }
+  
+  .mat-drawer-container {
+    background-color: rgb(37, 36, 36)!important;
+  }
+  
+  body, html {
+    background-color: rgb(37, 36, 36) !important;
+  }
+  */

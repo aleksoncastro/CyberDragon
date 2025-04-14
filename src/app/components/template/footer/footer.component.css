@@ -20,4 +20,6 @@ html, body {
   height: 50px;
   font-size: small;
   text-align: center;
+  background-color: rgb(37, 36, 36);
+  border-bottom: 0px;
 }

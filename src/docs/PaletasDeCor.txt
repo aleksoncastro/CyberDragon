@@ -1,0 +1,17 @@
+
+DARK MODERNA
+| Propósito              | Cor (Hex) | Nome Descritivo                   |
+|------------------------|-----------|-----------------------------------|
+| Fundo principal        | #121212   | Preto fosco                       |
+| Fundo secundário       | #1E1E1E   | Cinza carvão                      |
+| Cartões / Containers   | #2A2A2A   | Grafite escuro                    |
+| Texto primário         | #FFFFFF   | Branco puro                       |
+| Texto secundário       | #B3B3B3   | Cinza claro                       |
+| Icons / Destaque       | #C4A000   | Amarelo dourado (luxo)            |
+| Hover / Ação           | #FFD700   | Amarelo vibrante                  |
+| Erro / alerta          | #FF4C4C   | Vermelho alerta                   |
+| Sucesso                | #4CAF50   | Verde confirmação                 |
+| Cor de ação primária   | #FFB300   | Amarelo queimado                  |
+| Aviso / atenção        | #D85D3A   | Laranja queimado                  |
+| Borda / sombra sutil   | #34344A   | Cinza azulado sutil               |
+| Inputs ou containers	 | #5a5959   | Cinza claro                       |

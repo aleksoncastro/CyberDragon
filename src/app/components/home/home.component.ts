@@ -1,19 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [MatInputModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, MatCardModule],
+  imports: [ MatDrawerContainer,CommonModule, MatInputModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, MatCardModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
   summary = [
     { title: 'Funcionários', value: '12 ativos', icon: 'supervisor_account' },
     { title: 'Fornecedores', value: '5 cadastrados', icon: 'business' },

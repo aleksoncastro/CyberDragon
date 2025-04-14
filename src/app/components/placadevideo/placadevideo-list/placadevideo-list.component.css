@@ -1,153 +1,128 @@
-.toolbar-title {
-    flex: 1;
-    text-align: center;
-    white-space: nowrap;
+/* Toolbar */
+mat-toolbar {
+    background-color: #121212 !important; /* Fundo principal */
+    color: #FFFFFF !important; /* Texto primário */
+    border-bottom: 3px solid #C4A000; /* Cor de destaque */
 }
 
-mat-toolbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;  
+.toolbar-title {
+    color: #FFFFFF !important; /* Texto primário */
+    flex: 1;
+    text-align: center;
 }
 
 .flex-container {
     display: flex;
     align-items: center;
     width: 100%;
-    
+}
+
+.mais{
+    color:white;
+    background-color: #C4A000;
+}
+
+
+.pesquisa{
+    color:white;
+    background-color: #5a5959;
+    height: 50px;
+    border-radius: 8px;
+}
+
+.search-bar{
+    color:#B3B3B3  ;
+}
+
+.dados{
+    color: white;
+    background-color: #FFFFFF;
+}
+
+/* Tabela */
+table.mat-elevation-z8 {
+    background-color: #fff; /* Cartões / Containers */
+    color: black; /* Texto primário - Branca dentro da tabela */
 }
 
 .demo-table {
-    width: 100%;
-    overflow-x: auto;
-    display: block;
+    border: 24px solid #5a5959 ; /* Cor da borda */
+    border-radius: 8px; /* Cantos arredondados, opcional */
+    overflow: hidden; /* Garante que os cantos arredondados se apliquem */
 }
 
+.paginar{
+    color: white;
+}
+
+/* Headers da tabela */
+th.mat-header-cell {
+    background-color: #34344A; /* Borda / sombra sutil */
+    color: #FFFFFF; /* Texto primário */
+}
+
+/* Cores das células */
+td.mat-cell {
+    color: #FFFFFF; /* Texto primário - Branco dentro das células */
+}
+
+/* Borda da célula */
+td.mat-cell, th.mat-header-cell {
+    border-right: 1px solid #34344A; /* Borda / sombra sutil */
+}
+
+/* Hover nos itens da tabela */
+.mat-row:hover {
+    background-color: #1E1E1E; /* Fundo secundário */
+}
+
+/* Estilo de ícones na tabela */
+mat-icon {
+    color: #121212; /* Ícones ativos */
+}
+
+/* Botões de ação */
+button.mat-icon-button {
+    background-color: #C4A000; /* Cor de destaque */
+    color: #FFFFFF; /* Texto primário */
+}
+
+
+
+button.mat-icon-button:hover {
+    background-color: #FFD700; /* Hover / Ação */
+}
+
+/* Formulário de Pesquisa */
+.mat-form-field {
+    background-color: transparent; /* Fundo transparente */
+    color: #FFFFFF; /* Texto primário */
+    border-radius: 4px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    border-color: #34344A; /* Borda / sombra sutil */
+}
+
+/* Input */
+input.mat-input-element {
+    color: #B3B3B3; /* Texto secundário */
+    background-color: #1E1E1E; /* Fundo secundário */
+    border-radius: 4px;
+}
+
+/* Paginador */
 mat-paginator {
-    position: sticky;
-    bottom: 0;
-    z-index: 1000; 
-    background-color: white; 
+    background-color: #121212; /* Fundo principal */
+    color: #B3B3B3; /* Texto secundário */
+    border-top: 1px solid #34344A; /* Borda / sombra sutil */
 }
 
-.mat-column-id,
-.mat-column-sigla {
-    text-align: center;
+/* Paginador ao passar o mouse */
+mat-paginator:hover {
+    background-color: #1E1E1E; /* Fundo secundário */
 }
 
-.mat-column-acao {
-    justify-content: center;  
-    gap: 0.5rem;  
-    width: 10em;  
-    text-align: center; 
-}
-
-.mat-column-id {
-    width: 5em;
-    border-right: 1px solid currentColor;
-    padding-right: 24px;
-    text-align: center;
-}
-
-.mat-column-modelo,
-.mat-column-categoria,
-.mat-column-preco,
-.mat-column-resolucao,
-.mat-column-energia,
-.mat-column-descricao,
-.mat-column-idFan,
-.mat-column-compatibilidade,
-.mat-column-clockBase,
-.mat-column-clockBoost,
-.mat-column-suporteRayTracing,
-.mat-column-memoria,
-.mat-column-saidas,
-.mat-column-tamanho,
-.mat-column-fornecedor,
-.mat-column-listaImagem {
-    text-align: left; 
-}
-
-@media (max-width: 768px) {
-    .mat-column-acao {
-        width: auto; 
-        flex-direction: column; 
-        align-items: center; 
-        gap: 0.5rem;  
-    }
-
-    mat-toolbar {
-        position: static;  
-    }
-
-    mat-paginator {
-        position: static;  
-    }
-
-    .mat-column-id,
-    .mat-column-sigla,
-    .mat-column-modelo,
-    .mat-column-categoria,
-    .mat-column-preco,
-    .mat-column-resolucao,
-    .mat-column-energia,
-    .mat-column-descricao,
-    .mat-column-idFan,
-    .mat-column-compatibilidade,
-    .mat-column-clockBase,
-    .mat-column-clockBoost,
-    .mat-column-suporteRayTracing,
-    .mat-column-memoria,
-    .mat-column-saidas,
-    .mat-column-tamanho,
-    .mat-column-fornecedor,
-    .mat-column-listaImagem {
-        font-size: 0.9rem; 
-    }
-
-    mat-form-field {
-        width: 100%; 
-        margin: 8px 0; 
-    }
-
-    .toolbar-title {
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .mat-column-acao {
-        gap: 0.3rem; 
-    }
-
-    .mat-column-id,
-    .mat-column-sigla,
-    .mat-column-modelo,
-    .mat-column-categoria,
-    .mat-column-preco,
-    .mat-column-resolucao,
-    .mat-column-energia,
-    .mat-column-descricao,
-    .mat-column-idFan,
-    .mat-column-compatibilidade,
-    .mat-column-clockBase,
-    .mat-column-clockBoost,
-    .mat-column-suporteRayTracing,
-    .mat-column-memoria,
-    .mat-column-saidas,
-    .mat-column-tamanho,
-    .mat-column-fornecedor,
-    .mat-column-listaImagem {
-        font-size: 0.8rem; 
-    }
-
-    .flex-container {
-        flex-direction: column; 
-        align-items: center;
-    }
-
-    .mat-column-acao {
-        width: 100%; 
-        justify-content: space-evenly; 
-    }
+.botoes{
+    color: white;
 }

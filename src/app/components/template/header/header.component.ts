@@ -1,5 +1,5 @@
 import { SidebarService } from '../../../services/sidebar.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   standalone: true,
   imports: [
+    RouterLink,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,

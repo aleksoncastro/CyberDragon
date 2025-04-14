@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -46,11 +46,14 @@ export class PlacadevideoListComponent implements OnInit {
   page = 0;
   
 
+  
   constructor(private placaDeVideoService: PlacaDeVideoService) { }
-
+  
   ngOnInit(): void {
     this.carregarPlacasDeVideo();
   }
+  
+
 
   carregarPlacasDeVideo(): void {
     this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {

@@ -8,10 +8,15 @@ DARK MODERNA
 | Texto primário         | #FFFFFF   | Branco puro                       |
 | Texto secundário       | #B3B3B3   | Cinza claro                       |
 | Icons / Destaque       | #C4A000   | Amarelo dourado (luxo)            |
-| Hover / Ação           | #FFD700   | Amarelo vibrante                  |
+| Hover / Ação           | #5a5959   | Cinza claro                       |
 | Erro / alerta          | #FF4C4C   | Vermelho alerta                   |
 | Sucesso                | #4CAF50   | Verde confirmação                 |
 | Cor de ação primária   | #FFB300   | Amarelo queimado                  |
 | Aviso / atenção        | #D85D3A   | Laranja queimado                  |
 | Borda / sombra sutil   | #34344A   | Cinza azulado sutil               |
 | Inputs ou containers	 | #5a5959   | Cinza claro                       |
+
+sombras comandos{
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+}

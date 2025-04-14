@@ -1,128 +1,141 @@
 /* Toolbar */
 mat-toolbar {
-    background-color: #121212 !important; /* Fundo principal */
-    color: #FFFFFF !important; /* Texto primário */
-    border-bottom: 3px solid #C4A000; /* Cor de destaque */
-}
-
-.toolbar-title {
-    color: #FFFFFF !important; /* Texto primário */
+    color: #FFFFFF !important;
+    border-bottom: 3px solid #C4A000;
+    border-radius: 5px;
+  }
+  
+  .toolbar-title {
+    color: #FFFFFF !important;
     flex: 1;
     text-align: center;
-}
-
-.flex-container {
+  }
+  
+  .titulo-table {
+    color: #FFFFFF !important;
+    flex: 1;
+    text-align: center;
+    border-radius: 5px;
+    border-bottom: 0px;
+    transform: translateY(0px);
+  }
+  
+  .flex-container {
     display: flex;
     align-items: center;
     width: 100%;
-}
-
-.mais{
-    color:white;
+  }
+  
+  /* Botão de adicionar */
+  .mais {
+    color: white;
     background-color: #C4A000;
-}
-
-
-.pesquisa{
-    color:white;
-    background-color: #5a5959;
-    height: 50px;
+  }
+  
+  /* Campo de pesquisa */
+  .pesquisa {
+    color: white;
+    background-color: #2A2A2A;
+    height: 55px;
     border-radius: 8px;
-}
-
-.search-bar{
-    color:#B3B3B3  ;
-}
-
-.dados{
-    color: white;
-    background-color: #FFFFFF;
-}
-
-/* Tabela */
-table.mat-elevation-z8 {
-    background-color: #fff; /* Cartões / Containers */
-    color: black; /* Texto primário - Branca dentro da tabela */
-}
-
-.demo-table {
-    border: 24px solid #5a5959 ; /* Cor da borda */
-    border-radius: 8px; /* Cantos arredondados, opcional */
-    overflow: hidden; /* Garante que os cantos arredondados se apliquem */
-}
-
-.paginar{
-    color: white;
-}
-
-/* Headers da tabela */
-th.mat-header-cell {
-    background-color: #34344A; /* Borda / sombra sutil */
-    color: #FFFFFF; /* Texto primário */
-}
-
-/* Cores das células */
-td.mat-cell {
-    color: #FFFFFF; /* Texto primário - Branco dentro das células */
-}
-
-/* Borda da célula */
-td.mat-cell, th.mat-header-cell {
-    border-right: 1px solid #34344A; /* Borda / sombra sutil */
-}
-
-/* Hover nos itens da tabela */
-.mat-row:hover {
-    background-color: #1E1E1E; /* Fundo secundário */
-}
-
-/* Estilo de ícones na tabela */
-mat-icon {
-    color: #121212; /* Ícones ativos */
-}
-
-/* Botões de ação */
-button.mat-icon-button {
-    background-color: #C4A000; /* Cor de destaque */
-    color: #FFFFFF; /* Texto primário */
-}
-
-
-
-button.mat-icon-button:hover {
-    background-color: #FFD700; /* Hover / Ação */
-}
-
-/* Formulário de Pesquisa */
-.mat-form-field {
-    background-color: transparent; /* Fundo transparente */
-    color: #FFFFFF; /* Texto primário */
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+  }
+  
+  .search-bar {
+    color: #B3B3B3;
+  }
+  
+  /* Tabela */
+  table.mat-elevation-z8 {
+    background-color: #121212;
+    color: rgb(0, 0, 0);
+  }
+  
+  .demo-table {
+    overflow: hidden;
+    transform: translateY(-4px);
+  }
+  
+  .tabela-com-label {
+    width: 100%;
+  }
+  
+  .colunas {
+    color: #FFFFFF;
+  }
+  
+  /* Headers da tabela */
+  th.mat-header-cell {
+    background-color: #34344A;
+    color: #FFFFFF;
+  }
+  
+  /* Cores das células */
+  td.mat-cell {
+    color: #FFFFFF;
+  }
+  
+  /* Borda da célula */
+  td.mat-cell,
+  th.mat-header-cell {
+    border-right: 1px solid #34344A;
+  }
+  
+  /* Hover nos itens da tabela */
+  .mat-row:hover {
+    background-color: #1E1E1E;
+  }
+  
+  /* Estilo de ícones */
+  mat-icon {
+    color: #C4A000;
+  }
+  
+  /* Botões de ação */
+  button.mat-icon-button {
+    background-color: #C4A000;
+    color: #FFFFFF;
+  }
+  
+  button.mat-icon-button:hover {
+    background-color: #FFD700;
+  }
+  
+  /* Input */
+  input.mat-input-element {
+    color: #B3B3B3;
+    background-color: #1E1E1E;
     border-radius: 4px;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline {
-    border-color: #34344A; /* Borda / sombra sutil */
-}
-
-/* Input */
-input.mat-input-element {
-    color: #B3B3B3; /* Texto secundário */
-    background-color: #1E1E1E; /* Fundo secundário */
+    height: 70px;
+  }
+  
+  /* Formulário */
+  .mat-form-field {
+    background-color: transparent;
+    color: #FFFFFF;
     border-radius: 4px;
-}
-
-/* Paginador */
-mat-paginator {
-    background-color: #121212; /* Fundo principal */
-    color: #B3B3B3; /* Texto secundário */
-    border-top: 1px solid #34344A; /* Borda / sombra sutil */
-}
-
-/* Paginador ao passar o mouse */
-mat-paginator:hover {
-    background-color: #1E1E1E; /* Fundo secundário */
-}
-
-.botoes{
+  }
+  
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    border-color: #34344A;
+  }
+  
+  /* Paginador */
+  mat-paginator {
+    background-color: #2A2A2A;
+    color: #B3B3B3;
+    border-top: 1px solid #34344A;
+    border-radius: 5px;
+  }
+  
+  mat-paginator:hover {
+    background-color: #5a5959;
+  }
+  
+  .botoes {
     color: white;
-}
+  }
+
+  
+  

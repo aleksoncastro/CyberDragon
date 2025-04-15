@@ -17,6 +17,7 @@
 </mat-form-field>
 
 <div class="tabela-container">
+  
   <mat-toolbar color="primary" class="titulo-table">
     <div class="flex-container">
       <span class="toolbar-title">Placas de Vídeo</span>
@@ -147,7 +148,7 @@
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
     
     </table>
 

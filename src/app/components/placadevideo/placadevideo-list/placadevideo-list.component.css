@@ -1,141 +1,291 @@
 /* Toolbar */
 mat-toolbar {
-    color: #FFFFFF !important;
-    border-bottom: 3px solid #C4A000;
-    border-radius: 5px;
-  }
-  
-  .toolbar-title {
-    color: #FFFFFF !important;
-    flex: 1;
+  color: var(--texto-primario) !important;
+  border-bottom: 3px solid var(--icone-destaque);
+  border-radius: 5px;
+}
+
+.toolbar-title {
+  color: var(--texto-primario) !important;
+  flex: 1;
+  text-align: center;
+}
+
+.titulo-table {
+  color: var(--texto-primario) !important;
+  flex: 1;
+  text-align: center;
+  border-radius: 5px;
+  border-bottom: 0px;
+  transform: translateY(0px);
+  height: 40px;
+  width: auto;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+/* Botão de adicionar */
+.mais {
+  color: var(--texto-primario);
+  background-color: var(--icone-destaque);
+}
+
+/* Campo de pesquisa */
+.pesquisa {
+  color: var(--texto-primario);
+  background-color: var(--cartao-container);
+  height: 55px;
+  border-radius: 8px;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2); /* pode manter como efeito */
+}
+
+.search-bar {
+  color: var(--texto-secundario);
+}
+
+/* Tabela */
+table.mat-elevation-z8 {
+  background-color: var(--fundo-principal);
+}
+
+.demo-table {
+  transform: translateY(-4px);
+  width: 100%;
+  overflow-x: auto;
+  display: block;
+
+}
+
+.tabela-com-label {
+  width: 100%;
+}
+
+.colunas {
+  color: var(--texto-primario);
+}
+
+/* Headers da tabela */
+th.mat-header-cell {
+  background-color: var(--borda-sombra);
+  color: var(--texto-primario);
+}
+
+/* Cores das células */
+td.mat-cell {
+  color: var(--texto-primario);
+}
+
+/* Borda da célula */
+td.mat-cell,
+th.mat-header-cell {
+  border-right: 1px solid var(--borda-sombra);
+}
+
+
+/* Estilo de ícones */
+mat-icon {
+  color: var(--icone-destaque);
+  display: flex;
+  border-radius: 15px;
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+mat-icon:hover {
+  border-radius: 15px;
+  transform: scale(1.5);
+}
+
+button.mat-fab.accent:hover{
+  border-radius: 15px;
+  transform: scale(3.5);
+}
+/* Input */
+input.mat-input-element {
+  color: var(--texto-secundario);
+  background-color: var(--fundo-secundario);
+  border-radius: 4px;
+  height: 70px;
+}
+
+
+/* Formulário */
+.mat-form-field {
+  background-color: transparent;
+  color: var(--texto-primario);
+  border-radius: 4px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: var(--borda-sombra);
+}
+
+/* Paginador */
+mat-paginator {
+  background-color: var(--cartao-container);
+  color: var(--texto-secundario);
+  border-top: 1px solid var(--borda-sombra);
+  border-radius: 5px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000; 
+
+}
+
+mat-paginator:hover {
+  background-color: var(--hover-acao);
+}
+
+.botoes {
+  color: var(--texto-primario);
+}
+
+.mat-column-acao {
+  justify-content: center;  
+  gap: 0.5rem;  
+  width: 10em;  
+  text-align: center; 
+}
+
+.mat-column-id,
+.mat-column-sigla {
     text-align: center;
-  }
-  
+}
+
+.mat-column-id {
+  width: 5em;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+.mat-column-modelo,
+.mat-column-categoria,
+.mat-column-preco,
+.mat-column-resolucao,
+.mat-column-energia,
+.mat-column-descricao,
+.mat-column-idFan,
+.mat-column-compatibilidade,
+.mat-column-clockBase,
+.mat-column-clockBoost,
+.mat-column-suporteRayTracing,
+.mat-column-memoria,
+.mat-column-saidas,
+.mat-column-tamanho,
+.mat-column-fornecedor,
+.mat-column-listaImagem {
+  text-align: left; 
+}
+
+.pesquisa {
+  width: 25% !important;
+  margin: 80px auto;
+}
+
+table.mat-elevation-z8 {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
   .titulo-table {
-    color: #FFFFFF !important;
-    flex: 1;
+    font-size: 14px;
+    flex-direction: column;
     text-align: center;
-    border-radius: 5px;
-    border-bottom: 0px;
-    transform: translateY(0px);
   }
   
-  .flex-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  
+  mat-toolbar {
+    position: static;  
   }
   
-  /* Botão de adicionar */
-  .mais {
-    color: white;
-    background-color: #C4A000;
-  }
-  
-  /* Campo de pesquisa */
-  .pesquisa {
-    color: white;
-    background-color: #2A2A2A;
-    height: 55px;
-    border-radius: 8px;
-    transform: translateY(-4px);
-    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
-  }
-  
-  .search-bar {
-    color: #B3B3B3;
-  }
-  
-  /* Tabela */
-  table.mat-elevation-z8 {
-    background-color: #121212;
-    color: rgb(0, 0, 0);
-  }
-  
-  .demo-table {
-    overflow: hidden;
-    transform: translateY(-4px);
-  }
-  
-  .tabela-com-label {
-    width: 100%;
-  }
-  
-  .colunas {
-    color: #FFFFFF;
-  }
-  
-  /* Headers da tabela */
-  th.mat-header-cell {
-    background-color: #34344A;
-    color: #FFFFFF;
-  }
-  
-  /* Cores das células */
-  td.mat-cell {
-    color: #FFFFFF;
-  }
-  
-  /* Borda da célula */
-  td.mat-cell,
-  th.mat-header-cell {
-    border-right: 1px solid #34344A;
-  }
-  
-  /* Hover nos itens da tabela */
-  .mat-row:hover {
-    background-color: #1E1E1E;
-  }
-  
-  /* Estilo de ícones */
-  mat-icon {
-    color: #C4A000;
-  }
-  
-  /* Botões de ação */
-  button.mat-icon-button {
-    background-color: #C4A000;
-    color: #FFFFFF;
-  }
-  
-  button.mat-icon-button:hover {
-    background-color: #FFD700;
-  }
-  
-  /* Input */
-  input.mat-input-element {
-    color: #B3B3B3;
-    background-color: #1E1E1E;
-    border-radius: 4px;
-    height: 70px;
-  }
-  
-  /* Formulário */
-  .mat-form-field {
-    background-color: transparent;
-    color: #FFFFFF;
-    border-radius: 4px;
-  }
-  
-  .mat-form-field-appearance-outline .mat-form-field-outline {
-    border-color: #34344A;
-  }
-  
-  /* Paginador */
   mat-paginator {
-    background-color: #2A2A2A;
-    color: #B3B3B3;
-    border-top: 1px solid #34344A;
-    border-radius: 5px;
-  }
-  
-  mat-paginator:hover {
-    background-color: #5a5959;
-  }
-  
-  .botoes {
-    color: white;
+    position: static;  
+}
+
+.mat-column-id,
+    .mat-column-sigla,
+    .mat-column-modelo,
+    .mat-column-categoria,
+    .mat-column-preco,
+    .mat-column-resolucao,
+    .mat-column-energia,
+    .mat-column-descricao,
+    .mat-column-idFan,
+    .mat-column-compatibilidade,
+    .mat-column-clockBase,
+    .mat-column-clockBoost,
+    .mat-column-suporteRayTracing,
+    .mat-column-memoria,
+    .mat-column-saidas,
+    .mat-column-tamanho,
+    .mat-column-fornecedor,
+    .mat-column-listaImagem {
+        font-size: 0.9rem; 
   }
 
-  
-  
+  mat-form-field {
+    width: 100%; 
+    margin: 8px 0; 
+}
+
+.toolbar-title {
+    font-size: 1.2rem;
+}
+
+  .acoes-botoes {
+    flex-direction: row;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mat-column-acao {
+      gap: 0.3rem; 
+  }
+
+  .mat-column-id,
+  .mat-column-sigla,
+  .mat-column-modelo,
+  .mat-column-categoria,
+  .mat-column-preco,
+  .mat-column-resolucao,
+  .mat-column-energia,
+  .mat-column-descricao,
+  .mat-column-idFan,
+  .mat-column-compatibilidade,
+  .mat-column-clockBase,
+  .mat-column-clockBoost,
+  .mat-column-suporteRayTracing,
+  .mat-column-memoria,
+  .mat-column-saidas,
+  .mat-column-tamanho,
+  .mat-column-fornecedor,
+  .mat-column-listaImagem {
+      font-size: 0.8rem; 
+  }
+
+  .flex-container {
+      flex-direction: column; 
+      align-items: center;
+  }
+
+  .mat-column-acao {
+      width: 100%; 
+      justify-content: space-evenly; 
+  }
+}
+
+tr.mat-row:hover {
+  background-color: var(--hover-acao); /* Verde claro suave, troque por outra cor se quiser */
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+
+

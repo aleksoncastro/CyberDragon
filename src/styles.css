@@ -20,6 +20,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 24px !important;
   }
 
+
+  :root {
+    --fundo-principal: #121212;
+    --fundo-secundario: #1E1E1E;
+    --cartao-container: #2A2A2A;
+    --texto-primario: #FFFFFF;
+    --texto-secundario: #B3B3B3;
+    --icone-destaque: #C4A000;
+    --hover-acao: #5a5959;
+    --erro-alerta: #FF4C4C;
+    --sucesso: #4CAF50;
+    --acao-primaria: #FFB300;
+    --aviso-atencao: #D85D3A;
+    --borda-sombra: #34344A;
+    --input-container: #5a5959;
+  }
+  
+
   mat-toolbar {
     --mat-toolbar-container-background-color: #2A2A2A  !important;
     --mat-toolbar-container-text-color: w;

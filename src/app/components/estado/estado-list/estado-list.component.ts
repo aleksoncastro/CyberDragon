@@ -22,7 +22,7 @@ export class EstadoListComponent implements OnInit {
   estados: Estado[] = [];
   // variaveis de controle de paginação
   totalRecords= 0;
-  pageSize = 4;
+  pageSize = 10;
   page =0;
   formGroup: any;
   router: any;

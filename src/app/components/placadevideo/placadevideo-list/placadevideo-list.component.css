@@ -43,7 +43,7 @@ mat-toolbar {
   height: 55px;
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2); /* pode manter como efeito */
+  box-shadow: 0 4px 8px var(--box-shadow); /* pode manter como efeito */
 }
 
 .search-bar {
@@ -71,21 +71,9 @@ table.mat-elevation-z8 {
   color: var(--texto-primario);
 }
 
-/* Headers da tabela */
-th.mat-header-cell {
-  background-color: var(--borda-sombra);
-  color: var(--texto-primario);
-}
-
-/* Cores das células */
-td.mat-cell {
-  color: var(--texto-primario);
-}
-
-/* Borda da célula */
-td.mat-cell,
-th.mat-header-cell {
-  border-right: 1px solid var(--borda-sombra);
+.header{
+  background-color: var(--fundo-secundario);
+  color: var(--texto-secundario)
 }
 
 
@@ -106,6 +94,22 @@ button.mat-fab.accent:hover{
   border-radius: 15px;
   transform: scale(3.5);
 }
+
+button.mais {
+  transition: transform 0.3s ease;
+}
+
+button.mais:hover {
+  transform: scale(1.2); /* aumenta 20% */
+  background-color: var(--hover-botao);
+}
+
+button.mais:hover mat-icon {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+  background-color: var(--hover-botao);
+}
+
 /* Input */
 input.mat-input-element {
   color: var(--texto-secundario);
@@ -135,6 +139,7 @@ mat-paginator {
   position: sticky;
   bottom: 0;
   z-index: 1000; 
+  position: static;
 
 }
 
@@ -204,9 +209,6 @@ table.mat-elevation-z8 {
     position: static;  
   }
   
-  mat-paginator {
-    position: static;  
-}
 
 .mat-column-id,
     .mat-column-sigla,

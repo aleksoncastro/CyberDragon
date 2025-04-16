@@ -1,59 +1,74 @@
 <mat-toolbar color="primary">
     <div class="flex-container">
-        <span class="toolbar-title"> Controle de Estados </span>
-        <button mat-fab color="accent" routerLink="/admin/estados/new">
-            <mat-icon>add</mat-icon>
-        </button>
+      <span class="toolbar-title">Controle de Estados</span>
+      <button mat-fab class="mais" color="accent" routerLink="/admin/estados/new">
+        <mat-icon class="mais">add</mat-icon>
+      </button>
     </div>
-</mat-toolbar>
-
-<!-- Campo de pesquisa -->
-<mat-form-field appearance="outline" style="margin: 16px; width: 300px;">
-    <mat-label>Pesquisar</mat-label>
-    <input matInput (keyup)="filtrar($event)">
+  </mat-toolbar>
+  
+  <!-- Campo de pesquisa -->
+  <mat-form-field appearance="outline" style="margin: 16px; width: 300px;" class="pesquisa">
+    <mat-label class="search-bar">Pesquisar</mat-label>
+    <input matInput (keyup)="filtrar($event)" class="input">
     <button mat-icon-button matSuffix disabled>
-        <mat-icon>search</mat-icon>
+      <mat-icon>search</mat-icon>
     </button>
-</mat-form-field>
-
-<table mat-table [dataSource]="estadosFiltrados" class="mat-elevation-z8">
-
-    <!-- id Column -->
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> Id </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- nome Column -->
-    <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-    </ng-container>
-
-    <!-- sigla Column -->
-    <ng-container matColumnDef="sigla">
-        <th mat-header-cell *matHeaderCellDef> Sigla </th>
-        <td mat-cell *matCellDef="let element"> {{element.sigla}} </td>
-    </ng-container>
-
-    <!-- acao Column -->
-    <ng-container matColumnDef="acao">
-        <th mat-header-cell *matHeaderCellDef> Ação </th>
-        <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary" routerLink="/admin/estados/edit/{{element.id}}">
-                <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="excluir(element)">
-                <mat-icon>delete</mat-icon>
-            </button>
+  </mat-form-field>
+  
+  <div class="tabela-container">
+  
+    <mat-toolbar color="primary" class="titulo-table">
+      <div class="flex-container">
+        <span class="toolbar-title">Lista de Estados</span>
+      </div>
+    </mat-toolbar>
+  
+    <table mat-table [dataSource]="estadosFiltrados" class="mat-elevation-z8 demo-table tabela-com-label">
+  
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Id </th>
+        <td mat-cell *matCellDef="let element" class="colunas"> {{element.id}} </td>
+      </ng-container>
+  
+      <!-- nome Column -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Nome </th>
+        <td mat-cell *matCellDef="let element" class="colunas"> {{element.nome}} </td>
+      </ng-container>
+  
+      <!-- sigla Column -->
+      <ng-container matColumnDef="sigla">
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Sigla </th>
+        <td mat-cell *matCellDef="let element" class="colunas"> {{element.sigla}} </td>
+      </ng-container>
+  
+      <!-- acao Column -->
+      <ng-container matColumnDef="acao">
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Ação </th>
+        <td mat-cell *matCellDef="let element" class="colunas">
+          <button mat-icon-button color="primary" routerLink="/admin/estados/edit/{{element.id}}" class="botoes">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluir(element)" class="botoes">
+            <mat-icon>delete</mat-icon>
+          </button>
         </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-</table>
-
-<mat-paginator [pageSizeOptions]="[2, 4, 8, 16]" [pageSize]="pageSize" [length]="totalRecords" [pageIndex]="page"
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
+  
+    </table>
+  
+  </div>
+  
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20, 30]"
+    [pageSize]="pageSize"
+    [length]="totalRecords"
+    [pageIndex]="page"
     (page)="paginar($event)">
-</mat-paginator>
+  </mat-paginator>
+  

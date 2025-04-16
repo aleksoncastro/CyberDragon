@@ -21,7 +21,7 @@ export class MunicipioListComponent implements OnInit {
   municipios: Municipio[] = [];
   // Variáveis de controle de paginação
   totalRecords = 0; 
-  pageSize = 5;
+  pageSize = 10;
   page = 0;
   formGroup: any;
   router: any;

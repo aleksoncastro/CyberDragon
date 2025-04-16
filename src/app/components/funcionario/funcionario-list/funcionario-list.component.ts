@@ -17,12 +17,12 @@ import { FuncionarioService } from '../../../services/funcionario.service';
   styleUrl: './funcionario-list.component.css'
 })
 export class FuncionarioListComponent {
-  displayedColumns: string[] = ['id', 'nome', 'dataNascimento', 'statusFuncionario']
+  displayedColumns: string[] = ['id', 'nome', 'dataNascimento', 'statusFuncionario', 'acao']
   funcionarios: Funcionario[] = []
 
   // variaveis de controle de paginação
   totalRecords = 0;
-  pageSize = 2;
+  pageSize = 10;
   page = 0;
 
   constructor(private funcionarioService: FuncionarioService) { }

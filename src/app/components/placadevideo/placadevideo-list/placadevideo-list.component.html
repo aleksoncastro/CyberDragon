@@ -27,85 +27,85 @@
   
     <!-- ID Column -->
     <ng-container matColumnDef="id" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Id </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Id </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.id}} </td>
     </ng-container>
     
     <!-- Modelo Column -->
     <ng-container matColumnDef="modelo" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Modelo </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Modelo </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.modelo}} </td>
     </ng-container>
     
     <!-- Categoria Column -->
     <ng-container matColumnDef="categoria" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Categoria </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Categoria </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.categoria}} </td>
     </ng-container>
     
     <!-- Preço Column -->
     <ng-container matColumnDef="preco" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Preço </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Preço </th>
       <td mat-cell *matCellDef="let element" class="colunas"> R$ {{element.preco | number:'1.2-2'}} </td>
     </ng-container>
     
     <!-- Resolução Column -->
     <ng-container matColumnDef="resolucao" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Resolução </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Resolução </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.resolucao}} </td>
     </ng-container>
     
     <!-- Energia Column -->
     <ng-container matColumnDef="energia" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Energia (W) </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Energia (W) </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.energia}} W </td>
     </ng-container>
     
     <!-- Descrição Column -->
     <ng-container matColumnDef="descricao" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Descrição </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Descrição </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.descricao}} </td>
     </ng-container>
     
     <!-- Quantidade de Fans Column -->
     <ng-container matColumnDef="idFan" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Fans </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Fans </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.fan?.label}} </td>
     </ng-container>
     
     <!-- Compatibilidade Column -->
     <ng-container matColumnDef="compatibilidade" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Compatibilidade </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Compatibilidade </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.compatibilidade}} </td>
     </ng-container>
     
     <!-- Clock Base Column -->
     <ng-container matColumnDef="clockBase" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Clock Base (MHz) </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Clock Base (MHz) </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.clockBase | number:'1.0-0'}} MHz</td>
     </ng-container>
     
     <!-- Clock Boost Column -->
     <ng-container matColumnDef="clockBoost" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Clock Boost (MHz) </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Clock Boost (MHz) </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.clockBoost | number:'1.0-0'}} MHz</td>
     </ng-container>
     
     <!-- Suporte Ray Tracing Column -->
     <ng-container matColumnDef="suporteRayTracing" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Ray Tracing </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Ray Tracing </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.suporteRayTracing ? 'Sim' : 'Não'}} </td>
     </ng-container>
     
     <!-- Memória Column -->
     <ng-container matColumnDef="memoria" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Memória </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Memória </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.memoria.tipo}} - {{element.memoria.capacidade}} GB </td>
     </ng-container>
     
     <!-- Saídas de Vídeo Column -->
     <ng-container matColumnDef="saidas" class="dados">
-      <th mat-header-cell *matHeaderCellDef class="colunas"> Saídas de Vídeo </th>
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Saídas de Vídeo </th>
       <td mat-cell *matCellDef="let element" class="colunas">
         <span *ngFor="let saida of element.saidas; let i = index">
           {{saida.tipo}}<span *ngIf="i < element.saidas.length - 1">, </span>
@@ -116,19 +116,19 @@
     
       <!-- Tamanho Column -->
       <ng-container matColumnDef="tamanho">
-        <th mat-header-cell *matHeaderCellDef class="colunas"> Tamanho </th>
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Tamanho </th>
         <td mat-cell *matCellDef="let element" class="colunas"> {{element.tamanho.largura}}x{{element.tamanho.altura}} mm</td>
       </ng-container>
     
       <!-- Fornecedor Column -->
       <ng-container matColumnDef="fornecedor">
-        <th mat-header-cell *matHeaderCellDef class="colunas"> Fornecedor </th>
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Fornecedor </th>
         <td mat-cell *matCellDef="let element" class="colunas"> {{element.fornecedor.nome}} </td>
       </ng-container>
     
       <!-- Lista de Imagens Column -->
       <ng-container matColumnDef="listaImagem">
-        <th mat-header-cell *matHeaderCellDef class="colunas"> Imagens </th>
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Imagens </th>
         <td mat-cell *matCellDef="let element" class="colunas">
           <img *ngIf="element.listaImagem?.length > 0" [src]="element.listaImagem[0]" alt="Imagem" width="50">
         </td>
@@ -136,7 +136,7 @@
     
       <!-- Ações Column -->
       <ng-container matColumnDef="acao">
-        <th mat-header-cell *matHeaderCellDef class="colunas"> Ação </th>
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Ação </th>
         <td mat-cell *matCellDef="let element" class="colunas">
           <button mat-icon-button color="primary" routerLink="/admin/placasdevideo/edit/{{element.id}}" class="botoes">
             <mat-icon>edit</mat-icon>
@@ -147,7 +147,7 @@
         </td>
       </ng-container>
     
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
     
     </table>
@@ -158,7 +158,7 @@
   [length]="totalRecords"
   [pageSize]="pageSize"
   [pageIndex]="page"
-  [pageSizeOptions]="[5, 10, 20]"
+  [pageSizeOptions]="[5, 10, 20, 30]"
   showFirstLastButtons
   (page)="paginar($event)">
 </mat-paginator>

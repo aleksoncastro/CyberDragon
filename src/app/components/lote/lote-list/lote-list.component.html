@@ -1,63 +1,84 @@
 <mat-toolbar color="primary">
-    <div class="flex-container">
-      <span class="toolbar-title">Controle de Lotes</span>
-      <button mat-fab class="accent" routerLink="/admin/lotes/new">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-  </mat-toolbar>
+  <div class="flex-container">
+    <span class="toolbar-title">Controle de Lotes</span>
+    <button mat-fab class="mais" routerLink="/admin/lotes/new">
+      <mat-icon class="mais">add</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
 
-  <!-- Campo de pesquisa -->
-<mat-form-field appearance="outline" style="margin: 16px; width: 300px;">
-  <mat-label>Pesquisar</mat-label>
-  <input matInput (keyup)="filtrar($event)">
+<!-- Campo de pesquisa -->
+<mat-form-field appearance="outline" style="margin: 16px; width: 300px;" class="pesquisa">
+  <mat-label class="search-bar">Pesquisar</mat-label>
+  <input matInput (keyup)="filtrar($event)" class="input">
   <button mat-icon-button matSuffix disabled>
     <mat-icon>search</mat-icon>
   </button>
 </mat-form-field>
+<div class="tabela-container">
   
-  <table mat-table [dataSource]="lotesFiltrados" class="mat-elevation-z8">
+  <mat-toolbar color="primary" class="titulo-table">
+    <div class="flex-container">
+      <span class="toolbar-title">Lista de Lotes</span>
+    </div>
+  </mat-toolbar>
+
+  <table mat-table [dataSource]="lotesFiltrados" class="mat-elevation-z8 demo-table tabela-com-label">
+
+    <!-- Id -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
-      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      <th mat-header-cell *matHeaderCellDef class="header-table">Id</th>
+      <td mat-cell *matCellDef="let element" class="colunas mat-column-id">{{ element.id }}</td>
     </ng-container>
-  
+
+    <!-- Código -->
     <ng-container matColumnDef="codigo">
-      <th mat-header-cell *matHeaderCellDef>Código</th>
-      <td mat-cell *matCellDef="let element">{{ element.codigo }}</td>
+      <th mat-header-cell *matHeaderCellDef class="header-table">Código</th>
+      <td mat-cell *matCellDef="let element" class="colunas mat-column-nome">{{ element.codigo }}</td>
     </ng-container>
-  
+
+    <!-- Estoque -->
     <ng-container matColumnDef="estoque">
-      <th mat-header-cell *matHeaderCellDef>Estoque</th>
-      <td mat-cell *matCellDef="let element">{{ element.estoque }}</td>
+      <th mat-header-cell *matHeaderCellDef class="header-table">Estoque</th>
+      <td mat-cell *matCellDef="let element" class="colunas">{{ element.estoque }}</td>
     </ng-container>
-  
+
+    <!-- Data de Fabricação -->
     <ng-container matColumnDef="dataFabricacao">
-      <th mat-header-cell *matHeaderCellDef>Data de Fabricação</th>
-      <td mat-cell *matCellDef="let element">{{ element.dataFabricacao }}</td>
+      <th mat-header-cell *matHeaderCellDef class="header-table">Data de Fabricação</th>
+      <td mat-cell *matCellDef="let element" class="colunas">{{ element.dataFabricacao }}</td>
     </ng-container>
-  
+
+    <!-- Placa de Vídeo -->
     <ng-container matColumnDef="placaDeVideo">
-      <th mat-header-cell *matHeaderCellDef>Placa de Vídeo</th>
-      <td mat-cell *matCellDef="let element">{{ element.placaDeVideo?.modelo }}</td>
+      <th mat-header-cell *matHeaderCellDef class="header-table">Placa de Vídeo</th>
+      <td mat-cell *matCellDef="let element" class="colunas">{{ element.placaDeVideo?.modelo }}</td>
     </ng-container>
-  
+
+    <!-- Ação -->
     <ng-container matColumnDef="acao">
-      <th mat-header-cell *matHeaderCellDef>Ação</th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-icon-button color="primary" routerLink="/admin/lotes/edit/{{ element.id }}">
+      <th mat-header-cell *matHeaderCellDef class="header-table">Ação</th>
+      <td mat-cell *matCellDef="let element" class="colunas mat-column-acao">
+        <button mat-icon-button color="primary" routerLink="/admin/lotes/edit/{{ element.id }}" class="botoes">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="excluir(element.id)">
+        <button mat-icon-button color="warn" (click)="excluir(element)" class="botoes">
           <mat-icon>delete</mat-icon>
         </button>
       </td>
     </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Cabeçalhos e linhas -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
   </table>
-  
-  <mat-paginator [pageSizeOptions]="[2, 4, 8, 16]" pageSize="pageSize" [length]="totalRecords" (page)="paginar($event)">
-  </mat-paginator>
-  
+</div>
+
+<!-- Paginador -->
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 20, 30]"
+  [pageSize]="pageSize"
+  [length]="totalRecords"
+  [pageIndex]="page"
+  (page)="paginar($event)">
+</mat-paginator>

@@ -22,7 +22,7 @@ export class LoteListComponent implements OnInit {
 
   // Variáveis de controle de paginação
   totalRecords = 0;
-  pageSize = 2;
+  pageSize = 10;
   page = 0;
 
   constructor(private loteService: LoteService) { }

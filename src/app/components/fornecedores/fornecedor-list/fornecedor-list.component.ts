@@ -22,7 +22,7 @@ export class FornecedorListComponent implements OnInit {
 
   // variaveis de controle de paginação
   totalRecords = 0;
-  pageSize = 2;
+  pageSize = 10;
   page = 0;
 
 

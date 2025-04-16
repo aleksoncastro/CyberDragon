@@ -160,9 +160,9 @@ mat-paginator:hover {
   border-right: 1px solid currentColor;
   padding-right: 24px;
   text-align: center;
+  color: var(--texto-primario);
 }
 
-.mat-column-id,
 .mat-column-nome,
 .mat-column-cnpj,
 .mat-column-email {

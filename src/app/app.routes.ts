@@ -17,7 +17,7 @@ import { UsuarioFormFuncionarioComponent } from './components/usuario/usuario-fo
 import { fornecedorResolver } from './components/fornecedores/fornecedor.resolver';
 import { municipioResolver } from './components/municipio/municipio.resolver';
 import { FuncionarioListComponent } from './components/funcionario/funcionario-list/funcionario-list.component';
-import { placadevideoResolver } from './components/placadevideo/placaDeVideo.resolver';
+import { placadevideoResolver } from './components/placadevideo/placadevideo.resolver';
 import { PlacadevideoVitrineComponent } from './components/placadevideo/placadevideo-vitrine/placadevideo-vitrine.component';
 import { HomeComponent } from './components/home/home.component';
 

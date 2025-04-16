@@ -1,22 +1,155 @@
-/* Container do topo */
-.flex-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 16px;
+/* Toolbar */
+mat-toolbar {
+    color: var(--texto-primario) !important;
+    border-bottom: 3px solid var(--icone-destaque);
+    border-radius: 5px;
 }
 
 .toolbar-title {
-    font-size: 1.25rem;
-    font-weight: 500;
+    color: var(--texto-primario) !important;
+    flex: 1;
     text-align: center;
-    flex-grow: 1;
+}
+
+.titulo-table {
+    color: var(--texto-primario) !important;
+    flex: 1;
+    text-align: center;
+    border-radius: 5px;
+    border-bottom: 0px;
+    transform: translateY(0px);
+    height: 40px;
+    width: auto;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* Botão de adicionar */
+.mais {
+    color: var(--texto-primario);
+    background-color: var(--icone-destaque);
+    transition: transform 0.3s ease;
+}
+
+button.mais:hover {
+    transform: scale(1.2);
+    background-color: var(--hover-botao);
+}
+
+button.mais:hover mat-icon {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+    background-color: var(--hover-botao);
+}
+
+/* Campo de pesquisa */
+.pesquisa {
+    color: var(--texto-primario);
+    background-color: var(--cartao-container);
+    height: 55px;
+    border-radius: 8px;
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px var(--box-shadow);
+    /* pode manter como efeito */
+}
+
+.colunas {
+    color: var(--texto-primario);
+}
+
+.header {
+    background-color: var(--fundo-secundario);
+    color: var(--texto-secundario)
+}
+
+.search-bar {
+    color: var(--texto-secundario);
 }
 
 /* Tabela */
-table {
+table.mat-elevation-z8 {
+    background-color: var(--fundo-principal);
+    font-size: 12px;
+}
+
+.demo-table {
+    transform: translateY(-4px);
     width: 100%;
+    overflow-x: auto;
+}
+
+.tabela-com-label {
+    width: 100%;
+}
+
+.colunas {
+    color: var(--texto-primario);
+}
+
+.header {
+    background-color: var(--fundo-secundario);
+    color: var(--texto-secundario);
+}
+
+/* Estilo de ícones */
+mat-icon {
+    color: var(--icone-destaque);
+    display: flex;
+    border-radius: 15px;
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+mat-icon:hover {
+    border-radius: 15px;
+    transform: scale(1.5);
+}
+
+/* Input */
+input.mat-input-element {
+    color: var(--texto-secundario);
+    background-color: var(--fundo-secundario);
+    border-radius: 4px;
+    height: 70px;
+}
+
+/* Formulário */
+.mat-form-field {
+    background-color: transparent;
+    color: var(--texto-primario);
+    border-radius: 4px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    border-color: var(--borda-sombra);
+}
+
+/* Paginador */
+mat-paginator {
+    background-color: var(--cartao-container);
+    color: var(--texto-secundario);
+    border-top: 1px solid var(--borda-sombra);
+    border-radius: 5px;
+    position: static;
+}
+
+mat-paginator:hover {
+    background-color: var(--hover-acao);
+}
+
+.botoes {
+    color: var(--texto-primario);
+}
+
+/* Colunas */
+.mat-column-acao {
+    justify-content: center;
+    gap: 0.5rem;
+    width: 10em;
+    text-align: center;
 }
 
 .mat-column-id {
@@ -24,30 +157,74 @@ table {
     border-right: 1px solid currentColor;
     padding-right: 24px;
     text-align: center;
+    color: var(--texto-primario);
 }
 
-.mat-column-nome {
-    width: 40%;
-}
-
+.mat-column-nome,
 .mat-column-estado {
-    width: 35%;
+    text-align: left;
+    color: var(--texto-primario);
 }
 
 .mat-column-acao {
-    width: 10em;
     text-align: center;
+    color: var(--texto-primario);
 }
 
-/* Campo de pesquisa */
-mat-form-field {
-    margin: 16px;
-    width: 300px;
+/* Responsividade */
+@media (max-width: 768px) {
+    .titulo-table {
+        font-size: 14px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    mat-toolbar {
+        position: static;
+    }
+
+    .mat-column-id,
+    .mat-column-nome,
+    .mat-column-estado {
+        font-size: 0.9rem;
+    }
+
+    mat-form-field {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    .toolbar-title {
+        font-size: 1.2rem;
+    }
+
+    .acoes-botoes {
+        flex-direction: row;
+        gap: 4px;
+    }
 }
 
-/* Alinhamento geral */
-mat-header-cell,
-mat-cell {
-    padding: 8px;
-    word-wrap: break-word;
+@media (max-width: 480px) {
+    .mat-column-acao {
+        gap: 0.3rem;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .mat-column-id,
+    .mat-column-nome,
+    .mat-column-estado {
+        font-size: 0.8rem;
+    }
+
+    .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+tr.mat-row:hover {
+    background-color: var(--hover-acao);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
 }

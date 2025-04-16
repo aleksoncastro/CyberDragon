@@ -34,6 +34,7 @@ export class FornecedorListComponent implements OnInit {
     this.fornecedorService.findAll(this.page, this.pageSize).subscribe(
       data => {
         console.log('Dados recebidos:', data);  // Adicione um log para verificar os dados recebidos
+        this.fornecedores = data;
         this.fornecedoresFiltrados = data;
       },
       error => {

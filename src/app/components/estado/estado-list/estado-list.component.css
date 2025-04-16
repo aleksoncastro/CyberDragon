@@ -28,8 +28,6 @@ mat-toolbar {
     width: 100%;
   }
   
-  
-  
   /* Botão de adicionar */
   .mais {
     color: var(--texto-primario);
@@ -157,11 +155,6 @@ mat-toolbar {
     text-align: center; 
   }
   
-  .mat-column-id,
-  .mat-column-sigla {
-    text-align: center;
-  }
-  
   .mat-column-id {
     width: 5em;
     border-right: 1px solid currentColor;
@@ -169,7 +162,6 @@ mat-toolbar {
     text-align: center;
   }
   
-    .mat-column-id,
     .mat-column-nome,
     .mat-column-sigla{
     text-align: left; 

@@ -33,8 +33,7 @@ export class PlacadevideoListComponent implements OnInit {
     'suporteRayTracing', 
     'memoria', 
     'tamanho', 
-    'fornecedor', 
-    'listaImagem', 
+    'fornecedor',  
     'acao'
   ];
   placasDeVideo: PlacaDeVideo[] = [];

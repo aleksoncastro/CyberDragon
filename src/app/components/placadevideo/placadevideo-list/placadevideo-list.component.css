@@ -28,8 +28,6 @@ mat-toolbar {
   width: 100%;
 }
 
-
-
 /* Botão de adicionar */
 .mais {
   color: var(--texto-primario);

@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-placadevideo-vitrine',
   standalone: true,
-  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatProgressSpinnerModule, FormsModule],
+  imports: [MatInputModule, MatPaginatorModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatProgressSpinnerModule, FormsModule],
   templateUrl: './placadevideo-vitrine.component.html',
   styleUrl: './placadevideo-vitrine.component.css'
 })

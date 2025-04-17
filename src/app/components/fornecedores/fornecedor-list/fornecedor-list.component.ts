@@ -68,6 +68,11 @@ export class FornecedorListComponent implements OnInit {
     );
   }
 
+  formatarCnpj(cnpj: string): string {
+    if (!cnpj) return '';
+    return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+  }  
+
   paginar(event: PageEvent): void {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;

@@ -13,15 +13,12 @@ mat-toolbar {
 
 .titulo-table {
   color: var(--texto-primario) !important;
-  flex: 1;
-  text-align: center;
   border-radius: 5px;
-  border-bottom: 0px;
-  transform: translateY(0px);
   height: 40px;
   width: auto;
 }
 
+/* Flex Container */
 .flex-container {
   display: flex;
   align-items: center;
@@ -32,17 +29,29 @@ mat-toolbar {
 .mais {
   color: var(--texto-primario);
   background-color: var(--icone-destaque);
+  transition: transform 0.3s ease;
+}
+
+button.mais:hover {
+  transform: scale(1.2);
+  background-color: var(--hover-botao);
+}
+
+button.mais:hover mat-icon {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+  background-color: var(--hover-botao);
 }
 
 /* Campo de pesquisa */
 .pesquisa {
+  height: 55px;
   color: var(--texto-primario);
   background-color: var(--cartao-container);
-  height: 55px;
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--fundo-principal);
-  width: 25% !important;
+  box-shadow: 0 4px 8px var(--box-shadow);
+  width: 300px !important;
   margin: 80px auto;
 }
 
@@ -50,20 +59,24 @@ mat-toolbar {
   color: var(--texto-secundario);
 }
 
+input.mat-input-element {
+  color: var(--texto-secundario);
+  background-color: var(--fundo-secundario);
+  border-radius: 4px;
+  height: 70px;
+}
+
 /* Tabela */
 table.mat-elevation-z8 {
   background-color: var(--fundo-principal);
   font-size: 12px;
-}
-
-.demo-table {
-  transform: translateY(-4px);
   width: 100%;
-  overflow-x: auto;
 }
 
+.demo-table,
 .tabela-com-label {
   width: 100%;
+  overflow-x: auto;
 }
 
 .colunas {
@@ -84,47 +97,7 @@ mat-icon {
 }
 
 mat-icon:hover {
-  border-radius: 15px;
   transform: scale(1.5);
-}
-
-button.mat-fab.accent:hover {
-  border-radius: 15px;
-  transform: scale(3.5);
-}
-
-button.mais {
-  transition: transform 0.3s ease;
-}
-
-button.mais:hover {
-  transform: scale(1.2);
-  background-color: var(--hover-botao);
-}
-
-button.mais:hover mat-icon {
-  transform: scale(1.2);
-  transition: transform 0.3s ease;
-  background-color: var(--hover-botao);
-}
-
-/* Input */
-input.mat-input-element {
-  color: var(--texto-secundario);
-  background-color: var(--fundo-secundario);
-  border-radius: 4px;
-  height: 70px;
-}
-
-/* Formulário */
-.mat-form-field {
-  background-color: transparent;
-  color: var(--texto-primario);
-  border-radius: 4px;
-}
-
-.mat-form-field-appearance-outline .mat-form-field-outline {
-  border-color: var(--borda-sombra);
 }
 
 /* Paginador */
@@ -133,16 +106,15 @@ mat-paginator {
   color: var(--texto-secundario);
   border-top: 1px solid var(--borda-sombra);
   border-radius: 5px;
-  position: sticky;
-  bottom: 0;
-  z-index: 1000;
   position: static;
+  z-index: 1000;
 }
 
 mat-paginator:hover {
   background-color: var(--hover-acao);
 }
 
+/* Botões */
 .botoes {
   color: var(--texto-primario);
 }
@@ -160,21 +132,18 @@ mat-paginator:hover {
   border-right: 1px solid currentColor;
   padding-right: 24px;
   text-align: center;
-  color: var(--texto-primario);
 }
 
 .mat-column-nome,
 .mat-column-cnpj,
 .mat-column-email {
   text-align: left;
-  color: var(--texto-primario);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
   .titulo-table {
     font-size: 14px;
-    flex-direction: column;
     text-align: center;
   }
 
@@ -224,6 +193,7 @@ mat-paginator:hover {
   }
 }
 
+/* Efeito hover na linha da tabela */
 tr.mat-row:hover {
   background-color: var(--hover-acao);
   transition: background-color 0.3s ease;

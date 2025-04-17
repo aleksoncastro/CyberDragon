@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, LOCALE_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -8,11 +8,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { Funcionario } from '../../../models/funcionario';
 import { FuncionarioService } from '../../../services/funcionario.service';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-funcionario-list',
-  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
+  imports: [ DatePipe, MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
   templateUrl: './funcionario-list.component.html',
   styleUrl: './funcionario-list.component.css'
 })

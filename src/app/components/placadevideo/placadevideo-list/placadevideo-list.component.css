@@ -12,14 +12,11 @@ mat-toolbar {
 }
 
 .titulo-table {
+  background-color: var(--fundo-secundario);
   color: var(--texto-primario) !important;
-  flex: 1;
-  text-align: center;
   border-radius: 5px;
-  border-bottom: 0px;
-  transform: translateY(0px);
   height: 40px;
-  width: auto;
+  padding: 8px 0;
 }
 
 .flex-container {
@@ -36,12 +33,14 @@ mat-toolbar {
 
 /* Campo de pesquisa */
 .pesquisa {
+  height: 55px;
   color: var(--texto-primario);
   background-color: var(--cartao-container);
-  height: 55px;
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--fundo-principal); /* pode manter como efeito */
+  box-shadow: 0 4px 8px var(--box-shadow);
+  width: 300px !important;
+  margin: 80px auto;
 }
 
 .search-bar {
@@ -58,7 +57,6 @@ table.mat-elevation-z8 {
   width: 100%;
   overflow-x: auto;
   display: block;
-
 }
 
 .tabela-com-label {
@@ -69,11 +67,10 @@ table.mat-elevation-z8 {
   color: var(--texto-primario);
 }
 
-.header{
+.header {
   background-color: var(--fundo-secundario);
-  color: var(--texto-secundario)
+  color: var(--texto-secundario);
 }
-
 
 /* Estilo de ícones */
 mat-icon {
@@ -88,7 +85,7 @@ mat-icon:hover {
   transform: scale(1.5);
 }
 
-button.mat-fab.accent:hover{
+button.mat-fab.accent:hover {
   border-radius: 15px;
   transform: scale(3.5);
 }
@@ -98,7 +95,7 @@ button.mais {
 }
 
 button.mais:hover {
-  transform: scale(1.2); /* aumenta 20% */
+  transform: scale(1.1);
   background-color: var(--hover-botao);
 }
 
@@ -115,7 +112,6 @@ input.mat-input-element {
   border-radius: 4px;
   height: 70px;
 }
-
 
 /* Formulário */
 .mat-form-field {
@@ -136,9 +132,7 @@ mat-paginator {
   border-radius: 5px;
   position: sticky;
   bottom: 0;
-  z-index: 1000; 
-  position: static;
-
+  z-index: 1000;
 }
 
 mat-paginator:hover {
@@ -150,15 +144,15 @@ mat-paginator:hover {
 }
 
 .mat-column-acao {
-  justify-content: center;  
-  gap: 0.5rem;  
-  width: 10em;  
-  text-align: center; 
+  justify-content: center;
+  gap: 0.5rem;
+  width: 10em;
+  text-align: center;
 }
 
 .mat-column-id,
 .mat-column-sigla {
-    text-align: center;
+  text-align: center;
 }
 
 .mat-column-id {
@@ -167,6 +161,7 @@ mat-paginator:hover {
   padding-right: 24px;
   text-align: center;
 }
+
 .mat-column-modelo,
 .mat-column-categoria,
 .mat-column-preco,
@@ -183,12 +178,7 @@ mat-paginator:hover {
 .mat-column-tamanho,
 .mat-column-fornecedor,
 .mat-column-listaImagem {
-  text-align: left; 
-}
-
-.pesquisa {
-  width: 25% !important;
-  margin: 80px auto;
+  text-align: left;
 }
 
 table.mat-elevation-z8 {
@@ -201,52 +191,9 @@ table.mat-elevation-z8 {
     flex-direction: column;
     text-align: center;
   }
-  
-  
+
   mat-toolbar {
-    position: static;  
-  }
-  
-
-.mat-column-id,
-    .mat-column-sigla,
-    .mat-column-modelo,
-    .mat-column-categoria,
-    .mat-column-preco,
-    .mat-column-resolucao,
-    .mat-column-energia,
-    .mat-column-descricao,
-    .mat-column-idFan,
-    .mat-column-compatibilidade,
-    .mat-column-clockBase,
-    .mat-column-clockBoost,
-    .mat-column-suporteRayTracing,
-    .mat-column-memoria,
-    .mat-column-saidas,
-    .mat-column-tamanho,
-    .mat-column-fornecedor,
-    .mat-column-listaImagem {
-        font-size: 0.9rem; 
-  }
-
-  mat-form-field {
-    width: 100%; 
-    margin: 8px 0; 
-}
-
-.toolbar-title {
-    font-size: 1.2rem;
-}
-
-  .acoes-botoes {
-    flex-direction: row;
-    gap: 4px;
-  }
-}
-
-@media (max-width: 480px) {
-  .mat-column-acao {
-      gap: 0.3rem; 
+    position: static;
   }
 
   .mat-column-id,
@@ -267,22 +214,63 @@ table.mat-elevation-z8 {
   .mat-column-tamanho,
   .mat-column-fornecedor,
   .mat-column-listaImagem {
-      font-size: 0.8rem; 
+    font-size: 0.9rem;
+  }
+
+  mat-form-field {
+    width: 100%;
+    margin: 8px 0;
+  }
+
+  .toolbar-title {
+    font-size: 1.2rem;
+  }
+
+  .acoes-botoes {
+    flex-direction: row;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mat-column-acao {
+    gap: 0.3rem;
+  }
+
+  .mat-column-id,
+  .mat-column-sigla,
+  .mat-column-modelo,
+  .mat-column-categoria,
+  .mat-column-preco,
+  .mat-column-resolucao,
+  .mat-column-energia,
+  .mat-column-descricao,
+  .mat-column-idFan,
+  .mat-column-compatibilidade,
+  .mat-column-clockBase,
+  .mat-column-clockBoost,
+  .mat-column-suporteRayTracing,
+  .mat-column-memoria,
+  .mat-column-saidas,
+  .mat-column-tamanho,
+  .mat-column-fornecedor,
+  .mat-column-listaImagem {
+    font-size: 0.8rem;
   }
 
   .flex-container {
-      flex-direction: column; 
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .mat-column-acao {
-      width: 100%; 
-      justify-content: space-evenly; 
+    width: 100%;
+    justify-content: space-evenly;
   }
 }
 
 tr.mat-row:hover {
-  background-color: var(--hover-acao); /* Verde claro suave, troque por outra cor se quiser */
+  background-color: var(--hover-acao);
   transition: background-color 0.3s ease;
   cursor: pointer;
 }

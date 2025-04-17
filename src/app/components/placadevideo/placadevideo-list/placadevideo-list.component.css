@@ -41,7 +41,7 @@ mat-toolbar {
   height: 55px;
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--box-shadow); /* pode manter como efeito */
+  box-shadow: 0 4px 8px var(--fundo-principal); /* pode manter como efeito */
 }
 
 .search-bar {
@@ -285,6 +285,90 @@ tr.mat-row:hover {
   background-color: var(--hover-acao); /* Verde claro suave, troque por outra cor se quiser */
   transition: background-color 0.3s ease;
   cursor: pointer;
+}
+
+
+
+
+.mat-column-acao{
+  width: 10%;
+}
+
+
+
+.detalhes-card{
+  background-color: var(--fundo-secundario);
+  width: 80%;
+  height: auto;
+}
+
+
+
+/* Estilo para a imagem principal */
+.main-image {
+  width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-placa {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: flex-start;
+}
+
+.card-section {
+  flex: 1 1 300px; /* ocupa no mínimo 300px, quebra se não couber */
+}
+
+/* Estilo para as imagens adicionais */
+.additional-images {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.additional-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+h4 {
+  margin-top: 0;
+}
+
+/* Estilo de bloqueio da tela */
+body.modal-open {
+  overflow: hidden;
+}
+
+body.modal-open .overlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* escurece o fundo */
+  z-index: 999; /* abaixo do card mas acima de tudo */
 }
 
 

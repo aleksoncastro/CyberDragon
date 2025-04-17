@@ -9,11 +9,13 @@ import { RouterLink } from '@angular/router';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { FornecedorService } from '../../../services/fornecedor.service';
 
 @Component({
   selector: 'app-placadevideo-list',
   standalone: true,
-  imports: [ MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule],
+  imports: [ MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatCardModule],
   templateUrl: './placadevideo-list.component.html',
   styleUrl: './placadevideo-list.component.css'
 })
@@ -44,15 +46,39 @@ export class PlacadevideoListComponent implements OnInit {
   pageSize = 10;
   page = 0;
   
+  placaSelecionada: PlacaDeVideo | null = null;
+
+  fanLabels: { [key: number]: string } = {
+    0: 'Single',
+    1: 'Double',
+    2: 'Triple'
+  };
+
+  fornecedorMap: { [id: number]: string } = {};
+
 
   
-  constructor(private placaDeVideoService: PlacaDeVideoService) { }
+  constructor(private placaDeVideoService: PlacaDeVideoService,
+    private fornecedorService: FornecedorService,
+    public placaService: PlacaDeVideoService
+  ) { }
   
   ngOnInit(): void {
+    this.fornecedorService.findAll().subscribe(fornecedores => {
+      fornecedores.forEach(f => {
+        if (f.id !== undefined) {
+          this.fornecedorMap[f.id] = f.nome;
+        }
+      });
+    });
+
     this.carregarPlacasDeVideo();
   }
-  
 
+  ngOnChanges() {
+    document.body.style.overflow = this.placaSelecionada ? 'hidden' : '';
+  }
+  
 
   carregarPlacasDeVideo(): void {
     this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
@@ -76,4 +102,12 @@ export class PlacadevideoListComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.carregarPlacasDeVideo();
   }
+
+  verDetalhes(id: number): void {
+    this.placaDeVideoService.findById(id).subscribe(data => {
+      console.log("Detalhes da placa:", data);
+      this.placaSelecionada = data;
+    });
+  }
+  
 }

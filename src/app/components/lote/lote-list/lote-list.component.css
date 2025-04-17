@@ -41,7 +41,7 @@ mat-toolbar {
   height: 55px;
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  box-shadow: 0 4px 8px var(--fundo-principal);
   width: 25% !important;
   margin: 80px auto;
 }

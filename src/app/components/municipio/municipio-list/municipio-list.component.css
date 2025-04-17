@@ -53,7 +53,7 @@ button.mais:hover mat-icon {
     height: 55px;
     border-radius: 8px;
     transform: translateY(-4px);
-    box-shadow: 0 4px 8px var(--box-shadow);
+    box-shadow: 0 4px 8px var(--fundo-principal);
     /* pode manter como efeito */
 }
 

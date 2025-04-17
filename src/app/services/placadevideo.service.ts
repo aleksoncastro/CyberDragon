@@ -29,11 +29,19 @@ export class PlacaDeVideoService {
 
   }
 
+  getImagemUrl(nome: string): string {
+    const url = `http://localhost:8080/placasdevideo/imagens/placasdevideo/${nome}`;
+    console.log("Gerando URL da imagem:", url);
+    return url;
+
+  }
+  
+
   count(): Observable<number> {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
-  findById(id: string): Observable<PlacaDeVideo> {
+  findById(id: number): Observable<PlacaDeVideo> {
     return this.httpClient.get<PlacaDeVideo>(`${this.baseUrl}/${id}`);
   }
 

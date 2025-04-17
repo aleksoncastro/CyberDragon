@@ -12,97 +12,98 @@
   <mat-label class="search-bar">Pesquisar</mat-label>
   <input matInput (keyup)="filtrar($event)" class="input">
   <button mat-icon-button matSuffix disabled>
-      <mat-icon>search</mat-icon>
+    <mat-icon>search</mat-icon>
   </button>
 </mat-form-field>
 
-<div class="tabela-container">
-  
+<div class="tabela-container" style="position: relative;">
+
   <mat-toolbar color="primary" class="titulo-table">
     <div class="flex-container">
       <span class="toolbar-title">Placas de Vídeo</span>
     </div>
   </mat-toolbar>
   <table mat-table [dataSource]="placasDeVideoFiltradas" class="mat-elevation-z8 demo-table tabela-com-label">
-  
+
     <!-- ID Column -->
     <ng-container matColumnDef="id" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Id </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.id}} </td>
     </ng-container>
-    
+
     <!-- Modelo Column -->
     <ng-container matColumnDef="modelo" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Modelo </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.modelo}} </td>
     </ng-container>
-    
+
     <!-- Categoria Column -->
     <ng-container matColumnDef="categoria" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Categoria </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.categoria}} </td>
     </ng-container>
-    
+
     <!-- Preço Column -->
     <ng-container matColumnDef="preco" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Preço </th>
       <td mat-cell *matCellDef="let element" class="colunas"> R$ {{element.preco | number:'1.2-2'}} </td>
     </ng-container>
-    
+
     <!-- Resolução Column -->
     <ng-container matColumnDef="resolucao" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Resolução </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.resolucao}} </td>
     </ng-container>
-    
+
     <!-- Energia Column -->
     <ng-container matColumnDef="energia" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Energia (W) </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.energia}} W </td>
     </ng-container>
-    
+
     <!-- Descrição Column -->
     <ng-container matColumnDef="descricao" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Descrição </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.descricao}} </td>
     </ng-container>
-    
+
     <!-- Quantidade de Fans Column -->
     <ng-container matColumnDef="idFan" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Fans </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.fan?.label}} </td>
     </ng-container>
-    
+
     <!-- Compatibilidade Column -->
     <ng-container matColumnDef="compatibilidade" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Compatibilidade </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.compatibilidade}} </td>
     </ng-container>
-    
+
     <!-- Clock Base Column -->
     <ng-container matColumnDef="clockBase" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Clock Base (MHz) </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.clockBase | number:'1.0-0'}} MHz</td>
     </ng-container>
-    
+
     <!-- Clock Boost Column -->
     <ng-container matColumnDef="clockBoost" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Clock Boost (MHz) </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.clockBoost | number:'1.0-0'}} MHz</td>
     </ng-container>
-    
+
     <!-- Suporte Ray Tracing Column -->
     <ng-container matColumnDef="suporteRayTracing" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Ray Tracing </th>
       <td mat-cell *matCellDef="let element" class="colunas"> {{element.suporteRayTracing ? 'Sim' : 'Não'}} </td>
     </ng-container>
-    
+
     <!-- Memória Column -->
     <ng-container matColumnDef="memoria" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Memória </th>
-      <td mat-cell *matCellDef="let element" class="colunas"> {{element.memoria.tipo}} - {{element.memoria.capacidade}} GB </td>
+      <td mat-cell *matCellDef="let element" class="colunas"> {{element.memoria.tipo}} - {{element.memoria.capacidade}}
+        GB </td>
     </ng-container>
-    
+
     <!-- Saídas de Vídeo Column -->
     <ng-container matColumnDef="saidas" class="dados">
       <th mat-header-cell *matHeaderCellDef class="header-table"> Saídas de Vídeo </th>
@@ -112,53 +113,136 @@
         </span>
       </td>
     </ng-container>
+
+
+    <!-- Tamanho Column -->
+    <ng-container matColumnDef="tamanho">
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Tamanho </th>
+      <td mat-cell *matCellDef="let element" class="colunas"> {{element.tamanho.largura}}x{{element.tamanho.altura}} mm
+      </td>
+    </ng-container>
+
+    <!-- Fornecedor Column -->
+    <ng-container matColumnDef="fornecedor">
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Fornecedor </th>
+      <td mat-cell *matCellDef="let element" class="colunas"> {{element.fornecedor.nome}} </td>
+    </ng-container>
+
+    <!-- Lista de Imagens Column -->
+    <ng-container matColumnDef="listaImagem">
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Imagens </th>
+      <td mat-cell *matCellDef="let element" class="colunas">
+        <img *ngIf="element.listaImagem?.length > 0" [src]="element.listaImagem[0]" alt="Imagem" width="50">
+      </td>
+    </ng-container>
+
+    <!-- Ações Column -->
+    <ng-container matColumnDef="acao">
+      <th mat-header-cell *matHeaderCellDef class="header-table"> Ação </th>
+      <td mat-cell *matCellDef="let element" class="colunas">
+        <button mat-icon-button color="primary" routerLink="/admin/placasdevideo/edit/{{element.id}}" class="botoes">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" class="botoes">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" class="botoes" (click)="verDetalhes(element.id)">
+          <mat-icon>info</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
+
+
+  </table>
+
+  <div class="overlay" *ngIf="placaSelecionada" (click)="placaSelecionada = null"></div>
+
+  <mat-card *ngIf="placaSelecionada" class="detalhes-card"
+  style="position: fixed; top: 5%; left: 260px; right: 5%; z-index: 1000; margin: auto;">
+    <mat-card-header>
+      <mat-card-title>Detalhes da Placa: {{ placaSelecionada.modelo }}</mat-card-title>
+      <button mat-icon-button (click)="placaSelecionada = null" style="margin-left: auto;">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <mat-card-content class="card-placa">
+  <!-- Container principal com imagem + info -->
+  <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px;">
+    <!-- Imagem principal -->
+    <div class="card-section">
+      <h4>Imagens</h4>
+      <img [src]="placaService.getImagemUrl(placaSelecionada.listaImagem[0])"
+           alt="Imagem da placa"
+           class="main-image"
+           *ngIf="placaSelecionada.listaImagem && placaSelecionada.listaImagem.length > 0">
+    </div>
+
+    <!-- Imagens adicionais -->
+    <div *ngIf="placaSelecionada.listaImagem && placaSelecionada.listaImagem.length > 1"
+         class="additional-images card-section">
+      <img *ngFor="let img of placaSelecionada.listaImagem.slice(1)"
+           [src]="placaService.getImagemUrl(img)"
+           alt="Imagem extra"
+           class="additional-image">
+    </div>
+
+    <!-- Informações principais -->
+    <div class="card-section">
+      <h4>Informações</h4>
+      <p><strong>Categoria:</strong> {{ placaSelecionada.categoria }}</p>
+      <p><strong>Preço:</strong> R$ {{ placaSelecionada.preco | number:'1.2-2' }}</p>
+      <p><strong>Resolução:</strong> {{ placaSelecionada.resolucao }}</p>
+      <p><strong>Energia:</strong> {{ placaSelecionada.energia }} W</p>
+      <p><strong>Clock Base:</strong> {{ placaSelecionada.clockBase }} GHz</p>
+      <p><strong>Clock Boost:</strong> {{ placaSelecionada.clockBoost }} GHz</p>
+      <p><strong>Ray Tracing:</strong> {{ placaSelecionada.suporteRayTracing ? 'Sim' : 'Não' }}</p>
+    </div>
+
+    <div class="card-section">
+      <h4>Mais Detalhes</h4>
+      <p><strong>Compatibilidade:</strong> {{ placaSelecionada.compatibilidade }}</p>
+      <p><strong>Descrição:</strong> {{ placaSelecionada.descricao }}</p>
+      <p><strong>Fans:</strong> {{ fanLabels[placaSelecionada.idFan] }}</p>
+      <p><strong>Fornecedor:</strong> {{ fornecedorMap[placaSelecionada.idFornecedor] }}</p>
+    </div>
+
+    <div class="card-section">
+      <h4>Memória</h4>
+      <p><strong>Tipo:</strong> {{ placaSelecionada.memoria.tipoMemoria }}</p>
+      <p><strong>Capacidade:</strong> {{ placaSelecionada.memoria.capacidade }} GB</p>
+      <p><strong>Largura de Banda:</strong> {{ placaSelecionada.memoria.larguraBanda }} bit</p>
+      <p><strong>Velocidade:</strong> {{ placaSelecionada.memoria.velocidadeMemoria }} MHz</p>
+    </div>
+
+    <div class="card-section">
+      <h4>Tamanho</h4>
+      <p><strong>Largura:</strong> {{ placaSelecionada.tamanho.largura }} mm</p>
+      <p><strong>Altura:</strong> {{ placaSelecionada.tamanho.altura }} mm</p>
+      <p><strong>Comprimento:</strong> {{ placaSelecionada.tamanho.comprimento }} mm</p>
+    </div>
+
+    <div class="card-section">
+      <h4>Saídas de Vídeo</h4>
+      <p *ngIf="placaSelecionada.saidas.length > 0">
+        <span *ngFor="let saida of placaSelecionada.saidas; let i = index">
+          {{ saida.tipoMemoria }}<span *ngIf="i < placaSelecionada.saidas.length - 1">, </span>
+        </span>
+      </p>
+      <p *ngIf="placaSelecionada.saidas.length === 0">Nenhuma saída de vídeo cadastrada.</p>
+    </div>
+  </div>
+</mat-card-content>
     
-    
-      <!-- Tamanho Column -->
-      <ng-container matColumnDef="tamanho">
-        <th mat-header-cell *matHeaderCellDef class="header-table"> Tamanho </th>
-        <td mat-cell *matCellDef="let element" class="colunas"> {{element.tamanho.largura}}x{{element.tamanho.altura}} mm</td>
-      </ng-container>
-    
-      <!-- Fornecedor Column -->
-      <ng-container matColumnDef="fornecedor">
-        <th mat-header-cell *matHeaderCellDef class="header-table"> Fornecedor </th>
-        <td mat-cell *matCellDef="let element" class="colunas"> {{element.fornecedor.nome}} </td>
-      </ng-container>
-    
-      <!-- Lista de Imagens Column -->
-      <ng-container matColumnDef="listaImagem">
-        <th mat-header-cell *matHeaderCellDef class="header-table"> Imagens </th>
-        <td mat-cell *matCellDef="let element" class="colunas">
-          <img *ngIf="element.listaImagem?.length > 0" [src]="element.listaImagem[0]" alt="Imagem" width="50">
-        </td>
-      </ng-container>
-    
-      <!-- Ações Column -->
-      <ng-container matColumnDef="acao">
-        <th mat-header-cell *matHeaderCellDef class="header-table"> Ação </th>
-        <td mat-cell *matCellDef="let element" class="colunas">
-          <button mat-icon-button color="primary" routerLink="/admin/placasdevideo/edit/{{element.id}}" class="botoes">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" class="botoes" >
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
-    
-    </table>
+  </mat-card>
+
+
 
 </div>
 
-<mat-paginator
-  [length]="totalRecords"
-  [pageSize]="pageSize"
-  [pageIndex]="page"
-  [pageSizeOptions]="[5, 10, 20, 30]"
-  showFirstLastButtons
-  (page)="paginar($event)">
+<mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageIndex]="page" [pageSizeOptions]="[5, 10, 20, 30]"
+  showFirstLastButtons (page)="paginar($event)">
 </mat-paginator>

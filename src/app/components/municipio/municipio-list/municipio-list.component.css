@@ -1,34 +1,25 @@
-/* Toolbar */
+/* --- Toolbar Geral --- */
 mat-toolbar {
     color: var(--texto-primario) !important;
     border-bottom: 3px solid var(--icone-destaque);
     border-radius: 5px;
-}
-
-.toolbar-title {
-    color: var(--texto-primario) !important;
-    flex: 1;
-    text-align: center;
-}
-
-.titulo-table {
-    color: var(--texto-primario) !important;
-    flex: 1;
-    text-align: center;
-    border-radius: 5px;
-    border-bottom: 0px;
-    transform: translateY(0px);
-    height: 40px;
-    width: auto;
+    padding: 0 1rem;
 }
 
 .flex-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
 }
 
-/* Botão de adicionar */
+.toolbar-title {
+    color: var(--texto-primario);
+    text-align: center;
+    flex: 1;
+}
+
+/* --- Botão "Adicionar" --- */
 .mais {
     color: var(--texto-primario);
     background-color: var(--icone-destaque);
@@ -43,51 +34,50 @@ button.mais:hover {
 button.mais:hover mat-icon {
     transform: scale(1.2);
     transition: transform 0.3s ease;
-    background-color: var(--hover-botao);
 }
 
-/* Campo de pesquisa */
+/* --- Campo de Pesquisa --- */
 .pesquisa {
+    height: 55px;
     color: var(--texto-primario);
     background-color: var(--cartao-container);
-    height: 55px;
     border-radius: 8px;
     transform: translateY(-4px);
     box-shadow: 0 4px 8px var(--box-shadow);
-    /* pode manter como efeito */
-}
-
-.colunas {
-    color: var(--texto-primario);
-}
-
-.header {
-    background-color: var(--fundo-secundario);
-    color: var(--texto-secundario)
+    width: 300px !important;
+    margin: 80px auto;
 }
 
 .search-bar {
     color: var(--texto-secundario);
 }
 
-/* Tabela */
+input.mat-input-element {
+    color: var(--texto-secundario);
+    background-color: var(--fundo-secundario);
+    border-radius: 4px;
+}
+
+/* --- Título da Tabela --- */
+.titulo-table {
+    background-color: var(--fundo-secundario);
+    color: var(--texto-primario) !important;
+    border-radius: 5px;
+    height: 40px;
+    padding: 8px 0;
+}
+
+/* --- Tabela --- */
+.tabela-container {
+    padding: 1rem;
+}
+
 table.mat-elevation-z8 {
     background-color: var(--fundo-principal);
-    font-size: 12px;
-}
-
-.demo-table {
-    transform: translateY(-4px);
     width: 100%;
+    font-size: 13px;
+    border-radius: 4px;
     overflow-x: auto;
-}
-
-.tabela-com-label {
-    width: 100%;
-}
-
-.colunas {
-    color: var(--texto-primario);
 }
 
 .header {
@@ -95,7 +85,33 @@ table.mat-elevation-z8 {
     color: var(--texto-secundario);
 }
 
-/* Estilo de ícones */
+.colunas {
+    color: var(--texto-primario);
+}
+
+/* --- Colunas Específicas --- */
+.mat-column-id {
+    width: 5em;
+    text-align: center;
+    padding-right: 24px;
+    border-right: 1px solid currentColor;
+}
+
+.mat-column-nome,
+.mat-column-estado {
+    text-align: left;
+}
+
+.mat-column-acao {
+    text-align: center;
+    width: 10em;
+}
+
+/* --- Ícones de Ação --- */
+.botoes {
+    color: var(--texto-primario);
+}
+
 mat-icon {
     color: var(--icone-destaque);
     display: flex;
@@ -104,83 +120,46 @@ mat-icon {
 }
 
 mat-icon:hover {
-    border-radius: 15px;
     transform: scale(1.5);
 }
 
-/* Input */
-input.mat-input-element {
-    color: var(--texto-secundario);
-    background-color: var(--fundo-secundario);
-    border-radius: 4px;
-    height: 70px;
+/* --- Linha Hover --- */
+tr.mat-row:hover {
+    background-color: var(--hover-acao);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
-/* Formulário */
+/* --- Form Field Geral --- */
 .mat-form-field {
     background-color: transparent;
     color: var(--texto-primario);
-    border-radius: 4px;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline {
     border-color: var(--borda-sombra);
 }
 
-/* Paginador */
+/* --- Paginador --- */
 mat-paginator {
     background-color: var(--cartao-container);
     color: var(--texto-secundario);
     border-top: 1px solid var(--borda-sombra);
     border-radius: 5px;
-    position: static;
 }
 
 mat-paginator:hover {
     background-color: var(--hover-acao);
 }
 
-.botoes {
-    color: var(--texto-primario);
-}
-
-/* Colunas */
-.mat-column-acao {
-    justify-content: center;
-    gap: 0.5rem;
-    width: 10em;
-    text-align: center;
-}
-
-.mat-column-id {
-    width: 5em;
-    border-right: 1px solid currentColor;
-    padding-right: 24px;
-    text-align: center;
-    color: var(--texto-primario);
-}
-
-.mat-column-nome,
-.mat-column-estado {
-    text-align: left;
-    color: var(--texto-primario);
-}
-
-.mat-column-acao {
-    text-align: center;
-    color: var(--texto-primario);
-}
-
-/* Responsividade */
+/* --- Responsividade --- */
 @media (max-width: 768px) {
-    .titulo-table {
-        font-size: 14px;
-        flex-direction: column;
-        text-align: center;
+    .toolbar-title {
+        font-size: 1.1rem;
     }
 
-    mat-toolbar {
-        position: static;
+    .titulo-table {
+        font-size: 1rem;
     }
 
     .mat-column-id,
@@ -189,26 +168,23 @@ mat-paginator:hover {
         font-size: 0.9rem;
     }
 
-    mat-form-field {
-        width: 100%;
-        margin: 8px 0;
+    .flex-container {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
     }
 
-    .toolbar-title {
-        font-size: 1.2rem;
-    }
-
-    .acoes-botoes {
-        flex-direction: row;
-        gap: 4px;
+    mat-form-field.pesquisa {
+        width: 90%;
+        margin: 8px auto;
     }
 }
 
 @media (max-width: 480px) {
     .mat-column-acao {
         gap: 0.3rem;
-        width: 100%;
         justify-content: space-evenly;
+        width: 100%;
     }
 
     .mat-column-id,
@@ -217,14 +193,11 @@ mat-paginator:hover {
         font-size: 0.8rem;
     }
 
+    .toolbar-title {
+        font-size: 1rem;
+    }
+
     .flex-container {
-        flex-direction: column;
         align-items: center;
     }
-}
-
-tr.mat-row:hover {
-    background-color: var(--hover-acao);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
 }

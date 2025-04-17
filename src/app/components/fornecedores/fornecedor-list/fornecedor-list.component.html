@@ -28,7 +28,7 @@
 
     <!-- id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef class="header-table">Id</th>
+      <th mat-header-cell *matHeaderCellDef class="header-table">ID</th>
       <td mat-cell *matCellDef="let element" class="colunas">{{ element.id }}</td>
     </ng-container>
 
@@ -41,7 +41,7 @@
     <!-- cnpj Column -->
     <ng-container matColumnDef="cnpj">
       <th mat-header-cell *matHeaderCellDef class="header-table">CNPJ</th>
-      <td mat-cell *matCellDef="let element" class="colunas">{{ element.cnpj }}</td>
+      <td mat-cell *matCellDef="let element" class="colunas">{{ formatarCnpj(element.cnpj) }}</td>
     </ng-container>
 
     <!-- email Column -->

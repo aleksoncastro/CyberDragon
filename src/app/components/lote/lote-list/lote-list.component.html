@@ -27,7 +27,7 @@
 
     <!-- Id -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef class="header-table">Id</th>
+      <th mat-header-cell *matHeaderCellDef class="header-table">ID</th>
       <td mat-cell *matCellDef="let element" class="colunas mat-column-id">{{ element.id }}</td>
     </ng-container>
 
@@ -46,7 +46,7 @@
     <!-- Data de Fabricação -->
     <ng-container matColumnDef="dataFabricacao">
       <th mat-header-cell *matHeaderCellDef class="header-table">Data de Fabricação</th>
-      <td mat-cell *matCellDef="let element" class="colunas">{{ element.dataFabricacao }}</td>
+      <td mat-cell *matCellDef="let element" class="colunas">{{ element.dataFabricacao | date:'dd/MM/yyyy'}}</td>
     </ng-container>
 
     <!-- Placa de Vídeo -->

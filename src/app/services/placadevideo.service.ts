@@ -30,10 +30,10 @@ export class PlacaDeVideoService {
   }
 
   getImagemUrl(nome: string): string {
-    const url = `http://localhost:8080/placasdevideo/imagens/placasdevideo/${nome}`;
-    console.log("Gerando URL da imagem:", url);
-    return url;
-
+    if (nome.startsWith('http')) {
+      return nome; // já é uma URL completa, usa direto
+    }
+    return `http://localhost:8080${nome.startsWith('/') ? '' : '/'}${nome}`;
   }
   
 

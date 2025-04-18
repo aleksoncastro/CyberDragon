@@ -14,11 +14,12 @@ mat-toolbar {
 }
 
 .titulo-table {
-  background-color: var(--fundo-secundario);
+  background-color: var(--cartao-container);
   color: var(--texto-primario) !important;
   border-radius: 5px;
   height: 40px;
   padding: 8px 0;
+  border-bottom: 0px;
 }
 
 /* Flex container */
@@ -57,7 +58,7 @@ mat-toolbar {
   background-color: var(--cartao-container);
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  box-shadow: 0 4px 8px var(--fundo-principal);
   width: 300px !important;
   margin: 80px auto;
 }
@@ -149,6 +150,7 @@ mat-paginator {
   border-top: 1px solid var(--borda-sombra);
   border-radius: 5px;
   z-index: 1000;
+  position: static;
 }
 
 mat-paginator:hover {

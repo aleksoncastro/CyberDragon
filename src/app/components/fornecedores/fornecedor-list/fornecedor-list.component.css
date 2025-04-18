@@ -1,3 +1,4 @@
+
 /* Toolbar */
 mat-toolbar {
   color: var(--texto-primario) !important;
@@ -12,18 +13,22 @@ mat-toolbar {
 }
 
 .titulo-table {
+  background-color: var(--cartao-container);
+  border-bottom: 0px;
   color: var(--texto-primario) !important;
   border-radius: 5px;
   height: 40px;
-  width: auto;
+  padding: 8px 0;
 }
 
-/* Flex Container */
+/* Flex layout */
 .flex-container {
   display: flex;
   align-items: center;
   width: 100%;
 }
+
+
 
 /* Botão de adicionar */
 .mais {
@@ -50,7 +55,7 @@ button.mais:hover mat-icon {
   background-color: var(--cartao-container);
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  box-shadow: 0 4px 8px var(--fundo-principal);
   width: 300px !important;
   margin: 80px auto;
 }
@@ -69,14 +74,15 @@ input.mat-input-element {
 /* Tabela */
 table.mat-elevation-z8 {
   background-color: var(--fundo-principal);
-  font-size: 12px;
   width: 100%;
+  font-size: 12px;
+  overflow-x: auto;
 }
 
 .demo-table,
 .tabela-com-label {
   width: 100%;
-  overflow-x: auto;
+  transform: translateY(-4px);
 }
 
 .colunas {
@@ -199,3 +205,4 @@ tr.mat-row:hover {
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
+

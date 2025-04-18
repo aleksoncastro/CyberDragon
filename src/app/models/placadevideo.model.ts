@@ -1,3 +1,5 @@
+import { Fornecedor } from "./fornecedor.model";
+
 export class PlacaDeVideo {
   id?: number;
   modelo: string;
@@ -11,10 +13,12 @@ export class PlacaDeVideo {
   clockBoost: number;
   suporteRayTracing: boolean;
   idFan: number;
+  fan?: Fan;
   memoria: Memoria;
   saidas: SaidaVideo[];
   tamanho: Tamanho;
   idFornecedor: number;
+  fornecedor?: Fornecedor;
   listaImagem: string[];
 
   constructor() {
@@ -50,6 +54,16 @@ export class Memoria {
     this.larguraBanda = 0;
     this.velocidadeMemoria = 0;
   }
+}
+
+export class Fan{
+  id?: number;
+  label: string;
+
+  constructor(){
+    this.label = '';
+  }
+
 }
 
 export class SaidaVideo {

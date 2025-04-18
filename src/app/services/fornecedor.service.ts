@@ -33,7 +33,7 @@ export class FornecedorService {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
   }
 
-  findById(id: string): Observable<Fornecedor> {
+  findById(id: number): Observable<Fornecedor> {
     return this.httpClient.get<Fornecedor>(`${this.baseUrl}/${id}`);
   }
 

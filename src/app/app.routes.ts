@@ -20,7 +20,7 @@ import { FuncionarioListComponent } from './components/funcionario/funcionario-l
 import { PlacadevideoVitrineComponent } from './components/placadevideo/placadevideo-vitrine/placadevideo-vitrine.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { placadevideoResolver } from './components/placadevideo/placadevideo.resolver';
+import { placadevideoResolver } from './components/placadevideo/placaDeVideo.resolver';
 
 export const routes: Routes = [
 

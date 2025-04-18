@@ -12,7 +12,8 @@ mat-toolbar {
 }
 
 .titulo-table {
-  background-color: var(--fundo-secundario);
+  background-color: var(--cartao-container);
+  border-bottom: 0px;
   color: var(--texto-primario) !important;
   border-radius: 5px;
   height: 40px;
@@ -51,7 +52,7 @@ mat-toolbar {
   background-color: var(--cartao-container);
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  box-shadow: 0 4px 8px var(--fundo-principal);
   width: 300px !important;
   margin: 80px auto;
 }
@@ -78,16 +79,9 @@ input.mat-input-element {
   border-color: var(--borda-sombra);
 }
 
-/* Tabela */
-.tabela-container {
-  width: 100%;
-  overflow-x: auto;
-}
 
 table.mat-elevation-z8 {
   background-color: var(--fundo-principal);
-  width: 100%;
-  font-size: 12px;
 }
 
 .demo-table {
@@ -96,9 +90,6 @@ table.mat-elevation-z8 {
   overflow-x: auto;
 }
 
-.tabela-com-label {
-  width: 100%;
-}
 
 .colunas {
   color: var(--texto-primario);

@@ -10,7 +10,7 @@ import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { FornecedorService } from '../../../services/fornecedor.service';
+
 
 @Component({
   selector: 'app-placadevideo-list',
@@ -27,14 +27,10 @@ export class PlacadevideoListComponent implements OnInit {
     'preco', 
     'resolucao', 
     'energia', 
-    'descricao', 
     'idFan',
     'compatibilidade', 
-    'clockBase', 
-    'clockBoost', 
     'suporteRayTracing', 
     'memoria', 
-    'tamanho', 
     'fornecedor',  
     'acao'
   ];
@@ -54,31 +50,19 @@ export class PlacadevideoListComponent implements OnInit {
     2: 'Triple'
   };
 
-  fornecedorMap: { [id: number]: string } = {};
-
-
-  
   constructor(private placaDeVideoService: PlacaDeVideoService,
-    private fornecedorService: FornecedorService,
     public placaService: PlacaDeVideoService
   ) { }
   
   ngOnInit(): void {
-    this.fornecedorService.findAll().subscribe(fornecedores => {
-      fornecedores.forEach(f => {
-        if (f.id !== undefined) {
-          this.fornecedorMap[f.id] = f.nome;
-        }
-      });
-    });
-
     this.carregarPlacasDeVideo();
   }
 
   ngOnChanges() {
     document.body.style.overflow = this.placaSelecionada ? 'hidden' : '';
   }
-  
+
+
 
   carregarPlacasDeVideo(): void {
     this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
@@ -107,6 +91,10 @@ export class PlacadevideoListComponent implements OnInit {
     this.placaDeVideoService.findById(id).subscribe(data => {
       console.log("Detalhes da placa:", data);
       this.placaSelecionada = data;
+
+      if (this.placaSelecionada.listaImagem?.length > 0) {
+        console.log("URL da imagem:", this.placaService.getImagemUrl(this.placaSelecionada.listaImagem[0]));
+      }
     });
   }
   

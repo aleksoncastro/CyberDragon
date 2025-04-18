@@ -12,11 +12,11 @@ mat-toolbar {
 }
 
 .titulo-table {
-  background-color: var(--fundo-secundario);
+  background-color: var(--cartao-container);
   color: var(--texto-primario) !important;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   height: 40px;
-  padding: 8px 0;
+  border-bottom: 0px;
 }
 
 .flex-container {
@@ -38,7 +38,7 @@ mat-toolbar {
   background-color: var(--cartao-container);
   border-radius: 8px;
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px var(--box-shadow);
+  box-shadow: 0 4px 8px var(--fundo-principal);
   width: 300px !important;
   margin: 80px auto;
 }
@@ -56,7 +56,6 @@ table.mat-elevation-z8 {
   transform: translateY(-4px);
   width: 100%;
   overflow-x: auto;
-  display: block;
 }
 
 .tabela-com-label {
@@ -130,7 +129,7 @@ mat-paginator {
   color: var(--texto-secundario);
   border-top: 1px solid var(--borda-sombra);
   border-radius: 5px;
-  position: sticky;
+  position: static;
   bottom: 0;
   z-index: 1000;
 }
@@ -286,20 +285,14 @@ tr.mat-row:hover {
 
 .detalhes-card{
   background-color: var(--fundo-secundario);
-  width: 80%;
+  width: 60%;
   height: auto;
 }
 
-
-
-/* Estilo para a imagem principal */
-.main-image {
-  width: 300px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+.card-section h4{
+  color: var(--texto-secundario);
 }
+
 
 .card-placa {
   display: flex;
@@ -310,19 +303,35 @@ tr.mat-row:hover {
 }
 
 .card-section {
-  flex: 1 1 300px; /* ocupa no mínimo 300px, quebra se não couber */
+  flex: 1 1 200px; /* ocupa no mínimo 300px, quebra se não couber
+                  flex: 1 1 300px; */
+}
+
+/* Estilo para a imagem principal */
+.main-image {
+  width: 315px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para o contêiner das imagens adicionais */
+.additional-images {
+  display: flex;
+  flex-direction: column;  /* Imagens adicionais empilhadas verticalmente */
+  gap: 8px;
+  max-height: 315px; /* 4x100px + gaps (você ajusta isso) */
+  justify-content: flex-start;  /* Alinha as imagens no topo */
+  margin-top: 40px;
+  height: 100%; /* Garante que use o espaço do pai */
+  align-items: flex-start;
 }
 
 /* Estilo para as imagens adicionais */
-.additional-images {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
 .additional-image {
   width: 100px;
-  height: 100px;
+  height: 100px;  /* Garantir altura fixa */
   object-fit: cover;
   border-radius: 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -334,30 +343,26 @@ h4 {
 }
 
 /* Estilo de bloqueio da tela */
-body.modal-open {
-  overflow: hidden;
-}
-
-body.modal-open .overlay {
-  display: block;
+.overlay {
   position: fixed;
-  top: 0;
+  top: 64px; /* ajusta se sua toolbar for maior/menor */
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.6); /* fundo escuro com transparência */
+  z-index: 999; /* abaixo do card, acima da tabela */
+  backdrop-filter: blur(2px);
+  overflow: hidden;
 }
 
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6); /* escurece o fundo */
-  z-index: 999; /* abaixo do card mas acima de tudo */
+body {
+  overflow: hidden;
 }
 
+.bloqueado {
+  pointer-events: none;  /* Desabilita qualquer interação com a tabela */
+  opacity: 0.5;  /* Opcional: Torna a tabela semi-transparente para indicar que está bloqueada */
+  overflow: hidden;  /* Garante que o scroll não será possível */
+}
 
 

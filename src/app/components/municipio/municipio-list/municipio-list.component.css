@@ -43,7 +43,7 @@ button.mais:hover mat-icon {
     background-color: var(--cartao-container);
     border-radius: 8px;
     transform: translateY(-4px);
-    box-shadow: 0 4px 8px var(--box-shadow);
+    box-shadow: 0 4px 8px var(--fundo-principal);
     width: 300px !important;
     margin: 80px auto;
 }
@@ -60,24 +60,21 @@ input.mat-input-element {
 
 /* --- Título da Tabela --- */
 .titulo-table {
-    background-color: var(--fundo-secundario);
+    background-color: var(--cartao-container);
     color: var(--texto-primario) !important;
-    border-radius: 5px;
     height: 40px;
-    padding: 8px 0;
+    border-bottom: 0px;
 }
 
-/* --- Tabela --- */
-.tabela-container {
-    padding: 1rem;
-}
 
 table.mat-elevation-z8 {
     background-color: var(--fundo-principal);
-    width: 100%;
-    font-size: 13px;
-    border-radius: 4px;
-    overflow-x: auto;
+}
+
+.demo-table {
+  transform: translateY(-4px);
+  width: 100%;
+  overflow-x: auto;
 }
 
 .header {
@@ -146,6 +143,7 @@ mat-paginator {
     color: var(--texto-secundario);
     border-top: 1px solid var(--borda-sombra);
     border-radius: 5px;
+    position: static;
 }
 
 mat-paginator:hover {
@@ -154,13 +152,6 @@ mat-paginator:hover {
 
 /* --- Responsividade --- */
 @media (max-width: 768px) {
-    .toolbar-title {
-        font-size: 1.1rem;
-    }
-
-    .titulo-table {
-        font-size: 1rem;
-    }
 
     .mat-column-id,
     .mat-column-nome,

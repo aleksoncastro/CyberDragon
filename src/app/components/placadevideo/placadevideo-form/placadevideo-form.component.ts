@@ -16,11 +16,12 @@ import { Fornecedor } from '../../../models/fornecedor.model';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatStepperModule } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-placadevideo-form',
   standalone: true,
-  imports: [NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
+  imports: [MatStepperModule, NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatSelectModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
   templateUrl: './placadevideo-form.component.html',
   styleUrl: './placadevideo-form.component.css'
@@ -45,35 +46,45 @@ export class PlacaDeVideoFormComponent {
         const placaDeVideo: PlacaDeVideo = this.activatedRoute.snapshot.data['placadevideo'];
 
         this.formGroup = this.formBuilder.group({
-          id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
-          modelo: [placaDeVideo?.modelo || '', Validators.required],
-          categoria: [placaDeVideo?.categoria || '', Validators.required],
-          preco: [placaDeVideo?.preco || '', [Validators.required, Validators.min(0)]],
-          resolucao: [placaDeVideo?.resolucao || '', Validators.required],
-          energia: [placaDeVideo?.energia || '', [Validators.required, Validators.min(0)]],
-          descricao: [placaDeVideo?.descricao || '', Validators.required],
-          compatibilidade: [placaDeVideo?.compatibilidade || '', [Validators.required, Validators.min(1)]],
-          clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
-          clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
-          suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
-          idFan: [placaDeVideo?.idFan ?? '', [Validators.required, Validators.min(1)]],
-          idFornecedor: [placaDeVideo?.idFornecedor ?? '', Validators.required],
-          memoria: this.formBuilder.group({
-            tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
-            capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
-            larguraBanda: [placaDeVideo?.memoria?.larguraBanda || '', [Validators.required, Validators.min(1)]],
-            velocidadeMemoria: [placaDeVideo?.memoria?.velocidadeMemoria || '', [Validators.required, Validators.min(1)]],
-          }),
-          tamanho: this.formBuilder.group({
-            largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
-            altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
-            comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
-          }),
-          saidas: this.formBuilder.array(
-            placaDeVideo?.saidas?.length
-              ? placaDeVideo.saidas.map(saida => this.createSaidaFormGroup(saida))
-              : [this.createSaidaFormGroup()]
-          )
+          formArray: this.formBuilder.array([
+            this.formBuilder.group({
+              id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
+              modelo: [placaDeVideo?.modelo || '', Validators.required],
+              categoria: [placaDeVideo?.categoria || '', Validators.required],
+              idFan: [placaDeVideo?.idFan ?? '', [Validators.required, Validators.min(1)]],
+              preco: [placaDeVideo?.preco || '', [Validators.required, Validators.min(0)]],
+              resolucao: [placaDeVideo?.resolucao || '', Validators.required],
+              energia: [placaDeVideo?.energia || '', [Validators.required, Validators.min(0)]],
+              descricao: [placaDeVideo?.descricao || '', Validators.required],
+              compatibilidade: [placaDeVideo?.compatibilidade || '', [Validators.required, Validators.min(1)]],
+            }),
+            this.formBuilder.group({
+              clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
+              clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
+              suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
+            }),
+            this.formBuilder.group({
+              idFornecedor: [placaDeVideo?.idFornecedor ?? '', Validators.required],
+              memoria: this.formBuilder.group({
+                tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
+                capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
+                larguraBanda: [placaDeVideo?.memoria?.larguraBanda || '', [Validators.required, Validators.min(1)]],
+                velocidadeMemoria: [placaDeVideo?.memoria?.velocidadeMemoria || '', [Validators.required, Validators.min(1)]],
+              }),
+            }),
+            this.formBuilder.group({
+              tamanho: this.formBuilder.group({
+                largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
+                altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
+                comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
+              }),
+              saidas: this.formBuilder.array(
+                placaDeVideo?.saidas?.length
+                  ? placaDeVideo.saidas.map(saida => this.createSaidaFormGroup(saida))
+                  : [this.createSaidaFormGroup()]
+              )
+            })
+          ])
         });
         console.log("PlacaDeVideo inicializada:", this.formGroup.value);
         this.idFornecedorSelecionado = placaDeVideo?.idFornecedor ?? null;
@@ -98,63 +109,76 @@ export class PlacaDeVideoFormComponent {
     });
   }
   getSaidas(): FormArray {
-    return this.formGroup.get('saidas') as FormArray;
-  }
+    return (this.formGroup.get('formArray') as FormArray).at(3).get('saidas') as FormArray;
+  }  
 
   // Método para adicionar uma nova saída de vídeo ao array
   adicionarSaida(): void {
     this.getSaidas().push(
       this.formBuilder.group({
         tipo: ['', Validators.required],
-        quantidade: [0, Validators.required],}
+        quantidade: [0, Validators.required],
+      }
       ));
   }
+
+  get formArray(): FormArray {
+    return this.formGroup.get('formArray') as FormArray;
+  }  
 
   get saidasFormArray(): FormArray {
     return this.formGroup.get('saidas') as FormArray;
   }
 
   removerSaida(index: number) {
-    (this.formGroup.get('saidas') as FormArray).removeAt(index);
-  }
+    this.getSaidas().removeAt(index);
+  }  
 
   salvar() {
     console.log("Método salvar() da Placa de Vídeo chamado!");
 
     if (!this.formGroup.valid) {
+      this.formGroup.markAllAsTouched();
       console.warn("Formulário inválido! Verifique os campos.");
       return;
-    }
+    }    
 
     const formValue = this.formGroup.value;
     console.log("Valores do formulário:", formValue);
+    
+    const formArray = this.formGroup.get('formArray') as FormArray;
 
+    const step1 = formArray.at(0).value;
+    const step2 = formArray.at(1).value;
+    const step3 = formArray.at(2).value;
+    const step4 = formArray.at(3).value;
+    
     const placaDeVideo: PlacaDeVideo = {
-      id: formValue.id,
-      modelo: formValue.modelo,
-      categoria: formValue.categoria,
-      preco: formValue.preco,
-      resolucao: formValue.resolucao,
-      energia: formValue.energia,
-      descricao: formValue.descricao,
-      compatibilidade: formValue.compatibilidade,
-      clockBase: formValue.clockBase,
-      clockBoost: formValue.clockBoost,
-      suporteRayTracing: formValue.suporteRayTracing,
-      idFan: formValue.idFan, // CORRIGIDO: era ididFan
-      idFornecedor: formValue.idFornecedor, // CORRIGIDO: era idFornecedor
+      id: step1.id,
+      modelo: step1.modelo,
+      categoria: step1.categoria,
+      preco: step1.preco,
+      resolucao: step1.resolucao,
+      energia: step1.energia,
+      descricao: step1.descricao,
+      compatibilidade: step1.compatibilidade,
+      clockBase: step2.clockBase,
+      clockBoost: step2.clockBoost,
+      suporteRayTracing: step2.suporteRayTracing,
+      idFan: step1.idFan,
+      idFornecedor: step3.idFornecedor,
       memoria: {
-        tipoMemoria: formValue.memoria.tipoMemoria, // CORRIGIDO: tipoMemoriaMemoria → tipoMemoria
-        capacidade: formValue.memoria.capacidade,
-        larguraBanda: formValue.memoria.larguraBanda,
-        velocidadeMemoria: formValue.memoria.velocidadeMemoria,
+        tipoMemoria: step3.memoria.tipoMemoria,
+        capacidade: step3.memoria.capacidade,
+        larguraBanda: step3.memoria.larguraBanda,
+        velocidadeMemoria: step3.memoria.velocidadeMemoria,
       },
       tamanho: {
-        largura: formValue.tamanho.largura,
-        altura: formValue.tamanho.altura,
-        comprimento: formValue.tamanho.comprimento,
+        largura: step4.tamanho.largura,
+        altura: step4.tamanho.altura,
+        comprimento: step4.tamanho.comprimento,
       },
-      saidas: formValue.saidas,
+      saidas: step4.saidas,
       listaImagem: []
     };
 
@@ -193,11 +217,11 @@ export class PlacaDeVideoFormComponent {
   tratarErros(httpError: HttpErrorResponse): void {
 
     if (httpError.status === 400) {
-      if(httpError.error?.errors){
-        httpError.error.errors.forEach((validationError: any)  => {
+      if (httpError.error?.errors) {
+        httpError.error.errors.forEach((validationError: any) => {
           const formControl = this.formGroup.get(validationError.fieldName);
           if (formControl) {
-            formControl.setErrors({apiError: validationError.message})
+            formControl.setErrors({ apiError: validationError.message })
           }
         });
       }
@@ -207,14 +231,14 @@ export class PlacaDeVideoFormComponent {
 
   }
 
-  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined) : string {
+  getErrorMessage(controlName: string, errors: ValidationErrors | null | undefined): string {
     if (!errors || !this.errorMessages[controlName]) {
       return 'invalid field';
     }
 
-    for(const errorName in errors) {
+    for (const errorName in errors) {
       console.log(errorName);
-      if (this.errorMessages[controlName][errorName]){
+      if (this.errorMessages[controlName][errorName]) {
         return this.errorMessages[controlName][errorName];
       }
     }

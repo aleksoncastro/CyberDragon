@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -31,7 +31,6 @@ export class PlacadevideoListComponent implements OnInit {
     'compatibilidade', 
     'suporteRayTracing', 
     'memoria', 
-    'fornecedor',  
     'acao'
   ];
   placasDeVideo: PlacaDeVideo[] = [];
@@ -49,6 +48,8 @@ export class PlacadevideoListComponent implements OnInit {
     1: 'Double',
     2: 'Triple'
   };
+  snackbarService: any;
+  router: any;
 
   constructor(private placaDeVideoService: PlacaDeVideoService,
     public placaService: PlacaDeVideoService
@@ -97,5 +98,17 @@ export class PlacadevideoListComponent implements OnInit {
       }
     });
   }
-  
+
+  excluir(placasdevideo: PlacaDeVideo): void {
+      if (placasdevideo.id != null) {
+        this.placaDeVideoService.delete(placasdevideo).subscribe({
+          next: () => {
+            this.carregarPlacasDeVideo();  // Recarregar os placasdevideos após exclusão
+          },
+          error: (erroResponse) => {
+            console.log('Erro ao excluir', JSON.stringify(erroResponse));
+          },
+        });
+      }
+    } 
 }

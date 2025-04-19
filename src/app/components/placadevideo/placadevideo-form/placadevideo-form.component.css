@@ -6,12 +6,18 @@
     color: white;
 }
 
+mat-stepper {
+    padding: 1rem;
+    border-radius: 8px;
+}
+
 mat-card {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 2rem auto;
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    
 }
 
 mat-form-field {

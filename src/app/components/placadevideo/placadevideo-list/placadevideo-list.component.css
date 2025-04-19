@@ -9,6 +9,11 @@ mat-toolbar {
   color: var(--texto-primario) !important;
   flex: 1;
   text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .titulo-table {
@@ -22,7 +27,11 @@ mat-toolbar {
 .flex-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
   width: 100%;
+  gap: 8px;
+  padding: 0 8px;
 }
 
 /* Botão de adicionar */
@@ -140,17 +149,33 @@ mat-paginator:hover {
 
 .botoes {
   color: var(--texto-primario);
+  padding: 11px;
 }
 
 .mat-column-acao {
+  align-items: center;
+}
+
+.acoes-container {
+  display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  width: 10em;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+td.colunas.acao {
+  min-width: 120px;
+  max-width: 160px;
+  overflow: visible;
+}
+
+th.header-table.acao {
   text-align: center;
 }
 
-.mat-column-id,
-.mat-column-sigla {
+.mat-column-id {
   text-align: center;
 }
 
@@ -196,7 +221,6 @@ table.mat-elevation-z8 {
   }
 
   .mat-column-id,
-  .mat-column-sigla,
   .mat-column-modelo,
   .mat-column-categoria,
   .mat-column-preco,
@@ -223,6 +247,11 @@ table.mat-elevation-z8 {
 
   .toolbar-title {
     font-size: 1.2rem;
+    padding: 0 4px;
+  }
+
+  .flex-container {
+    padding: 0 4px;
   }
 
   .acoes-botoes {
@@ -258,8 +287,11 @@ table.mat-elevation-z8 {
   }
 
   .flex-container {
-    flex-direction: column;
     align-items: center;
+  }
+
+  .toolbar-title {
+    font-size: 1rem;
   }
 
   .mat-column-acao {

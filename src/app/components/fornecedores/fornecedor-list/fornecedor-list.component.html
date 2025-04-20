@@ -16,14 +16,17 @@
   </button>
 </mat-form-field>
 
-<div class="tabela-container">
+<div class="tabela-container" style="position: relative;">
 
   <mat-toolbar color="primary" class="titulo-table">
     <div class="flex-container">
       <span class="toolbar-title">Lista de Fornecedores</span>
     </div>
   </mat-toolbar>
+
+  <div class="overlay" *ngIf="fornecedorSelecionado" (click)="fornecedorSelecionado = null"></div>
   
+  <div [class.bloqueado]="fornecedorSelecionado">
   <table mat-table [dataSource]="fornecedoresFiltrados" class="mat-elevation-z8 demo-table tabela-com-label">
 
     <!-- id Column -->
@@ -60,19 +63,51 @@
         <button mat-icon-button color="warn" (click)="excluir(element)" class="botoes">
           <mat-icon>delete</mat-icon>
         </button>
+        <button mat-icon-button color="accent" class="botoes" (click)="verDetalhes(element.id)">
+          <mat-icon>info</mat-icon>
+        </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
-
+    
   </table>
+  </div>
+
+    <mat-card *ngIf="fornecedorSelecionado" class="detalhes-card"
+      style="position: fixed; top: 5%; left: 260px; right: 5%; z-index: 1000; margin: auto;">
+      <mat-card-header>
+        <mat-card-title>Detalhes do Fornecedor: {{ fornecedorSelecionado.nome }}</mat-card-title>
+        <button mat-icon-button (click)="fornecedorSelecionado = null" style="margin-left: auto;">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-header>
+
+      <mat-card-content class="card-fornecedor">
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px;">
+
+          <div class="card-section">
+            <h4>Informações Principais</h4>
+            <p><strong>Nome:</strong> {{ fornecedorSelecionado.nome }}</p>
+            <p><strong>CNPJ:</strong> {{ fornecedorSelecionado.cnpj }}</p>
+            <p><strong>Email:</strong> {{ fornecedorSelecionado.email }}</p>
+          </div>
+
+          <div class="card-section" *ngIf="fornecedorSelecionado && fornecedorSelecionado.telefones && fornecedorSelecionado.telefones.length > 0">
+            <h4>Telefones</h4>
+            <ul>
+              <li *ngFor="let tel of fornecedorSelecionado.telefones">{{ tel }}</li>
+            </ul>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+
 </div>
 
-<mat-paginator
-  [pageSizeOptions]="[5, 10, 20, 30]"
-  [pageSize]="pageSize"
-  [length]="totalRecords"
-  [pageIndex]="page"
+<mat-paginator [pageSizeOptions]="[5, 10, 20, 30]" [pageSize]="pageSize" [length]="totalRecords" [pageIndex]="page"
   (page)="paginar($event)">
 </mat-paginator>

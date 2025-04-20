@@ -9,10 +9,12 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-fornecedor-list',
-  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule],
+  standalone: true,
+  imports: [ MatCardModule, MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule],
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
@@ -25,6 +27,7 @@ export class FornecedorListComponent implements OnInit {
   pageSize = 10;
   page = 0;
 
+  fornecedorSelecionado: Fornecedor | null = null;
 
   constructor(private fornecedorService : FornecedorService) { }
 
@@ -51,6 +54,11 @@ export class FornecedorListComponent implements OnInit {
     );
   }
 
+  ngOnChanges() {
+    document.body.style.overflow = this.fornecedorSelecionado ? 'hidden' : '';
+  }
+
+
   loadFornecedores(): void {
     this.fornecedorService.findAll(this.page, this.pageSize).subscribe(data => {
       this.fornecedores = data;
@@ -71,7 +79,14 @@ export class FornecedorListComponent implements OnInit {
   formatarCnpj(cnpj: string): string {
     if (!cnpj) return '';
     return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
-  }  
+  } 
+  
+  verDetalhes(id: number): void {
+    this.fornecedorService.findById(id).subscribe(data => {
+      console.log("Detalhes do Fornecedor:", data);
+      this.fornecedorSelecionado = data;
+    });
+  }
 
   paginar(event: PageEvent): void {
     this.page = event.pageIndex;

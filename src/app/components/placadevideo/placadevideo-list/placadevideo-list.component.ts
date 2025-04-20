@@ -63,8 +63,6 @@ export class PlacadevideoListComponent implements OnInit {
     document.body.style.overflow = this.placaSelecionada ? 'hidden' : '';
   }
 
-
-
   carregarPlacasDeVideo(): void {
     this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
       this.placasDeVideo = data;

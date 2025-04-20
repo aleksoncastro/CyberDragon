@@ -7,11 +7,13 @@
 }
 
 mat-stepper {
+    background-color: var(--fundo-secundario);
     padding: 1rem;
     border-radius: 8px;
 }
 
 mat-card {
+    background-color: var(--fundo-principal);
     max-width: 1000px;
     margin: 2rem auto;
     padding: 1rem;
@@ -20,9 +22,27 @@ mat-card {
     
 }
 
+mat-card-content {
+    background-color: var(--fundo-principal);
+}
+
 mat-form-field {
+    background-color: var(--icone-destaque);
     width: 100%;
     margin-bottom: 20px;
+}
+
+mat-label {
+    color: var(--cartao-container);
+}
+
+mat-select {
+    background-color: var(--texto-principal);
+}
+
+/* Estilo do matStepLabel para aparecer em amarelo */
+::ng-deep .mat-step-label {
+    color: var(--icone-destaque) !important; /* Amarelo */
 }
 
 .form-container {
@@ -34,11 +54,14 @@ mat-form-field {
 }
 
 button[mat-raised-button] {
+    background-color: var(--icone-destaque); /* Amarelo */
+    color: var(--texto-principal); /* Preto */
     width: 120px;
     margin-right: 1rem;
 }
 
 button[mat-raised-button]:last-child {
+    background-color: red;
     margin-right: 0;
 }
 

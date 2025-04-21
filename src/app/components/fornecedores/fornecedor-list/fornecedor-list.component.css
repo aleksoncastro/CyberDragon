@@ -1,4 +1,3 @@
-
 /* Toolbar */
 mat-toolbar {
   color: var(--texto-primario) !important;
@@ -28,7 +27,11 @@ mat-toolbar {
   width: 100%;
 }
 
-
+.detalhes-card {
+  background-color: var(--fundo-secundario);
+  width: 60%;
+  height: auto;
+}
 
 /* Botão de adicionar */
 .mais {
@@ -125,11 +128,20 @@ mat-paginator:hover {
   color: var(--texto-primario);
 }
 
+.acao-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: nowrap; /* Impede quebra */
+  align-items: center;
+}
+
+
 /* Colunas */
 .mat-column-acao {
   justify-content: center;
   gap: 0.5rem;
-  width: 10em;
+  width: 12em;
   text-align: center;
 }
 
@@ -205,4 +217,3 @@ tr.mat-row:hover {
   transition: background-color 0.3s ease;
   cursor: pointer;
 }
-

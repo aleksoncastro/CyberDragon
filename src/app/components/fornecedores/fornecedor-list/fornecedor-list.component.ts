@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-fornecedor-list',
   standalone: true,
-  imports: [ MatCardModule, MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule],
+  imports: [MatCardModule, MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule],
   templateUrl: './fornecedor-list.component.html',
   styleUrls: ['./fornecedor-list.component.css']
 })
@@ -29,7 +29,7 @@ export class FornecedorListComponent implements OnInit {
 
   fornecedorSelecionado: Fornecedor | null = null;
 
-  constructor(private fornecedorService : FornecedorService) { }
+  constructor(private fornecedorService: FornecedorService) { }
 
   fornecedoresFiltrados: Fornecedor[] = [];
 
@@ -79,13 +79,19 @@ export class FornecedorListComponent implements OnInit {
   formatarCnpj(cnpj: string): string {
     if (!cnpj) return '';
     return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
-  } 
-  
+  }
+
   verDetalhes(id: number): void {
     this.fornecedorService.findById(id).subscribe(data => {
-      console.log("Detalhes do Fornecedor:", data);
+      console.log('Fornecedor selecionado:', data);
       this.fornecedorSelecionado = data;
+      document.body.style.overflow = 'hidden'; // <- aqui
     });
+  }
+
+  fecharDetalhes(): void {
+    this.fornecedorSelecionado = null;
+    document.body.style.overflow = ''; // <- resetar
   }
 
   paginar(event: PageEvent): void {

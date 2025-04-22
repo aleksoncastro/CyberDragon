@@ -19,7 +19,7 @@ mat-card {
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 mat-card-content {
@@ -42,7 +42,8 @@ mat-select {
 
 /* Estilo do matStepLabel para aparecer em amarelo */
 ::ng-deep .mat-step-label {
-    color: var(--icone-destaque) !important; /* Amarelo */
+    color: var(--icone-destaque) !important;
+    /* Amarelo */
 }
 
 .form-container {
@@ -54,8 +55,10 @@ mat-select {
 }
 
 button[mat-raised-button] {
-    background-color: var(--icone-destaque); /* Amarelo */
-    color: var(--texto-principal); /* Preto */
+    background-color: var(--icone-destaque);
+    /* Amarelo */
+    color: var(--texto-principal);
+    /* Preto */
     width: 120px;
     margin-right: 1rem;
 }
@@ -113,3 +116,76 @@ mat-error {
     font-size: 0.875rem;
     color: red;
 }
+
+.form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.form-grid .full-width-input {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 250px;
+}
+
+.full-width-input{
+    background-color: var(--fundo-secundario);
+    color: var(--texto-principal);
+}
+
+.full-width-input {
+    width: 100%;
+    margin-bottom: 0px; /* ou 4px se quiser botao junto */
+  }
+  
+
+.modelo-placa{
+    width: 100%;
+}
+
+.descricao{
+    width: 100%;
+}
+
+.descricao textarea {
+    height: 120px;     
+    resize: none;           
+    overflow-y: auto;      
+}
+
+::ng-deep .mat-step-header .mat-step-label {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: none !important;
+  }
+  
+  ::ng-deep .mat-horizontal-stepper-header-container {
+    flex-wrap: nowrap; /* permite quebra de linha se necessário */
+  }
+
+  .botao{
+    background-color: var(--icone-destaque);
+    color: var(--texto-principal);
+    width: 65px;
+  }
+
+  button.mat-fab.accent:hover {
+    border-radius: 15px;
+    transform: scale(3.5);
+  }
+  
+  button.botao {
+    transition: transform 0.3s ease;
+  }
+  
+  button.botao:hover {
+    transform: scale(1.1);
+    background-color: var(--hover-botao);
+  }
+  
+  button.botao:hover mat-icon {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+    background-color: var(--hover-botao);
+  }

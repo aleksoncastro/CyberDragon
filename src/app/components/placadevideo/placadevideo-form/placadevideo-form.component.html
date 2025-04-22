@@ -6,64 +6,115 @@
 
         <mat-stepper formArrayName="formArray" linear>
           <mat-step formGroupName="0" [stepControl]="formArray.get([0])!">
-            <ng-template matStepLabel class="stepper">Dados Básicos</ng-template>
+            <ng-template matStepLabel class="stepper">Informações Gerais</ng-template>
 
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Modelo</mat-label>
-              <input matInput type="text" formControlName="modelo">
-              <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
-                {{ getErrorMessage('modelo', formGroup.get('modelo')?.errors) }}
-                @if (formGroup.get('modelo')?.hasError('apiError')) {
-                <span>{{ formGroup.get('modelo')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
+            <div class="form-grid">
+              <div class="modelo-placa">
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Modelo</mat-label>
+                  <input class="input" matInput type="text" formControlName="modelo" />
+                  <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
+                    {{ getErrorMessage('modelo', formGroup.get('modelo')?.errors) }}
+                    @if (formGroup.get('modelo')?.hasError('apiError')) {
+                    <span>{{ formGroup.get('modelo')?.getError('apiError') }}</span>
+                    }
+                  </mat-error>
+                </mat-form-field>
+              </div>
 
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Categoria</mat-label>
-              <input matInput type="text" formControlName="categoria">
-              <mat-error *ngIf="formGroup.get('categoria')?.invalid && formGroup.get('categoria')?.touched">
-                {{ getErrorMessage('categoria', formGroup.get('categoria')?.errors) }}
-                @if (formGroup.get('categoria')?.hasError('apiError')) {
-                <span>{{ formGroup.get('categoria')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
+             
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Fornecedor</mat-label>
+                <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)">
+                  <mat-option *ngFor="let forne of fornecedor" [value]="forne.id">
+                    {{ forne.nome }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('idFornecedor')?.invalid && formGroup.get('idFornecedor')?.touched">
+                  O nome do fornecedor é obrigatório.
+                </mat-error>
+              </mat-form-field>
 
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Quantidade de Fans</mat-label>
-              <mat-select formControlName="idFan">
-                <mat-option *ngFor="let fan of [1, 2, 3]" [value]="fan">{{ fan }}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="formGroup.get('idFan')?.invalid && formGroup.get('idFan')?.touched">
-                {{ getErrorMessage('idFan', formGroup.get('idFan')?.errors) }}
-                @if (formGroup.get('idFan')?.hasError('apiError')) {
-                <span>{{ formGroup.get('idFan')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Categoria</mat-label>
+                <input matInput type="text" formControlName="categoria" />
+                <mat-error *ngIf="formGroup.get('categoria')?.invalid && formGroup.get('categoria')?.touched">
+                  {{ getErrorMessage('categoria', formGroup.get('categoria')?.errors) }}
+                  @if (formGroup.get('categoria')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('categoria')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
 
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Preço</mat-label>
-              <input matInput type="number" formControlName="preco">
-              <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
-                {{ getErrorMessage('preco', formGroup.get('preco')?.errors) }}
-                @if (formGroup.get('preco')?.hasError('apiError')) {
-                <span>{{ formGroup.get('preco')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Preço</mat-label>
+                <input matInput type="number" formControlName="preco" />
+                <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
+                  {{ getErrorMessage('preco', formGroup.get('preco')?.errors) }}
+                  @if (formGroup.get('preco')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('preco')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
 
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Resolução</mat-label>
-              <input matInput type="text" formControlName="resolucao">
-              <mat-error *ngIf="formGroup.get('resolucao')?.invalid && formGroup.get('resolucao')?.touched">
-                {{ getErrorMessage('resolucao', formGroup.get('resolucao')?.errors) }}
-                @if (formGroup.get('resolucao')?.hasError('apiError')) {
-                <span>{{ formGroup.get('resolucao')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Resolução</mat-label>
+                <input matInput type="text" formControlName="resolucao" />
+                <mat-error *ngIf="formGroup.get('resolucao')?.invalid && formGroup.get('resolucao')?.touched">
+                  {{ getErrorMessage('resolucao', formGroup.get('resolucao')?.errors) }}
+                  @if (formGroup.get('resolucao')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('resolucao')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Quantidade de Fans</mat-label>
+                <mat-select formControlName="idFan">
+                  <mat-option *ngFor="let fan of [1, 2, 3]" [value]="fan">{{ fan }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formGroup.get('idFan')?.invalid && formGroup.get('idFan')?.touched">
+                  {{ getErrorMessage('idFan', formGroup.get('idFan')?.errors) }}
+                  @if (formGroup.get('idFan')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('idFan')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Compatibilidade</mat-label>
+                <input matInput type="number" formControlName="compatibilidade">
+                <mat-error *ngIf="formGroup.get('compatibilidade')?.invalid && formGroup.get('compatibilidade')?.touched">
+                  {{ getErrorMessage('compatibilidade', formGroup.get('compatibilidade')?.errors) }}
+                  @if (formGroup.get('compatibilidade')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('compatibilidade')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+
+              <div class="descricao">
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Descrição</mat-label>
+                  <textarea matInput formControlName="descricao"></textarea>
+                  <mat-error *ngIf="formGroup.get('descricao')?.invalid && formGroup.get('descricao')?.touched">
+                    {{ getErrorMessage('descricao', formGroup.get('descricao')?.errors) }}
+                    @if (formGroup.get('descricao')?.hasError('apiError')) {
+                    <span>{{ formGroup.get('descricao')?.getError('apiError') }}</span>
+                    }
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="botao">
+              <button mat-button matStepperNext type="button">Next</button>
+            </div>
+          </mat-step>
+
+          <mat-step formGroupName="1" [stepControl]="formArray.get([1])!">
+            <ng-template matStepLabel>Especificações Técnicas</ng-template>
 
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Energia (W)</mat-label>
@@ -76,35 +127,6 @@
               </mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Descrição</mat-label>
-              <textarea matInput formControlName="descricao"></textarea>
-              <mat-error *ngIf="formGroup.get('descricao')?.invalid && formGroup.get('descricao')?.touched">
-                {{ getErrorMessage('descricao', formGroup.get('descricao')?.errors) }}
-                @if (formGroup.get('descricao')?.hasError('apiError')) {
-                <span>{{ formGroup.get('descricao')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Compatibilidade</mat-label>
-              <input matInput type="number" formControlName="compatibilidade">
-              <mat-error *ngIf="formGroup.get('compatibilidade')?.invalid && formGroup.get('compatibilidade')?.touched">
-                {{ getErrorMessage('compatibilidade', formGroup.get('compatibilidade')?.errors) }}
-                @if (formGroup.get('compatibilidade')?.hasError('apiError')) {
-                <span>{{ formGroup.get('compatibilidade')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <div>
-              <button mat-button matStepperNext type="button">Next</button>
-            </div>
-          </mat-step>
-
-          <mat-step formGroupName="1" [stepControl]="formArray.get([1])!">
-            <ng-template matStepLabel>Clock e RayTracing</ng-template>
 
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Clock Base (MHz)</mat-label>
@@ -116,7 +138,6 @@
                 }
               </mat-error>
             </mat-form-field>
-
 
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Clock Boost (MHz)</mat-label>
@@ -133,159 +154,149 @@
 
             <div>
               <button mat-button matStepperPrevious type="button">Back</button>
-              <button mat-button matStepperNext type="button">Next</button>            </div>
+              <button mat-button matStepperNext type="button">Next</button>
+            </div>
           </mat-step>
 
           <mat-step formGroupName="2" [stepControl]="formArray.get([2])!">
             <ng-template matStepLabel>Memória e Fornecedor</ng-template>
 
-          <h3>Memória</h3>
-          <div formGroupName="memoria">
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Tipo de Memória</mat-label>
-              <input matInput type="text" formControlName="tipoMemoria">
-              <mat-error
-                *ngIf="formGroup.get('memoria.tipoMemoria')?.invalid && formGroup.get('memoria.tipoMemoria')?.touched">
-                {{ getErrorMessage('tipoMemoria', formGroup.get('memoria.tipoMemoria')?.errors) }}
-                @if (formGroup.get('memoria.tipoMemoria')?.hasError('apiError')) {
-                <span>{{ formGroup.get('memoria.tipoMemoria')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Capacidade (GB)</mat-label>
-              <input matInput type="number" formControlName="capacidade">
-              <mat-error
-                *ngIf="formGroup.get('memoria.capacidade')?.invalid && formGroup.get('memoria.capacidade')?.touched">
-                {{ getErrorMessage('capacidade', formGroup.get('memoria.capacidade')?.errors) }}
-                @if (formGroup.get('memoria.capacidade')?.hasError('apiError')) {
-                <span>{{ formGroup.get('memoria.capacidade')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Largura de Banda (GB/s)</mat-label>
-              <input matInput type="number" formControlName="larguraBanda">
-              <mat-error
-                *ngIf="formGroup.get('memoria.larguraBanda')?.invalid && formGroup.get('memoria.larguraBanda')?.touched">
-                {{ getErrorMessage('larguraBanda', formGroup.get('memoria.larguraBanda')?.errors) }}
-                @if (formGroup.get('memoria.larguraBanda')?.hasError('apiError')) {
-                <span>{{ formGroup.get('memoria.larguraBanda')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Velocidade da Memória (MHz)</mat-label>
-              <input matInput type="number" formControlName="velocidadeMemoria">
-              <mat-error
-                *ngIf="formGroup.get('memoria.velocidadeMemoria')?.invalid && formGroup.get('memoria.velocidadeMemoria')?.touched">
-                {{ getErrorMessage('velocidadeMemoria', formGroup.get('memoria.velocidadeMemoria')?.errors) }}
-                @if (formGroup.get('memoria.velocidadeMemoria')?.hasError('apiError')) {
-                <span>{{ formGroup.get('memoria.velocidadeMemoria')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <h3>Fornecedor</h3>
-          <mat-form-field appearance="fill" class="full-width-input">
-            <mat-label>Fornecedor</mat-label>
-            <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)">
-              <mat-option *ngFor="let forne of fornecedor" [value]="forne.id">
-                {{ forne.nome }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="formGroup.get('idFornecedor')?.invalid && formGroup.get('idFornecedor')?.touched">
-              O nome do fornecedor é obrigatório.
-            </mat-error>
-          </mat-form-field>
-
-          <div>
-            <button mat-button matStepperPrevious type="button">Back</button>
-            <button mat-button matStepperNext type="button">Next</button>          </div>
-        </mat-step>
-
-        <mat-step formGroupName="3" [stepControl]="formArray.get([3])!">
-          <ng-template matStepLabel>Dimensões e Saídas de Vídeo</ng-template>
-
-          <h3>Dimensões</h3>
-          <div formGroupName="tamanho">
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Largura (mm)</mat-label>
-              <input matInput type="number" formControlName="largura">
-              <mat-error *ngIf="formGroup.get('tamanho.largura')?.invalid && formGroup.get('tamanho.largura')?.touched">
-                {{ getErrorMessage('largura', formGroup.get('tamanho.largura')?.errors) }}
-                @if (formGroup.get('tamanho.largura')?.hasError('apiError')) {
-                <span>{{ formGroup.get('tamanho.largura')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Altura (mm)</mat-label>
-              <input matInput type="number" formControlName="altura">
-              <mat-error *ngIf="formGroup.get('tamanho.altura')?.invalid && formGroup.get('tamanho.altura')?.touched">
-                {{ getErrorMessage('altura', formGroup.get('tamanho.altura')?.errors) }}
-                @if (formGroup.get('tamanho.altura')?.hasError('apiError')) {
-                <span>{{ formGroup.get('tamanho.altura')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill" class="full-width-input">
-              <mat-label>Comprimento (mm)</mat-label>
-              <input matInput type="number" formControlName="comprimento">
-              <mat-error
-                *ngIf="formGroup.get('tamanho.comprimento')?.invalid && formGroup.get('tamanho.comprimento')?.touched">
-                {{ getErrorMessage('comprimento', formGroup.get('tamanho.comprimento')?.errors) }}
-                @if (formGroup.get('tamanho.comprimento')?.hasError('apiError')) {
-                <span>{{ formGroup.get('tamanho.comprimento')?.getError('apiError') }}</span>
-                }
-              </mat-error>
-            </mat-form-field>
-          </div>
-
-          <h3>Saídas de Vídeo</h3>
-          <div formArrayName="saidas">
-            <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
-
+            <h3>Memória</h3>
+            <div formGroupName="memoria">
               <mat-form-field appearance="fill" class="full-width-input">
-                <mat-label>Tipo</mat-label>
-                <input matInput type="text" formControlName="tipo">
-                <mat-error *ngIf="saida.get('tipo')?.invalid && saida.get('tipo')?.touched">
-                  {{ getErrorMessage('tipo', saida.get('tipo')?.errors) }}
-                  @if (saida.get('tipo')?.hasError('apiError')) {
-                  <span>{{ saida.get('tipo')?.getError('apiError') }}</span>
+                <mat-label>Tipo de Memória</mat-label>
+                <input matInput type="text" formControlName="tipoMemoria">
+                <mat-error
+                  *ngIf="formGroup.get('memoria.tipoMemoria')?.invalid && formGroup.get('memoria.tipoMemoria')?.touched">
+                  {{ getErrorMessage('tipoMemoria', formGroup.get('memoria.tipoMemoria')?.errors) }}
+                  @if (formGroup.get('memoria.tipoMemoria')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('memoria.tipoMemoria')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width-input">
-                <mat-label>Quantidade</mat-label>
-                <input matInput type="number" formControlName="quantidade">
-                <mat-error *ngIf="saida.get('quantidade')?.invalid && saida.get('quantidade')?.touched">
-                  {{ getErrorMessage('quantidade', saida.get('quantidade')?.errors) }}
-                  @if (saida.get('quantidade')?.hasError('apiError')) {
-                  <span>{{ saida.get('quantidade')?.getError('apiError') }}</span>
+                <mat-label>Capacidade (GB)</mat-label>
+                <input matInput type="number" formControlName="capacidade">
+                <mat-error
+                  *ngIf="formGroup.get('memoria.capacidade')?.invalid && formGroup.get('memoria.capacidade')?.touched">
+                  {{ getErrorMessage('capacidade', formGroup.get('memoria.capacidade')?.errors) }}
+                  @if (formGroup.get('memoria.capacidade')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('memoria.capacidade')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
 
-              <button mat-icon-button color="warn" (click)="removerSaida(i)" *ngIf="getSaidas().length > 1">
-                <mat-icon>delete</mat-icon>
-              </button>
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Largura de Banda (GB/s)</mat-label>
+                <input matInput type="number" formControlName="larguraBanda">
+                <mat-error
+                  *ngIf="formGroup.get('memoria.larguraBanda')?.invalid && formGroup.get('memoria.larguraBanda')?.touched">
+                  {{ getErrorMessage('larguraBanda', formGroup.get('memoria.larguraBanda')?.errors) }}
+                  @if (formGroup.get('memoria.larguraBanda')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('memoria.larguraBanda')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Velocidade da Memória (MHz)</mat-label>
+                <input matInput type="number" formControlName="velocidadeMemoria">
+                <mat-error
+                  *ngIf="formGroup.get('memoria.velocidadeMemoria')?.invalid && formGroup.get('memoria.velocidadeMemoria')?.touched">
+                  {{ getErrorMessage('velocidadeMemoria', formGroup.get('memoria.velocidadeMemoria')?.errors) }}
+                  @if (formGroup.get('memoria.velocidadeMemoria')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('memoria.velocidadeMemoria')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
             </div>
-          </div>
 
-          <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
+            <div>
+              <button mat-button matStepperPrevious type="button">Back</button>
+              <button mat-button matStepperNext type="button">Next</button>
+            </div>
+          </mat-step>
 
-          <div>
-            <button mat-button matStepperPrevious type="button">Back</button>
-          </div>
-        </mat-step>
+          <mat-step formGroupName="3" [stepControl]="formArray.get([3])!">
+            <ng-template matStepLabel>Dimensões e Saídas de Vídeo</ng-template>
+
+            <h3>Dimensões</h3>
+            <div formGroupName="tamanho">
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Largura (mm)</mat-label>
+                <input matInput type="number" formControlName="largura">
+                <mat-error
+                  *ngIf="formGroup.get('tamanho.largura')?.invalid && formGroup.get('tamanho.largura')?.touched">
+                  {{ getErrorMessage('largura', formGroup.get('tamanho.largura')?.errors) }}
+                  @if (formGroup.get('tamanho.largura')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('tamanho.largura')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Altura (mm)</mat-label>
+                <input matInput type="number" formControlName="altura">
+                <mat-error *ngIf="formGroup.get('tamanho.altura')?.invalid && formGroup.get('tamanho.altura')?.touched">
+                  {{ getErrorMessage('altura', formGroup.get('tamanho.altura')?.errors) }}
+                  @if (formGroup.get('tamanho.altura')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('tamanho.altura')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Comprimento (mm)</mat-label>
+                <input matInput type="number" formControlName="comprimento">
+                <mat-error
+                  *ngIf="formGroup.get('tamanho.comprimento')?.invalid && formGroup.get('tamanho.comprimento')?.touched">
+                  {{ getErrorMessage('comprimento', formGroup.get('tamanho.comprimento')?.errors) }}
+                  @if (formGroup.get('tamanho.comprimento')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('tamanho.comprimento')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <h3>Saídas de Vídeo</h3>
+            <div formArrayName="saidas">
+              <div *ngFor="let saida of getSaidas().controls; let i = index" [formGroupName]="i">
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Tipo</mat-label>
+                  <input matInput type="text" formControlName="tipo">
+                  <mat-error *ngIf="saida.get('tipo')?.invalid && saida.get('tipo')?.touched">
+                    {{ getErrorMessage('tipo', saida.get('tipo')?.errors) }}
+                    @if (saida.get('tipo')?.hasError('apiError')) {
+                    <span>{{ saida.get('tipo')?.getError('apiError') }}</span>
+                    }
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Quantidade</mat-label>
+                  <input matInput type="number" formControlName="quantidade">
+                  <mat-error *ngIf="saida.get('quantidade')?.invalid && saida.get('quantidade')?.touched">
+                    {{ getErrorMessage('quantidade', saida.get('quantidade')?.errors) }}
+                    @if (saida.get('quantidade')?.hasError('apiError')) {
+                    <span>{{ saida.get('quantidade')?.getError('apiError') }}</span>
+                    }
+                  </mat-error>
+                </mat-form-field>
+
+                <button mat-icon-button color="warn" (click)="removerSaida(i)" *ngIf="getSaidas().length > 1">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
+
+            <div>
+              <button mat-button matStepperPrevious type="button">Back</button>
+            </div>
+          </mat-step>
 
         </mat-stepper>
       </form>

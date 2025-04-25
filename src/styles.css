@@ -28,6 +28,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --texto-primario: #FFFFFF;
     --texto-secundario: #B3B3B3;
     --icone-destaque: #C4A000;
+    --amarelo-destaque: #FFD700;
     --hover-acao: #5a5959;
     --erro-alerta: #FF4C4C;
     --sucesso: #4CAF50;

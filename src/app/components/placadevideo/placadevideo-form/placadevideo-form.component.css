@@ -109,7 +109,7 @@ h3 {
     margin-top: 1rem;
     font-size: 1.25rem;
     font-weight: bold;
-    color: #333;
+    color: var(--texto-principal);
 }
 
 mat-error {
@@ -164,11 +164,7 @@ mat-error {
     flex-wrap: nowrap; /* permite quebra de linha se necessário */
   }
 
-  .botao{
-    background-color: var(--icone-destaque);
-    color: var(--texto-principal);
-    width: 65px;
-  }
+
 
   button.mat-fab.accent:hover {
     border-radius: 15px;
@@ -189,3 +185,87 @@ mat-error {
     transition: transform 0.3s ease;
     background-color: var(--hover-botao);
   }
+
+.energia{
+   width: 100%; 
+}
+
+.suporteRayTracing1 {
+    background-color: var(--icone-destaque);
+    border-radius: 12px;
+    padding: 2px 8px;
+    display: inline-block;
+    height: 40px;
+    color: var(--texto-principal, );
+  }
+  
+/* Aqui começa o ng-deep para pegar o material internamente */
+::ng-deep .suporteRayTracing1 .mdc-checkbox__background {
+    border: 2px solid var(--icone-destaque);
+    background-color: var(--fundo-secundario);
+  }
+  
+  ::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-checkbox__background {
+    background-color: black !important;
+    border-color: black !important;
+  }
+  
+  ::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-checkbox__checkmark-path {
+    stroke: white !important;
+  }
+  
+  
+  ::ng-deep .suporteRayTracing1 .mdc-label {
+    color: var(--texto-principal, white);
+    transition: color 0.2s;
+  }
+  
+  ::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-label {
+    color: var(--texto-principal);
+  }
+  
+  .suporteRayTracing1:hover {
+    background-color: rgba(255, 215, 0, 0.1); /* Amarelo suave no hover */
+  }
+  
+  /* Container dos botões */
+.botao {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+/* Estilizando botões mat-button corretamente */
+::ng-deep .botao button.mat-mdc-button {
+    background-color: var(--icone-destaque) !important;
+    color: var(--fundo-principal) !important;
+    border-radius: 8px;
+    padding: 6px 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  /* Hover */
+  ::ng-deep .botao button.mat-mdc-button:hover {
+    background-color: var(--hover-acao) !important;
+    transform: scale(1.03);
+  }
+  
+  /* Desabilitado */
+  ::ng-deep .botao button.mat-mdc-button:disabled {
+    background-color: #44444466 !important;
+    color: #cccccc !important;
+    cursor: not-allowed !important;
+  }
+
+  .memoria-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .saidas {
+    width: 30%;
+  }
+  

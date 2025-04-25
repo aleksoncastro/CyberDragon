@@ -63,8 +63,6 @@ export class PlacaDeVideoFormComponent {
               clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
               clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
               suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
-            }),
-            this.formBuilder.group({
               memoria: this.formBuilder.group({
                 tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
                 capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
@@ -83,7 +81,7 @@ export class PlacaDeVideoFormComponent {
                   ? placaDeVideo.saidas.map(saida => this.createSaidaFormGroup(saida))
                   : [this.createSaidaFormGroup()]
               )
-            })
+            }),
           ])
         });
         console.log("PlacaDeVideo inicializada:", this.formGroup.value);
@@ -109,7 +107,7 @@ export class PlacaDeVideoFormComponent {
     });
   }
   getSaidas(): FormArray {
-    return (this.formGroup.get('formArray') as FormArray).at(3).get('saidas') as FormArray;
+    return (this.formGroup.get('formArray') as FormArray).at(2).get('saidas') as FormArray;
   }  
 
   // Método para adicionar uma nova saída de vídeo ao array
@@ -144,43 +142,43 @@ export class PlacaDeVideoFormComponent {
     }    
 
     const formValue = this.formGroup.value;
-    console.log("Valores do formulário:", formValue);
-    
-    const formArray = this.formGroup.get('formArray') as FormArray;
+console.log("Valores do formulário:", formValue);
 
-    const step1 = formArray.at(0).value;
-    const step2 = formArray.at(1).value;
-    const step3 = formArray.at(2).value;
-    const step4 = formArray.at(3).value;
-    
-    const placaDeVideo: PlacaDeVideo = {
-      id: step1.id,
-      modelo: step1.modelo,
-      categoria: step1.categoria,
-      preco: step1.preco,
-      resolucao: step1.resolucao,
-      energia: step2.energia,
-      descricao: step1.descricao,
-      compatibilidade: step1.compatibilidade,
-      clockBase: step2.clockBase,
-      clockBoost: step2.clockBoost,
-      suporteRayTracing: step2.suporteRayTracing,
-      idFan: step1.idFan,
-      idFornecedor: step1.idFornecedor,
-      memoria: {
-        tipoMemoria: step3.memoria.tipoMemoria,
-        capacidade: step3.memoria.capacidade,
-        larguraBanda: step3.memoria.larguraBanda,
-        velocidadeMemoria: step3.memoria.velocidadeMemoria,
-      },
-      tamanho: {
-        largura: step4.tamanho.largura,
-        altura: step4.tamanho.altura,
-        comprimento: step4.tamanho.comprimento,
-      },
-      saidas: step4.saidas,
-      listaImagem: []
-    };
+const formArray = this.formGroup.get('formArray') as FormArray;
+
+const step1 = formArray.at(0).value;
+const step2 = formArray.at(1).value;
+const step3 = formArray.at(2).value;
+
+const placaDeVideo: PlacaDeVideo = {
+  id: step1.id,
+  modelo: step1.modelo,
+  categoria: step1.categoria,
+  preco: step1.preco,
+  resolucao: step1.resolucao,
+  descricao: step1.descricao,
+  compatibilidade: step1.compatibilidade,
+  idFan: step1.idFan,
+  idFornecedor: step1.idFornecedor,
+  energia: step2.energia,
+  clockBase: step2.clockBase,
+  clockBoost: step2.clockBoost,
+  suporteRayTracing: step2.suporteRayTracing,
+  memoria: {
+    tipoMemoria: step2.memoria.tipoMemoria,
+    capacidade: step2.memoria.capacidade,
+    larguraBanda: step2.memoria.larguraBanda,
+    velocidadeMemoria: step2.memoria.velocidadeMemoria,
+  },
+  tamanho: {
+    largura: step3.tamanho.largura,
+    altura: step3.tamanho.altura,
+    comprimento: step3.tamanho.comprimento,
+  },
+  saidas: step3.saidas,
+  listaImagem: []
+};
+
 
     console.log("Objeto PlacaDeVideo a ser enviado:", JSON.stringify(placaDeVideo, null, 2));
 

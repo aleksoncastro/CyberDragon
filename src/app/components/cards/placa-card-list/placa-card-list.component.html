@@ -1,0 +1,35 @@
+<mat-drawer-container class="container">
+    <div class="home">
+        <div class="container responsive-grid">
+            <mat-card class="example-card" appearance="outlined" *ngFor="let card of cards()">
+        
+               <div class="image-container">
+                    <img class="image" [src]="card.imageUrl" />
+               </div>    
+                <div class="card-info">
+
+                    <span>Placa de Video {{card.title}}, </span>
+                    <span>{{ card.fornecedor }}, </span>
+                    <span>{{ card.capacidade }}GB, </span>
+                    <span>{{ card.tipoMemoria }}, </span>
+                    <span>{{ card.larguraBanda }}-bit</span>
+                  </div>
+
+                  <span class="valor-desconto">de <del>{{card.preco + 1 | currency:'BRL'}}</del> por:</span>
+
+                <p class="avista">à vista</p>
+                
+                <mat-card-content class="preco">{{card.preco | currency:'BRL' }}</mat-card-content>
+
+                <div class="line"></div>
+
+                <p class="parcelamento">Em até 10x de 
+                    <span class="valor-parcela"> {{card.preco/ 10 | currency:'BRL'}} </span>
+                </p>
+                <p class="parcelamento">sem juros no cartão</p>
+        
+            </mat-card>
+        </div>
+    </div>
+</mat-drawer-container>
+

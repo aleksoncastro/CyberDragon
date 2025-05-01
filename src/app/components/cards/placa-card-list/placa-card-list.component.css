@@ -8,23 +8,23 @@
   }
   
   .example-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
     border: 1px solid transparent;
     cursor: pointer;
     border-radius: 8px;
-    background-color: var(--cartao-container);
+    background-color: var(--fundo-principal);
     color: var(--texto-primario);
     width: 100%;
     max-width: 320px;
     height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    margin: 20px;
   }
   
   .example-card:hover {
-    transform: scale(1.03);
+    transform: scale(1.1) translateY(-4px); /* aumenta 10% e sobe 4px */
     box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
     border: 1px solid var(--icone-destaque); /* Azul Material */
     border: 1px solid var(--borda-destaque);
-    transform: translateY(-4px);
   }
 
   .card-info{
@@ -44,7 +44,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* ajuste conforme o tamanho desejado */
+   ;/* ajuste conforme o tamanho desejado */
     overflow: hidden;
   }
   
@@ -55,7 +55,7 @@
   }
 
   .image{
-    height: 220px;
+    height: 290px;
     width: 100%;
     border-radius: 20px;
     padding: 10px;
@@ -79,6 +79,10 @@
   .parcelamento{
     font-size: 13px;
     margin-bottom: 0px;
+  }
+  .parcelamento2{
+    font-size: 13px;
+    margin-top: 0px;
   }
 
   .line{

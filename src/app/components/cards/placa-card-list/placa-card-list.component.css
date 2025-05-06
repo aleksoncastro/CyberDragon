@@ -4,7 +4,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
-    padding: 1rem;
+    padding: 10rem;
   }
   
   .example-card {
@@ -14,10 +14,11 @@
     background-color: var(--fundo-principal);
     color: var(--texto-primario);
     width: 100%;
-    max-width: 320px;
+    max-width: 250px;
     height: auto;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
     margin: 20px;
+    justify-content: center;
   }
   
   .example-card:hover {
@@ -44,7 +45,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-   ;/* ajuste conforme o tamanho desejado */
     overflow: hidden;
   }
   
@@ -96,5 +96,114 @@
     font-size: 13px;
     color: #e90313;
   }
- 
-  
+
+  .anuncio-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    height: 60vh;           /* Altura total da tela */
+}
+
+.anuncio {
+    max-width: 100%;
+    width: 90%;
+    height: auto;
+    
+    -webkit-mask-image: radial-gradient(circle at center, 
+        rgba(0,0,0,1) 60%, 
+        rgba(0,0,0,0) 100%);
+    mask-image: radial-gradient(circle at center, 
+        rgba(0,0,0,1) 60%, 
+        rgba(0,0,0,0) 100%);
+    
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    
+    -webkit-mask-size: cover;
+    mask-size: cover;
+}
+
+.titulo-ofertas {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--amarelo-destaque);
+  margin: 1rem 0 -10rem 10rem; /* "cola" no grid e respeita padding lateral */
+}
+
+.icon-fogo {
+  font-size: 1.8rem;
+  animation: pulse 1.2s infinite alternate;
+}
+
+/* animação leve */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  100% {
+    transform: scale(1.15);
+    filter: brightness(1.3);
+  }
+}
+
+.scroll-horizontal {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem 0;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
+.scroll-horizontal::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-horizontal::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 3px;
+}
+
+.scroll-horizontal mat-card {
+  min-width: 250px;
+  scroll-snap-align: start;
+}
+
+.scroll-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 10rem 5rem;
+  background-color: transparent !important;
+  margin-bottom: -10rem;
+}
+
+::ng-deep .scroll-button{
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--amarelo-destaque);
+  border: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+::ng-deep .scroll-button mat-icon {
+  font-size: 30px;
+}
+
+::ng-deep .scroll-button:hover {
+  transform: scale(2.0);
+  cursor: pointer;
+}
+
+

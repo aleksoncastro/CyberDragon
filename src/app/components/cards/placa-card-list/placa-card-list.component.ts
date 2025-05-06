@@ -5,6 +5,7 @@ import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { MatDrawerContainer } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { ViewChild, ElementRef } from '@angular/core';
 
 type Card = {
   title: string;
@@ -26,35 +27,52 @@ export class PlacaCardListComponent implements OnInit {
   placa: PlacaDeVideo[] = [];
   cards = signal<Card[]>([]);
 
-  constructor(private placaService: PlacaDeVideoService) {}
+  constructor(private placaService: PlacaDeVideoService) { }
+
+  cardsLancamentos = signal<Card[]>([]);
+  cardsOfertas = signal<Card[]>([]);
 
   ngOnInit(): void {
+    this.carregarLancamentos();
     this.carregarPlacas();
+  }
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+  scrollLeft() {
+    this.scrollContainer.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
+  }
+
+  scrollRight() {
+    this.scrollContainer.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
+  }
+
+  carregarLancamentos() {
+
+    this.placaService.findByUltimosLancamentos('RTX', 'RX', '40', 'XT').subscribe((data) => {
+      const cards = this.converterParaCards(data);
+      this.cardsLancamentos.set(cards);
+    });
   }
 
   carregarPlacas() {
     this.placaService.findAll(0, 10).subscribe((data) => {
-      this.placa = data;
-      this.carregarCards();
+      const cards = this.converterParaCards(data);
+      this.cardsOfertas.set(cards);
     });
   }
 
-  carregarCards() {
-    const cards: Card[] = [];
-    this.placa.forEach((placa) => {
-      cards.push({
-        title: placa.modelo,
-        tipoMemoria: placa.memoria.tipoMemoria,
-        fornecedor: placa.fornecedor?.nome ?? 'Fornecedor não informado',
-        capacidade: placa.memoria.capacidade,
-        larguraBanda: placa.memoria.larguraBanda,
-        preco: placa.preco,
-        imageUrl: placa.listaImagem?.length
-          ? this.placaService.getImagemUrl(placa.listaImagem[0])
-          : 'assets/imagem-nao-disponivel'
-      });
-    });
-  
-    this.cards.set(cards);
+  converterParaCards(placas: PlacaDeVideo[]): Card[] {
+    return placas.map((placa) => ({
+      title: placa.modelo,
+      tipoMemoria: placa.memoria.tipoMemoria,
+      fornecedor: placa.fornecedor?.nome ?? 'Fornecedor não informado',
+      capacidade: placa.memoria.capacidade,
+      larguraBanda: placa.memoria.larguraBanda,
+      preco: placa.preco,
+      imageUrl: placa.listaImagem?.length
+        ? this.placaService.getImagemUrl(placa.listaImagem[0])
+        : 'assets/imagem-nao-disponivel'
+    }));
   }
 }

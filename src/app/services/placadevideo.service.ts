@@ -57,4 +57,10 @@ export class PlacaDeVideoService {
     return this.httpClient.delete<PlacaDeVideo>(`${this.baseUrl}/${placadevideo.id}`);
   }
 
+  findByUltimosLancamentos(prefixo1: string, prefixo2: string, valor1: string, valor2: string): Observable<PlacaDeVideo[]> {
+    const url = `${this.baseUrl}/search/lancamentos/${prefixo1}/${prefixo2}/${valor1}/${valor2}`;
+    return this.httpClient.get<PlacaDeVideo[]>(url);
+  }
+  
+
 }

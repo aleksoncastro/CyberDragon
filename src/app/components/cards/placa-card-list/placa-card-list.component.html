@@ -1,11 +1,68 @@
 <mat-drawer-container class="container">
     <div class="home">
+
+        <div class="anuncio-container">
+            <img src="assets/anuncio.png" alt="Anuncio ´laca" class="anuncio" />
+        </div>
+
+        <div class="titulo-ofertas">
+            <span class="icon-foguete">🚀</span>
+            <span>Lançamentos</span>
+        </div>
+
+        <div class="scroll-wrapper">
+            <button mat-icon-button class="scroll-button" (click)="scrollLeft()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <div class="scroll-horizontal" #scrollContainer>
+                <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsLancamentos()">
+
+                    <div class="image-container">
+                        <img class="image" [src]="card.imageUrl" />
+                    </div>
+                    <div class="card-info">
+
+                        <span>Placa de Video {{card.title}}, </span>
+                        <span>{{ card.fornecedor }}, </span>
+                        <span>{{ card.capacidade }}GB, </span>
+                        <span>{{ card.tipoMemoria }}, </span>
+                        <span>{{ card.larguraBanda }}-bit</span>
+                    </div>
+
+                    <span class="valor-desconto">de <del>{{card.preco + 1 | currency:'BRL'}}</del> por:</span>
+
+                    <p class="avista">à vista</p>
+
+                    <mat-card-content class="preco">{{card.preco | currency:'BRL' }}</mat-card-content>
+
+                    <div class="line"></div>
+
+                    <p class="parcelamento">Em até 10x de
+                        <span class="valor-parcela"> {{card.preco/ 10 | currency:'BRL'}} </span>
+                    </p>
+                    <p class="parcelamento2">sem juros no cartão</p>
+
+                </mat-card>
+            </div>
+
+            
+            <button mat-icon-button class="scroll-button" (click)="scrollRight()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+         
+        </div>
+
+        <div class="titulo-ofertas">
+            <span class="icon-fogo">🔥</span>
+            <span>Ofertas em Destaque</span>
+        </div>
+
         <div class="container responsive-grid">
-            <mat-card class="example-card" appearance="outlined" *ngFor="let card of cards()">
-        
-               <div class="image-container">
+            <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsOfertas()">
+
+                <div class="image-container">
                     <img class="image" [src]="card.imageUrl" />
-               </div>    
+                </div>
                 <div class="card-info">
 
                     <span>Placa de Video {{card.title}}, </span>
@@ -13,23 +70,22 @@
                     <span>{{ card.capacidade }}GB, </span>
                     <span>{{ card.tipoMemoria }}, </span>
                     <span>{{ card.larguraBanda }}-bit</span>
-                  </div>
+                </div>
 
-                  <span class="valor-desconto">de <del>{{card.preco + 1 | currency:'BRL'}}</del> por:</span>
+                <span class="valor-desconto">de <del>{{card.preco + 1 | currency:'BRL'}}</del> por:</span>
 
                 <p class="avista">à vista</p>
-                
+
                 <mat-card-content class="preco">{{card.preco | currency:'BRL' }}</mat-card-content>
 
                 <div class="line"></div>
 
-                <p class="parcelamento">Em até 10x de 
+                <p class="parcelamento">Em até 10x de
                     <span class="valor-parcela"> {{card.preco/ 10 | currency:'BRL'}} </span>
                 </p>
                 <p class="parcelamento2">sem juros no cartão</p>
-        
+
             </mat-card>
         </div>
     </div>
 </mat-drawer-container>
-

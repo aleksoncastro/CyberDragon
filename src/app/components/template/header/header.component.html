@@ -1,48 +1,57 @@
 <mat-toolbar color="primary" class="navbar">
-    <!-- Menu (hambúrguer) -->
-    <button (click)="clickMenu()" mat-icon-button>
-      <mat-icon>menu</mat-icon>
-    </button>
-  
-    <!-- Logo -->
-    <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" [routerLink]="['/admin/home']" style="cursor: pointer;" />
-    <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" [routerLink]="['/admin/home']" style="cursor: pointer;"/>
-    <!-- Espaço -->
-    <span class="cyber-spacer"></span>
-  
-    <!-- Barra de pesquisa -->
-    <div class="search-wrapper">
-        <div class="search-background">
-          <mat-form-field class="search-bar" appearance="outline">
-            <mat-label class="buscar">Buscar</mat-label>
-            <input
-              matInput
-              placeholder="O que você procura?"
-              [(ngModel)]="searchQuery"
-              (keydown.enter)="onSearch()" class="input" />
-            <button mat-icon-button matSuffix (click)="onSearch()" aria-label="Buscar">
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-      </div>
-  
-    <!-- Espaço -->
-    <span class="cyber-spacer"></span>
-  
-    <!-- Ícones lado direito -->
-    <button mat-icon-button aria-label="Favoritos">
-      <mat-icon>favorite</mat-icon>
-    </button>
-  
-    <button mat-icon-button aria-label="Carrinho de compras">
-      <mat-icon>shopping_cart</mat-icon>
-    </button>
-  
-    <button mat-icon-button aria-label="Conta">
-      <mat-icon>person</mat-icon>
-    </button>
-  
-    <!-- Botão Entrar/Cadastrar -->
-    <button mat-button class="auth-btn">Entrar / Cadastrar</button>
-  </mat-toolbar>
+  <!-- Menu (hambúrguer) -->
+  <button (click)="clickMenu()" mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Logo -->
+  <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" *ngIf="isAdmin(); else logoCliente"
+    [routerLink]="['/admin/home']" style="cursor: pointer;" />
+
+  <ng-template #logoCliente>
+    <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" />
+  </ng-template>
+
+  <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" *ngIf="isAdmin(); else logoNomeCliente"
+    [routerLink]="['/admin/home']" style="cursor: pointer;" />
+
+  <ng-template #logoNomeCliente>
+    <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" />
+  </ng-template>
+
+  <!-- Espaço -->
+  <span class="cyber-spacer"></span>
+
+  <!-- Barra de pesquisa -->
+  <div class="search-wrapper">
+    <div class="search-background">
+      <mat-form-field class="search-bar" appearance="outline">
+        <mat-label class="buscar">Buscar</mat-label>
+        <input matInput placeholder="O que você procura?" [(ngModel)]="searchQuery" (keydown.enter)="onSearch()"
+          class="input" />
+        <button mat-icon-button matSuffix (click)="onSearch()" aria-label="Buscar">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Espaço -->
+  <span class="cyber-spacer"></span>
+
+  <!-- Ícones lado direito -->
+  <button mat-icon-button aria-label="Favoritos">
+    <mat-icon>favorite</mat-icon>
+  </button>
+
+  <button mat-icon-button aria-label="Carrinho de compras">
+    <mat-icon>shopping_cart</mat-icon>
+  </button>
+
+  <button mat-icon-button aria-label="Conta">
+    <mat-icon>person</mat-icon>
+  </button>
+
+  <!-- Botão Entrar/Cadastrar -->
+  <button mat-button class="auth-btn">Entrar / Cadastrar</button>
+</mat-toolbar>

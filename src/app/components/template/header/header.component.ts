@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,8 @@ import { Component } from '@angular/core';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -34,6 +36,10 @@ export class HeaderComponent {
   clickMenu() {
     this.sidebarService.toggle();
   }
+
+  isAdmin(): boolean {
+    return this.router.url.startsWith('/admin');
+  }  
 
   onSearch() {
     const query = this.searchQuery.trim();

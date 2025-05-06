@@ -1,0 +1,131 @@
+.navbar {
+    overflow-x: hidden;
+    white-space: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Drawer refinado com fundo grafite escuro */
+.drawer {
+    width: 300px;
+    background-color: #2A2A2A;
+    /* grafite escuro */
+    color: #B3B3B3;
+    /* cinza claro */
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Estilo para navegadores baseados em WebKit (Chrome, Safari, Edge) */
+.drawer::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .drawer::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .drawer::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  
+  .drawer::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+  }
+  
+  /* Estilo para Firefox */
+  .drawer {
+    scrollbar-width: thin;
+    scrollbar-color: #555 transparent;
+  }
+  
+
+/* Cabeçalho do menu */
+.menu-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 64px;
+    font-weight: 600;
+    padding: 0 20px;
+    color: #FFFFFF;
+    /* texto branco puro */
+}
+
+.menu-title {
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+/* Áreas de categoria */
+.menu-section {
+    padding: 10px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-header {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #B3B3B3;
+    /* cinza claro */
+    padding: 8px 20px 4px;
+}
+
+/* Lista de itens do menu */
+mat-list-item {
+    padding: 8px 20px;
+    font-size: 15px;
+    color: #C4A000;
+    /* amarelo dourado */
+    transition: background-color 0.25s ease;
+    border-radius: 4px;
+    margin: 4px 8px;
+}
+
+mat-list-item:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+    /* hover dourado sutil */
+}
+
+mat-icon[matListIcon] {
+    margin-right: 12px;
+    color: #FFD700;
+    /* ícones com amarelo vibrante */
+}
+
+/* Conteúdo principal */
+.content-area {
+    flex: 1;
+    padding: 24px;
+    box-sizing: border-box;
+    background-color: #1E1E1E;
+    /* fundo secundário */
+    overflow: auto;
+    color: #FFFFFF;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .drawer {
+        width: 80vw;
+    }
+
+    .menu-header {
+        font-size: 16px;
+    }
+
+    .section-header {
+        font-size: 12px;
+    }
+}

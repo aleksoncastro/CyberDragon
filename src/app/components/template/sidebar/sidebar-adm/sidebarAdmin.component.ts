@@ -1,17 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { MatDrawer, MatDrawerContent, MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
-import { SidebarService } from '../../../services/sidebar.service';
+import { MatDrawer, MatDrawerContent, MatSidenavModule } from '@angular/material/sidenav';
+import { SidebarService } from '../../../../services/sidebar.service';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatList, MatListItem, MatListModule, MatNavList } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-sidebarAdmin',
   imports: [MatSidenavModule, RouterModule, MatToolbarModule, MatDrawer,
             MatDrawerContent, MatNavList, MatListItem, RouterOutlet, MatListModule, MatIconModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  templateUrl: './sidebarAdmin.component.html',
+  styleUrl: './sidebarAdmin.component.css'
 })
 export class SidebarComponent {
 

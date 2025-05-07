@@ -77,10 +77,10 @@
         <td mat-cell *matCellDef="let element" class="colunas"> {{element.fan?.label}} </td>
       </ng-container>
 
-      <!-- Compatibilidade Column -->
-      <ng-container matColumnDef="compatibilidade" class="dados">
-        <th mat-header-cell *matHeaderCellDef class="header-table"> Compatibilidade </th>
-        <td mat-cell *matCellDef="let element" class="colunas"> {{element.compatibilidade}} </td>
+      <!-- Barramento Column -->
+      <ng-container matColumnDef="barramento" class="dados">
+        <th mat-header-cell *matHeaderCellDef class="header-table"> Barramento </th>
+        <td mat-cell *matCellDef="let element" class="colunas"> {{element.barramento}} </td>
       </ng-container>
 
       <!-- Clock Base Column -->
@@ -114,7 +114,7 @@
         <th mat-header-cell *matHeaderCellDef class="header-table"> Saídas de Vídeo </th>
         <td mat-cell *matCellDef="let element" class="colunas">
           <span *ngFor="let saida of element.saidas; let i = index">
-            {{saida.tipo}}<span *ngIf="i < element.saidas.length - 1">, </span>
+            {{saida.tipo}} ({{saida.quantidade}})<span *ngIf="i < element.saidas.length - 1">, </span>
           </span>
         </td>
       </ng-container>
@@ -208,15 +208,16 @@
 
         <div class="card-section">
           <h4>Especificações</h4>
-          <p><strong>Compatibilidade:</strong> {{ placaSelecionada.compatibilidade }}</p>
+          <p><strong>Barramento:</strong> {{ placaSelecionada.barramento }}</p>
           <p><strong>Fornecedor:</strong> {{ placaSelecionada.fornecedor?.nome }}</p>
           <p><strong>Energia:</strong> {{ placaSelecionada.energia }} W</p>
           <p><strong>Clock Base:</strong> {{ placaSelecionada.clockBase }} GHz</p>
           <p><strong>Clock Boost:</strong> {{ placaSelecionada.clockBoost }} GHz</p>
           <h4>Saídas de Vídeo</h4>
           <p *ngIf="placaSelecionada.saidas.length > 0">
+            <strong>Tipo: </strong>
             <span *ngFor="let saida of placaSelecionada.saidas; let i = index">
-              {{ saida.tipoMemoria }}<span *ngIf="i < placaSelecionada.saidas.length - 1">, </span>
+              {{ saida.tipo }} ({{saida.quantidade}}) <span *ngIf="i < placaSelecionada.saidas.length - 1">, </span>
             </span>
           </p>
           <p *ngIf="placaSelecionada.saidas.length === 0">Nenhuma saída de vídeo cadastrada.</p>

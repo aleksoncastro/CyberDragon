@@ -55,7 +55,7 @@ export class PlacaDeVideoFormComponent {
               preco: [placaDeVideo?.preco || '', [Validators.required, Validators.min(0)]],
               resolucao: [placaDeVideo?.resolucao || '', Validators.required],
               idFan: [placaDeVideo?.idFan ?? '', [Validators.required, Validators.min(1)]],
-              compatibilidade: [placaDeVideo?.compatibilidade || '', [Validators.required, Validators.min(1)]],
+              barramento: [placaDeVideo?.barramento || '', [Validators.required, Validators.min(1)]],
               descricao: [placaDeVideo?.descricao || '', Validators.required],
             }),
             this.formBuilder.group({
@@ -157,7 +157,7 @@ const placaDeVideo: PlacaDeVideo = {
   preco: step1.preco,
   resolucao: step1.resolucao,
   descricao: step1.descricao,
-  compatibilidade: step1.compatibilidade,
+  barramento: step1.barramento,
   idFan: step1.idFan,
   idFornecedor: step1.idFornecedor,
   energia: step2.energia,
@@ -270,9 +270,9 @@ const placaDeVideo: PlacaDeVideo = {
       required: 'A descrição deve ser informada.',
       apiError: ' '
     },
-    compatibilidade: {
-      required: 'A compatibilidade deve ser informada.',
-      min: 'Informe pelo menos um item de compatibilidade.',
+    barramento: {
+      required: 'A barramento deve ser informada.',
+      min: 'Informe pelo menos um item de barramento.',
       apiError: ' '
     },
     clockBase: {

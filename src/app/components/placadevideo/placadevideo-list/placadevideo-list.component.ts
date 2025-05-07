@@ -28,7 +28,7 @@ export class PlacadevideoListComponent implements OnInit {
     'resolucao', 
     'energia', 
     'idFan',
-    'compatibilidade', 
+    'barramento', 
     'suporteRayTracing', 
     'memoria', 
     'fornecedor',
@@ -39,7 +39,7 @@ export class PlacadevideoListComponent implements OnInit {
 
   // variáveis de controle de paginação
   totalRecords = 0;
-  pageSize = 10;
+  pageSize = 20;
   page = 0;
   
   placaSelecionada: PlacaDeVideo | null = null;
@@ -65,14 +65,18 @@ export class PlacadevideoListComponent implements OnInit {
   }
 
   carregarPlacasDeVideo(): void {
-    this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
-      this.placasDeVideo = data;
-      this.placasDeVideoFiltradas = data; // Inicializa a lista filtrada com todos os dados
-    });
-    this.placaDeVideoService.count().subscribe(data => {
-      this.totalRecords = data;
+    // Primeiro busca a informação da paginação
+    this.placaDeVideoService.getPaginacao(this.page, this.pageSize).subscribe(paginacao => {
+      this.totalRecords = paginacao.totalRecords;
+  
+      // Depois busca os dados da página
+      this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
+        this.placasDeVideo = data;
+        this.placasDeVideoFiltradas = data;
+      });
     });
   }
+  
 
   filtrar(event: any): void {
     const valor = event.target.value.toLowerCase();

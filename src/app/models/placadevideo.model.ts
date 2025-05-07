@@ -8,7 +8,7 @@ export class PlacaDeVideo {
   resolucao: string;
   energia: number;
   descricao: string;
-  compatibilidade: number;
+  barramento: string;
   clockBase: number;
   clockBoost: number;
   suporteRayTracing: boolean;
@@ -29,7 +29,7 @@ export class PlacaDeVideo {
     this.resolucao = '';
     this.energia = 0;
     this.descricao = '';
-    this.compatibilidade = 0;
+    this.barramento = '';
     this.clockBase = 0;
     this.clockBoost = 0;
     this.suporteRayTracing = false;
@@ -68,11 +68,11 @@ export class Fan{
 
 export class SaidaVideo {
   id?: number;
-  tipoMemoria: string;
+  tipo: string;
   quantidade: number;
 
   constructor() {
-    this.tipoMemoria = '';
+    this.tipo = '';
     this.quantidade = 0;
   }
 }

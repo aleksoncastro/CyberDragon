@@ -82,12 +82,12 @@
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width-input">
-                <mat-label>Compatibilidade</mat-label>
-                <input matInput type="number" formControlName="compatibilidade">
-                <mat-error *ngIf="formGroup.get('compatibilidade')?.invalid && formGroup.get('compatibilidade')?.touched">
-                  {{ getErrorMessage('compatibilidade', formGroup.get('compatibilidade')?.errors) }}
-                  @if (formGroup.get('compatibilidade')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('compatibilidade')?.getError('apiError') }}</span>
+                <mat-label>Barramento</mat-label>
+                <input matInput type="number" formControlName="barramento">
+                <mat-error *ngIf="formGroup.get('barramento')?.invalid && formGroup.get('barramento')?.touched">
+                  {{ getErrorMessage('barramento', formGroup.get('barramento')?.errors) }}
+                  @if (formGroup.get('barramento')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('barramento')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>

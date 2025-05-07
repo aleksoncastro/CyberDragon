@@ -1,4 +1,4 @@
-import { SidebarService } from '../../../services/sidebar.service';
+import { SidebarService } from '../../../../services/sidebar.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -7,10 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-header-cli',
   standalone: true,
   imports: [
     RouterLink,
@@ -19,13 +18,12 @@ import { NgIf } from '@angular/common';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
-    NgIf
+    FormsModule
   ],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  templateUrl: './header-cli.component.html',
+  styleUrl: './header-cli.component.css'
 })
-export class HeaderComponent {
+export class HeaderCliComponent {
   searchQuery: string = '';
 
   constructor(
@@ -36,10 +34,6 @@ export class HeaderComponent {
   clickMenu() {
     this.sidebarService.toggle();
   }
-
-  isAdmin(): boolean {
-    return this.router.url.startsWith('/admin');
-  }  
 
   onSearch() {
     const query = this.searchQuery.trim();

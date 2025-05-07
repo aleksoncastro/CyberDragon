@@ -5,19 +5,10 @@
   </button>
 
   <!-- Logo -->
-  <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" *ngIf="isAdmin(); else logoCliente"
-    [routerLink]="['/admin/home']" style="cursor: pointer;" />
-
-  <ng-template #logoCliente>
-    <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" />
-  </ng-template>
-
-  <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" *ngIf="isAdmin(); else logoNomeCliente"
-    [routerLink]="['/admin/home']" style="cursor: pointer;" />
-
-  <ng-template #logoNomeCliente>
-    <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" />
-  </ng-template>
+  <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" [routerLink]="['/placa-card-list']"
+    style="cursor: pointer;" />
+  <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" [routerLink]="['/placa-card-list']"
+    style="cursor: pointer;" />
 
   <!-- Espaço -->
   <span class="cyber-spacer"></span>

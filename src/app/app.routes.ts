@@ -59,7 +59,7 @@ export const routes: Routes = [
         component: AdminTemplateComponent,
         title: 'Administrativo',
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'estados' },
+            { path: '', pathMatch: 'full', redirectTo: 'home' },
             { path: 'estados', component: EstadoListComponent, title: 'Lista de Estados' },
             { path: 'estados/new', component: EstadoFormComponent, title: 'Novo Estado' },
             { path: 'estados/edit/:id', component: EstadoFormComponent, resolve: { estado: estadoResolver } },

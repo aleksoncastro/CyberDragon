@@ -287,12 +287,27 @@
                 </button>
               </div>
             </div>
+
+            
             <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
 
             <div class="botao">
               <button mat-button matStepperPrevious type="button">Back</button>
+              <button mat-button matStepperNext type="button">Next</button>
             </div>
           </mat-step>
+
+          <mat-step formGroupName="2" [stepControl]="formArray.get([3])!">
+            <ng-template matStepLabel>Imagens</ng-template>
+            <input type="file" (change)="onFileSelected($event)" multiple />
+            <div *ngFor="let imagem of listaImagens; let i = index">
+              <p>{{ imagem.name }}</p>
+              <button mat-icon-button (click)="removerImagem(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-step>
+
         </mat-stepper>
       </form>
     </mat-card-content>

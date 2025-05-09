@@ -35,12 +35,13 @@ export class PlacaDeVideoService {
     return `http://localhost:8080${nome.startsWith('/') ? '' : '/'}${nome}`;
   }
 
-  uploadImagem(id: number, imagem: File): Observable<void> {
-    const formData = new FormData();
-    formData.append('imagem', imagem); // deve bater com o nome do campo no ImageForm
-    formData.append('nomeImagem', imagem.name); // esse campo também é necessário
-  
-    return this.httpClient.patch<void>(this.baseUrl +`/${id}/upload/imagem`, formData);
+  uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('nomeImagem', imagem.name);
+    formData.append('imagem', imagem, imagem.name);
+    
+    return this.httpClient.patch<PlacaDeVideo>(`${this.baseUrl}/${id}/upload/imagem`, formData);
   }
   
 

@@ -22,7 +22,7 @@
                 </mat-form-field>
               </div>
 
-             
+
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Fornecedor</mat-label>
                 <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)">
@@ -116,7 +116,7 @@
           <mat-step formGroupName="1" [stepControl]="formArray.get([1])!">
             <ng-template matStepLabel>Especificações Técnicas</ng-template>
             <div class="form-grid">
-              
+
               <div class="energia">
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Energia (W)</mat-label>
@@ -129,30 +129,30 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-          
+
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Clock Base (MHz)</mat-label>
                 <input matInput type="number" formControlName="clockBase">
                 <mat-error *ngIf="formGroup.get('clockBase')?.invalid && formGroup.get('clockBase')?.touched">
                   {{ getErrorMessage('clockBase', formGroup.get('clockBase')?.errors) }}
                   @if (formGroup.get('clockBase')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('clockBase')?.getError('apiError') }}</span>
+                  <span>{{ formGroup.get('clockBase')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
-  
-                <mat-form-field appearance="fill" class="full-width-input">
-                  <mat-label>Clock Boost (MHz)</mat-label>
-                  <input matInput type="number" formControlName="clockBoost">
-                  <mat-error *ngIf="formGroup.get('clockBoost')?.invalid && formGroup.get('clockBoost')?.touched">
-                    {{ getErrorMessage('clockBoost', formGroup.get('clockBoost')?.errors) }}
-                    @if (formGroup.get('clockBoost')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('clockBoost')?.getError('apiError') }}</span>
-                    }
-                  </mat-error>
-                </mat-form-field>
-                   
-            
+
+              <mat-form-field appearance="fill" class="full-width-input">
+                <mat-label>Clock Boost (MHz)</mat-label>
+                <input matInput type="number" formControlName="clockBoost">
+                <mat-error *ngIf="formGroup.get('clockBoost')?.invalid && formGroup.get('clockBoost')?.touched">
+                  {{ getErrorMessage('clockBoost', formGroup.get('clockBoost')?.errors) }}
+                  @if (formGroup.get('clockBoost')?.hasError('apiError')) {
+                  <span>{{ formGroup.get('clockBoost')?.getError('apiError') }}</span>
+                  }
+                </mat-error>
+              </mat-form-field>
+
+
               <h3>Memória</h3>
               <div formGroupName="memoria" class="memoria-row">
                 <mat-form-field appearance="fill" class="full-width-input">
@@ -166,7 +166,7 @@
                     }
                   </mat-error>
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Capacidade (GB)</mat-label>
                   <input matInput type="number" formControlName="capacidade">
@@ -178,7 +178,7 @@
                     }
                   </mat-error>
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Largura de Banda (GB/s)</mat-label>
                   <input matInput type="number" formControlName="larguraBanda">
@@ -190,7 +190,7 @@
                     }
                   </mat-error>
                 </mat-form-field>
-  
+
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Velocidade da Memória (MHz)</mat-label>
                   <input matInput type="number" formControlName="velocidadeMemoria">
@@ -205,7 +205,7 @@
               </div>
 
             </div>
-            
+
             <div class="suporteRayTracing1">
               <mat-checkbox formControlName="suporteRayTracing">Suporte a Ray Tracing</mat-checkbox>
             </div>
@@ -288,7 +288,7 @@
               </div>
             </div>
 
-            
+
             <button mat-raised-button color="accent" (click)="adicionarSaida()">Adicionar Saída</button>
 
             <div class="botao">
@@ -298,15 +298,30 @@
           </mat-step>
 
           <mat-step formGroupName="2" [stepControl]="formArray.get([3])!">
-            <ng-template matStepLabel>Imagens</ng-template>
-            <input type="file" (change)="onFileSelected($event)" multiple />
-            <div *ngFor="let imagem of listaImagens; let i = index">
-              <p>{{ imagem.name }}</p>
-              <button mat-icon-button (click)="removerImagem(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
+            <mat-label>Imagens</mat-label>
+            <div class="form-grid">
+              <div class="imagem-upload">
+                <mat-label>Selecione as imagens</mat-label>
+                <input type="file" (change)="onFileSelected($event)" multiple />
+
+                <div class="image-previews">
+                  <div *ngFor="let image of imagePreviews; trackBy: trackByFn; let i = index">
+                    <div>
+                      <img [src]="image" alt="Preview" />
+                      <button (click)="removerImagem(i)">Remover</button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="botao">
+              <button mat-button matStepperPrevious type="button">Back</button>
             </div>
           </mat-step>
+
+
 
         </mat-stepper>
       </form>

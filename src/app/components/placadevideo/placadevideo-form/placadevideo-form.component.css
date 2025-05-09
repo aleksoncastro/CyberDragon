@@ -269,3 +269,16 @@ mat-error {
     width: 30%;
   }
   
+.file-upload-label {
+  display: block;
+  border: 1px solid rgba(0,0,0,0.23);
+  border-radius: 4px;
+  padding: 1rem;
+  cursor: pointer;
+  color: rgba(0,0,0,0.6);
+}
+
+.file-upload-label input {
+  display: none;
+}
+

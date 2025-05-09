@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -16,6 +16,7 @@ import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { SnackbarService } from '../../snackbar/snackbar.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-placadevideo-form',
@@ -30,13 +31,18 @@ export class PlacaDeVideoFormComponent {
   formGroup!: FormGroup;
   idFornecedorSelecionado: number | null = null;
   listaImagens: File[] = [];
+  fileName: string = '';
+  selectedFile: File | null = null;
+  imagePreviews: (string | ArrayBuffer | null)[] = [];
 
   constructor(private formBuilder: FormBuilder,
     private placaDeVideoService: PlacaDeVideoService,
     private fornecedorService: FornecedorService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private snackbarService: SnackbarService) {
+    private snackbarService: SnackbarService,
+    private location: Location,
+    private cdRef: ChangeDetectorRef) {
 
     this.fornecedorService.findAll().subscribe({
       next: (fornecedores) => {
@@ -96,59 +102,56 @@ export class PlacaDeVideoFormComponent {
     });
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-  
-    // Verificar se arquivos foram selecionados
-    if (input.files && input.files.length > 0) {
-      // Iterar sobre todos os arquivos selecionados
-      for (let i = 0; i < input.files.length; i++) {
-        const file = input.files[i];
-  
-        // Adicionar o arquivo ao array de imagens local
-        this.listaImagens.push(file);
-        
-        // Adicionar o arquivo ao FormArray
-        const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
-  
-        // Verificar se o FormArray e a listaImagem foram encontrados
-        if (imagensFormArray) {
-          imagensFormArray.push(this.formBuilder.control(file)); // Adicionando o arquivo ao FormArray
-        } else {
-          console.error('Erro: FormArray ou listaImagem não encontrado.');
-        }
-      }
-  
-      console.log('Imagens selecionadas:', this.listaImagens);
-    } else {
-      console.log('Nenhuma imagem selecionada.');
-    }
+  // Método que lida com a seleção de arquivos de imagem
+onFileSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const files = Array.from(input.files);
+    this.listaImagens.push(...files);
+
+    const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
+
+    files.forEach(file => {
+      imagensFormArray.push(this.formBuilder.control(file));
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreviews.push(reader.result);
+        this.cdRef.detectChanges(); // Chama detectChanges logo após a alteração
+      };
+      reader.readAsDataURL(file);
+    });
   }
-  
+}
+
+// Método para adicionar uma imagem manualmente ao FormArray
+adicionarImagem(imagem: File): void {
+  const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
+
+  if (imagensFormArray) {
+    imagensFormArray.push(this.formBuilder.control(imagem));
+  } else {
+    console.error('FormArray ou listaImagem não encontrada.');
+  }
+}
+
+// Método para remover uma imagem do FormArray e da lista
+removerImagem(index: number): void {
+  const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
+
+  if (imagensFormArray) {
+    imagensFormArray.removeAt(index);
+    this.listaImagens.splice(index, 1);
+    this.imagePreviews.splice(index, 1);
+  }
+}
+
+// Método para gerar a visualização da imagem antes do upload
+getImagePreview(file: File): string {
+  return URL.createObjectURL(file);
+}
 
 
-  adicionarImagem(imagem: File): void {
-    const imagensFormArray = this.formGroup.get('formArray')?.get([3]);
-  
-    if (imagensFormArray && imagensFormArray.get('listaImagem')) {
-      const listaImagemFormArray = imagensFormArray.get('listaImagem') as FormArray;
-      listaImagemFormArray.push(this.formBuilder.control(imagem)); // Adicionando a imagem ao FormArray
-    } else {
-      console.error('FormArray ou listaImagem não encontrada.');
-    }
-  }
-  
-  removerImagem(index: number): void {
-    const imagensFormArray = this.formGroup.get('formArray')?.get([3]);
-  
-    if (imagensFormArray && imagensFormArray.get('listaImagem')) {
-      const listaImagemFormArray = imagensFormArray.get('listaImagem') as FormArray;
-      listaImagemFormArray.removeAt(index); // Removendo a imagem do FormArray
-    } else {
-      console.error('FormArray ou listaImagem não encontrada.');
-    }
-  }
-  
 
 
   atualizarIdFornecedor(id: number) {
@@ -190,30 +193,58 @@ export class PlacaDeVideoFormComponent {
     this.getSaidas().removeAt(index);
   }
 
+  private uploadImage(id: number) {
+    if (this.selectedFile) {
+      this.placaDeVideoService.uploadImage(id, this.selectedFile.name, this.selectedFile)
+        .subscribe({
+          next: () => {
+            this.voltarPagina(); // ou atualizar a view
+          },
+          error: (err) => {
+            console.error('Erro ao fazer upload da imagem', err);
+          }
+        });
+    } else {
+      this.voltarPagina();
+    }
+  }
+
+  trackByFn(index: number, item: any): number {
+  return item; // ou use um identificador único
+}
+
+
+  
+
+
+
+  
+  voltarPagina() {
+    this.location.back();
+  }
+
   salvar() {
     console.log("Método salvar() da Placa de Vídeo chamado!");
-  
+
     if (!this.formGroup.valid) {
       this.formGroup.markAllAsTouched();
       console.warn("Formulário inválido! Verifique os campos.");
       return;
     }
-  
+
     const formValue = this.formGroup.value;
     console.log("Valores do formulário:", formValue);
-  
+
     const formArray = this.formGroup.get('formArray') as FormArray;
-  
+
     const step1 = formArray.at(0).value;
     const step2 = formArray.at(1).value;
     const step3 = formArray.at(2).value;
-    
+
     // Acesse o FormArray de imagens dentro do índice 3
-    const listaImagemFormArray = (formArray.at(3).get('listaImagem') as FormArray);
-    
-    // Se houver imagens, obtenha os valores (supondo que você tenha controles para as imagens)
+    const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
     const listaImagem = listaImagemFormArray.controls.map(control => control.value);
-  
+
     const placaDeVideo: PlacaDeVideo = {
       id: step1.id,
       modelo: step1.modelo,
@@ -242,30 +273,33 @@ export class PlacaDeVideoFormComponent {
       saidas: step3.saidas,
       listaImagem: [] // Não inclui imagens aqui, pois será tratado separadamente
     };
-  
+
     console.log("Objeto PlacaDeVideo a ser enviado:", JSON.stringify(placaDeVideo, null, 2));
-  
+
+    // Enviar dados da placa de vídeo (inserir ou atualizar)
     if (placaDeVideo.id == null) {
-      console.log("Chamando API para INSERIR nova placa de vídeo...");
       this.placaDeVideoService.insert(placaDeVideo).subscribe({
         next: (placaCriada) => {
           console.log("Placa de vídeo salva com sucesso!");
-  
-          // Após a criação, envia as imagens (se existirem)
+
+          // Enviar imagens (se houver)
           if (listaImagem.length > 0 && placaDeVideo.id) {
-            for (let i = 0; i < listaImagem.length; i++) {
-              const imagem = listaImagem[i];
-              this.placaDeVideoService.uploadImagem(placaDeVideo.id, imagem).subscribe({
-                next: () => {
-                  console.log(`Imagem ${i + 1} enviada com sucesso!`);
-                },
-                error: (err) => {
-                  console.error(`Erro ao enviar imagem ${i + 1}:`, err);
-                }
-              });
-            }
+            listaImagem.forEach((imagem, i) => {
+              if (placaDeVideo.id !== undefined) {
+                this.placaDeVideoService.uploadImage(placaDeVideo.id, imagem.name, imagem).subscribe({
+                  next: () => {
+                    console.log(`Imagem ${i + 1} enviada com sucesso!`);
+                  },
+                  error: (err) => {
+                    console.error(`Erro ao enviar imagem ${i + 1}:`, err);
+                  }
+                });
+              } else {
+                console.error('ID da placa de vídeo não definido');
+              }
+            });
           }
-  
+
           this.router.navigateByUrl('/admin/placasdevideo');
         },
         error: (errorResponse) => {
@@ -273,16 +307,13 @@ export class PlacaDeVideoFormComponent {
         }
       });
     } else {
-      console.log("Chamando API para ATUALIZAR placa de vídeo...");
       this.placaDeVideoService.update(placaDeVideo).subscribe({
         next: () => {
           console.log("Placa de vídeo atualizada com sucesso!");
-  
-          // Após a atualização, envia as imagens (se existirem)
-          if (listaImagem.length > 0 && placaDeVideo.id) {
-            for (let i = 0; i < listaImagem.length; i++) {
-              const imagem = listaImagem[i];
-              this.placaDeVideoService.uploadImagem(placaDeVideo.id, imagem).subscribe({
+
+          if (listaImagem.length > 0) {
+            listaImagem.forEach((imagem, i) => {
+              this.placaDeVideoService.uploadImage(placaDeVideo.id!, imagem.name, imagem).subscribe({
                 next: () => {
                   console.log(`Imagem ${i + 1} enviada com sucesso!`);
                   if (i === listaImagem.length - 1) {
@@ -291,11 +322,11 @@ export class PlacaDeVideoFormComponent {
                 },
                 error: (err) => {
                   console.error(`Erro ao enviar imagem ${i + 1}:`, err);
-                  this.snackbarService.showMessage('Placa atualizada, mas houve erro ao enviar a imagem.', false);
+                  this.snackbarService.showMessage('Placa salva, mas houve erro ao enviar a imagem.', false);
                   this.router.navigateByUrl('/admin/placasdevideo');
                 }
               });
-            }
+            });
           } else {
             this.router.navigateByUrl('/admin/placasdevideo');
           }
@@ -306,7 +337,11 @@ export class PlacaDeVideoFormComponent {
       });
     }
   }
-  
+
+
+
+
+
 
 
   cancelar() {

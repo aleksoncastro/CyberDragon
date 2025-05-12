@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { Location, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
@@ -16,7 +16,6 @@ import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { SnackbarService } from '../../snackbar/snackbar.component';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-placadevideo-form',
@@ -31,9 +30,10 @@ export class PlacaDeVideoFormComponent {
   formGroup!: FormGroup;
   idFornecedorSelecionado: number | null = null;
   listaImagens: File[] = [];
+
   fileName: string = '';
   selectedFile: File | null = null;
-  imagePreviews: (string | ArrayBuffer | null)[] = [];
+  imagePreview: string | ArrayBuffer | null = null;
 
   constructor(private formBuilder: FormBuilder,
     private placaDeVideoService: PlacaDeVideoService,
@@ -44,6 +44,50 @@ export class PlacaDeVideoFormComponent {
     private location: Location,
     private cdRef: ChangeDetectorRef) {
 
+    this.formGroup = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          id: [null],
+          modelo: ['', Validators.required],
+          idFornecedor: [null, Validators.required],
+          categoria: ['', Validators.required],
+          preco: ['', [Validators.required, Validators.min(0)]],
+          resolucao: ['', Validators.required],
+          idFan: [null, [Validators.required, Validators.min(1)]],
+          barramento: [null, [Validators.required, Validators.min(1)]],
+          descricao: ['', Validators.required],
+        }),
+        this.formBuilder.group({
+          energia: [null, [Validators.required, Validators.min(0)]],
+          clockBase: [null, [Validators.required, Validators.min(0)]],
+          clockBoost: [null, [Validators.required, Validators.min(0)]],
+          suporteRayTracing: [false],
+          memoria: this.formBuilder.group({
+            tipoMemoria: ['', Validators.required],
+            capacidade: [null, [Validators.required, Validators.min(1)]],
+            larguraBanda: [null, [Validators.required, Validators.min(1)]],
+            velocidadeMemoria: [null, [Validators.required, Validators.min(1)]],
+          }),
+        }),
+        this.formBuilder.group({
+          tamanho: this.formBuilder.group({
+            largura: [null, [Validators.required, Validators.min(1)]],
+            altura: [null, [Validators.required, Validators.min(1)]],
+            comprimento: [null, [Validators.required, Validators.min(1)]],
+          }),
+          saidas: this.formBuilder.array([this.createSaidaFormGroup()])
+        }),
+        this.formBuilder.group({
+          listaImagem: this.formBuilder.array([])
+        })
+      ])
+    });
+
+
+  }
+
+  private initializeForm(): void {
+
     this.fornecedorService.findAll().subscribe({
       next: (fornecedores) => {
         this.fornecedor = fornecedores;
@@ -51,36 +95,41 @@ export class PlacaDeVideoFormComponent {
 
         const placaDeVideo: PlacaDeVideo = this.activatedRoute.snapshot.data['placadevideo'];
 
+        if (placaDeVideo?.listaImagem?.length) {
+          this.imagePreview = this.placaDeVideoService.getImagemUrl(placaDeVideo.listaImagem[0]);
+          this.fileName = placaDeVideo.listaImagem[0];
+        }
+
         this.formGroup = this.formBuilder.group({
           formArray: this.formBuilder.array([
             this.formBuilder.group({
               id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
-              modelo: [placaDeVideo?.modelo || '', Validators.required],
-              idFornecedor: [placaDeVideo?.idFornecedor ?? '', Validators.required],
-              categoria: [placaDeVideo?.categoria || '', Validators.required],
-              preco: [placaDeVideo?.preco || '', [Validators.required, Validators.min(0)]],
-              resolucao: [placaDeVideo?.resolucao || '', Validators.required],
-              idFan: [placaDeVideo?.idFan ?? '', [Validators.required, Validators.min(1)]],
-              barramento: [placaDeVideo?.barramento || '', [Validators.required, Validators.min(1)]],
-              descricao: [placaDeVideo?.descricao || '', Validators.required],
+              modelo: [(placaDeVideo && placaDeVideo.modelo) ? placaDeVideo.modelo : '', Validators.required],
+              idFornecedor: [(placaDeVideo && placaDeVideo.idFornecedor) ? placaDeVideo.idFornecedor : '', Validators.required],
+              categoria: [(placaDeVideo && placaDeVideo.categoria) ? placaDeVideo.categoria : '', Validators.required],
+              preco: [(placaDeVideo && placaDeVideo.preco) ? placaDeVideo.preco : '', [Validators.required, Validators.min(0)]],
+              resolucao: [(placaDeVideo && placaDeVideo.resolucao) ? placaDeVideo.resolucao : '', Validators.required],
+              idFan: [(placaDeVideo && placaDeVideo.idFan) ? placaDeVideo.idFan : '', [Validators.required, Validators.min(1)]],
+              barramento: [(placaDeVideo && placaDeVideo.barramento) ? placaDeVideo.barramento : '', [Validators.required, Validators.min(1)]],
+              descricao: [(placaDeVideo && placaDeVideo.descricao) ? placaDeVideo.descricao : '', Validators.required],
             }),
             this.formBuilder.group({
-              energia: [placaDeVideo?.energia || '', [Validators.required, Validators.min(0)]],
-              clockBase: [placaDeVideo?.clockBase || '', [Validators.required, Validators.min(0)]],
-              clockBoost: [placaDeVideo?.clockBoost || '', [Validators.required, Validators.min(0)]],
-              suporteRayTracing: [placaDeVideo?.suporteRayTracing || false],
+              energia: [(placaDeVideo && placaDeVideo.energia) ? placaDeVideo.energia : '', [Validators.required, Validators.min(0)]],
+              clockBase: [(placaDeVideo && placaDeVideo.clockBase) ? placaDeVideo.clockBase : '', [Validators.required, Validators.min(0)]],
+              clockBoost: [(placaDeVideo && placaDeVideo.clockBoost) ? placaDeVideo.clockBoost : '', [Validators.required, Validators.min(0)]],
+              suporteRayTracing: [(placaDeVideo && placaDeVideo.suporteRayTracing) ? placaDeVideo.suporteRayTracing : false],
               memoria: this.formBuilder.group({
-                tipoMemoria: [placaDeVideo?.memoria?.tipoMemoria || '', Validators.required],
-                capacidade: [placaDeVideo?.memoria?.capacidade || '', [Validators.required, Validators.min(1)]],
-                larguraBanda: [placaDeVideo?.memoria?.larguraBanda || '', [Validators.required, Validators.min(1)]],
-                velocidadeMemoria: [placaDeVideo?.memoria?.velocidadeMemoria || '', [Validators.required, Validators.min(1)]],
+                tipoMemoria: [(placaDeVideo && placaDeVideo.memoria?.tipoMemoria) ? placaDeVideo.memoria.tipoMemoria : '', Validators.required],
+                capacidade: [(placaDeVideo && placaDeVideo.memoria?.capacidade) ? placaDeVideo.memoria.capacidade : '', [Validators.required, Validators.min(1)]],
+                larguraBanda: [(placaDeVideo && placaDeVideo.memoria?.larguraBanda) ? placaDeVideo.memoria.larguraBanda : '', [Validators.required, Validators.min(1)]],
+                velocidadeMemoria: [(placaDeVideo && placaDeVideo.memoria?.velocidadeMemoria) ? placaDeVideo.memoria.velocidadeMemoria : '', [Validators.required, Validators.min(1)]],
               }),
             }),
             this.formBuilder.group({
               tamanho: this.formBuilder.group({
-                largura: [placaDeVideo?.tamanho?.largura || '', [Validators.required, Validators.min(1)]],
-                altura: [placaDeVideo?.tamanho?.altura || '', [Validators.required, Validators.min(1)]],
-                comprimento: [placaDeVideo?.tamanho?.comprimento || '', [Validators.required, Validators.min(1)]],
+                largura: [(placaDeVideo && placaDeVideo.tamanho?.largura) ? placaDeVideo.tamanho.largura : '', [Validators.required, Validators.min(1)]],
+                altura: [(placaDeVideo && placaDeVideo.tamanho?.altura) ? placaDeVideo.tamanho.altura : '', [Validators.required, Validators.min(1)]],
+                comprimento: [(placaDeVideo && placaDeVideo.tamanho?.comprimento) ? placaDeVideo.tamanho.comprimento : '', [Validators.required, Validators.min(1)]],
               }),
               saidas: this.formBuilder.array(
                 placaDeVideo?.saidas?.length
@@ -93,63 +142,69 @@ export class PlacaDeVideoFormComponent {
             })
           ])
         });
-        console.log("PlacaDeVideo inicializada:", this.formGroup.value);
+
+
         this.idFornecedorSelecionado = placaDeVideo?.idFornecedor ?? null;
-      },
-      error: (err) => {
-        console.error('Erro ao buscar fornecedores', err);
+
+
       }
     });
   }
-
-  // Método que lida com a seleção de arquivos de imagem
-onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    const files = Array.from(input.files);
-    this.listaImagens.push(...files);
-
-    const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
-
-    files.forEach(file => {
-      imagensFormArray.push(this.formBuilder.control(file));
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreviews.push(reader.result);
-        this.cdRef.detectChanges(); // Chama detectChanges logo após a alteração
-      };
-      reader.readAsDataURL(file);
+  ngOnInit(): void {
+    this.fornecedorService.findAll().subscribe(data => {
+      this.fornecedor = data;
+      this.initializeForm();
     });
   }
-}
 
-// Método para adicionar uma imagem manualmente ao FormArray
-adicionarImagem(imagem: File): void {
-  const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
 
-  if (imagensFormArray) {
-    imagensFormArray.push(this.formBuilder.control(imagem));
-  } else {
-    console.error('FormArray ou listaImagem não encontrada.');
+  carregarImagemSelecionada(event: any) {
+  this.selectedFile = event.target.files[0];
+
+  if (this.selectedFile) {
+    this.fileName = this.selectedFile.name;
+
+    // carregando image preview
+    const reader = new FileReader();
+    reader.onload = e => this.imagePreview = reader.result;
+    reader.readAsDataURL(this.selectedFile);
+
+    // Adiciona o arquivo ao FormArray
+    const formArray = this.formGroup.get('formArray') as FormArray;
+    const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
+    listaImagemFormArray.push(this.formBuilder.control(this.selectedFile));
   }
 }
 
-// Método para remover uma imagem do FormArray e da lista
-removerImagem(index: number): void {
-  const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
 
-  if (imagensFormArray) {
-    imagensFormArray.removeAt(index);
-    this.listaImagens.splice(index, 1);
-    this.imagePreviews.splice(index, 1);
+  /*
+  // Método para adicionar uma imagem manualmente ao FormArray
+  adicionarImagem(imagem: File): void {
+    const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
+   
+    if (imagensFormArray) {
+      imagensFormArray.push(this.formBuilder.control(imagem));
+    } else {
+      console.error('FormArray ou listaImagem não encontrada.');
+    }
   }
-}
+   
+  // Método para remover uma imagem do FormArray e da lista
+  removerImagem(index: number): void {
+    const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
+   
+    if (imagensFormArray) {
+      imagensFormArray.removeAt(index);
+      this.listaImagens.splice(index, 1);
+      this.imagePreview.splice(index, 1);
+    }
+    // Método para gerar a visualização da imagem antes do upload
+    getImagePreview(file: File): string {
+      return URL.createObjectURL(file);
+    }
+  }*/
 
-// Método para gerar a visualização da imagem antes do upload
-getImagePreview(file: File): string {
-  return URL.createObjectURL(file);
-}
+
 
 
 
@@ -193,32 +248,42 @@ getImagePreview(file: File): string {
     this.getSaidas().removeAt(index);
   }
 
-  private uploadImage(id: number) {
-    if (this.selectedFile) {
-      this.placaDeVideoService.uploadImage(id, this.selectedFile.name, this.selectedFile)
-        .subscribe({
-          next: () => {
-            this.voltarPagina(); // ou atualizar a view
-          },
-          error: (err) => {
-            console.error('Erro ao fazer upload da imagem', err);
-          }
-        });
-    } else {
+  private uploadImage(placaId: number) {
+    const formArray = this.formGroup.get('formArray') as FormArray;
+    const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
+    const listaImagem = listaImagemFormArray.controls.map(control => control.value);
+
+    if (!listaImagem || listaImagem.length === 0) {
       this.voltarPagina();
+      return;
     }
+
+    let imagensEnviadas = 0;
+
+    listaImagem.forEach((imagem, index) => {
+      this.placaDeVideoService.uploadImage(placaId, imagem.name, imagem).subscribe({
+        next: () => {
+          imagensEnviadas++;
+          console.log(`Imagem ${index + 1} enviada com sucesso!`);
+          if (imagensEnviadas === listaImagem.length) {
+            this.voltarPagina();
+          }
+        },
+        error: (err) => {
+          console.error(`Erro ao fazer o upload da imagem ${index + 1}:`, err);
+          // Você pode continuar enviando as outras ou parar tudo aqui, depende da regra de negócio.
+          this.snackbarService.showMessage('Placa salva, mas houve erro ao enviar uma ou mais imagens.', false);
+          this.voltarPagina();
+        }
+      });
+    });
   }
 
+
   trackByFn(index: number, item: any): number {
-  return item; // ou use um identificador único
-}
+    return item; // ou use um identificador único
+  }
 
-
-  
-
-
-
-  
   voltarPagina() {
     this.location.back();
   }
@@ -240,10 +305,6 @@ getImagePreview(file: File): string {
     const step1 = formArray.at(0).value;
     const step2 = formArray.at(1).value;
     const step3 = formArray.at(2).value;
-
-    // Acesse o FormArray de imagens dentro do índice 3
-    const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
-    const listaImagem = listaImagemFormArray.controls.map(control => control.value);
 
     const placaDeVideo: PlacaDeVideo = {
       id: step1.id,
@@ -271,78 +332,24 @@ getImagePreview(file: File): string {
         comprimento: step3.tamanho.comprimento,
       },
       saidas: step3.saidas,
-      listaImagem: [] // Não inclui imagens aqui, pois será tratado separadamente
+      listaImagem: []
     };
 
-    console.log("Objeto PlacaDeVideo a ser enviado:", JSON.stringify(placaDeVideo, null, 2));
+    // Decide a operação (insert ou update)
+    const operacao = placaDeVideo.id == null
+      ? this.placaDeVideoService.insert(placaDeVideo)
+      : this.placaDeVideoService.update(placaDeVideo);
 
-    // Enviar dados da placa de vídeo (inserir ou atualizar)
-    if (placaDeVideo.id == null) {
-      this.placaDeVideoService.insert(placaDeVideo).subscribe({
-        next: (placaCriada) => {
-          console.log("Placa de vídeo salva com sucesso!");
-
-          // Enviar imagens (se houver)
-          if (listaImagem.length > 0 && placaDeVideo.id) {
-            listaImagem.forEach((imagem, i) => {
-              if (placaDeVideo.id !== undefined) {
-                this.placaDeVideoService.uploadImage(placaDeVideo.id, imagem.name, imagem).subscribe({
-                  next: () => {
-                    console.log(`Imagem ${i + 1} enviada com sucesso!`);
-                  },
-                  error: (err) => {
-                    console.error(`Erro ao enviar imagem ${i + 1}:`, err);
-                  }
-                });
-              } else {
-                console.error('ID da placa de vídeo não definido');
-              }
-            });
-          }
-
-          this.router.navigateByUrl('/admin/placasdevideo');
-        },
-        error: (errorResponse) => {
-          console.error("Erro ao salvar a placa de vídeo:", errorResponse);
-        }
-      });
-    } else {
-      this.placaDeVideoService.update(placaDeVideo).subscribe({
-        next: () => {
-          console.log("Placa de vídeo atualizada com sucesso!");
-
-          if (listaImagem.length > 0) {
-            listaImagem.forEach((imagem, i) => {
-              this.placaDeVideoService.uploadImage(placaDeVideo.id!, imagem.name, imagem).subscribe({
-                next: () => {
-                  console.log(`Imagem ${i + 1} enviada com sucesso!`);
-                  if (i === listaImagem.length - 1) {
-                    this.router.navigateByUrl('/admin/placasdevideo');
-                  }
-                },
-                error: (err) => {
-                  console.error(`Erro ao enviar imagem ${i + 1}:`, err);
-                  this.snackbarService.showMessage('Placa salva, mas houve erro ao enviar a imagem.', false);
-                  this.router.navigateByUrl('/admin/placasdevideo');
-                }
-              });
-            });
-          } else {
-            this.router.navigateByUrl('/admin/placasdevideo');
-          }
-        },
-        error: (errorResponse) => {
-          console.error("Erro ao atualizar a placa de vídeo:", errorResponse);
-        }
-      });
-    }
+    operacao.subscribe({
+      next: (placaCadastrada) => {
+        this.uploadImage(placaCadastrada.id); // Chama o método de upload
+      },
+      error: (error) => {
+        console.error("Erro ao salvar a placa de vídeo:", error);
+        this.snackbarService.showMessage("Erro ao salvar a placa de vídeo.", false);
+      }
+    });
   }
-
-
-
-
-
-
 
   cancelar() {
     this.router.navigateByUrl('/admin/placasdevideo');

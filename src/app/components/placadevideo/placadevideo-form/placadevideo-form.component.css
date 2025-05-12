@@ -282,3 +282,36 @@ mat-error {
   display: none;
 }
 
+.example-card {
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: var(--fundo-principal);
+    color: var(--texto-primario);
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    margin: 20px;
+    justify-content: center;
+  }
+  
+  .example-card:hover {
+    transform: scale(1.1) translateY(-4px); /* aumenta 10% e sobe 4px */
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+    border: 1px solid var(--icone-destaque); /* Azul Material */
+    border: 1px solid var(--borda-destaque);
+  }
+
+.card-info{
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+

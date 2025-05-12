@@ -12,7 +12,7 @@
               <div class="modelo-placa">
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Modelo</mat-label>
-                  <input class="input" matInput type="text" formControlName="modelo" />
+                  <input class="input" matInput type="text" formControlName="modelo" #inputModelo />
                   <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
                     {{ getErrorMessage('modelo', formGroup.get('modelo')?.errors) }}
                     @if (formGroup.get('modelo')?.hasError('apiError')) {
@@ -25,7 +25,7 @@
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Fornecedor</mat-label>
-                <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)">
+                <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)"#inputFornecedor>
                   <mat-option *ngFor="let forne of fornecedor" [value]="forne.id">
                     {{ forne.nome }}
                   </mat-option>
@@ -48,7 +48,7 @@
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Preço</mat-label>
-                <input matInput type="number" formControlName="preco" />
+                <input matInput type="number" formControlName="preco" #inputPreco/>
                 <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
                   {{ getErrorMessage('preco', formGroup.get('preco')?.errors) }}
                   @if (formGroup.get('preco')?.hasError('apiError')) {
@@ -157,7 +157,7 @@
               <div formGroupName="memoria" class="memoria-row">
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Tipo de Memória</mat-label>
-                  <input matInput type="text" formControlName="tipoMemoria">
+                  <input matInput type="text" formControlName="tipoMemoria" #inputTipoMemoria>
                   <mat-error
                     *ngIf="formGroup.get('memoria.tipoMemoria')?.invalid && formGroup.get('memoria.tipoMemoria')?.touched">
                     {{ getErrorMessage('tipoMemoria', formGroup.get('memoria.tipoMemoria')?.errors) }}
@@ -169,7 +169,7 @@
 
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Capacidade (GB)</mat-label>
-                  <input matInput type="number" formControlName="capacidade">
+                  <input matInput type="number" formControlName="capacidade" #inputCapacidade>
                   <mat-error
                     *ngIf="formGroup.get('memoria.capacidade')?.invalid && formGroup.get('memoria.capacidade')?.touched">
                     {{ getErrorMessage('capacidade', formGroup.get('memoria.capacidade')?.errors) }}
@@ -181,7 +181,7 @@
 
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Largura de Banda (GB/s)</mat-label>
-                  <input matInput type="number" formControlName="larguraBanda">
+                  <input matInput type="number" formControlName="larguraBanda" #inputLarguraBanda>
                   <mat-error
                     *ngIf="formGroup.get('memoria.larguraBanda')?.invalid && formGroup.get('memoria.larguraBanda')?.touched">
                     {{ getErrorMessage('larguraBanda', formGroup.get('memoria.larguraBanda')?.errors) }}
@@ -298,31 +298,38 @@
           </mat-step>
 
           <mat-step formGroupName="2" [stepControl]="formArray.get([3])!">
-            <mat-label>Imagens</mat-label>
-            <div class="form-grid">
-              <div class="imagem-upload">
-                <mat-label>Selecione as imagens</mat-label>
-                <input type="file" (change)="onFileSelected($event)" multiple />
+            <mat-form-field appearance="fill" class="full-width-input">
+              <mat-label>Imagens</mat-label>
+              <input type="file" (change)="carregarImagemSelecionada($event)" hidden #fileInput>
+              <input matInput [value]="fileName" readonly>
 
-                <div class="image-previews">
-                  <div *ngFor="let image of imagePreviews; trackBy: trackByFn; let i = index">
-                    <div>
-                      <img [src]="image" alt="Preview" />
-                      <button (click)="removerImagem(i)">Remover</button>
-                    </div>
-                  </div>
+              <button mat-icon-button matSuffix (click)="fileInput.click()">
+                <mat-icon>folder_open</mat-icon>
+              </button>
 
-                </div>
+              <div class="botao">
+                <button mat-button matStepperPrevious type="button">Back</button>
               </div>
+            </mat-form-field>
+
+            <div *ngIf="imagePreview" class="container responsiv-grid">
+              <mat-card  class="example-card" appearance="outlined">
+                <img mat-card-image [src]="imagePreview" >
+
+                <div class="card-info">
+                        <span>Placa de Video {{inputModelo}}, </span>
+                        <span>{{ inputFornecedor.value.label }}, </span>
+                        <span>{{ inputCapacidade }}GB, </span>
+                        <span>{{ inputTipoMemoria }}, </span>
+                        <span>{{ inputLarguraBanda }}-bit</span>       
+                </div>
+              </mat-card>
+
+
+
             </div>
 
-            <div class="botao">
-              <button mat-button matStepperPrevious type="button">Back</button>
-            </div>
           </mat-step>
-
-
-
         </mat-stepper>
       </form>
     </mat-card-content>

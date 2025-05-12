@@ -30,9 +30,8 @@ export class PlacaDeVideoService {
   }
   
 
-  getImagemUrl(nome: string): string {
-    if (nome.startsWith('http')) return nome;
-    return `http://localhost:8080${nome.startsWith('/') ? '' : '/'}${nome}`;
+  getImagemUrl(nomeImagem: string): string {
+    return `${this.baseUrl}/image/download/${nomeImagem}`;
   }
 
   uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any> {
@@ -41,7 +40,7 @@ export class PlacaDeVideoService {
     formData.append('nomeImagem', imagem.name);
     formData.append('imagem', imagem, imagem.name);
     
-    return this.httpClient.patch<PlacaDeVideo>(`${this.baseUrl}/${id}/upload/imagem`, formData);
+    return this.httpClient.patch<PlacaDeVideo>(`${this.baseUrl}/image/upload`, formData);
   }
   
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Lote } from '../models/lote.model';  
+import { PaginacaoDTO } from '../models/paginacao-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,21 @@ export class LoteService {
   constructor(private httpClient: HttpClient) { }
 
   findAll(page?: number, pageSize?: number): Observable<Lote[]> {
-    let params = new HttpParams();
-
-    if (page !== undefined && pageSize !== undefined) {
-      params = params.set('page', page.toString())
-                     .set('page_size', pageSize.toString());
+      let params = new HttpParams();
+      if (page !== undefined && pageSize !== undefined) {
+        params = params.set('page', page.toString()).set('page_size', pageSize.toString());
+      }
+    
+      return this.httpClient.get<Lote[]>(this.baseUrl + '/page', { params });
     }
-
-    return this.httpClient.get<Lote[]>(this.baseUrl, { params });
-  }
+    
+    getPaginacao(page: number, pageSize: number): Observable<PaginacaoDTO> {
+      let params = new HttpParams()
+        .set('page', page.toString())
+        .set('page_size', pageSize.toString());
+    
+      return this.httpClient.get<PaginacaoDTO>(this.baseUrl, { params });
+    }
 
   findByIdPlacaDeVideoQtdeTotal(idPlacaDeVideo: number): Observable<Lote[]> {
     return this.httpClient.get<Lote[]>(`${this.baseUrl}/placa/${idPlacaDeVideo}`);

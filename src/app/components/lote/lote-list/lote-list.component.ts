@@ -31,24 +31,7 @@ export class LoteListComponent implements OnInit {
   lotesFiltrados: Lote[] = [];
 
   ngOnInit(): void {
-    this.loteService.findAll(this.page, this.pageSize).subscribe(
-      data => {
-        console.log('Dados recebidos:', data);  // Adicione um log para verificar os dados recebidos
-        this.lotes = data;
-        this.lotesFiltrados = data;  // Inicializa a lista filtrada com todos os lotes
-      },
-      error => {
-        console.error('Erro ao carregar lotes:', error);  // Verifique se há erro na chamada
-      }
-    );
-    this.loteService.count().subscribe(
-      data => {
-        this.totalRecords = data;
-      },
-      error => {
-        console.error('Erro ao carregar o total de lotes:', error);  // Verifique se há erro ao contar
-      }
-    );
+    this.carregarLotes();
   }
 
   loadLotes(): void {
@@ -58,6 +41,19 @@ export class LoteListComponent implements OnInit {
     });
     this.loteService.count().subscribe(data => {
       this.totalRecords = data;
+    });
+  }
+
+  carregarLotes(): void {
+    // Primeiro busca a informação da paginação
+    this.loteService.getPaginacao(this.page, this.pageSize).subscribe(paginacao => {
+      this.totalRecords = paginacao.totalRecords;
+  
+      // Depois busca os dados da página
+      this.loteService.findAll(this.page, this.pageSize).subscribe(data => {
+        this.lotes= data;
+        this.lotesFiltrados = data;
+      });
     });
   }
 

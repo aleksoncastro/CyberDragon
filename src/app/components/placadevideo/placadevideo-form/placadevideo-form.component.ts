@@ -30,6 +30,7 @@ export class PlacaDeVideoFormComponent {
   formGroup!: FormGroup;
   idFornecedorSelecionado: number | null = null;
   listaImagens: File[] = [];
+  apiError: any = {};
 
   fileName: string = '';
   selectedFile: File | null = null;
@@ -105,11 +106,13 @@ export class PlacaDeVideoFormComponent {
             this.formBuilder.group({
               id: [(placaDeVideo && placaDeVideo.id) ? placaDeVideo.id : null],
               modelo: [(placaDeVideo && placaDeVideo.modelo) ? placaDeVideo.modelo : '', Validators.required],
-              idFornecedor: [(placaDeVideo && placaDeVideo.idFornecedor) ? placaDeVideo.idFornecedor : '', Validators.required],
+              idFornecedor: [placaDeVideo?.fornecedor?.id ?? '', Validators.required],
+              //idFornecedor: [(placaDeVideo && placaDeVideo.idFornecedor) ? placaDeVideo.idFornecedor : '', Validators.required],
               categoria: [(placaDeVideo && placaDeVideo.categoria) ? placaDeVideo.categoria : '', Validators.required],
               preco: [(placaDeVideo && placaDeVideo.preco) ? placaDeVideo.preco : '', [Validators.required, Validators.min(0)]],
               resolucao: [(placaDeVideo && placaDeVideo.resolucao) ? placaDeVideo.resolucao : '', Validators.required],
-              idFan: [(placaDeVideo && placaDeVideo.idFan) ? placaDeVideo.idFan : '', [Validators.required, Validators.min(1)]],
+              idFan: [placaDeVideo?.fan?.id ?? '', [Validators.required, Validators.min(1)]],
+              //idFan: [(placaDeVideo && placaDeVideo.idFan) ? placaDeVideo.idFan : '', [Validators.required, Validators.min(1)]],
               barramento: [(placaDeVideo && placaDeVideo.barramento) ? placaDeVideo.barramento : '', [Validators.required, Validators.min(1)]],
               descricao: [(placaDeVideo && placaDeVideo.descricao) ? placaDeVideo.descricao : '', Validators.required],
             }),
@@ -159,21 +162,26 @@ export class PlacaDeVideoFormComponent {
 
 
   carregarImagemSelecionada(event: any) {
-  this.selectedFile = event.target.files[0];
+    this.selectedFile = event.target.files[0];
 
-  if (this.selectedFile) {
-    this.fileName = this.selectedFile.name;
+    if (this.selectedFile) {
+      this.fileName = this.selectedFile.name;
 
-    // carregando image preview
-    const reader = new FileReader();
-    reader.onload = e => this.imagePreview = reader.result;
-    reader.readAsDataURL(this.selectedFile);
+      // carregando image preview
+      const reader = new FileReader();
+      reader.onload = e => this.imagePreview = reader.result;
+      reader.readAsDataURL(this.selectedFile);
 
-    // Adiciona o arquivo ao FormArray
-    const formArray = this.formGroup.get('formArray') as FormArray;
-    const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
-    listaImagemFormArray.push(this.formBuilder.control(this.selectedFile));
+      // Adiciona o arquivo ao FormArray
+      const formArray = this.formGroup.get('formArray') as FormArray;
+      const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
+      listaImagemFormArray.push(this.formBuilder.control(this.selectedFile));
+    }
   }
+
+  getNomeFornecedor(idFornecedor: number): string {
+  const fornecedorSelecionado = this.fornecedor.find(forne => forne.id === idFornecedor);
+  return fornecedorSelecionado ? fornecedorSelecionado.nome : '';
 }
 
 
@@ -280,10 +288,6 @@ export class PlacaDeVideoFormComponent {
   }
 
 
-  trackByFn(index: number, item: any): number {
-    return item; // ou use um identificador único
-  }
-
   voltarPagina() {
     this.location.back();
   }
@@ -335,7 +339,7 @@ export class PlacaDeVideoFormComponent {
       listaImagem: []
     };
 
-    // Decide a operação (insert ou update)
+    
     const operacao = placaDeVideo.id == null
       ? this.placaDeVideoService.insert(placaDeVideo)
       : this.placaDeVideoService.update(placaDeVideo);
@@ -349,6 +353,7 @@ export class PlacaDeVideoFormComponent {
         this.snackbarService.showMessage("Erro ao salvar a placa de vídeo.", false);
       }
     });
+ 
   }
 
   cancelar() {

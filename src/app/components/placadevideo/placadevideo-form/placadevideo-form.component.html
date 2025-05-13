@@ -317,11 +317,11 @@
                 <img mat-card-image [src]="imagePreview" >
 
                 <div class="card-info">
-                        <span>Placa de Video {{inputModelo}}, </span>
-                        <span>{{ inputFornecedor.value.label }}, </span>
-                        <span>{{ inputCapacidade }}GB, </span>
-                        <span>{{ inputTipoMemoria }}, </span>
-                        <span>{{ inputLarguraBanda }}-bit</span>       
+                        <span>Placa de Video {{inputModelo.value}}, </span>
+                        <span>{{ getNomeFornecedor(inputFornecedor.value ) }}, </span>
+                        <span>{{ inputCapacidade.value }}GB, </span>
+                        <span>{{ inputTipoMemoria.value }}, </span>
+                        <span>{{ inputLarguraBanda.value }}-bit</span>       
                 </div>
               </mat-card>
 

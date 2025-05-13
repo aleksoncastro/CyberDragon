@@ -13,34 +13,11 @@
   display: none !important;
 }
 
-/* Estiliza a borda outline para fundo escuro e sem borda visível */
-::ng-deep .search-bar .mdc-notched-outline {
-  background-color: #2A2A2A !important;
-  border-radius: 10px;
-  border-color: transparent !important;
-}
-
 ::ng-deep .search-bar input.mat-mdc-input-element {
   color: white !important;
   caret-color: #FFD700 !important;
 }
 
-/* Remove a linha de foco animada */
-::ng-deep .search-bar .mdc-line-ripple {
-  display: none !important;
-}
-
-
-/* Placeholder (label quando flutuando ou não) */
-::ng-deep .search-bar .mdc-floating-label {
-  color: #B3B3B3 !important;
-}
-
-::ng-deep .search-bar .mat-mdc-form-field-input-control,
-::ng-deep .search-bar .mat-mdc-input-element {
-  color: #FFFFFF !important;
-  caret-color: #FFD700 !important;
-}
 
 
 .logo {
@@ -72,7 +49,6 @@
   width: 100%;
 }
 
-
 /* Barra de busca transparente com destaque sutil */
 .search-bar {
   position: relative;
@@ -89,29 +65,13 @@
   left: 0;
   height: 22px;
   width: 100%;
-  background-color: #1E1E1E; /* linha de base escura */
+  background-color: transparent; /* linha de base escura */
   border-radius: 0 0 4px 4px;
   z-index: -1;
 }
 
 .buscar{
   color:#B3B3B3;
-}
-
-/* Input customizado com visual dark elegante */
-.search-bar .mat-input-element {
-  background-color: #1E1E1E !important;
-  color: #FFFFFF !important;
-  border-radius: 0 0 10px 10px;
-  padding: 6px 12px;
-  caret-color: #FFD700;
-}
-
-/* Remove as bordas padrões do Angular Material */
-.search-bar.mat-form-field-appearance-outline .mat-form-field-outline,
-.search-bar.mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  border-color: transparent;
-  display: none !important;
 }
 
 /* Ícone do botão de busca */
@@ -126,12 +86,7 @@
   width: 100%;
   max-width: 600px;
   border: none;
-  border-radius: 10px 10px 30px 30px;
-}
-
-/* Remove padding lateral padrão */
-.search-bar .mat-form-field-wrapper {
-  padding: 0 !important;
+  border-radius: 5px;
 }
 
 .categoria-barra {

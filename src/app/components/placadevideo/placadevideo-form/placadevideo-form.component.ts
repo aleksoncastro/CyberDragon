@@ -1,4 +1,4 @@
-import { Location, NgFor, NgIf } from '@angular/common';
+import { CommonModule, Location, NgFor, NgIf } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
@@ -20,7 +20,7 @@ import { SnackbarService } from '../../snackbar/snackbar.component';
 @Component({
   selector: 'app-placadevideo-form',
   standalone: true,
-  imports: [MatStepperModule, NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
+  imports: [MatStepperModule, CommonModule, NgIf, NgFor, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatSelectModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatCardModule],
   templateUrl: './placadevideo-form.component.html',
   styleUrl: './placadevideo-form.component.css'
@@ -35,6 +35,21 @@ export class PlacaDeVideoFormComponent {
   fileName: string = '';
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  selectedFiles: File[] = [];
+  imagePreviewsList: (string | ArrayBuffer | null)[] = [];
+  imagensBackend: string[] = [];
+  precoFormatado: string = '';
+  opcoesBarramento: string[] = [
+  'PCIe 5.0 x16',
+  'PCIe 4.0 x16',
+  'PCIe 3.0 x16',
+  'PCIe 3.0 x8',
+  'PCIe 2.0 x16',
+  'AGP 8x',
+  'AGP 4x'
+];
+
+
 
   constructor(private formBuilder: FormBuilder,
     private placaDeVideoService: PlacaDeVideoService,
@@ -43,7 +58,8 @@ export class PlacaDeVideoFormComponent {
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
     private location: Location,
-    private cdRef: ChangeDetectorRef) {
+    private cdRef: ChangeDetectorRef,
+    public placaService: PlacaDeVideoService) {
 
     this.formGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -109,7 +125,7 @@ export class PlacaDeVideoFormComponent {
               idFornecedor: [placaDeVideo?.fornecedor?.id ?? '', Validators.required],
               //idFornecedor: [(placaDeVideo && placaDeVideo.idFornecedor) ? placaDeVideo.idFornecedor : '', Validators.required],
               categoria: [(placaDeVideo && placaDeVideo.categoria) ? placaDeVideo.categoria : '', Validators.required],
-              preco: [(placaDeVideo && placaDeVideo.preco) ? placaDeVideo.preco : '', [Validators.required, Validators.min(0)]],
+              preco: [(placaDeVideo && placaDeVideo.preco) ? placaDeVideo.preco : '', [Validators.required, Validators.min(0.01)]],
               resolucao: [(placaDeVideo && placaDeVideo.resolucao) ? placaDeVideo.resolucao : '', Validators.required],
               idFan: [placaDeVideo?.fan?.id ?? '', [Validators.required, Validators.min(1)]],
               //idFan: [(placaDeVideo && placaDeVideo.idFan) ? placaDeVideo.idFan : '', [Validators.required, Validators.min(1)]],
@@ -146,6 +162,14 @@ export class PlacaDeVideoFormComponent {
           ])
         });
 
+        if (placaDeVideo?.listaImagem?.length) {
+          this.imagensBackend = [...placaDeVideo.listaImagem];
+
+          // Mostrar a primeira imagem como preview principal
+          this.imagePreview = this.placaDeVideoService.getImagemUrl(this.imagensBackend[0]);
+          this.fileName = this.imagensBackend[0];
+        }
+
 
         this.idFornecedorSelecionado = placaDeVideo?.idFornecedor ?? null;
 
@@ -157,64 +181,128 @@ export class PlacaDeVideoFormComponent {
     this.fornecedorService.findAll().subscribe(data => {
       this.fornecedor = data;
       this.initializeForm();
+
+      const preco = this.formGroup.get('preco')?.value;
+      if (preco) {
+        this.precoFormatado = this.formatarParaVisual(preco);
+      }
+
     });
+
+
   }
 
 
   carregarImagemSelecionada(event: any) {
-    this.selectedFile = event.target.files[0];
+    const arquivos: FileList = event.target.files;
+    const formArray = this.formGroup.get('formArray') as FormArray;
+    const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
 
-    if (this.selectedFile) {
-      this.fileName = this.selectedFile.name;
+    const limite = 5;
 
-      // carregando image preview
+    if (arquivos.length + listaImagemFormArray.length > limite) {
+      alert('Você só pode selecionar até 5 imagens.');
+      return;
+    }
+
+    for (let i = 0; i < arquivos.length; i++) {
+      const file = arquivos[i];
+
+      // Preenche variáveis principais com a primeira imagem
+      if (this.selectedFiles.length === 0) {
+        this.selectedFile = file;
+        const readerPrincipal = new FileReader();
+        readerPrincipal.onload = () => this.imagePreview = readerPrincipal.result;
+        readerPrincipal.readAsDataURL(file);
+      }
+
+      this.selectedFiles.push(file);
+      listaImagemFormArray.push(this.formBuilder.control(file));
+
+      // Carrega o preview para galeria
       const reader = new FileReader();
-      reader.onload = e => this.imagePreview = reader.result;
-      reader.readAsDataURL(this.selectedFile);
+      reader.onload = () => this.imagePreviewsList.push(reader.result);
+      reader.readAsDataURL(file);
+    }
 
-      // Adiciona o arquivo ao FormArray
-      const formArray = this.formGroup.get('formArray') as FormArray;
+    this.fileName = this.selectedFiles.map(f => f.name).join(', ');
+  }
+
+  removerImagem(index: number, origem: 'back' | 'nova') {
+    const formArray = this.formGroup.get('formArray') as FormArray;
+    const grupoPrincipal = formArray.at(0) as FormGroup;
+    const idPlaca = grupoPrincipal.get('id')?.value;
+
+    if (origem === 'back') {
+      const nomeImagem = this.imagensBackend[index];
+
+      if (idPlaca && nomeImagem) {
+        this.placaDeVideoService.deleteImage(idPlaca, nomeImagem).subscribe(() => {
+          this.imagensBackend.splice(index, 1);
+
+          // Atualiza a preview principal, se necessário
+          if (index === 0) {
+            this.imagePreview = this.imagensBackend[0]
+              ? this.placaDeVideoService.getImagemUrl(this.imagensBackend[0])
+              : this.imagePreviewsList[0] ?? null;
+          }
+        });
+      }
+    } else if (origem === 'nova') {
+      this.selectedFiles.splice(index, 1);
+      this.imagePreviewsList.splice(index, 1);
+
       const listaImagemFormArray = formArray.at(3).get('listaImagem') as FormArray;
-      listaImagemFormArray.push(this.formBuilder.control(this.selectedFile));
+      listaImagemFormArray.removeAt(index);
+
+      if (index === 0) {
+        this.selectedFile = this.selectedFiles[0] ?? null;
+        this.imagePreview = this.imagePreviewsList[0] ?? this.imagensBackend[0] ?? null;
+      }
     }
   }
+
+
+  formatarPreco(event: Event) {
+    let input = (event.target as HTMLInputElement).value;
+
+    // Remove tudo que não for número
+    const numeros = input.replace(/\D/g, '');
+
+    // Converte para decimal (centavos)
+    const valor = (parseFloat(numeros) / 100).toFixed(2);
+
+    this.precoFormatado = this.formatarParaVisual(valor);
+  }
+
+  formatarParaVisual(valor: string | number): string {
+    const numero = Number(valor);
+    if (isNaN(numero)) return '';
+
+    return numero.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+    });
+  }
+
+  converterPrecoParaEnvio() {
+    // Limpa "R$" e vírgulas, substitui para ponto
+    const valorLimpo = this.precoFormatado
+      .replace('R$', '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim();
+
+    const precoNumerico = parseFloat(valorLimpo);
+    this.formGroup.get('preco')?.setValue(precoNumerico);
+  }
+
 
   getNomeFornecedor(idFornecedor: number): string {
-  const fornecedorSelecionado = this.fornecedor.find(forne => forne.id === idFornecedor);
-  return fornecedorSelecionado ? fornecedorSelecionado.nome : '';
-}
-
-
-  /*
-  // Método para adicionar uma imagem manualmente ao FormArray
-  adicionarImagem(imagem: File): void {
-    const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
-   
-    if (imagensFormArray) {
-      imagensFormArray.push(this.formBuilder.control(imagem));
-    } else {
-      console.error('FormArray ou listaImagem não encontrada.');
-    }
+    const fornecedorSelecionado = this.fornecedor.find(forne => forne.id === idFornecedor);
+    return fornecedorSelecionado ? fornecedorSelecionado.nome : '';
   }
-   
-  // Método para remover uma imagem do FormArray e da lista
-  removerImagem(index: number): void {
-    const imagensFormArray = this.formGroup.get('formArray')?.get([3])?.get('listaImagem') as FormArray;
-   
-    if (imagensFormArray) {
-      imagensFormArray.removeAt(index);
-      this.listaImagens.splice(index, 1);
-      this.imagePreview.splice(index, 1);
-    }
-    // Método para gerar a visualização da imagem antes do upload
-    getImagePreview(file: File): string {
-      return URL.createObjectURL(file);
-    }
-  }*/
-
-
-
-
 
 
   atualizarIdFornecedor(id: number) {
@@ -282,6 +370,7 @@ export class PlacaDeVideoFormComponent {
           // Você pode continuar enviando as outras ou parar tudo aqui, depende da regra de negócio.
           this.snackbarService.showMessage('Placa salva, mas houve erro ao enviar uma ou mais imagens.', false);
           this.voltarPagina();
+          console.log("Enviando imagem:", imagem.name, "para placa ID:", placaId);
         }
       });
     });
@@ -301,14 +390,17 @@ export class PlacaDeVideoFormComponent {
       return;
     }
 
-    const formValue = this.formGroup.value;
-    console.log("Valores do formulário:", formValue);
+
 
     const formArray = this.formGroup.get('formArray') as FormArray;
 
     const step1 = formArray.at(0).value;
     const step2 = formArray.at(1).value;
     const step3 = formArray.at(2).value;
+    // Converte R$ e vírgula do visual para número (ex: "R$ 1.234,56" → 1234.56)
+    const precoVisual = this.precoFormatado;
+    const precoNumerico = parseFloat(precoVisual.replace(/\D/g, '').replace(/(\d{2})$/, '.$1'));
+    formArray.at(0).get('preco')?.setValue(precoNumerico);
 
     const placaDeVideo: PlacaDeVideo = {
       id: step1.id,
@@ -335,26 +427,56 @@ export class PlacaDeVideoFormComponent {
         altura: step3.tamanho.altura,
         comprimento: step3.tamanho.comprimento,
       },
-      saidas: step3.saidas,
-      listaImagem: []
+      saidas: step3.saidas
     };
 
-    
-    const operacao = placaDeVideo.id == null
-      ? this.placaDeVideoService.insert(placaDeVideo)
-      : this.placaDeVideoService.update(placaDeVideo);
+    // Se for insert (id nulo), enviar o objeto inteiro
+    if (placaDeVideo.id == null) {
+      this.placaDeVideoService.insert(placaDeVideo).subscribe({
+        next: (placaCadastrada) => {
+          console.log('Placa cadastrada recebida do backend:', placaCadastrada);
+          this.tratarUploadERedirecionamento(placaCadastrada);
+        },
+        error: (error) => {
+          console.error("Erro ao salvar a placa de vídeo:", error);
+          this.snackbarService.showMessage("Erro ao salvar a placa de vídeo.", false);
+        }
+      });
+    } else {
+      // Se for update, cria um objeto sem listaImagem para enviar ao backend
+      const placaParaUpdate = {
+        ...placaDeVideo,
+        listaImagem: placaDeVideo.listaImagem || []
+      };
 
-    operacao.subscribe({
-      next: (placaCadastrada) => {
-        this.uploadImage(placaCadastrada.id); // Chama o método de upload
-      },
-      error: (error) => {
-        console.error("Erro ao salvar a placa de vídeo:", error);
-        this.snackbarService.showMessage("Erro ao salvar a placa de vídeo.", false);
-      }
-    });
- 
+      this.placaDeVideoService.update(placaParaUpdate).subscribe({
+        next: (placaCadastrada) => {
+          console.log('Placa atualizada recebida do backend:', placaCadastrada);
+          this.tratarUploadERedirecionamento(placaCadastrada);
+        },
+        error: (error) => {
+          console.error("Erro ao atualizar a placa de vídeo:", error);
+          this.snackbarService.showMessage("Erro ao salvar a placa de vídeo.", false);
+        }
+      });
+    }
   }
+
+  // Método para tratar upload e redirecionamento, usado nos dois casos
+  private tratarUploadERedirecionamento(placaCadastrada: any) {
+    if (placaCadastrada && placaCadastrada.id) {
+      if (this.selectedFiles && this.selectedFiles.length > 0) {
+        this.uploadImage(placaCadastrada.id);
+      } else {
+        this.snackbarService.showMessage("Placa salva com sucesso!", true);
+        this.router.navigate(['/admin/placasdevideo']);
+      }
+    } else {
+      console.error('Erro: ID da placa retornada está indefinido ou null.');
+      this.snackbarService.showMessage("Erro ao salvar a placa de vídeo.", false);
+    }
+  }
+
 
   cancelar() {
     this.router.navigateByUrl('/admin/placasdevideo');

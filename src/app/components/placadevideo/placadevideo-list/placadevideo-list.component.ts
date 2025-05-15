@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,22 +15,22 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-placadevideo-list',
   standalone: true,
-  imports: [ MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatCardModule],
+  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatCardModule],
   templateUrl: './placadevideo-list.component.html',
   styleUrl: './placadevideo-list.component.css'
 })
 export class PlacadevideoListComponent implements OnInit {
   displayedColumns: string[] = [
-    'id', 
-    'modelo', 
-    'categoria', 
-    'preco', 
-    'resolucao', 
-    'energia', 
+    'id',
+    'modelo',
+    'categoria',
+    'preco',
+    'resolucao',
+    'energia',
     'idFan',
-    'barramento', 
-    'suporteRayTracing', 
-    'memoria', 
+    'barramento',
+    'suporteRayTracing',
+    'memoria',
     'fornecedor',
     'acao'
   ];
@@ -41,7 +41,7 @@ export class PlacadevideoListComponent implements OnInit {
   totalRecords = 0;
   pageSize = 20;
   page = 0;
-  
+
   placaSelecionada: PlacaDeVideo | null = null;
 
   fanLabels: { [key: number]: string } = {
@@ -55,7 +55,7 @@ export class PlacadevideoListComponent implements OnInit {
   constructor(private placaDeVideoService: PlacaDeVideoService,
     public placaService: PlacaDeVideoService
   ) { }
-  
+
   ngOnInit(): void {
     this.carregarPlacasDeVideo();
   }
@@ -68,7 +68,7 @@ export class PlacadevideoListComponent implements OnInit {
     // Primeiro busca a informação da paginação
     this.placaDeVideoService.getPaginacao(this.page, this.pageSize).subscribe(paginacao => {
       this.totalRecords = paginacao.totalRecords;
-  
+
       // Depois busca os dados da página
       this.placaDeVideoService.findAll(this.page, this.pageSize).subscribe(data => {
         this.placasDeVideo = data;
@@ -76,7 +76,7 @@ export class PlacadevideoListComponent implements OnInit {
       });
     });
   }
-  
+
 
   filtrar(event: any): void {
     const valor = event.target.value.toLowerCase();
@@ -96,22 +96,23 @@ export class PlacadevideoListComponent implements OnInit {
       console.log("Detalhes da placa:", data);
       this.placaSelecionada = data;
 
-      if (this.placaSelecionada.listaImagem?.length > 0) {
+      if (this.placaSelecionada.listaImagem?.length) {
         console.log("URL da imagem:", this.placaService.getImagemUrl(this.placaSelecionada.listaImagem[0]));
       }
+
     });
   }
 
   excluir(placasdevideo: PlacaDeVideo): void {
-      if (placasdevideo.id != null) {
-        this.placaDeVideoService.delete(placasdevideo).subscribe({
-          next: () => {
-            this.carregarPlacasDeVideo();  // Recarregar os placasdevideos após exclusão
-          },
-          error: (erroResponse) => {
-            console.log('Erro ao excluir', JSON.stringify(erroResponse));
-          },
-        });
-      }
-    } 
+    if (placasdevideo.id != null) {
+      this.placaDeVideoService.delete(placasdevideo).subscribe({
+        next: () => {
+          this.carregarPlacasDeVideo();  // Recarregar os placasdevideos após exclusão
+        },
+        error: (erroResponse) => {
+          console.log('Erro ao excluir', JSON.stringify(erroResponse));
+        },
+      });
+    }
+  }
 }

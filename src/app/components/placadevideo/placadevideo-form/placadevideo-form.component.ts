@@ -40,14 +40,15 @@ export class PlacaDeVideoFormComponent {
   imagensBackend: string[] = [];
   precoFormatado: string = '';
   opcoesBarramento: string[] = [
-  'PCIe 5.0 x16',
-  'PCIe 4.0 x16',
-  'PCIe 3.0 x16',
-  'PCIe 3.0 x8',
-  'PCIe 2.0 x16',
-  'AGP 8x',
-  'AGP 4x'
-];
+    'PCIe 5.0 x16',
+    'PCIe 4.0 x16',
+    'PCIe 4.0 x8',
+    'PCIe 3.0 x16',
+    'PCIe 3.0 x8',
+    'PCIe 2.0 x16',
+    'AGP 8x',
+    'AGP 4x'
+  ];
 
 
 
@@ -125,7 +126,12 @@ export class PlacaDeVideoFormComponent {
               idFornecedor: [placaDeVideo?.fornecedor?.id ?? '', Validators.required],
               //idFornecedor: [(placaDeVideo && placaDeVideo.idFornecedor) ? placaDeVideo.idFornecedor : '', Validators.required],
               categoria: [(placaDeVideo && placaDeVideo.categoria) ? placaDeVideo.categoria : '', Validators.required],
-              preco: [(placaDeVideo && placaDeVideo.preco) ? placaDeVideo.preco : '', [Validators.required, Validators.min(0.01)]],
+              preco: [
+                (placaDeVideo && placaDeVideo.preco) ? placaDeVideo.preco : null,
+                [Validators.required, Validators.min(0.01), Validators.max(100000)]
+              ],
+
+
               resolucao: [(placaDeVideo && placaDeVideo.resolucao) ? placaDeVideo.resolucao : '', Validators.required],
               idFan: [placaDeVideo?.fan?.id ?? '', [Validators.required, Validators.min(1)]],
               //idFan: [(placaDeVideo && placaDeVideo.idFan) ? placaDeVideo.idFan : '', [Validators.required, Validators.min(1)]],
@@ -182,10 +188,7 @@ export class PlacaDeVideoFormComponent {
       this.fornecedor = data;
       this.initializeForm();
 
-      const preco = this.formGroup.get('preco')?.value;
-      if (preco) {
-        this.precoFormatado = this.formatarParaVisual(preco);
-      }
+
 
     });
 
@@ -262,40 +265,55 @@ export class PlacaDeVideoFormComponent {
     }
   }
 
+  aoDigitarPreco(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const valorDigitado = input.value;
 
-  formatarPreco(event: Event) {
-    let input = (event.target as HTMLInputElement).value;
+  // Remove tudo que não é número
+  const apenasNumeros = valorDigitado.replace(/\D/g, '');
 
-    // Remove tudo que não for número
-    const numeros = input.replace(/\D/g, '');
+  // Converte para número float (dividido por 100)
+  const valor = parseFloat(apenasNumeros) / 100;
 
-    // Converte para decimal (centavos)
-    const valor = (parseFloat(numeros) / 100).toFixed(2);
-
-    this.precoFormatado = this.formatarParaVisual(valor);
+  // Atualiza o FormControl com o número real e força validação
+  const control = this.formArray.at(0).get('preco');
+  if (control) {
+    control.setValue(valor, { emitEvent: true });
+    control.markAsTouched();
+    control.updateValueAndValidity();
   }
 
-  formatarParaVisual(valor: string | number): string {
-    const numero = Number(valor);
-    if (isNaN(numero)) return '';
+  // Atualiza visualmente o campo formatado
+  input.value = this.formatarComoMoeda(valor);
+}
 
-    return numero.toLocaleString('pt-BR', {
+
+  formatarComoMoeda(valor: number | null): string {
+    if (valor == null || isNaN(valor)) return 'R$ 0,00';
+
+    return valor.toLocaleString('pt-BR', {
       style: 'currency',
       currency: 'BRL',
-      minimumFractionDigits: 2,
+      minimumFractionDigits: 2
     });
   }
 
-  converterPrecoParaEnvio() {
-    // Limpa "R$" e vírgulas, substitui para ponto
-    const valorLimpo = this.precoFormatado
-      .replace('R$', '')
-      .replace(/\./g, '')
-      .replace(',', '.')
-      .trim();
+  mostrarValorCru() {
+    const control = this.formArray.at(0).get('preco');
+    if (control) {
+      const valor = control.value;
+      const campo = document.activeElement as HTMLInputElement;
+      campo.value = valor ?? '';
+    }
+  }
 
-    const precoNumerico = parseFloat(valorLimpo);
-    this.formGroup.get('preco')?.setValue(precoNumerico);
+  formatarValorFinal() {
+    const control = this.formArray.at(0).get('preco');
+    if (control) {
+      const valor = control.value;
+      const campo = document.activeElement as HTMLInputElement;
+      campo.value = this.formatarComoMoeda(valor);
+    }
   }
 
 
@@ -397,10 +415,6 @@ export class PlacaDeVideoFormComponent {
     const step1 = formArray.at(0).value;
     const step2 = formArray.at(1).value;
     const step3 = formArray.at(2).value;
-    // Converte R$ e vírgula do visual para número (ex: "R$ 1.234,56" → 1234.56)
-    const precoVisual = this.precoFormatado;
-    const precoNumerico = parseFloat(precoVisual.replace(/\D/g, '').replace(/(\d{2})$/, '.$1'));
-    formArray.at(0).get('preco')?.setValue(precoNumerico);
 
     const placaDeVideo: PlacaDeVideo = {
       id: step1.id,
@@ -524,7 +538,8 @@ export class PlacaDeVideoFormComponent {
     },
     preco: {
       required: 'O preço deve ser informado.',
-      min: 'O preço não pode ser negativo.',
+      min: 'O preço deve ser maior que R$0,00',
+      max: 'O preço deve ser menor que R$100.000,00',
       apiError: ' '
     },
     resolucao: {

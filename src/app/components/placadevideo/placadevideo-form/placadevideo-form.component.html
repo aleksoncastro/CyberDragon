@@ -51,14 +51,11 @@
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Preço</mat-label>
-                <input matInput type="text" [value]="precoFormatado" (input)="formatarPreco($event)"
-                  (blur)="converterPrecoParaEnvio()" #inputPreco />
+                <input matInput type="text" formControlName="preco" (input)="aoDigitarPreco($event)"
+                  (blur)="formatarValorFinal()" (focus)="mostrarValorCru()" #inputPreco>
                 <mat-error *ngIf="formArray.at(0).get('preco')?.invalid && formArray.at(0).get('preco')?.touched">
-                  {{ getErrorMessage('preco', formArray.at(0).get('preco')?.errors) }}
+                  {{ getErrorMessage('preco', formArray.at(0).get('preco')?.errors ) }}
                 </mat-error>
-                <span class="api-error" *ngIf="formArray.at(0).get('preco')?.hasError('apiError')">
-                  {{ formArray.at(0).get('preco')?.getError('apiError') }}
-                </span>
               </mat-form-field>
 
 

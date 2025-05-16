@@ -1,7 +1,7 @@
+import { Perfil } from "./perfil.model";
+
 export class Usuario {
+    id!: number;
     username!: string;
-    senha!: string;
-    perfil!: null;
-    email!: string;
-    cpf!: string;
+    perfil!: Perfil;
 }

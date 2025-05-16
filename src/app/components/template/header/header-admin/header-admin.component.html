@@ -19,7 +19,9 @@
       <span>Meu perfil</span>
     </button>
     <button mat-menu-item>
-      <mat-icon>logout</mat-icon>
+      <button mat-icon-button (click)="deslogar()">
+        <mat-icon>logout</mat-icon>
+      </button>
       <span>Sair</span>
     </button>
   </mat-menu>

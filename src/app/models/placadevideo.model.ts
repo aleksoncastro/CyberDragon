@@ -19,7 +19,7 @@ export class PlacaDeVideo {
   tamanho: Tamanho;
   idFornecedor: number;
   fornecedor?: Fornecedor;
-  listaImagem: string[];
+  listaImagem?: string[];
 
   constructor() {
     this.idFan = 0;

@@ -34,6 +34,31 @@ export class PlacaDeVideoService {
     return `${this.baseUrl}/image/download/${nomeImagem}`;
   }
 
+  deleteImage(idPlaca: number, nomeImagem: string): Observable<any> {
+  return this.httpClient.patch<PlacaDeVideo>(
+    `${this.baseUrl}/image/delete/${nomeImagem}/placa/${idPlaca}`,
+    null
+  );
+}
+
+  updateImagem(placaDeVideo: any, file: File) {
+  const formData = new FormData();
+  formData.append("id", placaDeVideo.id.toString());  // Pega o id da placa carregada
+  formData.append("nomeImagem", file.name);
+  formData.append("imagem", file);
+
+  this.httpClient.patch(`${this.baseUrl}/image/update/${placaDeVideo.id}`, formData).subscribe(
+    (response) => {
+      console.log('Imagem atualizada com sucesso:', response);
+    },
+    (error) => {
+      console.error('Erro ao atualizar imagem:', error);
+    }
+  );
+}
+
+
+
   uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('id', id.toString());

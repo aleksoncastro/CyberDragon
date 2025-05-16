@@ -1,281 +1,284 @@
 .toolbar-title {
-    display: flex;
-    justify-content: center;
-    font-size: x-large;
-    padding: 1rem 0;
-    color: white;
+  display: flex;
+  justify-content: center;
+  font-size: x-large;
+  padding: 1rem 0;
+  color: white;
 }
 
 mat-stepper {
-    background-color: var(--fundo-secundario);
-    padding: 1rem;
-    border-radius: 8px;
+  background-color: var(--fundo-secundario);
+  padding: 1rem;
+  border-radius: 8px;
 }
 
 mat-card {
-    background-color: var(--fundo-principal);
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
+  background-color: var(--fundo-principal);
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
 
 }
 
 mat-card-content {
-    background-color: var(--fundo-principal);
+  background-color: var(--fundo-principal);
 }
 
 mat-form-field {
-    background-color: var(--icone-destaque);
-    width: 100%;
-    margin-bottom: 20px;
+  background-color: var(--icone-destaque);
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 mat-label {
-    color: var(--cartao-container);
+  color: var(--cartao-container);
 }
 
 mat-select {
-    background-color: var(--texto-principal);
+  background-color: var(--texto-principal);
 }
 
 /* Estilo do matStepLabel para aparecer em amarelo */
 ::ng-deep .mat-step-label {
-    color: var(--icone-destaque) !important;
-    /* Amarelo */
+  color: var(--icone-destaque) !important;
+  /* Amarelo */
 }
 
 .form-container {
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 button[mat-raised-button] {
-    background-color: var(--icone-destaque);
-    /* Amarelo */
-    color: var(--texto-principal);
-    /* Preto */
-    width: 120px;
-    margin-right: 1rem;
+  background-color: var(--icone-destaque);
+  /* Amarelo */
+  color: var(--texto-principal);
+  /* Preto */
+  width: 120px;
+  margin-right: 1rem;
 }
 
 button[mat-raised-button]:last-child {
-    background-color: red;
-    margin-right: 0;
+  background-color: red;
+  margin-right: 0;
 }
 
 mat-card-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
 }
 
 @media (max-width: 768px) {
-    .toolbar-title {
-        font-size: 1.5rem;
-    }
+  .toolbar-title {
+    font-size: 1.5rem;
+  }
 
-    mat-card {
-        width: 100%;
-        max-width: 100%;
-        margin: 1rem;
-    }
+  mat-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem;
+  }
 
-    button[mat-raised-button] {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
+  button[mat-raised-button] {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 
-    .form-container {
-        padding: 1rem;
-    }
+  .form-container {
+    padding: 1rem;
+  }
 
-    mat-form-field {
-        width: 100%;
-    }
+  mat-form-field {
+    width: 100%;
+  }
 }
 
 mat-checkbox {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 h3 {
-    margin-top: 1rem;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: var(--texto-principal);
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--texto-principal);
 }
 
 mat-error {
-    font-size: 0.875rem;
-    color: red;
+  font-size: 0.875rem;
+  color: red;
 }
 
 .form-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .form-grid .full-width-input {
-    flex: 1 1 calc(50% - 16px);
-    min-width: 250px;
-}
-
-.full-width-input{
-    background-color: var(--fundo-secundario);
-    color: var(--texto-principal);
+  flex: 1 1 calc(50% - 16px);
+  min-width: 250px;
 }
 
 .full-width-input {
-    width: 100%;
-    margin-bottom: 0px; /* ou 4px se quiser botao junto */
-  }
-  
-
-.modelo-placa{
-    width: 100%;
+  background-color: var(--fundo-secundario);
+  color: var(--texto-principal);
 }
 
-.descricao{
-    width: 100%;
+.full-width-input {
+  width: 100%;
+  margin-bottom: 0px;
+  /* ou 4px se quiser botao junto */
+}
+
+
+.modelo-placa {
+  width: 100%;
+}
+
+.descricao {
+  width: 100%;
 }
 
 .descricao textarea {
-    height: 120px;     
-    resize: none;           
-    overflow-y: auto;      
+  height: 120px;
+  resize: none;
+  overflow-y: auto;
 }
 
 ::ng-deep .mat-step-header .mat-step-label {
-    white-space: normal !important;
-    overflow: visible !important;
-    text-overflow: unset !important;
-    max-width: none !important;
-  }
-  
-  ::ng-deep .mat-horizontal-stepper-header-container {
-    flex-wrap: nowrap; /* permite quebra de linha se necessário */
-  }
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  max-width: none !important;
+}
+
+::ng-deep .mat-horizontal-stepper-header-container {
+  flex-wrap: nowrap;
+  /* permite quebra de linha se necessário */
+}
 
 
 
-  button.mat-fab.accent:hover {
-    border-radius: 15px;
-    transform: scale(3.5);
-  }
-  
-  button.botao {
-    transition: transform 0.3s ease;
-  }
-  
-  button.botao:hover {
-    transform: scale(1.1);
-    background-color: var(--hover-botao);
-  }
-  
-  button.botao:hover mat-icon {
-    transform: scale(1.2);
-    transition: transform 0.3s ease;
-    background-color: var(--hover-botao);
-  }
+button.mat-fab.accent:hover {
+  border-radius: 15px;
+  transform: scale(3.5);
+}
 
-.energia{
-   width: 100%; 
+button.botao {
+  transition: transform 0.3s ease;
+}
+
+button.botao:hover {
+  transform: scale(1.1);
+  background-color: var(--hover-botao);
+}
+
+button.botao:hover mat-icon {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+  background-color: var(--hover-botao);
+}
+
+.energia {
+  width: 100%;
 }
 
 .suporteRayTracing1 {
-    background-color: var(--icone-destaque);
-    border-radius: 12px;
-    padding: 2px 8px;
-    display: inline-block;
-    height: 40px;
-    color: var(--texto-principal, );
-  }
-  
+  background-color: var(--icone-destaque);
+  border-radius: 12px;
+  padding: 2px 8px;
+  display: inline-block;
+  height: 40px;
+  color: var(--texto-principal, );
+}
+
 /* Aqui começa o ng-deep para pegar o material internamente */
 ::ng-deep .suporteRayTracing1 .mdc-checkbox__background {
-    border: 2px solid var(--icone-destaque);
-    background-color: var(--fundo-secundario);
-  }
-  
-  ::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-checkbox__background {
-    background-color: black !important;
-    border-color: black !important;
-  }
-  
-  ::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-checkbox__checkmark-path {
-    stroke: white !important;
-  }
-  
-  
-  ::ng-deep .suporteRayTracing1 .mdc-label {
-    color: var(--texto-principal, white);
-    transition: color 0.2s;
-  }
-  
-  ::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-label {
-    color: var(--texto-principal);
-  }
-  
-  .suporteRayTracing1:hover {
-    background-color: rgba(255, 215, 0, 0.1); /* Amarelo suave no hover */
-  }
-  
-  /* Container dos botões */
+  border: 2px solid var(--icone-destaque);
+  background-color: var(--fundo-secundario);
+}
+
+::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-checkbox__background {
+  background-color: black !important;
+  border-color: black !important;
+}
+
+::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-checkbox__checkmark-path {
+  stroke: white !important;
+}
+
+
+::ng-deep .suporteRayTracing1 .mdc-label {
+  color: var(--texto-principal, white);
+  transition: color 0.2s;
+}
+
+::ng-deep .suporteRayTracing1 .mat-mdc-checkbox-checked .mdc-label {
+  color: var(--texto-principal);
+}
+
+.suporteRayTracing1:hover {
+  background-color: rgba(255, 215, 0, 0.1);
+  /* Amarelo suave no hover */
+}
+
+/* Container dos botões */
 .botao {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 24px;
-  }
-  
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
 /* Estilizando botões mat-button corretamente */
 ::ng-deep .botao button.mat-mdc-button {
-    background-color: var(--icone-destaque) !important;
-    color: var(--fundo-principal) !important;
-    border-radius: 8px;
-    padding: 6px 20px;
-    font-weight: 500;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  /* Hover */
-  ::ng-deep .botao button.mat-mdc-button:hover {
-    background-color: var(--hover-acao) !important;
-    transform: scale(1.03);
-  }
-  
-  /* Desabilitado */
-  ::ng-deep .botao button.mat-mdc-button:disabled {
-    background-color: #44444466 !important;
-    color: #cccccc !important;
-    cursor: not-allowed !important;
-  }
+  background-color: var(--icone-destaque) !important;
+  color: var(--fundo-principal) !important;
+  border-radius: 8px;
+  padding: 6px 20px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
 
-  .memoria-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
+/* Hover */
+::ng-deep .botao button.mat-mdc-button:hover {
+  background-color: var(--hover-acao) !important;
+  transform: scale(1.03);
+}
 
-  .saidas {
-    width: 30%;
-  }
-  
+/* Desabilitado */
+::ng-deep .botao button.mat-mdc-button:disabled {
+  background-color: #44444466 !important;
+  color: #cccccc !important;
+  cursor: not-allowed !important;
+}
+
+.memoria-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.saidas {
+  width: 30%;
+}
+
 .file-upload-label {
   display: block;
-  border: 1px solid rgba(0,0,0,0.23);
+  border: 1px solid rgba(0, 0, 0, 0.23);
   border-radius: 4px;
   padding: 1rem;
   cursor: pointer;
-  color: rgba(0,0,0,0.6);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .file-upload-label input {
@@ -283,35 +286,138 @@ mat-error {
 }
 
 .example-card {
-    border: 1px solid transparent;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: var(--fundo-principal);
-    color: var(--texto-primario);
-    width: 100%;
-    max-width: 250px;
-    height: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-    margin: 20px;
-    justify-content: center;
-  }
-  
-  .example-card:hover {
-    transform: scale(1.1) translateY(-4px); /* aumenta 10% e sobe 4px */
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
-    border: 1px solid var(--icone-destaque); /* Azul Material */
-    border: 1px solid var(--borda-destaque);
-  }
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: var(--fundo-principal);
+  color: var(--texto-primario);
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  margin: 20px;
+  justify-content: center;
+}
 
-.card-info{
-    font-weight: 500;
-    font-size: 1.25rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.4;
-    font-size: 16px;
-    margin-bottom: 0;
-  }
+.example-card:hover {
+  transform: scale(1.1) translateY(-4px);
+  /* aumenta 10% e sobe 4px */
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+  border: 1px solid var(--icone-destaque);
+  /* Azul Material */
+  border: 1px solid var(--borda-destaque);
+}
 
+.card-info {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.image {
+  height: 290px;
+  width: 100%;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.avista {
+  color: #00a202;
+  font-size: 13px;
+}
+
+.preco {
+  color: #00a202;
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+.valor-parcela {
+  color: var(--icone-destaque);
+}
+
+.parcelamento {
+  font-size: 13px;
+  margin-bottom: 0px;
+}
+
+.parcelamento2 {
+  font-size: 13px;
+  margin-top: 0px;
+}
+
+.line {
+  margin-top: 10px;
+  height: 2px;
+  width: 30%;
+  background-color: var(--icone-destaque);
+}
+
+.valor-desconto {
+  font-size: 13px;
+  color: #e90313;
+}
+
+.preview-container {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.galeria-horizontal {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  flex-wrap: wrap;
+  max-width: 400px;
+  /* limite de largura para a galeria */
+}
+
+.mini-card {
+  width: 100px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+.mini-card:hover {
+  transform: scale(1.1) translateY(-4px);
+  /* aumenta 10% e sobe 4px */
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+  border: 1px solid var(--icone-destaque);
+  /* Azul Material */
+  border: 1px solid var(--borda-destaque);
+}
+
+.thumb-img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.erro-teste{
+  color:white;
+}

@@ -13,11 +13,8 @@
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Modelo</mat-label>
                   <input class="input" matInput type="text" formControlName="modelo" #inputModelo />
-                  <mat-error *ngIf="formGroup.get('modelo')?.invalid && formGroup.get('modelo')?.touched">
-                    {{ getErrorMessage('modelo', formGroup.get('modelo')?.errors) }}
-                    @if (formGroup.get('modelo')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('modelo')?.getError('apiError') }}</span>
-                    }
+                  <mat-error *ngIf="formArray.at(0).get('modelo')?.invalid && formArray.at(0).get('modelo')?.touched">
+                    {{ getErrorMessage('modelo', formArray.at(0).get('modelo')?.errors) }}
                   </mat-error>
                 </mat-form-field>
               </div>
@@ -25,47 +22,56 @@
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Fornecedor</mat-label>
-                <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)"#inputFornecedor>
+                <mat-select formControlName="idFornecedor" (selectionChange)="atualizarIdFornecedor($event.value)"
+                  #inputFornecedor>
                   <mat-option *ngFor="let forne of fornecedor" [value]="forne.id">
                     {{ forne.nome }}
                   </mat-option>
                 </mat-select>
-                <mat-error *ngIf="formGroup.get('idFornecedor')?.invalid && formGroup.get('idFornecedor')?.touched">
-                  O nome do fornecedor é obrigatório.
+                <mat-error
+                  *ngIf="formArray.at(0).get('idFornecedor')?.invalid && formArray.at(0).get('idFornecedor')?.touched">
+                  O fornecedor é obrigatório.
                 </mat-error>
+                <span class="api-error" *ngIf="formArray.at(0).get('idFornecedor')?.hasError('apiError')">
+                  {{ formArray.at(0).get('idFornecedor')?.getError('apiError') }}
+                </span>
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Categoria</mat-label>
                 <input matInput type="text" formControlName="categoria" />
-                <mat-error *ngIf="formGroup.get('categoria')?.invalid && formGroup.get('categoria')?.touched">
-                  {{ getErrorMessage('categoria', formGroup.get('categoria')?.errors) }}
-                  @if (formGroup.get('categoria')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('categoria')?.getError('apiError') }}</span>
-                  }
+                <mat-error
+                  *ngIf="formArray.at(0).get('categoria')?.invalid && formArray.at(0).get('categoria')?.touched">
+                  {{ getErrorMessage('categoria', formArray.at(0).get('categoria')?.errors) }}
                 </mat-error>
+                <span class="api-error" *ngIf="formArray.at(0).get('categoria')?.hasError('apiError')">
+                  {{ formArray.at(0).get('categoria')?.getError('apiError') }}
+                </span>
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Preço</mat-label>
-                <input matInput type="number" formControlName="preco" #inputPreco/>
-                <mat-error *ngIf="formGroup.get('preco')?.invalid && formGroup.get('preco')?.touched">
-                  {{ getErrorMessage('preco', formGroup.get('preco')?.errors) }}
-                  @if (formGroup.get('preco')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('preco')?.getError('apiError') }}</span>
-                  }
+                <input matInput type="text" [value]="precoFormatado" (input)="formatarPreco($event)"
+                  (blur)="converterPrecoParaEnvio()" #inputPreco />
+                <mat-error *ngIf="formArray.at(0).get('preco')?.invalid && formArray.at(0).get('preco')?.touched">
+                  {{ getErrorMessage('preco', formArray.at(0).get('preco')?.errors) }}
                 </mat-error>
+                <span class="api-error" *ngIf="formArray.at(0).get('preco')?.hasError('apiError')">
+                  {{ formArray.at(0).get('preco')?.getError('apiError') }}
+                </span>
               </mat-form-field>
+
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Resolução</mat-label>
                 <input matInput type="text" formControlName="resolucao" />
-                <mat-error *ngIf="formGroup.get('resolucao')?.invalid && formGroup.get('resolucao')?.touched">
-                  {{ getErrorMessage('resolucao', formGroup.get('resolucao')?.errors) }}
-                  @if (formGroup.get('resolucao')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('resolucao')?.getError('apiError') }}</span>
-                  }
+                <mat-error
+                  *ngIf="formArray.at(0).get('resolucao')?.invalid && formArray.at(0).get('resolucao')?.touched">
+                  {{ getErrorMessage('resolucao', formArray.at(0).get('resolucao')?.errors) }}
                 </mat-error>
+                <span class="api-error" *ngIf="formArray.at(0).get('resolucao')?.hasError('apiError')">
+                  {{ formArray.at(0).get('resolucao')?.getError('apiError') }}
+                </span>
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width-input">
@@ -73,23 +79,30 @@
                 <mat-select formControlName="idFan">
                   <mat-option *ngFor="let fan of [1, 2, 3]" [value]="fan">{{ fan }}</mat-option>
                 </mat-select>
-                <mat-error *ngIf="formGroup.get('idFan')?.invalid && formGroup.get('idFan')?.touched">
-                  {{ getErrorMessage('idFan', formGroup.get('idFan')?.errors) }}
-                  @if (formGroup.get('idFan')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('idFan')?.getError('apiError') }}</span>
-                  }
+                <mat-error *ngIf="formArray.at(0).get('idFan')?.invalid && formArray.at(0).get('idFan')?.touched">
+                  {{ getErrorMessage('idFan', formArray.at(0).get('idFan')?.errors) }}
                 </mat-error>
+                <span class="api-error" *ngIf="formArray.at(0).get('idFan')?.hasError('apiError')">
+                  {{ formArray.at(0).get('idFan')?.getError('apiError') }}
+                </span>
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Barramento</mat-label>
-                <input matInput type="number" formControlName="barramento">
-                <mat-error *ngIf="formGroup.get('barramento')?.invalid && formGroup.get('barramento')?.touched">
-                  {{ getErrorMessage('barramento', formGroup.get('barramento')?.errors) }}
-                  @if (formGroup.get('barramento')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('barramento')?.getError('apiError') }}</span>
-                  }
+                <mat-select formControlName="barramento">
+                  <mat-option *ngFor="let op of opcoesBarramento" [value]="op">
+                    {{ op }}
+                  </mat-option>
+                </mat-select>
+
+                <mat-error
+                  *ngIf="formArray.at(0).get('barramento')?.invalid && formArray.at(0).get('barramento')?.touched">
+                  {{ getErrorMessage('barramento', formArray.at(0).get('barramento')?.errors) }}
                 </mat-error>
+
+                <span class="api-error" *ngIf="formArray.at(0).get('barramento')?.hasError('apiError')">
+                  {{ formArray.at(0).get('barramento')?.getError('apiError') }}
+                </span>
               </mat-form-field>
 
 
@@ -97,14 +110,16 @@
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Descrição</mat-label>
                   <textarea matInput formControlName="descricao"></textarea>
-                  <mat-error *ngIf="formGroup.get('descricao')?.invalid && formGroup.get('descricao')?.touched">
-                    {{ getErrorMessage('descricao', formGroup.get('descricao')?.errors) }}
-                    @if (formGroup.get('descricao')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('descricao')?.getError('apiError') }}</span>
-                    }
+                  <mat-error
+                    *ngIf="formArray.at(0).get('descricao')?.invalid && formArray.at(0).get('descricao')?.touched">
+                    {{ getErrorMessage('descricao', formArray.at(0).get('descricao')?.errors) }}
                   </mat-error>
+                  <span class="api-error" *ngIf="formArray.at(0).get('descricao')?.hasError('apiError')">
+                    {{ formArray.at(0).get('descricao')?.getError('apiError') }}
+                  </span>
                 </mat-form-field>
               </div>
+
 
             </div>
 
@@ -300,7 +315,7 @@
           <mat-step formGroupName="2" [stepControl]="formArray.get([3])!">
             <mat-form-field appearance="fill" class="full-width-input">
               <mat-label>Imagens</mat-label>
-              <input type="file" (change)="carregarImagemSelecionada($event)" hidden #fileInput>
+              <input type="file" multiple (change)="carregarImagemSelecionada($event)" hidden #fileInput>
               <input matInput [value]="fileName" readonly>
 
               <button mat-icon-button matSuffix (click)="fileInput.click()">
@@ -313,22 +328,56 @@
             </mat-form-field>
 
             <div *ngIf="imagePreview" class="container responsiv-grid">
-              <mat-card  class="example-card" appearance="outlined">
-                <img mat-card-image [src]="imagePreview" >
+              <div class="preview-container">
+                <!-- Card principal -->
+                <mat-card class="example-card" appearance="outlined">
+                  <img mat-card-image [src]="imagePreview">
 
-                <div class="card-info">
-                        <span>Placa de Video {{inputModelo.value}}, </span>
-                        <span>{{ getNomeFornecedor(inputFornecedor.value ) }}, </span>
-                        <span>{{ inputCapacidade.value }}GB, </span>
-                        <span>{{ inputTipoMemoria.value }}, </span>
-                        <span>{{ inputLarguraBanda.value }}-bit</span>       
+                  <div class="card-info">
+                    <span>Placa de Video {{inputModelo.value}}, </span>
+                    <span>{{ getNomeFornecedor(inputFornecedor.value) }}, </span>
+                    <span>{{ inputCapacidade.value }}GB, </span>
+                    <span>{{ inputTipoMemoria.value }}, </span>
+                    <span>{{ inputLarguraBanda.value }}-bit</span>
+                  </div>
+
+                  <span class="valor-desconto">
+                    de <del>{{ (+inputPreco.value + 1) | currency:'BRL' }}</del> por:
+                  </span>
+                  <p class="avista">à vista</p>
+                  <mat-card-content class="preco">
+                    {{ inputPreco.value | currency:'BRL' }}
+                  </mat-card-content>
+                  <div class="line"></div>
+                  <p class="parcelamento">
+                    Em até 10x de
+                    <span class="valor-parcela">{{ (+inputPreco.value / 10) | currency:'BRL' }}</span>
+                  </p>
+                  <p class="parcelamento2">sem juros no cartão</p>
+                </mat-card>
+
+                <!-- Imagens do banco (já salvas) -->
+                <div *ngIf="imagensBackend.length > 0" class="galeria-horizontal">
+                  <mat-card *ngFor="let imagem of imagensBackend; let i = index" class="mini-card">
+                    <img [src]="placaService.getImagemUrl(imagem)" class="thumb-img">
+                    <button mat-icon-button color="warn" (click)="removerImagem(i, 'back')">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card>
                 </div>
-              </mat-card>
 
+                <!-- Imagens novas (ainda não salvas) -->
+                <div *ngIf="imagePreviewsList.length > 0" class="galeria-horizontal">
+                  <mat-card *ngFor="let preview of imagePreviewsList; let i = index" class="mini-card">
+                    <img [src]="preview" class="thumb-img">
+                    <button mat-icon-button color="warn" (click)="removerImagem(i, 'nova')">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-card>
+                </div>
 
-
+              </div>
             </div>
-
           </mat-step>
         </mat-stepper>
       </form>

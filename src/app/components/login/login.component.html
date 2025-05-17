@@ -1,17 +1,58 @@
-<div class="login-container">
+<div class="login-page">
+  <div class="login-container">
     <div class="login-box">
-        <img class="login-icon" src="/icons/passkey.svg" alt="Passkey">
-        <h2 class="login-title">Bem-vindo</h2>
+      <div class="login-header">
+        <div class="logo-container">
+          <img class="login-icon" src="/icons/passkey.svg" alt="Passkey">
+        </div>
+        <h1 class="login-title">Bem-vindo</h1>
+        <p class="login-subtitle">Faça login para acessar sua conta</p>
+      </div>
+      
+      <div class="login-form-container">
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="login-input">
-                <input matInput placeholder="Username" formControlName="username" required>
-                <mat-error *ngIf="loginForm.get('username')!.hasError('required')">O username é obrigatório</mat-error>
-            </mat-form-field>
-            <mat-form-field class="login-input">
-                <input matInput type="password" placeholder="Senha" formControlName="password" required>
-                <mat-error *ngIf="loginForm.get('password')!.hasError('required')">A senha é obrigatória</mat-error>
-            </mat-form-field>
-            <button mat-raised-button class="login-button" color="primary" type="submit">Login</button>
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Digite seu username" formControlName="username" required>
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="loginForm.get('username')!.hasError('required')">
+              O username é obrigatório
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('username')!.hasError('minlength')">
+              O username deve ter pelo menos 3 caracteres
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Digite sua senha" formControlName="password" required>
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" [attr.aria-label]="'Mostrar senha'" [attr.aria-pressed]="!hidePassword">
+              <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="loginForm.get('password')!.hasError('required')">
+              A senha é obrigatória
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('password')!.hasError('minlength')">
+              A senha deve ter pelo menos 3 caracteres
+            </mat-error>
+          </mat-form-field>
+          
+          <div class="login-options">
+            <mat-checkbox >Lembrar-me</mat-checkbox>
+            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+          </div>
+          
+          <button mat-raised-button class="login-button" type="submit" [disabled]="loginForm.invalid || isLoading">
+            <span *ngIf="!isLoading">Entrar</span>
+            <mat-spinner *ngIf="isLoading" diameter="24" color="accent"></mat-spinner>
+          </button>
         </form>
+      </div>
+      
+      <div class="login-footer">
+        <p>Não tem uma conta? <a href="#" class="register-link">Registre-se</a></p>
+      </div>
     </div>
+  </div>
 </div>

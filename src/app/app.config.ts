@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -10,6 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     JwtHelperService,
-    {provide: JWT_OPTIONS, useValue: {}}
+    {provide: JWT_OPTIONS, useValue: {}},
+    provideAnimations()
   ]
 };

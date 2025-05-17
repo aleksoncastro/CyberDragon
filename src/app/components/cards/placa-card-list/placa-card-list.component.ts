@@ -88,7 +88,12 @@ export class PlacaCardListComponent implements OnInit {
       id: card.id,
       modelo: card.title,
       preco: card.preco,
-      quantidade: 1
+      fornecedor: card.fornecedor,
+      capacidade: card.capacidade,
+      tipoMemoria: card.tipoMemoria,
+      larguraBanda: card.larguraBanda,
+      quantidade: 1,
+      imageUrl: card.imageUrl
     });
     
   }

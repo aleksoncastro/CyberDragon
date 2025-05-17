@@ -7,20 +7,35 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, MatFormFieldModule,
-    MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule,
-    RouterModule],
+  imports: [
+    NgIf, 
+    ReactiveFormsModule, 
+    MatFormFieldModule,
+    MatInputModule, 
+    MatButtonModule, 
+    MatCardModule, 
+    MatToolbarModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    RouterModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  hidePassword = true;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,33 +53,34 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      this.isLoading = true;
       const username = this.loginForm.get('username')!.value;
       const password = this.loginForm.get('password')!.value;
 
       this.authService.loginADM(username, password).subscribe({
         next: (resp) => {
+          this.isLoading = false;
           this.router.navigateByUrl('/admin');
         },
         error: (err) => {
+          this.isLoading = false;
           console.log(err);
           this.showSnackbarTopPosition("Dados Inválidos", 'Fechar', 2000);
         }
       });
       
     } else {
-      this.showSnackbarTopPosition("Dados inválidos", 'Fechar', 2000);
+      this.loginForm.markAllAsTouched();
+      this.showSnackbarTopPosition("Preencha todos os campos corretamente", 'Fechar', 2000);
     }
-  }
-
-  onRegister() {
-    // criar usuário
   }
 
   showSnackbarTopPosition(content: any, action: any, duration: any) {
     this.snackBar.open(content, action, {
-      duration: 2000,
-      verticalPosition: "top", // Allowed values are  'top' | 'bottom'
-      horizontalPosition: "center" // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+      duration: duration,
+      verticalPosition: "top", 
+      horizontalPosition: "center",
+      panelClass: ['error-snackbar']
     });
   }
 }

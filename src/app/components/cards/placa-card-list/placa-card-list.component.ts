@@ -6,8 +6,11 @@ import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { MatDrawerContainer } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { ViewChild, ElementRef } from '@angular/core';
+import { CarrinhoService } from '../../../services/carrinho.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 type Card = {
+  id: number;
   title: string;
   fornecedor: string;
   tipoMemoria: string;
@@ -27,7 +30,10 @@ export class PlacaCardListComponent implements OnInit {
   placa: PlacaDeVideo[] = [];
   cards = signal<Card[]>([]);
 
-  constructor(private placaService: PlacaDeVideoService) { }
+  constructor(private placaService: PlacaDeVideoService,
+    private carrinhoService: CarrinhoService,
+    private snackBar: MatSnackBar
+  ) { }
 
   cardsLancamentos = signal<Card[]>([]);
   cardsOfertas = signal<Card[]>([]);
@@ -64,6 +70,7 @@ export class PlacaCardListComponent implements OnInit {
 
   converterParaCards(placas: PlacaDeVideo[]): Card[] {
     return placas.map((placa) => ({
+      id: placa.id!,
       title: placa.modelo,
       tipoMemoria: placa.memoria.tipoMemoria,
       fornecedor: placa.fornecedor?.nome ?? 'Fornecedor não informado',
@@ -74,5 +81,23 @@ export class PlacaCardListComponent implements OnInit {
         ? this.placaService.getImagemUrl(placa.listaImagem[0])
         : 'assets/imagem-nao-disponivel'
     }));
+  }
+
+  adicionarAoCarrinho(card: Card): void {
+    this.carrinhoService.adicionar({
+      id: card.id,
+      modelo: card.title,
+      preco: card.preco,
+      quantidade: 1
+    });
+    
+  }
+
+  showSnackBarTopPosition(content: any) {
+    this.snackBar.open(content, 'Fechar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
   }
 }

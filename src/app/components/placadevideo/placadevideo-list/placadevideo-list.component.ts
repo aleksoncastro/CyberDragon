@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +10,8 @@ import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-
+import { CarrinhoService } from '../../../services/carrinho.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-placadevideo-list',
@@ -20,6 +21,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './placadevideo-list.component.css'
 })
 export class PlacadevideoListComponent implements OnInit {
+
   displayedColumns: string[] = [
     'id',
     'modelo',
@@ -49,11 +51,11 @@ export class PlacadevideoListComponent implements OnInit {
     1: 'Double',
     2: 'Triple'
   };
-  snackbarService: any;
   router: any;
 
   constructor(private placaDeVideoService: PlacaDeVideoService,
-    public placaService: PlacaDeVideoService
+    public placaService: PlacaDeVideoService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {

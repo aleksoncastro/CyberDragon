@@ -14,7 +14,7 @@
             <button mat-icon-button class="scroll-button" (click)="scrollLeft()">
                 <mat-icon>chevron_left</mat-icon>
             </button>
-            
+
             <div class="scroll-horizontal" #scrollContainer>
                 <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsLancamentos()">
 
@@ -43,14 +43,18 @@
                     </p>
                     <p class="parcelamento2">sem juros no cartão</p>
 
+                    <button mat-raised-button color="primary" (click)="adicionarAoCarrinho(card)">
+                        Adicionar ao Carrinho
+                    </button>
+
                 </mat-card>
             </div>
 
-            
+
             <button mat-icon-button class="scroll-button" (click)="scrollRight()">
                 <mat-icon>chevron_right</mat-icon>
             </button>
-         
+
         </div>
 
         <div class="titulo-ofertas">
@@ -85,6 +89,10 @@
                     <span class="valor-parcela"> {{card.preco/ 10 | currency:'BRL'}} </span>
                 </p>
                 <p class="parcelamento2">sem juros no cartão</p>
+
+                <button mat-raised-button color="primary" (click)="adicionarAoCarrinho(card)">
+                    Adicionar ao Carrinho
+                </button>
 
             </mat-card>
         </div>

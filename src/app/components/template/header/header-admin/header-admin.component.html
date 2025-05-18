@@ -16,10 +16,10 @@
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item>
       <mat-icon>person</mat-icon>
-      <span>Meu perfil</span>
+      <span>Meu Perfil</span>
     </button>
-    <button mat-menu-item>
-      <button mat-icon-button (click)="deslogar()">
+    <button mat-menu-item (click)="deslogar()">
+      <button mat-icon-button>
         <mat-icon>logout</mat-icon>
       </button>
       <span>Sair</span>

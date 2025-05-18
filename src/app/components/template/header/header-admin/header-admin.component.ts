@@ -33,7 +33,8 @@ export class HeaderAdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private sidebarService: SidebarService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
 
   }
 
@@ -54,6 +55,7 @@ export class HeaderAdminComponent implements OnInit, OnDestroy {
   deslogar() {
     this.authService.removeToken();
     this.authService.removeUsuarioLogado();
+    this.router.navigate(['/loginadmin']);
   }
   
 

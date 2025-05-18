@@ -1,0 +1,249 @@
+/* Página principal */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a1a, #CBA135, #1a1a1a);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Container com perspectiva sutil */
+.login-container {
+  width: 100%;
+  max-width: 420px;
+  perspective: 1000px;
+}
+
+/* Caixa principal do login */
+.login-box {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-out forwards;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.login-box:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.4);
+}
+
+/* Cabeçalho */
+.login-header {
+  padding: 32px 30px 22px;
+  background: #000;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+.login-icon {
+  width: 180px;
+  height: 160px;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+  animation: pulse 2s infinite;
+}
+
+.login-title {
+  margin: 12px 0 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #D4AF37;
+  letter-spacing: 0.6px;
+}
+
+.login-subtitle {
+  font-size: 15px;
+  color: #CBA135;
+  margin-top: 6px;
+}
+
+/* Formulário */
+.login-form-container {
+  padding: 30px;
+  background: white;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Campos de entrada */
+.login-input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-form-field-placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: #ffffff !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #D4AF37;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #D4AF37;
+  border-color: #D4AF37;
+}
+
+/* Texto dentro do checkbox "lembrar-me" */
+::ng-deep .mat-checkbox-label {
+  color: #ffffff !important;
+}
+
+/* Caixa do checkbox */
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+  border-color: #D4AF37 !important;
+}
+
+::ng-deep .mat-checkbox.mat-accent .mat-checkbox-background {
+  background-color: #D4AF37 !important;
+}
+
+/* Força a cor do texto digitado nos campos */
+::ng-deep input.mat-input-element {
+  color: #ffffff !important;
+}
+
+/* Força a cor do texto do placeholder */
+::ng-deep input.mat-input-element::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Evita herança indevida de cor preta */
+::ng-deep .mat-form-field-infix {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-form-field-wrapper,
+::ng-deep .mat-form-field-flex {
+  color: #ffffff !important;
+}
+
+.mat-icon {
+  color: #D4AF37 !important;
+}
+
+.mat-error {
+  color: #ff6b6b !important;
+}
+
+/* Opções de login */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #D4AF37;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.forgot-password {
+  color: #D4AF37;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: #CBA135;
+  text-decoration: underline;
+}
+
+/* Botão */
+.login-button {
+  height: 48px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  background: linear-gradient(to right, #D4AF37, #CBA135) !important;
+  color: #000; /* <- reforça a cor do texto */
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.login-button:not([disabled]):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Rodapé */
+.login-footer {
+  padding: 18px 30px;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  background: #111;
+  border-top: 1px solid #2a2a2a;
+}
+
+.register-link {
+  color: #D4AF37;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.register-link:hover {
+  color: #CBA135;
+  text-decoration: underline;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .login-container {
+    max-width: 100%;
+  }
+
+  .login-form-container {
+    padding: 20px;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+  }
+
+  .login-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

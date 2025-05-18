@@ -24,20 +24,18 @@ export class AuthService {
   }
 
   private initUsuarioLogado() {
-    const usuario = this.localStorageService.getItem(this.usuarioLogadoKey);
-    if (usuario) {
-      const usuarioLogado = JSON.parse(usuario);
-
-      this.setUsuarioLogado(usuarioLogado);
-      this.usuarioLogadoSubject.next(usuarioLogado);
-    }
-
+  const usuario = this.localStorageService.getItem(this.usuarioLogadoKey);
+  if (usuario) {
+    // usuario já é um objeto, não precisa parsear de novo
+    this.setUsuarioLogado(usuario);
+    this.usuarioLogadoSubject.next(usuario);
   }
+}
 
   loginADM(username: string, senha: string): Observable<any> {
   const params = { username, senha };
 
-  return this.http.post(`${this.baseURL}`, params, { observe: 'response' }).pipe(
+  return this.http.post(`${this.baseURL}/admin`, params, { observe: 'response' }).pipe(
     tap((res: any) => {
       console.log("Headers:", res.headers);
       console.log("Body:", res.body);
@@ -55,6 +53,26 @@ export class AuthService {
   );
 }
 
+loginCliente(username: string, senha: string): Observable<any> {
+  const params = { username, senha };
+
+  return this.http.post(`${this.baseURL}/cliente`, params, { observe: 'response' }).pipe(
+    tap((res: any) => {
+      console.log("Headers (cliente):", res.headers);
+      console.log("Body (cliente):", res.body);
+
+      const authToken = res.headers.get('Authorization') ?? '';
+      if (authToken) {
+        this.setToken(authToken);
+        const usuarioLogado = res.body;
+        if (usuarioLogado) {
+          this.setUsuarioLogado(usuarioLogado);
+          this.usuarioLogadoSubject.next(usuarioLogado);
+        }
+      }
+    })
+  );
+}
 
   setUsuarioLogado(usuario: Usuario): void {
     this.localStorageService.setItem(this.usuarioLogadoKey, usuario);

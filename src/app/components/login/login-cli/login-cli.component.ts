@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,10 +11,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgIf } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
+import { FooterComponent } from '../../template/footer/footer.component';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login-cli',
   standalone: true,
   imports: [
     NgIf, 
@@ -27,12 +28,14 @@ import { AuthService } from '../../services/auth.service';
     MatIconModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    RouterModule
+    RouterModule,
+    FooterComponent
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './login-cli.component.html',
+  styleUrl: './login-cli.component.css',
+  encapsulation: ViewEncapsulation.None
 })
-export class LoginComponent implements OnInit {
+export class LoginCliComponent implements OnInit {
   loginForm!: FormGroup;
   hidePassword = true;
   isLoading = false;
@@ -57,10 +60,10 @@ export class LoginComponent implements OnInit {
       const username = this.loginForm.get('username')!.value;
       const password = this.loginForm.get('password')!.value;
 
-      this.authService.loginADM(username, password).subscribe({
+      this.authService.loginCliente(username, password).subscribe({
         next: (resp) => {
           this.isLoading = false;
-          this.router.navigateByUrl('/admin');
+          this.router.navigateByUrl('/placa-card-list');
         },
         error: (err) => {
           this.isLoading = false;

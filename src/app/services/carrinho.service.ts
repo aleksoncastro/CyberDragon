@@ -18,7 +18,6 @@ export class CarrinhoService {
     this.carrinhoSubject.next(itens);
   }
 
-
   adicionar(item: ItemCarrinho): void {
     const carrinhoAtual = this.carrinhoSubject.value;
     const itemExistente = carrinhoAtual.find(i => i.id === item.id);
@@ -55,7 +54,4 @@ export class CarrinhoService {
   obter(): ItemCarrinho[] {
     return this.carrinhoSubject.value;
   }
-
-
-
 } 

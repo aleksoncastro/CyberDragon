@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { ViewChild, ElementRef } from '@angular/core';
 import { CarrinhoService } from '../../../services/carrinho.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FavoritosService } from '../../../services/favoritos.service';
+import { ItemCarrinho } from '../../../models/item-carrinho';
+import { ItemFavorito } from '../../../models/item-favorito';
 
 type Card = {
   id: number;
@@ -29,10 +32,12 @@ type Card = {
 export class PlacaCardListComponent implements OnInit {
   placa: PlacaDeVideo[] = [];
   cards = signal<Card[]>([]);
+  iconCarrinho = 'shopping_cart';
 
   constructor(private placaService: PlacaDeVideoService,
     private carrinhoService: CarrinhoService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private favoritosService: FavoritosService
   ) { }
 
   cardsLancamentos = signal<Card[]>([]);
@@ -95,7 +100,33 @@ export class PlacaCardListComponent implements OnInit {
       quantidade: 1,
       imageUrl: card.imageUrl
     });
-    
+
+  }
+
+  adicionarOuRemoverFavorito(card: Card): void {
+    const item: ItemFavorito = {
+      id: card.id,
+      title: card.title,
+      fornecedor: card.fornecedor,
+      tipoMemoria: card.tipoMemoria,
+      capacidade: card.capacidade,
+      larguraBanda: card.larguraBanda,
+      preco: card.preco,
+      imageUrl: card.imageUrl,
+      quantidade: 1
+    };
+
+    if (this.isFavorito(item.id)) {
+      this.favoritosService.remover(item);
+      this.showSnackBarTopPosition('Removido dos favoritos');
+    } else {
+      this.favoritosService.adicionar(item);
+      this.showSnackBarTopPosition('Adicionado aos favoritos');
+    }
+  }
+
+  isFavorito(id: number): boolean {
+    return this.favoritosService.obter().some(item => item.id === id);
   }
 
   showSnackBarTopPosition(content: any) {

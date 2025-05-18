@@ -25,6 +25,7 @@ import { UserTemplateComponent } from './components/template/user-template/user-
 import { PlacaCardListComponent } from './components/cards/placa-card-list/placa-card-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { CarrinhoComponent } from './components/carrinho/carrinho.component';
+import { FavoritosComponent } from './components/favoritos/favoritos.component';
 
 export const routes: Routes = [
     
@@ -55,6 +56,7 @@ export const routes: Routes = [
             { path: 'funcionarios', component: FuncionarioListComponent, title: 'Novo Funcionário' },
             { path: 'home', component: HomeComponent, title: 'Painel Administrativo' },
             { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho' },
+            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos' },
         ]
     },
     {

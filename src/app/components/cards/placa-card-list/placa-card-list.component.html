@@ -18,6 +18,15 @@
             <div class="scroll-horizontal" #scrollContainer>
                 <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsLancamentos()">
 
+                    <div class="action-icons">
+                        <button mat-icon-button (click)="adicionarOuRemoverFavorito(card)">
+                            <mat-icon>{{ isFavorito(card.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="adicionarAoCarrinho(card)">
+                            <mat-icon>{{ iconCarrinho }}</mat-icon>
+                        </button>
+                    </div>
+
                     <div class="image-container">
                         <img class="image" [src]="card.imageUrl" />
                     </div>
@@ -43,10 +52,6 @@
                     </p>
                     <p class="parcelamento2">sem juros no cartão</p>
 
-                    <button mat-raised-button color="primary" (click)="adicionarAoCarrinho(card)">
-                        Adicionar ao Carrinho
-                    </button>
-
                 </mat-card>
             </div>
 
@@ -64,6 +69,15 @@
 
         <div class="container responsive-grid">
             <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsOfertas()">
+
+                <div class="action-icons">
+                    <button mat-icon-button (click)="adicionarOuRemoverFavorito(card)">
+                        <mat-icon>{{ isFavorito(card.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="adicionarAoCarrinho(card)">
+                        <mat-icon>{{ iconCarrinho }}</mat-icon>
+                    </button>
+                </div>
 
                 <div class="image-container">
                     <img class="image" [src]="card.imageUrl" />
@@ -89,10 +103,6 @@
                     <span class="valor-parcela"> {{card.preco/ 10 | currency:'BRL'}} </span>
                 </p>
                 <p class="parcelamento2">sem juros no cartão</p>
-
-                <button mat-raised-button color="primary" (click)="adicionarAoCarrinho(card)">
-                    Adicionar ao Carrinho
-                </button>
 
             </mat-card>
         </div>

@@ -1,0 +1,54 @@
+<div class="favoritos-container">
+  <div class="favoritos-header">
+    <h1>Meus Favoritos</h1>
+    <span class="favoritos-badge" *ngIf="favoritos.length > 0">
+      {{ favoritos.length }} {{ favoritos.length === 1 ? 'item' : 'itens' }}
+    </span>
+  </div>
+
+  <ng-container *ngIf="favoritos.length > 0; else favoritosVazio">
+    <div class="favoritos-layout">
+      <div class="favoritos-itens">
+        <mat-card class="item-card" *ngFor="let item of favoritos" @itemAnimation>
+          <div class="item-content">
+            <div class="item-image">
+              <img [src]="item.imageUrl || getImagemUrl(item)" [alt]="item.title">
+            </div>
+            <div class="item-info">
+              <h3 class="item-titulo">Placa de Vídeo {{ item.title }}</h3>
+              <p class="item-detalhes">
+                <span>{{ item.fornecedor }}</span> ·
+                <span>{{ item.capacidade }}GB</span> ·
+                <span>{{ item.tipoMemoria }}</span> ·
+                <span>{{ item.larguraBanda }}-bit</span>
+              </p>
+              <p class="item-preco">Preço: {{ formatarPreco(item.preco) }}</p>
+            </div>
+
+            <div class="item-actions">
+              <button mat-icon-button color="warn" class="remover-btn" (click)="removerFavorito(item)" matTooltip="Remover dos favoritos">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button mat-stroked-button color="primary" (click)="adicionarAoCarrinho(item)">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Adicionar ao Carrinho
+              </button>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #favoritosVazio>
+    <div class="favoritos-vazio">
+      <mat-icon class="vazio-icon">favorite_border</mat-icon>
+      <h2>Nenhum favorito ainda</h2>
+      <p>Adicione produtos aos seus favoritos para acessá-los rapidamente aqui.</p>
+      <button mat-raised-button color="primary" (click)="continuarExplorando()">
+        <mat-icon>explore</mat-icon>
+        Explorar Produtos
+      </button>
+    </div>
+  </ng-template>
+</div>

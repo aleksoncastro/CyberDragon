@@ -6,6 +6,50 @@
     gap: 1.5rem;
     padding: 10rem;
   }
+
+  .example-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+        .action-icons {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .action-icons {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        display: flex;
+        gap: 8px;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+
+        button {
+            background: none;
+            border: none;
+            box-shadow: none;
+
+            mat-icon {
+                font-size: 24px;
+                color: var(--icone-destaque);
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
+
+            &:hover mat-icon {
+                transform: scale(1.2);
+                color: white;
+            }
+        }
+    }
+}
   
   .example-card {
     border: 1px solid transparent;

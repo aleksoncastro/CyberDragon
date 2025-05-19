@@ -73,7 +73,7 @@ export class CarrinhoComponent implements OnInit {
   }
 
   continuarComprando() {
-    this.router.navigate(["/placa-card-list"])
+    this.router.navigate(["/placasdevideo"])
   }
 
   // Formatar preço para exibição

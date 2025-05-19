@@ -16,7 +16,7 @@
             </button>
 
             <div class="scroll-horizontal" #scrollContainer>
-                <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsLancamentos()">
+                <mat-card class="example-card" (click)="verDetalhes(card.id)" appearance="outlined" *ngFor="let card of cardsLancamentos()">
 
                     <div class="action-icons">
                         <button mat-icon-button (click)="adicionarOuRemoverFavorito(card)">
@@ -68,7 +68,7 @@
         </div>
 
         <div class="container responsive-grid">
-            <mat-card class="example-card" appearance="outlined" *ngFor="let card of cardsOfertas()">
+            <mat-card class="example-card" (click)="verDetalhes(card.id)" appearance="outlined" *ngFor="let card of cardsOfertas()">
 
                 <div class="action-icons">
                     <button mat-icon-button (click)="adicionarOuRemoverFavorito(card)">

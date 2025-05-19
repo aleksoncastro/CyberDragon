@@ -63,7 +63,7 @@ export class LoginCliComponent implements OnInit {
       this.authService.loginCliente(username, password).subscribe({
         next: (resp) => {
           this.isLoading = false;
-          this.router.navigateByUrl('/placa-card-list');
+          this.router.navigateByUrl('/placasdevideo');
         },
         error: (err) => {
           this.isLoading = false;

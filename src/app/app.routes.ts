@@ -30,6 +30,7 @@ import { LoginCliComponent } from './components/login/login-cli/login-cli.compon
 import { AdminGuard } from './guards/admin.guard';
 import { ClienteGuard } from './guards/cliente.guard';
 import { loginredirectGuard } from './guards/loginredirect.guard';
+import { PlacaDeVideoDetailComponent } from './components/placadevideo/placadevideo-detail/placadevideo-detail.component';
 
 export const routes: Routes = [
 
@@ -39,10 +40,11 @@ export const routes: Routes = [
         component: UserTemplateComponent,
         title: 'E-commerce',
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'placa-card-list' },
-            { path: 'placa-card-list', component: PlacaCardListComponent, title: 'Cards de Placa' },
-            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', canActivate: [ClienteGuard] },
-            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', canActivate: [ClienteGuard] },
+            { path: '', pathMatch: 'full', redirectTo: 'placasdevideo' },
+            { path: 'placasdevideo', component: PlacaCardListComponent, title: 'Cards de Placa' },
+            { path: 'placadevideo-detail/:id', component: PlacaDeVideoDetailComponent, title: 'Detalhes da Placa de Video' },
+            { path: 'login', component: LoginCliComponent, title: 'Login Cliente', canActivate: [loginredirectGuard] },
+            { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
         ]
     },
     {
@@ -62,7 +64,7 @@ export const routes: Routes = [
             { path: 'fornecedores', component: FornecedorListComponent, title: 'Lista de Fornecedores' },
             { path: 'fornecedores/new', component: FornecedorFormComponent, title: 'Novo Fornecedor' },
             { path: 'fornecedores/edit/:id', component: FornecedorFormComponent, title: 'Edit de Fornecedor', resolve: { fornecedor: fornecedorResolver } },
-            { path: 'placasdevideo', component: PlacadevideoListComponent, title: 'Lista de Placas de Video' },
+            { path: 'placasdevideo-lista', component: PlacadevideoListComponent, title: 'Lista de Placas de Video' },
             { path: 'placasdevideo/new', component: PlacaDeVideoFormComponent, title: 'Nova Placa de Video' },
             { path: 'placasdevideo/edit/:id', component: PlacaDeVideoFormComponent, title: 'Edição de Placas de Video', resolve: { placadevideo: placadevideoResolver } },
             { path: 'lotes', component: LoteListComponent, title: 'Lista de Lotes' },
@@ -73,11 +75,18 @@ export const routes: Routes = [
         ]
     },
 
-    { path: 'loginadmin', component: LoginAdminComponent, title: 'Login Administração', canActivate: [loginredirectGuard] },
-    { path: 'logincli', component: LoginCliComponent, title: 'Login Cliente', canActivate: [loginredirectGuard] },
-    { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
-    { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video' },
+    {
+        path:'cliente',
+        component: UserTemplateComponent,
+        title: 'Usuario',
+        children: [
+            { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video' },
+            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', canActivate: [ClienteGuard] },
+            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', canActivate: [ClienteGuard] },
+        ]
+    },
 
+    { path: 'loginadmin', component: LoginAdminComponent, title: 'Login Administração', canActivate: [loginredirectGuard] },
     { path: '**', component: NotFoundComponent, title: 'Página não encontrada' }
 
 ];

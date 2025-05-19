@@ -1,0 +1,168 @@
+<div class="product-detail-container">
+  <!-- Back button -->
+  <button mat-icon-button class="back-button" (click)="voltar()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <div class="product-content" *ngIf="!isLoading">
+    <div class="product-gallery">
+      <!-- Main product image -->
+      <mat-card class="main-image-card">
+        <img [src]="getImageUrl(placaDeVideo.listaImagem?.[selectedImageIndex])" [alt]="placaDeVideo.modelo"
+          class="main-image">
+      </mat-card>
+
+      <!-- Thumbnails -->
+      <div class="thumbnails-container">
+        <button *ngFor="let imagem of placaDeVideo.listaImagem; let i = index" class="thumbnail-button"
+          [class.active]="selectedImageIndex === i" (click)="selectImage(i)">
+          <img [src]="getImageUrl(imagem)" [alt]="'Thumbnail ' + (i + 1)">
+        </button>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <!-- Product title -->
+      <h1 class="product-title">
+        Placa de Vídeo {{placaDeVideo.modelo}},
+        {{placaDeVideo.fan?.label}} fan,
+        {{placaDeVideo.categoria}},
+        {{placaDeVideo.fornecedor?.nome}},<br>
+        {{placaDeVideo.memoria.capacidade}}GB,
+        {{placaDeVideo.memoria.tipoMemoria}},
+        {{placaDeVideo.memoria.larguraBanda}}-bits
+      </h1>
+
+      <mat-divider class="divider"></mat-divider>
+
+      <!-- Brand -->
+      <p class="brand-info">Marca: {{placaDeVideo.fornecedor?.nome}}</p>
+
+      <!-- Price information -->
+      <div class="price-container">
+        <p class="price-label">à vista</p>
+        <p class="main-price">{{ placaDeVideo.preco | currency:'BRL' }}</p>
+
+        <p class="installment-price">{{ precoParcelado | currency:'BRL' }}</p>
+        <p class="installment-info">
+          em até 10x de {{ valorParcela | currency:'BRL'}}
+        </p>
+        <p class="installment-info">sem juros no cartão</p>
+      </div>
+
+
+      <!-- Buy button -->
+      <button mat-raised-button class="buy-button" (click)="addToCart()">
+        <mat-icon>shopping_cart</mat-icon>
+        COMPRAR
+      </button>
+
+      <!-- Product description -->
+      <div class="product-description">
+        <h2 class="model-title">SOBRE</h2>
+        <h3 class="tagline"></h3>
+        <p class="description-text">{{placaDeVideo.descricao}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Specifications -->
+  <mat-card class="specs-card" *ngIf="!isLoading">
+    <mat-card-header>
+      <mat-card-title>Especificações Técnicas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="specs-grid">
+        <div class="specs-section">
+          <h3>Informações Gerais</h3>
+          <div class="specs-item">
+            <span class="specs-label">Modelo:</span>
+            <span class="specs-value">{{placaDeVideo.modelo}}</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Categoria:</span>
+            <span class="specs-value">{{placaDeVideo.categoria}}</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Resolução:</span>
+            <span class="specs-value">{{placaDeVideo.resolucao}}</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Consumo de Energia:</span>
+            <span class="specs-value">{{placaDeVideo.energia}}W</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Barramento:</span>
+            <span class="specs-value">{{placaDeVideo.barramento}}</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Suporte Ray Tracing:</span>
+            <span class="specs-value">{{placaDeVideo.suporteRayTracing ? 'Sim' : 'Não'}}</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Ventoinhas:</span>
+            <span class="specs-value">{{placaDeVideo.fan?.label}}</span>
+          </div>
+        </div>
+
+        <div class="specs-section">
+          <h3>Memória e Performance</h3>
+          <div class="specs-item">
+            <span class="specs-label">Tipo de Memória:</span>
+            <span class="specs-value">{{placaDeVideo.memoria.tipoMemoria}}</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Capacidade:</span>
+            <span class="specs-value">{{placaDeVideo.memoria.capacidade}}GB</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Largura de Banda:</span>
+            <span class="specs-value">{{placaDeVideo.memoria.larguraBanda}}GB/s</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Velocidade:</span>
+            <span class="specs-value">{{placaDeVideo.memoria.velocidadeMemoria}}MHz</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Clock Base:</span>
+            <span class="specs-value">{{placaDeVideo.clockBase}}MHz</span>
+          </div>
+          <div class="specs-item">
+            <span class="specs-label">Clock Boost:</span>
+            <span class="specs-value">{{placaDeVideo.clockBoost}}MHz</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="specs-section">
+        <h3>Dimensões</h3>
+        <div class="specs-item">
+          <span class="specs-label">Largura:</span>
+          <span class="specs-value">{{placaDeVideo.tamanho.largura}}mm</span>
+        </div>
+        <div class="specs-item">
+          <span class="specs-label">Altura:</span>
+          <span class="specs-value">{{placaDeVideo.tamanho.altura}}mm</span>
+        </div>
+        <div class="specs-item">
+          <span class="specs-label">Comprimento:</span>
+          <span class="specs-value">{{placaDeVideo.tamanho.comprimento}}mm</span>
+        </div>
+      </div>
+
+      <div class="specs-section">
+        <h3>Saídas de Vídeo</h3>
+        <div class="specs-item" *ngFor="let saida of placaDeVideo.saidas">
+          <span class="specs-label">{{saida.tipo}}:</span>
+          <span class="specs-value">{{saida.quantidade}}x</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading indicator -->
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Carregando detalhes do produto...</p>
+  </div>
+</div>

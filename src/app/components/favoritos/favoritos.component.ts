@@ -76,7 +76,7 @@ export class FavoritosComponent implements OnInit {
 
 
   continuarExplorando(): void {
-    this.router.navigate(["/placa-card-list"])
+    this.router.navigate(["/placasdevideo"])
   }
 
   formatarPreco(valor: number): string {

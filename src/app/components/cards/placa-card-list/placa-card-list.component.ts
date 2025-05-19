@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FavoritosService } from '../../../services/favoritos.service';
 import { ItemCarrinho } from '../../../models/item-carrinho';
 import { ItemFavorito } from '../../../models/item-favorito';
+import { Router } from '@angular/router';
 
 type Card = {
   id: number;
@@ -34,7 +35,9 @@ export class PlacaCardListComponent implements OnInit {
   cards = signal<Card[]>([]);
   iconCarrinho = 'shopping_cart';
 
-  constructor(private placaService: PlacaDeVideoService,
+  constructor(
+    private router: Router,
+    private placaService: PlacaDeVideoService,
     private carrinhoService: CarrinhoService,
     private snackBar: MatSnackBar,
     private favoritosService: FavoritosService
@@ -72,6 +75,10 @@ export class PlacaCardListComponent implements OnInit {
       this.cardsOfertas.set(cards);
     });
   }
+
+  verDetalhes(id: number): void {
+  this.router.navigate(['placadevideo-detail/', id]);
+}
 
   converterParaCards(placas: PlacaDeVideo[]): Card[] {
     return placas.map((placa) => ({

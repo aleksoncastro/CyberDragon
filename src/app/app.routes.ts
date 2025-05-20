@@ -43,8 +43,6 @@ export const routes: Routes = [
             { path: '', pathMatch: 'full', redirectTo: 'placasdevideo' },
             { path: 'placasdevideo', component: PlacaCardListComponent, title: 'Cards de Placa' },
             { path: 'placadevideo-detail/:id', component: PlacaDeVideoDetailComponent, title: 'Detalhes da Placa de Video' },
-            { path: 'login', component: LoginCliComponent, title: 'Login Cliente', canActivate: [loginredirectGuard] },
-            { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
         ]
     },
     {
@@ -79,13 +77,17 @@ export const routes: Routes = [
         path:'cliente',
         component: UserTemplateComponent,
         title: 'Usuario',
+        canActivate: [ClienteGuard],
         children: [
             { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video' },
-            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', canActivate: [ClienteGuard] },
-            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', canActivate: [ClienteGuard] },
+            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho'},
+            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos'},
         ]
     },
 
+    { path: 'usuarioadm/new', component: UsuarioFormFuncionarioComponent, title: 'Novo Funcionário' },
+    { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
+    { path: 'login', component: LoginCliComponent, title: 'Login Cliente', canActivate: [loginredirectGuard] },
     { path: 'loginadmin', component: LoginAdminComponent, title: 'Login Administração', canActivate: [loginredirectGuard] },
     { path: '**', component: NotFoundComponent, title: 'Página não encontrada' }
 

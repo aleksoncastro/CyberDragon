@@ -10,12 +10,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpErrorResponse } from '@angular/common/http';
 import { matchPasswordsValidator } from '../../../validators/match-passwords.validators';
 import { UsuarioServiceFuncionario } from '../../../services/usuario-funcionario.service';
+import { FooterComponent } from '../../template/footer/footer.component';
 
 @Component({
   selector: 'app-usuario-form-funcionario',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatToolbarModule, MatIconModule],
+    MatButtonModule, MatToolbarModule, MatIconModule, FooterComponent],
   templateUrl: './usuario-form-funcionario.component.html',
   styleUrl: './usuario-form-funcionario.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,7 +84,7 @@ export class UsuarioFormFuncionarioComponent {
     if (this.formGroup.valid) {
       const novoUsuario = this.formGroup.value;
       this.usuarioService.insertUsuarioFuncionario(novoUsuario).subscribe({
-        next: () => this.router.navigate(['/login']),
+        next: () => this.router.navigate(['/loginadmin']),
         error: (error) => {
           console.log('Erro ao gravar: ' + JSON.stringify(error));
           this.tratarErros(error);

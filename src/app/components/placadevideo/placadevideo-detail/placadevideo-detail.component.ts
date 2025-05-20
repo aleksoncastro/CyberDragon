@@ -98,7 +98,7 @@ export class PlacaDeVideoDetailComponent implements OnInit {
 
   this.carrinhoService.adicionar(item)
 
-  this.router.navigate(["/carrinho"])
+  this.router.navigate(["/cliente/carrinho"])
 }
 
 

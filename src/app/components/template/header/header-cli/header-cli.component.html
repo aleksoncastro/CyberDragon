@@ -5,9 +5,9 @@
   </button>
 
   <!-- Logo -->
-  <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" [routerLink]="['/placa-card-list']"
+  <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" [routerLink]="['/placasdevideo']"
     style="cursor: pointer;" />
-  <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" [routerLink]="['/placa-card-list']"
+  <img src="assets/logoNome.png" alt="Logo Nome" class="logo-nome" [routerLink]="['/placasdevideo']"
     style="cursor: pointer;" />
 
   <!-- Espaço -->
@@ -31,20 +31,36 @@
   <span class="cyber-spacer"></span>
 
   <!-- Ícones lado direito -->
-  <button mat-icon-button aria-label="Favoritos" [routerLink]="['/favoritos']">
+  <button mat-icon-button aria-label="Favoritos" [routerLink]="['/cliente/favoritos']">
     <mat-icon>favorite</mat-icon>
   </button>
 
-  <button mat-icon-button aria-label="Carrinho de compras" [routerLink]="['/carrinho']">
+  <button mat-icon-button aria-label="Carrinho de compras" [routerLink]="['/cliente/carrinho']">
     <mat-icon>shopping_cart</mat-icon>
   </button>
 
-  <button mat-icon-button aria-label="Conta">
-    <mat-icon>person</mat-icon>
-  </button>
+  <!-- Quando logado, mostrar ícone de conta com menu -->
+  <ng-container *ngIf="isLogado; else naoLogado">
+    <button mat-icon-button [matMenuTriggerFor]="menuConta" aria-label="Conta">
+      <mat-icon>person</mat-icon>
+    </button>
 
-  <!-- Botão Entrar/Cadastrar -->
-  <button mat-button class="auth-btn" [routerLink]="['/logincli']">Entrar / Cadastrar</button>
+    <mat-menu #menuConta="matMenu">
+      <button mat-menu-item [routerLink]="['/cliente/conta']">
+        <mat-icon>account_circle</mat-icon>
+        Minha Conta
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Sair
+      </button>
+    </mat-menu>
+  </ng-container>
+
+  <!-- Quando NÃO logado, mostrar Entrar / Cadastrar -->
+  <ng-template #naoLogado>
+    <button mat-button class="auth-btn" [routerLink]="['/login']">Entrar / Cadastrar</button>
+  </ng-template>
 </mat-toolbar>
 
 <nav class="categoria-barra">

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ValidationErrors } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,12 +10,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpErrorResponse } from '@angular/common/http';
 import { matchPasswordsValidator } from '../../../validators/match-passwords.validators';
+import { FooterComponent } from '../../template/footer/footer.component';
 
 @Component({
   selector: 'app-usuario-form-cliente',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatToolbarModule, MatIconModule],
+    MatButtonModule, MatToolbarModule, MatIconModule, FooterComponent, RouterModule],
   templateUrl: './usuario-form-cliente.component.html',
   styleUrl: './usuario-form-cliente.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

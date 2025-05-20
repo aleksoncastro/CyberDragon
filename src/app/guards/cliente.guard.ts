@@ -18,7 +18,7 @@ export class ClienteGuard implements CanActivate {
       }
     }
 
-    this.router.navigate(['/logincli']);
+    this.router.navigate(['/login']);
     return false;
   }
 }

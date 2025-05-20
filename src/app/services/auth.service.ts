@@ -37,8 +37,8 @@ export class AuthService {
 
   return this.http.post(`${this.baseURL}/admin`, params, { observe: 'response' }).pipe(
     tap((res: any) => {
-      console.log("Headers:", res.headers);
-      console.log("Body:", res.body);
+      // console.log("Headers:", res.headers);
+      // console.log("Body:", res.body);
 
       const authToken = res.headers.get('Authorization') ?? '';
       if (authToken) {
@@ -58,8 +58,8 @@ loginCliente(username: string, senha: string): Observable<any> {
 
   return this.http.post(`${this.baseURL}/cliente`, params, { observe: 'response' }).pipe(
     tap((res: any) => {
-      console.log("Headers (cliente):", res.headers);
-      console.log("Body (cliente):", res.body);
+      // console.log("Headers (cliente):", res.headers);
+      // console.log("Body (cliente):", res.body);
 
       const authToken = res.headers.get('Authorization') ?? '';
       if (authToken) {

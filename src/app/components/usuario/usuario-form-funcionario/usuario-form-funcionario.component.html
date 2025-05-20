@@ -1,88 +1,100 @@
-<div class="wrapper">
-  <div class="container">
-    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+<div class="login-page">
+  <div class="login-container">
+    <div class="login-box">
+      <div class="login-header">
+        <div class="logo-container">
+          <img class="login-icon" src="/assets/logo01.png" alt="Passkey">
+        </div>
+        <h1 class="login-title">Cadastro de Funcionário</h1>
+        <p class="login-subtitle">Preencha os dados para se cadastrar</p>
+      </div>
 
-      <div class="form-container">
-        <div class="form-box">
-
-          <mat-toolbar color="primary" class="toolbar-title">
-            Cadastro de Usuário
-          </mat-toolbar>
+      <div class="login-form-container">
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
 
           <!-- Username -->
-<mat-form-field appearance="fill">
-  <mat-label>Username</mat-label>
-  <input matInput type="text" formControlName="username">
-  <mat-error *ngIf="formGroup.get('username') && formGroup.get('username')?.invalid && formGroup.get('username')?.touched">
-    {{ getErrorMessage('username', formGroup.get('username')?.errors) }}
-    @if (formGroup.get('username')?.hasError('apiError')) {
-      <span>{{ formGroup.get('username')?.getError('apiError') }}</span>
-    }
-  </mat-error>
-</mat-form-field>
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Digite seu username">
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-error *ngIf="formGroup.get('username')?.touched && formGroup.get('username')?.invalid">
+              {{ getErrorMessage('username', formGroup.get('username')?.errors) }}
+              @if (formGroup.get('username')?.hasError('apiError')) {
+              <span>{{ formGroup.get('username')?.getError('apiError') }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
 
-<!-- Email -->
-<mat-form-field appearance="fill">
-  <mat-label>Email</mat-label>
-  <input matInput type="email" formControlName="email">
-  <mat-error *ngIf="formGroup.get('email') && formGroup.get('email')?.invalid && formGroup.get('email')?.touched">
-    {{ getErrorMessage('email', formGroup.get('email')?.errors) }}
-    @if (formGroup.get('email')?.hasError('apiError')) {
-      <span>{{ formGroup.get('email')?.getError('apiError') }}</span>
-    }
-  </mat-error>
-</mat-form-field>
+          <!-- Email -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="Digite seu email">
+            <mat-icon matPrefix>mail</mat-icon>
+            <mat-error *ngIf="formGroup.get('email')?.touched && formGroup.get('email')?.invalid">
+              {{ getErrorMessage('email', formGroup.get('email')?.errors) }}
+              @if (formGroup.get('email')?.hasError('apiError')) {
+              <span>{{ formGroup.get('email')?.getError('apiError') }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
 
-<!-- CPF -->
-<mat-form-field appearance="fill">
-  <mat-label>CPF</mat-label>
-  <input matInput type="text" formControlName="cpf">
-  <mat-error *ngIf="formGroup.get('cpf') && formGroup.get('cpf')?.invalid && formGroup.get('cpf')?.touched">
-    {{ getErrorMessage('cpf', formGroup.get('cpf')?.errors) }}
-    @if (formGroup.get('cpf')?.hasError('apiError')) {
-      <span>{{ formGroup.get('cpf')?.getError('apiError') }}</span>
-    }
-  </mat-error>
-</mat-form-field>
+          <!-- CPF -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>CPF</mat-label>
+            <input matInput type="text" formControlName="cpf" placeholder="Digite seu CPF">
+            <mat-icon matPrefix>badge</mat-icon>
+            <mat-error *ngIf="formGroup.get('cpf')?.touched && formGroup.get('cpf')?.invalid">
+              {{ getErrorMessage('cpf', formGroup.get('cpf')?.errors) }}
+              @if (formGroup.get('cpf')?.hasError('apiError')) {
+              <span>{{ formGroup.get('cpf')?.getError('apiError') }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
 
-<!-- Senha -->
-<mat-form-field appearance="fill">
-  <mat-label>Senha</mat-label>
-  <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha">
-  <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
-    <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-  </button>
-  <mat-error *ngIf="formGroup.get('senha') && formGroup.get('senha')?.invalid && formGroup.get('senha')?.touched">
-    {{ getErrorMessage('senha', formGroup.get('senha')?.errors) }}
-    @if (formGroup.get('senha')?.hasError('apiError')) {
-      <span>{{ formGroup.get('senha')?.getError('apiError') }}</span>
-    }
-  </mat-error>
-</mat-form-field>
+          <!-- Senha -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senha"
+              placeholder="Digite sua senha">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="formGroup.get('senha')?.touched && formGroup.get('senha')?.invalid">
+              {{ getErrorMessage('senha', formGroup.get('senha')?.errors) }}
+              @if (formGroup.get('senha')?.hasError('apiError')) {
+              <span>{{ formGroup.get('senha')?.getError('apiError') }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
 
-<!-- Confirmar Senha -->
-<mat-form-field appearance="fill">
-  <mat-label>Confirmar Senha</mat-label>
-  <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmarSenha">
-  <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
-    <mat-icon>{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
-  </button>
-  <mat-error *ngIf="formGroup.get('confirmarSenha')?.touched && 
-                    (formGroup.get('confirmarSenha')?.invalid || formGroup.hasError('senhaNaoConfere'))">
-    {{ getErrorMessage('confirmarSenha', formGroup.get('confirmarSenha')?.errors) || getConfirmPasswordErrorMessage() }}
-    @if (formGroup.get('confirmarSenha')?.hasError('apiError')) {
-      <span>{{ formGroup.get('confirmarSenha')?.getError('apiError') }}</span>
-    }
-  </mat-error>
-</mat-form-field>
+          <!-- Confirmar Senha -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Confirmar Senha</mat-label>
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmarSenha"
+              placeholder="Confirme sua senha">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
+              <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="formGroup.get('confirmarSenha')?.touched && 
+                              (formGroup.get('confirmarSenha')?.invalid || formGroup.hasError('senhaNaoConfere'))">
+              {{ getErrorMessage('confirmarSenha', formGroup.get('confirmarSenha')?.errors) ||
+              getConfirmPasswordErrorMessage() }}
+              @if (formGroup.get('confirmarSenha')?.hasError('apiError')) {
+              <span>{{ formGroup.get('confirmarSenha')?.getError('apiError') }}</span>
+              }
+            </mat-error>
+          </mat-form-field>
 
-          <!-- Botão de Salvar -->
-          <button mat-raised-button color="primary" type="submit" [disabled]="formGroup.invalid">
+          <!-- Botão -->
+          <button mat-raised-button class="login-button" type="submit" [disabled]="formGroup.invalid">
             Salvar
           </button>
 
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
 </div>
+<app-footer></app-footer>

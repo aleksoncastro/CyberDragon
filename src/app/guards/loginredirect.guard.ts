@@ -16,10 +16,17 @@ export const loginredirectGuard: CanActivateFn = (
     if (usuarioStr) {
       const usuario = JSON.parse(usuarioStr);
 
-      // Permitir admin acessar logincli
+      // Permitir admin acessar login
       if (
         usuario.perfil.label.toLowerCase() === 'adm' &&
-        route.routeConfig?.path === 'logincli'
+        route.routeConfig?.path === 'login'
+      ) {
+        return true;
+      }
+
+      if (
+        usuario.perfil.label.toLowerCase() === 'user' &&
+        route.routeConfig?.path === 'loginadmin'
       ) {
         return true;
       }
@@ -34,11 +41,12 @@ export const loginredirectGuard: CanActivateFn = (
 
       // Redirecionar conforme perfil
       if (usuario.perfil.label.toLowerCase() === 'adm') {
-        router.navigate(['/admin/home']);
+        setTimeout(() => router.navigate(['/admin/home']));
       } else {
-        router.navigate(['/placa-card-list']);
+        setTimeout(() => router.navigate(['/placasdevideo']));
       }
       return false;
+
     }
   }
 

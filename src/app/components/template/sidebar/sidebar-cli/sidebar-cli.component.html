@@ -1,78 +1,92 @@
 <mat-drawer-container class="container">
-    <mat-drawer #drawer mode="push" opened class="drawer">
-  
-      <mat-nav-list>
-  
-        <!-- Seção: Conta do Usuário -->
-        <div class="menu-section">
-          <div class="section-header">Olá. Acesse sua conta</div>
-          <mat-list-item routerLink="/cliente/conta">
-            <mat-icon matListIcon>person</mat-icon>
-            <span style="color: #bbb;">Minha Conta</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cliente/dados">
-            <mat-icon matListIcon>badge</mat-icon>
-            <span style="color: #bbb;">Meus Dados</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cliente/pedidos">
-            <mat-icon matListIcon>receipt_long</mat-icon>
-            <span style="color: #bbb;">Meus Pedidos</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cliente/carteira">
-            <mat-icon matListIcon>account_balance_wallet</mat-icon>
-            <span style="color: #bbb;">Carteira</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cliente/avaliacoes">
-            <mat-icon matListIcon>star_rate</mat-icon>
-            <span style="color: #bbb;">Avaliações</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cliente/atendimento">
-            <mat-icon matListIcon>support_agent</mat-icon>
-            <span style="color: #bbb;">Atendimento ao Cliente</span>
-          </mat-list-item>
+  <mat-drawer #drawer mode="push" opened class="drawer">
+
+    <mat-nav-list>
+
+      <!-- Seção: Conta do Usuário -->
+      <div class="menu-section">
+        <div class="section-header">
+          <ng-container *ngIf="isLogado; else saudacaoPublica">
+            Olá, {{ usuarioNome }}
+          </ng-container>
+          <ng-template #saudacaoPublica>
+            Olá. Acesse sua conta
+          </ng-template>
         </div>
-  
-        <!-- Seção: Preferências -->
-        <div class="menu-section">
-          <div class="section-header">Preferências</div>
-          <mat-list-item routerLink="/cliente/favoritos">
-            <mat-icon matListIcon>favorite</mat-icon>
-            <span style="color: #bbb;">Favoritos</span>
+        <mat-list-item routerLink="/cliente/conta">
+          <mat-icon matListIcon>account_circle</mat-icon>
+          <span style="color: #bbb;">Minha Conta</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/cliente/dados">
+          <mat-icon matListIcon>badge</mat-icon>
+          <span style="color: #bbb;">Meus Dados</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/cliente/pedidos">
+          <mat-icon matListIcon>receipt_long</mat-icon>
+          <span style="color: #bbb;">Meus Pedidos</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/cliente/carteira">
+          <mat-icon matListIcon>account_balance_wallet</mat-icon>
+          <span style="color: #bbb;">Carteira</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/cliente/avaliacoes">
+          <mat-icon matListIcon>star_rate</mat-icon>
+          <span style="color: #bbb;">Avaliações</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/cliente/atendimento">
+          <mat-icon matListIcon>support_agent</mat-icon>
+          <span style="color: #bbb;">Atendimento ao Cliente</span>
+        </mat-list-item>
+      </div>
+
+      <!-- Seção: Preferências -->
+      <div class="menu-section">
+        <div class="section-header">Preferências</div>
+        <mat-list-item routerLink="/cliente/favoritos">
+          <mat-icon matListIcon>favorite</mat-icon>
+          <span style="color: #bbb;">Favoritos</span>
+        </mat-list-item>
+      </div>
+
+      <!-- Seção: Explorar -->
+      <div class="menu-section">
+        <div class="section-header">Explorar</div>
+        <mat-list-item routerLink="/cliente/mais-procurados">
+          <mat-icon matListIcon>trending_up</mat-icon>
+          <span style="color: #bbb;">Mais Procurados</span>
+        </mat-list-item>
+        <mat-list-item routerLink="/cliente/novidades">
+          <mat-icon matListIcon>new_releases</mat-icon>
+          <span style="color: #bbb;">Acabaram de Chegar</span>
+        </mat-list-item>
+      </div>
+
+      <!-- Seção: Autenticação -->
+      <div class="menu-section">
+        <ng-container *ngIf="isLogado; else acessoPublico">
+          <mat-list-item (click)="logout()">
+            <mat-icon matListIcon>logout</mat-icon>
+            <span style="color: #bbb;">Sair</span>
           </mat-list-item>
-        </div>
-  
-        <!-- Seção: Explorar -->
-        <div class="menu-section">
-          <div class="section-header">Explorar</div>
-          <mat-list-item routerLink="/cliente/mais-procurados">
-            <mat-icon matListIcon>trending_up</mat-icon>
-            <span style="color: #bbb;">Mais Procurados</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cliente/novidades">
-            <mat-icon matListIcon>new_releases</mat-icon>
-            <span style="color: #bbb;">Acabaram de Chegar</span>
-          </mat-list-item>
-        </div>
-  
-        <!-- Seção: Autenticação -->
-        <div class="menu-section">
-          <div class="section-header">Acesso</div>
-          <mat-list-item routerLink="/logincli">
+        </ng-container>
+
+        <ng-template #acessoPublico>
+          <a mat-list-item routerLink="/login">
             <mat-icon matListIcon>login</mat-icon>
             <span style="color: #bbb;">Entrar</span>
-          </mat-list-item>
-          <mat-list-item routerLink="/cadastro">
+          </a>
+          <a mat-list-item routerLink="/cadastro">
             <mat-icon matListIcon>person_add</mat-icon>
             <span style="color: #bbb;">Cadastre-se</span>
-          </mat-list-item>
-        </div>
-  
-      </mat-nav-list>
-  
-    </mat-drawer>
-  
-    <mat-drawer-content class="content-area">
-      <router-outlet></router-outlet>
-    </mat-drawer-content>
-  </mat-drawer-container>
-  
+          </a>
+        </ng-template>
+      </div>
+
+    </mat-nav-list>
+
+  </mat-drawer>
+
+  <mat-drawer-content class="content-area">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

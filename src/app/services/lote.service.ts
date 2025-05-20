@@ -29,7 +29,7 @@ export class LoteService {
       return this.httpClient.get<PaginacaoDTO>(this.baseUrl, { params });
     }
 
-  findByIdPlacaDeVideoQtdeTotal(idPlacaDeVideo: number): Observable<Lote[]> {
+  findByPlacasEmLotes(idPlacaDeVideo: number): Observable<Lote[]> {
     return this.httpClient.get<Lote[]>(`${this.baseUrl}/placa/${idPlacaDeVideo}`);
   }  
 

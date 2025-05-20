@@ -27,35 +27,64 @@
         Placa de Vídeo {{placaDeVideo.modelo}},
         {{placaDeVideo.fan?.label}} fan,
         {{placaDeVideo.categoria}},
-        {{placaDeVideo.fornecedor?.nome}},<br>
+        {{placaDeVideo.fornecedor?.nome}},
         {{placaDeVideo.memoria.capacidade}}GB,
         {{placaDeVideo.memoria.tipoMemoria}},
         {{placaDeVideo.memoria.larguraBanda}}-bits
       </h1>
 
-      <mat-divider class="divider"></mat-divider>
 
       <!-- Brand -->
       <p class="brand-info">Marca: {{placaDeVideo.fornecedor?.nome}}</p>
 
+      <mat-divider class="divider"></mat-divider>
+
+      <div class="disponibilidade-container">
+        <h1 class="disponivel">Disponível:</h1>
+        <h1 *ngIf="qtdTotal > 0" class="unidades">{{ qtdTotal }} unidade(s)</h1>
+        <h1 *ngIf="qtdTotal === 0" class="indisponivel">Produto Indisponível</h1>
+      </div>
+
+
+      <mat-divider class="divider"></mat-divider>
+
       <!-- Price information -->
       <div class="price-container">
         <p class="price-label">à vista</p>
-        <p class="main-price">{{ placaDeVideo.preco | currency:'BRL' }}</p>
 
-        <p class="installment-price">{{ precoParcelado | currency:'BRL' }}</p>
-        <p class="installment-info">
-          em até 10x de {{ valorParcela | currency:'BRL'}}
+        <p class="main-price">
+          <span class="material-icons icon-money">attach_money</span>
+          {{ placaDeVideo.preco | currency:'BRL' }}
         </p>
+
+        <div class="line"></div>
+
+        <p class="installment-price">
+          <span class="material-icons icon-card">credit_card</span>
+          {{ precoParcelado | currency:'BRL' }}
+        </p>
+
+        <p class="installment-info">
+          em até 10x de {{ valorParcela | currency:'BRL' }}
+        </p>
+
         <p class="installment-info">sem juros no cartão</p>
       </div>
 
 
+
       <!-- Buy button -->
-      <button mat-raised-button class="buy-button" (click)="addToCart()">
-        <mat-icon>shopping_cart</mat-icon>
-        COMPRAR
-      </button>
+      <div class="buy-actions">
+        <button mat-raised-button class="buy-button" (click)="addToCart()">
+          <mat-icon>shopping_cart</mat-icon>
+          COMPRAR
+        </button>
+
+        <button mat-icon-button class="favorite-button"
+          (click)="adicionarOuRemoverFavorito(); $event.stopPropagation()">
+          <mat-icon>{{ isFavorito(placaDeVideo.id!) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </button>
+      </div>
 
       <!-- Product description -->
       <div class="product-description">

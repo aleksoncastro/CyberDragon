@@ -108,6 +108,8 @@ export class PlacaCardListComponent implements OnInit {
       imageUrl: card.imageUrl
     });
 
+    
+  this.showSnackBarTopPosition('Adicionado ao carrinho');
   }
 
   adicionarOuRemoverFavorito(card: Card): void {

@@ -34,7 +34,8 @@
 /* Product gallery */
 .product-gallery {
   display: flex;
-  flex-direction: row-reverse; /* imagem principal à direita, thumbs à esquerda */
+  flex-direction: row-reverse;
+  /* imagem principal à direita, thumbs à esquerda */
   align-items: flex-start;
   gap: 16px;
 }
@@ -44,12 +45,13 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 16px;
-  width: 700px;
+  width: 600px;
   height: auto;
 }
 
 .main-image {
-  display: block;         /* remove espaços extras (evita inline gaps) */
+  display: block;
+  /* remove espaços extras (evita inline gaps) */
   width: 100%;
   height: auto;
   object-fit: contain;
@@ -67,7 +69,7 @@
 
 .thumbnail-button {
   position: relative;
-  width: 131px;
+  width: 113px;
   height: auto;
   border-radius: 8px;
   overflow: hidden;
@@ -106,7 +108,7 @@
 }
 
 .product-title {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 16px;
@@ -115,7 +117,7 @@
 
 @media (min-width: 768px) {
   .product-title {
-    font-size: 28px;
+    font-size: 37px;
   }
 }
 
@@ -137,22 +139,49 @@ mat-divider {
 .price-label {
   color: #009e2a;
   font-size: 14px;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
 }
 
 .main-price {
   color: #009e2a;
-  font-size: 32px;
+  font-size: 60px;
   font-weight: 700;
+  margin-top: 0px;
   margin-bottom: 16px;
 }
 
 .installment-price {
   color: #f44336;
-  font-size: 20px;
+  font-size: 50px;
   font-weight: 500;
   margin-bottom: 4px;
 }
+
+.line {
+  margin-top: 30px;
+  height: 2px;
+  width: 10%;
+  background-color: #f44336;
+  margin-bottom: -30px;
+}
+
+.main-price, .installment-price {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* espaço entre ícone e texto */
+}
+
+.icon-money{
+  font-size: 80px;
+  margin-left: -15px;
+  margin-right: -20px;
+}
+
+ .icon-card {
+  font-size: 50px; /* tamanho do ícone */
+  color: currentColor; /* para pegar a cor do texto */
+}
+
 
 .installment-info {
   color: #999;
@@ -249,6 +278,51 @@ mat-divider {
   color: #999;
 }
 
+
+/* Espaçamento entre o ícone e o texto */
+.buy-button mat-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  margin-right: 0.2rem;
+}
+
+.buy-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+ 
+  margin-top: 16px;
+}
+
+
+.favorite-button {
+  margin-left: 20px;
+  margin-bottom: 30px;
+  background-color: transparent;
+  color: #f44336;
+  /* cor do ícone */
+  border: 1px solid transparent;
+  box-shadow: none;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border 0.3s ease,
+    background-color 0.3s ease;
+}
+
+
+.favorite-button mat-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  transition: color 0.3s ease;
+}
+
+.favorite-button:hover {
+  transform: scale(1.5) translateY(-4px);
+}
+
 /* Pode ser colocado no arquivo .scss ou .css do componente */
 .buy-button {
   align-items: center;
@@ -263,16 +337,16 @@ mat-divider {
   min-width: 64px;
 
   /* Substituindo as variáveis por cores reais */
-  color: #ffffff;
-  background-color: #009e2a;
-  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 
-              0px 2px 2px 0px rgba(0, 0, 0, 0.14), 
-              0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  color: black;
+  background-color: #009e2a !important;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 
   width: 100%;
-  font-size: 1.5rem;
+  font-size: 3.0rem;
   display: flex;
-  height: 60px;
+  height: 90px;
   line-height: 0.6;
   text-align: right;
   font-weight: bold;
@@ -280,23 +354,33 @@ mat-divider {
   border-radius: 4px;
   padding: 8px 22px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
-              color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  width: 300px;
+  width: 400px;
 }
 
 .buy-button:hover {
-  background-color: #006e1d; /* verde escuro */
-  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+  background-color: #006e1d !important;
+  /* verde escuro */
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-/* Espaçamento entre o ícone e o texto */
-.buy-button mat-icon {
-  width: 38px;
-  height: 38px;
-  font-size: 38px;
-  margin-right: 0.2rem;
+.disponibilidade-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* para alinhar verticalmente */
+  font-size: 15px;
+  /* você pode adicionar padding/margin aqui se quiser */
 }
 
+.disponivel {
+  color: #009e2a;
+}
+
+.indisponivel {
+  color: #f44336;
+  /* Se quiser manter alinhado, pode colocar flex: 1 ou ajustar aqui */
+}

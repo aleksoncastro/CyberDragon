@@ -19,10 +19,10 @@
                 <mat-card class="example-card" (click)="verDetalhes(card.id)" appearance="outlined" *ngFor="let card of cardsLancamentos()">
 
                     <div class="action-icons">
-                        <button mat-icon-button (click)="adicionarOuRemoverFavorito(card)">
-                            <mat-icon>{{ isFavorito(card.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                        <button mat-icon-button (click)="adicionarOuRemoverFavorito(card); $event.stopPropagation()">
+                            <mat-icon >{{ isFavorito(card.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
                         </button>
-                        <button mat-icon-button (click)="adicionarAoCarrinho(card)">
+                        <button mat-icon-button (click)="adicionarAoCarrinho(card); $event.stopPropagation()">
                             <mat-icon>{{ iconCarrinho }}</mat-icon>
                         </button>
                     </div>

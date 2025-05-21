@@ -48,42 +48,47 @@
 
       <mat-divider class="divider"></mat-divider>
 
-      <!-- Price information -->
-      <div class="price-container">
-        <p class="price-label">à vista</p>
+      <div class="price-buy-wrapper">
+        <!-- Price information -->
+        <div class="price-container">
+          <p class="price-label">à vista</p>
 
-        <p class="main-price">
-          <span class="material-icons icon-money">attach_money</span>
-          {{ placaDeVideo.preco | currency:'BRL' }}
-        </p>
+          <p class="main-price">
+            <span class="material-icons icon-money">attach_money</span>
+            {{ placaDeVideo.preco | currency:'BRL' }}
+          </p>
 
-        <div class="line"></div>
+          <div class="line"></div>
 
-        <p class="installment-price">
-          <span class="material-icons icon-card">credit_card</span>
-          {{ precoParcelado | currency:'BRL' }}
-        </p>
+          <p class="installment-price">
+            <span class="material-icons icon-card">credit_card</span>
+            {{ precoParcelado | currency:'BRL' }}
+          </p>
 
-        <p class="installment-info">
-          em até 10x de {{ valorParcela | currency:'BRL' }}
-        </p>
+          <p class="installment-info">
+            em até 10x de {{ valorParcela | currency:'BRL' }}
+          </p>
 
-        <p class="installment-info">sem juros no cartão</p>
-      </div>
+          <p class="installment-info">sem juros no cartão</p>
+        </div>
 
 
 
-      <!-- Buy button -->
-      <div class="buy-actions">
-        <button mat-raised-button class="buy-button" (click)="addToCart()">
-          <mat-icon>shopping_cart</mat-icon>
-          COMPRAR
-        </button>
+        <!-- Buy button -->
+        <div class="buy-actions">
+          <div class="buy-button-container">
+            <button mat-raised-button class="buy-button" (click)="addToCart()">
+              <mat-icon>shopping_cart</mat-icon>
+              COMPRAR
+            </button>
 
-        <button mat-icon-button class="favorite-button"
-          (click)="adicionarOuRemoverFavorito(); $event.stopPropagation()">
-          <mat-icon>{{ isFavorito(placaDeVideo.id!) ? 'favorite' : 'favorite_border' }}</mat-icon>
-        </button>
+            <button mat-icon-button class="favorite-button"
+              (click)="adicionarOuRemoverFavorito(); $event.stopPropagation()">
+              <mat-icon>{{ isFavorito(placaDeVideo.id!) ? 'favorite' : 'favorite_border' }}</mat-icon>
+            </button>
+          </div>
+        </div>
+
       </div>
 
       <!-- Product description -->

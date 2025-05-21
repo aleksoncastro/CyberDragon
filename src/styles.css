@@ -20,6 +20,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 24px !important;
   }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Scroll global */
+}
+
+mat-drawer-content {
+  overflow-x: hidden !important;  /* previne scroll horizontal / overflow */
+  width: 100%;                    /* limita a largura ao container pai */
+  box-sizing: border-box;         /* pra incluir padding/borda no cálculo */
+}
+
+
+mat-drawer-container {
+  height: auto !important;
+  min-height: 100vh; /* para ocupar tela toda, mas crescer se precisar */
+}
+
+
+
 
   :root {
     --fundo-principal: #121212;

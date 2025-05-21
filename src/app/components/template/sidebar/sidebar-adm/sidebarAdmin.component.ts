@@ -28,4 +28,13 @@ export class SidebarComponent {
       });
   }
 
+  ngAfterViewInit() {
+    // Certifique-se de que o drawer está fechado após a inicialização da view
+    setTimeout(() => {
+      if (this.drawer && this.drawer.opened) {
+        this.drawer.close()
+      }
+    })
+  }
+
 }

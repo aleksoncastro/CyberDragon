@@ -5,6 +5,8 @@
   min-height: 100vh;
   padding: 24px;
   font-family: "Roboto", sans-serif;
+  overflow: unset; /* ou simplesmente remova qualquer overflow se já tiver */
+  height: auto;
 }
 
 /* Back button */
@@ -144,7 +146,7 @@ mat-divider {
 
 .main-price {
   color: #009e2a;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: 700;
   margin-top: 0px;
   margin-bottom: 16px;
@@ -152,17 +154,25 @@ mat-divider {
 
 .installment-price {
   color: #f44336;
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 500;
   margin-bottom: 4px;
 }
 
 .line {
-  margin-top: 30px;
+  margin-top: 10px;
   height: 2px;
-  width: 10%;
+  width: 15%;
   background-color: #f44336;
-  margin-bottom: -30px;
+  margin-bottom: 10px;
+}
+
+.line-2 {
+  margin: 10px auto;
+  height: 2px;
+  width: 15%;
+  background-color: #f44336;
+  margin-bottom: -25px;
 }
 
 .main-price, .installment-price {
@@ -191,13 +201,18 @@ mat-divider {
 
 /* Product description */
 .product-description {
-  margin-top: 32px;
+  margin-top: 50px;
+  max-width: 100%;
+  width: 100%;
+   grid-column: 1 / -1; /* Para grid */
+  flex: 1 1 100%;      /* Para flex */
 }
 
 .model-title {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 8px;
+  text-align: center;
 }
 
 .tagline {
@@ -325,7 +340,7 @@ mat-divider {
   margin-right: 30px;
   margin-bottom: 30px;
   background-color: transparent;
-  color: #f44336;
+  color: #ffffff;
   /* cor do ícone */
   border: 1px solid transparent;
   box-shadow: none;
@@ -369,7 +384,7 @@ mat-divider {
     0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 
   width: 100%;
-  font-size: 3.0rem;
+  font-size: 2.0rem;
   display: flex;
   height: 90px;
   line-height: 0.6;
@@ -383,7 +398,7 @@ mat-divider {
     border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
     color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  width: 400px;
+  width: 300px;
 }
 
 .buy-button:hover {
@@ -397,7 +412,7 @@ mat-divider {
   justify-content: space-between;
   align-items: center;
   /* para alinhar verticalmente */
-  font-size: 15px;
+  font-size: 10px;
   /* você pode adicionar padding/margin aqui se quiser */
 }
 
@@ -408,4 +423,50 @@ mat-divider {
 .indisponivel {
   color: #f44336;
   /* Se quiser manter alinhado, pode colocar flex: 1 ou ajustar aqui */
+}
+
+/* Espaçamento entre o ícone e o texto */
+.buy-button-esgotado mat-icon {
+  width: 60px;
+  height: 60px;
+  font-size: 60px;
+  margin-right: 0.2rem;
+}
+
+
+.buy-button-esgotado {
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-transform: uppercase;
+  min-width: 64px;
+
+  /* Substituindo as variáveis por cores reais */
+  color: black;
+  background-color: #474747 !important;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+  width: 100%;
+  font-size: 2.0rem;
+  display: flex;
+  height: 90px;
+  line-height: 0.6;
+  text-align: right;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 22px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  width: 300px;
 }

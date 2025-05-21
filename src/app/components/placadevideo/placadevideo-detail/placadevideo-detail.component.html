@@ -77,13 +77,17 @@
         <!-- Buy button -->
         <div class="buy-actions">
           <div class="buy-button-container">
-            <button mat-raised-button class="buy-button" (click)="addToCart()">
+            <button mat-raised-button class="buy-button" (click)="addToCart()" *ngIf="qtdTotal > 0">
               <mat-icon>shopping_cart</mat-icon>
               COMPRAR
             </button>
+            <button mat-raised-button class="buy-button-esgotado" *ngIf="qtdTotal === 0">
+              <mat-icon>do_not_disturb</mat-icon>
+              ESGOTADO
+            </button>
 
             <button mat-icon-button class="favorite-button"
-              (click)="adicionarOuRemoverFavorito(); $event.stopPropagation()">
+              (click)="adicionarOuRemoverFavorito(); $event.stopPropagation()" *ngIf="qtdTotal > 0">
               <mat-icon>{{ isFavorito(placaDeVideo.id!) ? 'favorite' : 'favorite_border' }}</mat-icon>
             </button>
           </div>
@@ -91,15 +95,18 @@
 
       </div>
 
-      <!-- Product description -->
-      <div class="product-description">
-        <h2 class="model-title">SOBRE</h2>
-        <h3 class="tagline"></h3>
-        <p class="description-text">{{placaDeVideo.descricao}}</p>
-      </div>
+    </div>
+
+  </div>
+  <!-- Product description -->
+  <div class="description container">
+    <div class="line-2"></div>
+    <div class="product-description">
+      <h2 class="model-title">SOBRE</h2>
+      <h3 class="tagline"></h3>
+      <p class="description-text">{{placaDeVideo.descricao}}</p>
     </div>
   </div>
-
   <!-- Specifications -->
   <mat-card class="specs-card" *ngIf="!isLoading">
     <mat-card-header>

@@ -26,7 +26,7 @@ type Card = {
 
 @Component({
   selector: 'app-placa-card-list',
-  imports: [CommonModule, NgFor, MatCardModule, MatDrawerContainer, MatIconModule],
+  imports: [CommonModule, NgFor, MatCardModule, MatIconModule],
   templateUrl: './placa-card-list.component.html',
   styleUrl: './placa-card-list.component.css',
 })

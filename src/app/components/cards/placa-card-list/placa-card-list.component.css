@@ -1,170 +1,184 @@
+/* Remover o overflow do container principal */
+:host {
+  display: block;
+  width: 100%;
+}
 
+/* Estilos para o container principal */
+.home {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Previne rolagem horizontal */
+}
 
 .container.responsive-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 10rem;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 10rem;
+}
 
-  .example-card {
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.example-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-    &:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-
-        .action-icons {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 
     .action-icons {
-        position: absolute;
-        bottom: 8px;
-        right: 8px;
-        display: flex;
-        gap: 8px;
-        opacity: 0;
-        transform: translateY(10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-
-        button {
-            background: none;
-            border: none;
-            box-shadow: none;
-
-            mat-icon {
-                font-size: 24px;
-                color: var(--icone-destaque);
-                transition: transform 0.3s ease, color 0.3s ease;
-            }
-
-            &:hover mat-icon {
-                transform: scale(1.2);
-                color: white;
-            }
-        }
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
+
+  .action-icons {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    button {
+      background: none;
+      border: none;
+      box-shadow: none;
+
+      mat-icon {
+        font-size: 24px;
+        color: var(--icone-destaque);
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      &:hover mat-icon {
+        transform: scale(1.2);
+        color: white;
+      }
+    }
+  }
 }
-  
-  .example-card {
-    border: 1px solid transparent;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: var(--fundo-principal);
-    color: var(--texto-primario);
-    width: 100%;
-    max-width: 250px;
-    height: auto;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-    margin: 20px;
-    justify-content: center;
-  }
-  
-  .example-card:hover {
-    transform: scale(1.1) translateY(-4px); /* aumenta 10% e sobe 4px */
-    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
-    border: 1px solid var(--icone-destaque); /* Azul Material */
-    border: 1px solid var(--borda-destaque);
-  }
 
-  .card-info{
-    font-weight: 500;
-    font-size: 1.25rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.4;
-    font-size: 16px;
-    margin-bottom: 0;
-  }
+.example-card {
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: var(--fundo-principal);
+  color: var(--texto-primario);
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  margin: 20px;
+  justify-content: center;
+  padding-top: 0 !important;
+}
 
+.example-card:hover {
+  transform: scale(1.1) translateY(-4px);
+  /* aumenta 10% e sobe 4px */
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+  border: 1px solid var(--icone-destaque);
+  /* Azul Material */
+  border: 1px solid var(--borda-destaque);
+}
 
-  .image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-  
-  .image-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
+.card-info {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  font-size: 16px;
+  margin-bottom: 0;
+}
 
-  .image{
-    height: 290px;
-    width: 100%;
-    border-radius: 20px;
-    padding: 10px;
-  }
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
 
-  .avista{
-    color: #00a202;
-    font-size: 13px;
-  }
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
+}
 
-  .preco{
-    color: #00a202;
-    font-weight: bolder;
-    font-size: 24px;
-  }
+.image {
+  height: 250px;
+  width: 100%;
+  border-radius: 5px;
+}
 
-  .valor-parcela{
-    color: var(--icone-destaque);
-  }
+.avista {
+  color: #00a202;
+  font-size: 13px;
+}
 
-  .parcelamento{
-    font-size: 13px;
-    margin-bottom: 0px;
-  }
-  .parcelamento2{
-    font-size: 13px;
-    margin-top: 0px;
-  }
+.preco {
+  color: #00a202;
+  font-weight: bolder;
+  font-size: 24px;
+}
 
-  .line{
-    margin-top: 10px;
-    height: 2px;
-    width: 30%;
-    background-color: var(--icone-destaque);
-  }
+.valor-parcela {
+  color: var(--icone-destaque);
+}
 
-  .valor-desconto{
-    font-size: 13px;
-    color: #e90313;
-  }
+.parcelamento {
+  font-size: 13px;
+  margin-bottom: 0px;
+}
 
-  .anuncio-container {
-    display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center;     /* Centraliza verticalmente */
-    height: 60vh;           /* Altura total da tela */
+.parcelamento2 {
+  font-size: 13px;
+  margin-top: 0px;
+}
+
+.line {
+  margin-top: 10px;
+  height: 2px;
+  width: 30%;
+  background-color: var(--icone-destaque);
+}
+
+.valor-desconto {
+  font-size: 13px;
+  color: #e90313;
+}
+
+.anuncio-container {
+  display: flex;
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  align-items: center;
+  /* Centraliza verticalmente */
+  height: 60vh;
+  /* Altura total da tela */
 }
 
 .anuncio {
-    max-width: 100%;
-    width: 90%;
-    height: auto;
-    
-    -webkit-mask-image: radial-gradient(circle at center, 
-        rgba(0,0,0,1) 60%, 
-        rgba(0,0,0,0) 100%);
-    mask-image: radial-gradient(circle at center, 
-        rgba(0,0,0,1) 60%, 
-        rgba(0,0,0,0) 100%);
-    
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    
-    -webkit-mask-size: cover;
-    mask-size: cover;
+  max-width: 100%;
+  width: 90%;
+  height: auto;
+
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-size: cover;
+  mask-size: cover;
 }
 
 .titulo-ofertas {
@@ -174,7 +188,8 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--amarelo-destaque);
-  margin: 1rem 0 -10rem 10rem; /* "cola" no grid e respeita padding lateral */
+  margin: 1rem 0 -10rem 10rem;
+  /* "cola" no grid e respeita padding lateral */
 }
 
 .icon-fogo {
@@ -188,6 +203,7 @@
     transform: scale(1);
     filter: brightness(1);
   }
+
   100% {
     transform: scale(1.15);
     filter: brightness(1.3);
@@ -228,7 +244,7 @@
   margin-bottom: -10rem;
 }
 
-::ng-deep .scroll-button{
+::ng-deep .scroll-button {
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -249,5 +265,3 @@
   transform: scale(2.0);
   cursor: pointer;
 }
-
-

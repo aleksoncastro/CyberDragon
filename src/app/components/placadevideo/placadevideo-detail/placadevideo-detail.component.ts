@@ -55,18 +55,20 @@ export class PlacaDeVideoDetailComponent implements OnInit {
     this.isLoading = true
     this.placaDeVideoService.findById(id).subscribe({
       next: (data) => {
-        this.placaDeVideo = data
-        this.calcularPrecos()
-        this.quantidadePlaca(data.id!)
-        this.isLoading = false
+        this.placaDeVideo = data;
+        this.calcularPrecos();
+        this.quantidadePlaca(data.id!);
+        this.isLoading = false;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (error) => {
         console.error("Erro ao carregar placa de vídeo:", error)
         this.snackBar.open("Erro ao carregar detalhes do produto", "Fechar", {
           duration: 3000,
-        })
-        this.isLoading = false
-        this.router.navigate(["/placasdevideo"])
+        });
+        this.isLoading = false;
+        this.router.navigate(["/placasdevideo"]);
       },
     })
   }
@@ -77,7 +79,7 @@ export class PlacaDeVideoDetailComponent implements OnInit {
         this.qtdTotal = lotes.reduce((total, lote) => total + lote.estoque, 0);
       },
       error: (err) => {
-        console.error("Erro ao buscar lotes:", err)
+        console.error("Erro ao buscar lotes:", err);
         this.qtdTotal = 0;
       }
 
@@ -86,9 +88,9 @@ export class PlacaDeVideoDetailComponent implements OnInit {
 
   calcularPrecos(): void {
     // Calcula o preço parcelado (exemplo: acréscimo de 17.65%)
-    this.precoParcelado = this.placaDeVideo.preco * 1.1765
+    this.precoParcelado = this.placaDeVideo.preco * 1.1765;
     // Calcula o valor da parcela em 12x
-    this.valorParcela = this.precoParcelado / 10
+    this.valorParcela = this.precoParcelado / 10;
   }
 
   selectImage(index: number): void {

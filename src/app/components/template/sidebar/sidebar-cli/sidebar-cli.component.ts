@@ -42,6 +42,15 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    // Certifique-se de que o drawer está fechado após a inicialização da view
+    setTimeout(() => {
+      if (this.drawer && this.drawer.opened) {
+        this.drawer.close()
+      }
+    })
+  }
+
   logout() {
     this.authService.removeToken();
     this.authService.removeUsuarioLogado();

@@ -41,7 +41,7 @@ export class HomeComponent {
       name: 'Placas de Vídeo',
       description: 'Controle de produtos e especificações.',
       icon: 'memory',
-      link: '/admin/placasdevideo'
+      link: '/admin/placasdevideo-lista'
     },
     {
       name: 'Lotes',

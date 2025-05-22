@@ -12,11 +12,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { CarrinhoService } from '../../../services/carrinho.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+
 
 @Component({
   selector: 'app-placadevideo-list',
   standalone: true,
-  imports: [MatInputModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatCardModule],
+  imports: [MatInputModule, MatExpansionModule, MatPaginatorModule, RouterLink, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatCardModule],
   templateUrl: './placadevideo-list.component.html',
   styleUrl: './placadevideo-list.component.css'
 })

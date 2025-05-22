@@ -107,12 +107,15 @@
       <p class="description-text">{{placaDeVideo.descricao}}</p>
     </div>
   </div>
-  <!-- Specifications -->
-  <mat-card class="specs-card" *ngIf="!isLoading">
-    <mat-card-header>
-      <mat-card-title>Especificações Técnicas</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+ <!-- Specifications - Usando mat-expansion-panel -->
+  <mat-accordion>
+    <mat-expansion-panel class="specs-card">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2 class="specs-title">Especificações Técnicas</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
       <div class="specs-grid">
         <div class="specs-section">
           <h3>Informações Gerais</h3>
@@ -198,12 +201,68 @@
           <span class="specs-value">{{saida.quantidade}}x</span>
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
 
   <!-- Loading indicator -->
   <div class="loading-container" *ngIf="isLoading">
     <mat-spinner></mat-spinner>
     <p>Carregando detalhes do produto...</p>
   </div>
+  
+ <div class="titulo-ofertas">
+        <span>Relacionados</span>
+    </div>
+
+    <div class="scroll-wrapper">
+        <button mat-icon-button class="scroll-button" (click)="scrollLeft()">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="scroll-horizontal" #scrollContainer >
+            <mat-card class="example-card" (click)="verDetalhes(card.id)" appearance="outlined"
+                *ngFor="let card of cardsOfertas()">
+
+                <div class="action-icons">
+                    <button mat-icon-button (click)="adicionarOuRemoverFavorito(); $event.stopPropagation()">
+                        <mat-icon>{{ isFavorito(card.id) ? 'favorite' : 'favorite_border' }}</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="adicionarAoCarrinho(card); $event.stopPropagation()">
+                        <mat-icon>{{ iconCarrinho }}</mat-icon>
+                    </button>
+                </div>
+
+                <div class="image-container">
+                    <img class="image" [src]="card.imageUrl" />
+                </div>
+                <div class="card-info">
+
+                    <span>Placa de Video {{card.title}}, </span>
+                    <span>{{ card.fornecedor }}, </span>
+                    <span>{{ card.capacidade }}GB, </span>
+                    <span>{{ card.tipoMemoria }}, </span>
+                    <span>{{ card.larguraBanda }}-bit</span>
+                </div>
+
+                <span class="valor-desconto">de <del>{{card.preco + 1 | currency:'BRL'}}</del> por:</span>
+
+                <p class="avista">à vista</p>
+
+                <mat-card-content class="preco">{{card.preco | currency:'BRL' }}</mat-card-content>
+
+                <div class="line"></div>
+
+                <p class="parcelamento">Em até 10x de
+                    <span class="valor-parcela"> {{card.preco/ 10 | currency:'BRL'}} </span>
+                </p>
+                <p class="parcelamento2">sem juros no cartão</p>
+
+            </mat-card>
+        </div>
+
+        <button mat-icon-button class="scroll-button" (click)="scrollRight()">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+
+    </div>
 </div>

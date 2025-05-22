@@ -306,25 +306,27 @@ tr.mat-row:hover {
   cursor: pointer;
 }
 
-
-
-
-.mat-column-acao{
+.mat-column-acao {
   width: 10%;
 }
 
-
-
-.detalhes-card{
+.detalhes-card {
   background-color: var(--fundo-secundario);
   width: 60%;
   height: auto;
+  max-height: 90vh;
+  overflow: hidden;
+  position: fixed;
+  top: 5%;
+  left: 260px;
+  right: 5%;
+  z-index: 1000;
+  margin: auto;
 }
 
-.card-section h4{
+.card-section h4 {
   color: var(--texto-secundario);
 }
-
 
 .card-placa {
   display: flex;
@@ -332,6 +334,8 @@ tr.mat-row:hover {
   flex-wrap: wrap;
   gap: 16px;
   justify-content: flex-start;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px); /* Ajuste conforme necessário */
 }
 
 .card-section {
@@ -351,10 +355,10 @@ tr.mat-row:hover {
 /* Estilo para o contêiner das imagens adicionais */
 .additional-images {
   display: flex;
-  flex-direction: column;  /* Imagens adicionais empilhadas verticalmente */
+  flex-direction: column; /* Imagens adicionais empilhadas verticalmente */
   gap: 8px;
   max-height: 315px; /* 4x100px + gaps (você ajusta isso) */
-  justify-content: flex-start;  /* Alinha as imagens no topo */
+  justify-content: flex-start; /* Alinha as imagens no topo */
   margin-top: 40px;
   height: 100%; /* Garante que use o espaço do pai */
   align-items: flex-start;
@@ -363,12 +367,11 @@ tr.mat-row:hover {
 /* Estilo para as imagens adicionais */
 .additional-image {
   width: 100px;
-  height: 100px;  /* Garantir altura fixa */
+  height: 100px; /* Garantir altura fixa */
   object-fit: cover;
   border-radius: 4px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 
 h4 {
   margin-top: 0;
@@ -392,9 +395,130 @@ body {
 }
 
 .bloqueado {
-  pointer-events: none;  /* Desabilita qualquer interação com a tabela */
-  opacity: 0.5;  /* Opcional: Torna a tabela semi-transparente para indicar que está bloqueada */
-  overflow: hidden;  /* Garante que o scroll não será possível */
+  pointer-events: none; /* Desabilita qualquer interação com a tabela */
+  opacity: 0.5; /* Opcional: Torna a tabela semi-transparente para indicar que está bloqueada */
+  overflow: hidden; /* Garante que o scroll não será possível */
 }
 
+/* Estilo para o card de descrição */
+.description-card {
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.3s ease;
+  background-color: #000000;
+  max-height: 300px;
+  overflow: hidden;
+}
 
+.description-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para o cabeçalho do card */
+.description-card .mat-card-header {
+  padding: 16px 16px 8px;
+}
+
+.description-card .mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Estilo para o conteúdo do card */
+.description-card .mat-card-content {
+  padding: 0 16px 16px;
+}
+
+/* Estilo para o painel de descrição dentro do card */
+.description-panel {
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid #e0e0e0;
+}
+
+.description-panel .mat-expansion-panel-header {
+  padding: 0 16px;
+  height: 48px;
+  min-height: 48px;
+  background-color: var(--fundo-secundario);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.description-panel .mat-expansion-panel-body {
+  padding: 0;
+  background-color: #fff;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.aviso {
+  color: white;
+}
+
+/* Estilo para o título e descrição do painel */
+.mat-expansion-panel-header .mat-panel-title {
+  font-weight: 40px;
+  color: #ffffff;
+}
+
+.mat-expansion-panel-header .mat-panel-description {
+  justify-content: flex-end;
+}
+
+/* Rotação do ícone quando expandido */
+::ng-deep .mat-expansion-panel.mat-expanded .mat-panel-description mat-icon {
+  transform: rotate(180deg);
+}
+
+/* Estilo para o conteúdo da descrição */
+.description-content {
+  padding: 20px;
+  background-color: #ffffff;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.description-content p {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-line;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .description-card {
+    margin-top: 16px;
+  }
+
+  .description-card .mat-card-title {
+    font-size: 16px;
+  }
+
+  .description-content {
+    padding: 16px;
+  }
+}
+
+/* Animação suave para o card */
+.description-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

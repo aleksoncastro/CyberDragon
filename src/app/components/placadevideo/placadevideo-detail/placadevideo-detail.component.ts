@@ -1,4 +1,4 @@
-import { Component, type OnInit } from "@angular/core"
+import { Component, ElementRef, signal, ViewChild, type OnInit } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { MatButtonModule } from "@angular/material/button"
 import { MatIconModule } from "@angular/material/icon"
@@ -16,11 +16,23 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner"
 import { ItemFavorito } from "../../../models/item-favorito"
 import { FavoritosService } from "../../../services/favoritos.service"
 import { LoteService } from "../../../services/lote.service"
+import { MatExpansionModule } from "@angular/material/expansion"
+
+type Card = {
+  id: number;
+  title: string;
+  fornecedor: string;
+  tipoMemoria: string;
+  capacidade: number;
+  larguraBanda: number;
+  preco: number;
+  imageUrl: string;
+};
 
 @Component({
   selector: "app-placadevideo-detail",
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule, MatTabsModule, RouterModule],
+  imports: [CommonModule, MatProgressSpinnerModule, MatExpansionModule, MatProgressSpinnerModule, MatButtonModule, MatIconModule, MatCardModule, MatDividerModule, MatTabsModule, RouterModule],
   templateUrl: "./placadevideo-detail.component.html",
   styleUrls: ["./placadevideo-detail.component.css"],
 })
@@ -31,6 +43,9 @@ export class PlacaDeVideoDetailComponent implements OnInit {
   precoParcelado = 0
   valorParcela = 0
   qtdTotal = 0
+  cards = signal<Card[]>([]);
+  placa: PlacaDeVideo[] = [];
+  iconCarrinho = 'shopping_cart';
 
   constructor(
     private route: ActivatedRoute,
@@ -42,13 +57,92 @@ export class PlacaDeVideoDetailComponent implements OnInit {
     private loteService: LoteService
   ) { }
 
+  cardsOfertas = signal<Card[]>([]);
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get("id")
     if (id) {
-      this.loadPlacaDeVideo(Number(id))
+      this.loadPlacaDeVideo(Number(id));
+      this.carregarPlacas();
     } else {
       this.router.navigate(["/placasdevideo"])
     }
+  }
+
+
+
+@ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+scrollRight() {
+  const lista = this.cardsOfertas();
+  if (lista.length > 0) {
+    const primeiro = lista[0];
+    const restante = lista.slice(1);
+    this.cardsOfertas.set([...restante, primeiro]);
+
+    // animação suave (opcional)
+    const container = this.scrollContainer.nativeElement;
+    container.scrollLeft = 0; // garante início
+    setTimeout(() => {
+      container.scrollBy({ left: 300, behavior: 'smooth' });
+    }, 0);
+  }
+}
+
+scrollLeft() {
+  const lista = this.cardsOfertas();
+  if (lista.length > 0) {
+    const ultimo = lista[lista.length - 1];
+    const restante = lista.slice(0, -1);
+    this.cardsOfertas.set([ultimo, ...restante]);
+
+    const container = this.scrollContainer.nativeElement;
+    container.scrollLeft = 300; // simula scroll à frente
+    setTimeout(() => {
+      container.scrollBy({ left: -300, behavior: 'smooth' });
+    }, 0);
+  }
+}
+
+
+
+  carregarPlacas() {
+    this.placaDeVideoService.findAll(0, 20).subscribe((data) => {
+      const cards = this.converterParaCards(data);
+      this.cardsOfertas.set(cards);
+    });
+  }
+
+  converterParaCards(placas: PlacaDeVideo[]): Card[] {
+    return placas.map((placa) => ({
+      id: placa.id!,
+      title: placa.modelo,
+      tipoMemoria: placa.memoria.tipoMemoria,
+      fornecedor: placa.fornecedor?.nome ?? 'Fornecedor não informado',
+      capacidade: placa.memoria.capacidade,
+      larguraBanda: placa.memoria.larguraBanda,
+      preco: placa.preco,
+      imageUrl: placa.listaImagem?.length
+        ? this.placaDeVideoService.getImagemUrl(placa.listaImagem[0])
+        : 'assets/imagem-nao-disponivel'
+    }));
+  }
+
+  adicionarAoCarrinho(card: Card): void {
+    this.carrinhoService.adicionar({
+      id: card.id,
+      modelo: card.title,
+      preco: card.preco,
+      fornecedor: card.fornecedor,
+      capacidade: card.capacidade,
+      tipoMemoria: card.tipoMemoria,
+      larguraBanda: card.larguraBanda,
+      quantidade: 1,
+      imageUrl: card.imageUrl
+    });
+
+
+    this.showSnackBarTopPosition('Adicionado ao carrinho');
   }
 
   loadPlacaDeVideo(id: number): void {
@@ -85,6 +179,10 @@ export class PlacaDeVideoDetailComponent implements OnInit {
 
     })
   }
+
+  verDetalhes(id: number): void {
+  this.router.navigate(['placadevideo-detail/', id]);
+}
 
   calcularPrecos(): void {
     // Calcula o preço parcelado (exemplo: acréscimo de 17.65%)

@@ -14,4 +14,24 @@ export class UsuarioService {
   insertUsuarioCliente(usuario : Usuario): Observable<Usuario>{
     return this.httpClient.post<Usuario>(this.baseUrl, usuario);
   }
+
+  getImagemUrl(nomeImagem: string): string {
+      return `${this.baseUrl}/image/download/${nomeImagem}`;
+    }
+  
+    deleteImage(idUsuario: number, nomeImagem: string): Observable<any> {
+    return this.httpClient.patch<Usuario>(
+      `${this.baseUrl}/image/delete/${nomeImagem}/usuario/${idUsuario}`,
+      null
+    );
+  }
+  
+    uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any> {
+      const formData: FormData = new FormData();
+      formData.append('id', id.toString());
+      formData.append('nomeImagem', imagem.name);
+      formData.append('imagem', imagem, imagem.name);
+      
+      return this.httpClient.patch<Usuario>(`${this.baseUrl}/image/upload`, formData);
+    }
 }

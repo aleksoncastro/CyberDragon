@@ -1,99 +1,126 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 ::ng-deep .success-snackbar {
-    background-color: #4caf50 !important;
-    color: white !important;
-  }
-  
-  ::ng-deep .error-snackbar {
-    background-color: #f44336 !important;
-    color: white !important;
-  }
+  background-color: #4caf50 !important;
+  color: white !important;
+}
 
-  .content-area {
-    padding: 24px !important;
-  }
+::ng-deep .error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}
 
-html, body {
+.content-area {
+  padding: 24px !important;
+}
+
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow-y: auto; /* Scroll global */
+  overflow-y: auto;
+  /* Scroll global */
 }
 
 mat-drawer-content {
-  overflow-x: hidden !important;  /* previne scroll horizontal / overflow */
-  width: 100%;                    /* limita a largura ao container pai */
-  box-sizing: border-box;         /* pra incluir padding/borda no cálculo */
+  overflow-x: hidden !important;
+  /* previne scroll horizontal / overflow */
+  width: 100%;
+  /* limita a largura ao container pai */
+  box-sizing: border-box;
+  /* pra incluir padding/borda no cálculo */
 }
 
 
 mat-drawer-container {
   height: auto !important;
-  min-height: 100vh; /* para ocupar tela toda, mas crescer se precisar */
+  min-height: 100vh;
+  /* para ocupar tela toda, mas crescer se precisar */
 }
 
 
 
 
-  :root {
-    --fundo-principal: #121212;
-    --fundo-secundario: #1E1E1E;
-    --cartao-container: #2A2A2A;
-    --texto-primario: #FFFFFF;
-    --texto-secundario: #B3B3B3;
-    --icone-destaque: #C4A000;
-    --amarelo-destaque: #FFD700;
-    --hover-acao: #5a5959;
-    --erro-alerta: #FF4C4C;
-    --sucesso: #4CAF50;
-    --acao-primaria: #FFB300;
-    --aviso-atencao: #D85D3A;
-    --borda-sombra: #34344A;
-    --input-container: #5a5959;
-    --box-shadow: rgba(255, 215, 0, 0.2);
-    --hover-botao: #b19e4a;
-  }
-  
-
-  mat-toolbar {
-    --mat-toolbar-container-background-color: #2A2A2A  !important;
-    --mat-toolbar-container-text-color: w;
-    border-bottom: 3px solid #C4A000;
-    transform: translateY(-4px);
-    box-shadow: 0 4px 20px var(--box-shadow);
-  }
-  
-  
-  mat-drawer-content {
-    background-color: #121212!important;
-  }
-
-  mat-paginator, 
-  mat-paginator * {
-    color: #FFFF !important;
-  }
+:root {
+  --fundo-principal: #121212;
+  --fundo-secundario: #1E1E1E;
+  --cartao-container: #2A2A2A;
+  --texto-primario: #FFFFFF;
+  --texto-secundario: #B3B3B3;
+  --icone-destaque: #C4A000;
+  --amarelo-destaque: #FFD700;
+  --hover-acao: #5a5959;
+  --erro-alerta: #FF4C4C;
+  --sucesso: #4CAF50;
+  --acao-primaria: #FFB300;
+  --aviso-atencao: #D85D3A;
+  --borda-sombra: #34344A;
+  --input-container: #5a5959;
+  --box-shadow: rgba(255, 215, 0, 0.2);
+  --hover-botao: #b19e4a;
+  --primary-color: #1a1a2e;
+  --secondary-color: #16213e;
+  --accent-color: #ff0055;
+  --text-color: #e6e6e6;
+  --border-color: #2a2a4a;
+  --hover-color: #ff3377;
+}
 
 
-  .mat-paginator-navigation-previous,
-  .mat-paginator-navigation-next,
-  .mat-paginator-navigation-first,
-  .mat-paginator-navigation-last {
-    color: white !important;
-    fill: white !important; /* Para ícones SVG */
-  }
+mat-toolbar {
+  --mat-toolbar-container-background-color: #2A2A2A !important;
+  --mat-toolbar-container-text-color: w;
+  border-bottom: 3px solid #C4A000;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px var(--box-shadow);
+}
 
-  .mat-icon-button.mat-paginator-navigation-button {
-    color: white !important;
-  }
 
- /*
+mat-drawer-content {
+  background-color: #121212 !important;
+}
+
+mat-paginator,
+mat-paginator * {
+  color: #FFFF !important;
+}
+
+
+.mat-paginator-navigation-previous,
+.mat-paginator-navigation-next,
+.mat-paginator-navigation-first,
+.mat-paginator-navigation-last {
+  color: white !important;
+  fill: white !important;
+  /* Para ícones SVG */
+}
+
+.mat-icon-button.mat-paginator-navigation-button {
+  color: white !important;
+}
+
+/*
 .content-area {
     padding: 0 !important;
     background-color: rgb(37, 36, 36) !important;

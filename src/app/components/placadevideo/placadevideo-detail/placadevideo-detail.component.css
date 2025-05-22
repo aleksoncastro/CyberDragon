@@ -470,3 +470,322 @@ mat-divider {
 
   width: 300px;
 }
+
+/* Specifications */
+.specs-card {
+  background-color: #0f0f0f !important;
+  color: white !important;
+  border-radius: 12px !important;
+  margin-bottom: 32px;
+}
+
+/* Estilo para o título dentro do expansion panel */
+.specs-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+/* Estilo para o cabeçalho do expansion panel */
+::ng-deep .mat-expansion-panel-header {
+  padding: 16px !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 16px !important;
+}
+
+/* Cores para o expansion panel */
+::ng-deep .mat-expansion-panel {
+  background-color: #0f0f0f !important;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+  color: white !important;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .specs-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.specs-section {
+  margin-bottom: 24px;
+}
+
+.specs-section h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.specs-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  max-width: 400px;
+}
+
+.specs-label {
+  color: #999;
+}
+
+.specs-value {
+  font-weight: 500;
+}
+
+.container.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  padding: 10rem;
+}
+
+.example-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+    .action-icons {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .action-icons {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+
+    button {
+      background: none;
+      border: none;
+      box-shadow: none;
+
+      mat-icon {
+        font-size: 24px;
+        color: var(--icone-destaque);
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+
+      &:hover mat-icon {
+        transform: scale(1.2);
+        color: white;
+      }
+    }
+  }
+}
+
+.example-card {
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: var(--fundo-principal);
+  color: var(--texto-primario);
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  margin: 20px;
+  justify-content: center;
+  padding-top: 0 !important;
+}
+
+.example-card:hover {
+  transform: scale(1.1) translateY(-4px);
+  /* aumenta 10% e sobe 4px */
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+  border: 1px solid var(--icone-destaque);
+  /* Azul Material */
+  border: 1px solid var(--borda-destaque);
+}
+
+.card-info {
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0;
+  padding: 0;
+}
+
+.image {
+  height: 250px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.avista {
+  color: #00a202;
+  font-size: 13px;
+}
+
+.preco {
+  color: #00a202;
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+.valor-parcela {
+  color: var(--icone-destaque);
+}
+
+.parcelamento {
+  font-size: 13px;
+  margin-bottom: 0px;
+}
+
+.parcelamento2 {
+  font-size: 13px;
+  margin-top: 0px;
+}
+
+.line {
+  margin-top: 10px;
+  height: 2px;
+  width: 30%;
+  background-color: var(--icone-destaque);
+}
+
+.valor-desconto {
+  font-size: 13px;
+  color: #e90313;
+}
+
+.anuncio-container {
+  display: flex;
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  align-items: center;
+  /* Centraliza verticalmente */
+  height: 60vh;
+  /* Altura total da tela */
+}
+
+.anuncio {
+  max-width: 100%;
+  width: 90%;
+  height: auto;
+
+  -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+
+.titulo-ofertas {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--amarelo-destaque);
+  margin: 1rem 0 -10rem 10rem;
+  overflow:-moz-hidden-unscrollable;
+  /* "cola" no grid e respeita padding lateral */
+}
+
+
+
+.scroll-horizontal {
+  display: flex;
+  overflow-x: auto;
+  padding: 1rem 0;
+  gap: 1rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  flex-grow: 1;
+  justify-content: flex-start;
+}
+
+.scroll-horizontal::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-horizontal::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 3px;
+}
+
+.scroll-horizontal mat-card {
+  min-width: 250px;
+  scroll-snap-align: start;
+}
+
+.scroll-wrapper {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem 5rem;
+  background-color: transparent !important;
+  margin-bottom: 0;
+}
+
+::ng-deep .scroll-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--amarelo-destaque);
+  border: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+::ng-deep .scroll-button mat-icon {
+  font-size: 30px;
+}
+
+::ng-deep .scroll-button:hover {
+  transform: scale(2.0);
+  cursor: pointer;
+}
+
+.juntar{
+  margin-bottom: -130px;;
+}
+
+

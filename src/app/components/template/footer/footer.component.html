@@ -1,10 +1,113 @@
-<div class="layout">
-  <div class="content">
+<footer class="footer-wrapper">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Coluna da marca -->
+        <div class="footer-brand">
+          <div class="logo-container">
+            <img src="assets/logo01.png" alt="Logo Cyber Dragon" class="logo" style="cursor: pointer;" />
+            <h2>CyberDragon</h2>
+          </div>
+          <p>Sua fonte confiável de placas de vídeo de alto desempenho para gaming, design e mineração.</p>
+          <div class="newsletter">
+            <h4>Receba nossas ofertas</h4>
+            <div class="newsletter-form">
+              <mat-form-field appearance="outline" class="email-input">
+                <input matInput placeholder="Seu e-mail" type="email">
+              </mat-form-field>
+              <button mat-raised-button class="custom-send-button">
+                <mat-icon>send</mat-icon>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Coluna de produtos -->
+        <div class="footer-section">
+          <h4>Produtos</h4>
+          <ul>
+            <li><a href="#">NVIDIA GeForce RTX</a></li>
+            <li><a href="#">AMD Radeon RX</a></li>
+            <li><a href="#">Placas para Workstation</a></li>
+            <li><a href="#">Placas para Mineração</a></li>
+            <li><a href="#">Acessórios</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna de atendimento -->
+        <div class="footer-section">
+          <h4>Atendimento</h4>
+          <ul>
+            <li><a href="#">Central de Ajuda</a></li>
+            <li><a href="#">Rastreie seu Pedido</a></li>
+            <li><a href="#">Trocas e Devoluções</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna de contato -->
+        <div class="footer-section">
+          <h4>Contato</h4>
+          <div class="contact-info">
+            <p><mat-icon>location_on</mat-icon> Quadra 108 Norte, Palmas - TO</p>
+            <p><mat-icon>phone</mat-icon> (63) 3000-0000</p>
+            <p><mat-icon>email</mat-icon> cyberdragon&#64;gmail.com.br</p>
+            <p><mat-icon>schedule</mat-icon> Seg-Sex: 9h às 18h</p>
+          </div>
+          <div class="social-icons">
+            <a href="#" aria-label="Instagram" class="social-icon">
+              <mat-icon>camera_alt</mat-icon>
+            </a>
+            <a href="#" aria-label="Facebook" class="social-icon">
+              <mat-icon>facebook</mat-icon>
+            </a>
+            <a href="#" aria-label="YouTube" class="social-icon">
+              <mat-icon>smart_display</mat-icon>
+            </a>
+            <a href="#" aria-label="Twitter" class="social-icon x">
+              <mat-icon>X</mat-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métodos de pagamento -->
+      <div class="payment-methods">
+        <h4>Formas de Pagamento</h4>
+        <div class="payment-icons">
+          <mat-icon class="payment-icon" matTooltip="Cartão de Crédito">credit_card</mat-icon>
+          <mat-icon class="payment-icon" matTooltip="Boleto">receipt</mat-icon>
+          <mat-icon class="payment-icon" matTooltip="PIX">attach_money</mat-icon>
+          <mat-icon class="payment-icon" matTooltip="Transferência Bancária">account_balance</mat-icon>
+          <mat-icon class="payment-icon" matTooltip="Criptomoedas">currency_bitcoin</mat-icon>
+        </div>
+      </div>
+
+      <!-- Certificados e segurança -->
+      <div class="security">
+        <div class="security-item">
+          <mat-icon>verified_user</mat-icon>
+          <span>Site Seguro</span>
+        </div>
+        <div class="security-item">
+          <mat-icon>lock</mat-icon>
+          <span>Pagamento Protegido</span>
+        </div>
+        <div class="security-item">
+          <mat-icon>verified</mat-icon>
+          <span>Loja Verificada</span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <mat-toolbar color="primary" class="footer">
-    <span class="toolbar-title">
-      UNITINS - Site desenvolvido na disciplina de Tópicos em Programação II
-    </span>
-  </mat-toolbar>
-</div>
+  <!-- Copyright -->
+  <div class="footer-copyright">
+    <div class="container">
+      <p>© 2025 CyberDragon - Todos os direitos reservados</p>
+      <p>Desenvolvido na disciplina de Tópicos em Programação II - UNITINS</p>
+    </div>
+  </div>
+</footer>

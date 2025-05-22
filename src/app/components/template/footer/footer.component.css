@@ -1,25 +1,300 @@
-html, body {
-  height: 100%;
+/* Estilos gerais */
+
+/* Container principal do footer */
+.footer-wrapper {
+  font-family: "Roboto", sans-serif;
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Seção principal do footer */
+.footer-main {
+  background-color: var(--cartao-container);
+  background-image: linear-gradient(135deg, var(--cartao-container) 0%, var(--fundo-secundario) 100%);
+  padding: 50px 0 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de grade cyber no background */
+.footer-main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Grid do footer */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+/* Estilos da seção da marca */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.logo {
+  height: 155px;
+  margin-right: -40px;
+}
+
+.footer-brand h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, var(--icone-destaque), #ff7700);
+  /*NÃO REMOVA ISSO AQUI EMBAIXO*/
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
+}
+
+.footer-brand p {
+  margin-top: 0;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+/* Estilos das seções */
+.footer-section h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-section h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 3px;
+  background-color: var(--amarelo-destaque);
+  border-radius: 3px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
-.layout {
-  display: flex;
-  flex-direction: column;
-  min-height: auto;
+.footer-section ul li {
+  margin-bottom: 10px;
 }
 
-.content {
+.footer-section ul li a {
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+  display: inline-block;
+  opacity: 0.8;
+}
+
+.footer-section ul li a:hover {
+  color: var(--acao-primaria);
+  transform: translateX(5px);
+  opacity: 1;
+}
+
+/* Estilos de contato */
+.contact-info {
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.contact-info mat-icon {
+  margin-right: 10px;
+  font-size: 18px;
+  color: var(--amarelo-destaque);
+}
+
+/* Estilos de redes sociais */
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  transition: all 0.3s;
+}
+.x mat-icon{
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+
+.social-icon:hover {
+  background-color: var(--amarelo-destaque);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 0, 85, 0.3);
+}
+
+/* Estilos do formulário de newsletter */
+.newsletter {
+  margin-top: 20px;
+}
+
+.newsletter h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+}
+
+.email-input {
   flex: 1;
 }
 
-.footer {
+::ng-deep .email-input input {
+  color: #ffff !important;
+}
+
+::ng-deep .custom-send-button {
+background-color: var(--fundo-principal) !important;
+color: var(--texto-primario) !important;
+}
+
+::ng-deep .custom-send-button:hover {
+  background-color: var(--amarelo-destaque) !important;
+}
+
+
+
+/* Estilos dos métodos de pagamento */
+.payment-methods {
+  margin-bottom: 30px;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.payment-methods h4 {
+  margin-bottom: 15px;
+}
+
+.payment-icons {
   display: flex;
   justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.payment-icon {
+  font-size: 28px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 8px;
+  transition: all 0.3s;
+}
+
+.payment-icon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+/* Estilos de segurança */
+.security {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.security-item {
+  display: flex;
   align-items: center;
-  height: 50px;
-  font-size: small;
+  gap: 8px;
+}
+
+.security-item mat-icon {
+  color: var(--amarelo-destaque);
+}
+
+/* Estilos do copyright */
+.footer-copyright {
+  background-color: rgb(0, 0, 0);
+  padding: 15px 0;
   text-align: center;
-  background-color: rgb(37, 36, 36);
-  border-bottom: 0px;
+  font-size: 14px;
+}
+
+.footer-copyright p {
+  margin: 5px 0;
+  opacity: 0.7;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .security {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-main {
+    padding: 30px 0 20px;
+  }
+
+  .payment-icons {
+    gap: 10px;
+  }
+
+  .payment-icon {
+    font-size: 24px;
+    padding: 6px;
+  }
 }

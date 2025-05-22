@@ -169,8 +169,7 @@
   </div>
 
 
-  <mat-card *ngIf="placaSelecionada" class="detalhes-card"
-    style="position: fixed; top: 5%; left: 260px; right: 5%; z-index: 1000; margin: auto;">
+  <mat-card *ngIf="placaSelecionada" class="detalhes-card">
     <mat-card-header>
       <mat-card-title>Detalhes da Placa: {{ placaSelecionada.modelo }}</mat-card-title>
       <button mat-icon-button (click)="placaSelecionada = null" style="margin-left: auto;">
@@ -202,7 +201,6 @@
           <p><strong>Preço:</strong> R$ {{ placaSelecionada.preco | number:'1.2-2' }}</p>
           <p><strong>Resolução:</strong> {{ placaSelecionada.resolucao }}</p>
           <p><strong>Ray Tracing:</strong> {{ placaSelecionada.suporteRayTracing ? 'Sim' : 'Não' }}</p>
-          <p><strong>Descrição:</strong> {{ placaSelecionada.descricao }}</p>
           <p><strong>Fans:</strong> {{ placaSelecionada.fan?.label }}</p>
         </div>
 
@@ -238,11 +236,32 @@
           <p><strong>Comprimento:</strong> {{ placaSelecionada.tamanho.comprimento }} mm</p>
         </div>
       </div>
+
+       <!-- Card separado para a descrição -->
+  <mat-card class="description-card">
+    <mat-card-header>
+      <mat-card-title>
+        <span>Descrição</span>
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <mat-expansion-panel class="description-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <span class="aviso">Clique para ver a descrição completa</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="description-content">
+          <p>{{ placaSelecionada.descricao }}</p>
+        </div>
+      </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+
     </mat-card-content>
 
   </mat-card>
-
-
 
 </div>
 

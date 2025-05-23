@@ -3,7 +3,7 @@
 /* Container principal do footer */
 .footer-wrapper {
   font-family: "Roboto", sans-serif;
-  color: var(--text-color);
+  color: var(--texto-primario);
 }
 
 .container {

@@ -205,7 +205,7 @@
   }
 
   100% {
-    transform: scale(1.7);
+    transform: scale(2.0);
     filter: brightness(1.3);
   }
 }

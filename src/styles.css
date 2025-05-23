@@ -34,14 +34,7 @@ body {
   padding: 24px !important;
 }
 
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-y: auto;
-  /* Scroll global */
-}
+
 
 mat-drawer-content {
   overflow-x: hidden !important;
@@ -63,6 +56,7 @@ mat-drawer-container {
 
 
 :root {
+  --fundo-preto: black;
   --fundo-principal: #121212;
   --fundo-secundario: #1E1E1E;
   --cartao-container: #2A2A2A;
@@ -81,10 +75,8 @@ mat-drawer-container {
   --hover-botao: #b19e4a;
   --primary-color: #1a1a2e;
   --secondary-color: #16213e;
-  --accent-color: #ff0055;
-  --text-color: #e6e6e6;
   --border-color: #2a2a4a;
-  --hover-color: #ff3377;
+
 }
 
 

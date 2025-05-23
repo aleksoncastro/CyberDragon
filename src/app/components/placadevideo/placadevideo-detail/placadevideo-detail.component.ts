@@ -17,6 +17,9 @@ import { ItemFavorito } from "../../../models/item-favorito"
 import { FavoritosService } from "../../../services/favoritos.service"
 import { LoteService } from "../../../services/lote.service"
 import { MatExpansionModule } from "@angular/material/expansion"
+import { NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+
 
 type Card = {
   id: number;
@@ -59,50 +62,75 @@ export class PlacaDeVideoDetailComponent implements OnInit {
 
   cardsOfertas = signal<Card[]>([]);
 
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get("id")
+ ngOnInit(): void {
+  this.route.params.subscribe(params => {
+    const id = +params['id'];
     if (id) {
-      this.loadPlacaDeVideo(Number(id));
+      this.loadPlacaDeVideo(id);
       this.carregarPlacas();
+      // Remova este:
+      // window.scrollTo({ top: 0, behavior: 'auto' });
     } else {
-      this.router.navigate(["/placasdevideo"])
+      this.router.navigate(["/placasdevideo"]);
+    }
+  });
+
+  // ✅ Aqui garante que sempre ao navegar, zera o scroll:
+  this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd)
+  ).subscribe(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  });
+}
+
+
+/*  ngOnInit(): void {
+  this.route.params.subscribe(params => {
+    const id = +params['id'];
+    if (id) {
+      this.loadPlacaDeVideo(id);
+      this.carregarPlacas();
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    } else {
+      this.router.navigate(["/placasdevideo"]);
+    }
+  });
+} */
+
+
+
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
+
+  scrollRight() {
+    const lista = this.cardsOfertas();
+    if (lista.length > 0) {
+      const primeiro = lista[0];
+      const restante = lista.slice(1);
+      this.cardsOfertas.set([...restante, primeiro]);
+
+      // animação suave (opcional)
+      const container = this.scrollContainer.nativeElement;
+      container.scrollLeft = 0; // garante início
+      setTimeout(() => {
+        container.scrollBy({ left: 300, behavior: 'smooth' });
+      }, 0);
     }
   }
 
+  scrollLeft() {
+    const lista = this.cardsOfertas();
+    if (lista.length > 0) {
+      const ultimo = lista[lista.length - 1];
+      const restante = lista.slice(0, -1);
+      this.cardsOfertas.set([ultimo, ...restante]);
 
-
-@ViewChild('scrollContainer') scrollContainer!: ElementRef;
-
-scrollRight() {
-  const lista = this.cardsOfertas();
-  if (lista.length > 0) {
-    const primeiro = lista[0];
-    const restante = lista.slice(1);
-    this.cardsOfertas.set([...restante, primeiro]);
-
-    // animação suave (opcional)
-    const container = this.scrollContainer.nativeElement;
-    container.scrollLeft = 0; // garante início
-    setTimeout(() => {
-      container.scrollBy({ left: 300, behavior: 'smooth' });
-    }, 0);
+      const container = this.scrollContainer.nativeElement;
+      container.scrollLeft = 300; // simula scroll à frente
+      setTimeout(() => {
+        container.scrollBy({ left: -300, behavior: 'smooth' });
+      }, 0);
+    }
   }
-}
-
-scrollLeft() {
-  const lista = this.cardsOfertas();
-  if (lista.length > 0) {
-    const ultimo = lista[lista.length - 1];
-    const restante = lista.slice(0, -1);
-    this.cardsOfertas.set([ultimo, ...restante]);
-
-    const container = this.scrollContainer.nativeElement;
-    container.scrollLeft = 300; // simula scroll à frente
-    setTimeout(() => {
-      container.scrollBy({ left: -300, behavior: 'smooth' });
-    }, 0);
-  }
-}
 
 
 
@@ -181,8 +209,8 @@ scrollLeft() {
   }
 
   verDetalhes(id: number): void {
-  this.router.navigate(['placadevideo-detail/', id]);
-}
+    this.router.navigate(['placadevideo-detail/', id]);
+  }
 
   calcularPrecos(): void {
     // Calcula o preço parcelado (exemplo: acréscimo de 17.65%)

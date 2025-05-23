@@ -1,7 +1,7 @@
 /* Main container */
 .product-detail-container {
-  background-color: black;
-  color: white;
+  background-color: var(--fundo-preto);
+  color: var(--texto-primario);
   min-height: 100vh;
   padding: 24px;
   font-family: "Roboto", sans-serif;
@@ -16,7 +16,7 @@
   border: 1px solid #333;
   border-radius: 50%;
   margin-bottom: 24px;
-  color: white;
+  color: var(--texto-primario);
 }
 
 /* Product content layout */
@@ -98,7 +98,7 @@
   right: 0;
   text-align: center;
   font-size: 10px;
-  color: white;
+  color: var(--texto-primario);
   background-color: rgba(0, 0, 0, 0.5);
   padding: 2px 0;
 }
@@ -228,7 +228,7 @@ mat-divider {
 
 /* Specifications */
 .specs-card {
-  background-color: #0f0f0f;
+  background-color: var(--primary-color);
   color: white;
   border-radius: 12px;
   padding: 16px;
@@ -598,7 +598,7 @@ mat-divider {
   border: 1px solid transparent;
   cursor: pointer;
   border-radius: 8px;
-  background-color: var(--fundo-principal);
+  background-color: var(--fundo-preto);
   color: var(--texto-primario);
   width: 100%;
   max-width: 250px;
@@ -676,7 +676,7 @@ mat-divider {
   margin-top: 0px;
 }
 
-.line {
+.line-card {
   margin-top: 10px;
   height: 2px;
   width: 30%;

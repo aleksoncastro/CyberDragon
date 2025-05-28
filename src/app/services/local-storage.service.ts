@@ -9,11 +9,19 @@ export class LocalStorageService {
 
   getItem(key: string): any {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+    try {
+      return JSON.parse(item!);
+    } catch {
+      return item;
+    }
   }
 
   setItem(key: string, value: any): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    if (typeof value === 'string') {
+      localStorage.setItem(key, value);
+    } else {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
   }
 
   removeItem(key: string): void {

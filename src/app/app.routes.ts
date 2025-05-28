@@ -31,6 +31,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { ClienteGuard } from './guards/cliente.guard';
 import { loginredirectGuard } from './guards/loginredirect.guard';
 import { PlacaDeVideoDetailComponent } from './components/placadevideo/placadevideo-detail/placadevideo-detail.component';
+import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
 
 export const routes: Routes = [
 
@@ -82,6 +83,7 @@ export const routes: Routes = [
             { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video' },
             { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho'},
             { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos'},
+            { path: 'infomarcoes', component: ClienteFormComponent, title: 'Informações do Cliente' },
         ]
     },
 

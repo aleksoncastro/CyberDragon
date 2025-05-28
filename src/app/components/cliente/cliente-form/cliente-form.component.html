@@ -1,76 +1,82 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="toolbar-title">
   <span>Formulário de Cliente</span>
 </mat-toolbar>
 
-<div class="container">
+<div class="form-container">
   <mat-card>
     <form [formGroup]="formGroup" (ngSubmit)="salvar()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nome</mat-label>
-        <input matInput formControlName="nome" placeholder="Informe o nome" />
-        <mat-error *ngIf="formGroup.get('nome')?.invalid && formGroup.get('nome')?.touched">
-          {{ getErrorMessage('nome', formGroup.get('nome')?.errors) }}
-        </mat-error>
-      </mat-form-field>
+      <h3>Informações Gerais</h3>
+      <div class="form-grid">
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" placeholder="Informe o nome" />
+          <mat-error *ngIf="formGroup.get('nome')?.invalid && formGroup.get('nome')?.touched">
+            {{ getErrorMessage('nome', formGroup.get('nome')?.errors) }}
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Data de Nascimento</mat-label>
-        <input matInput formControlName="dataNascimento" type="date" />
-        <mat-error *ngIf="formGroup.get('dataNascimento')?.invalid && formGroup.get('dataNascimento')?.touched">
-          {{ getErrorMessage('dataNascimento', formGroup.get('dataNascimento')?.errors) }}
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width-input">
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+          <mat-error *ngIf="formGroup.get('dataNascimento')?.invalid && formGroup.get('dataNascimento')?.touched">
+            {{ getErrorMessage('dataNascimento', formGroup.get('dataNascimento')?.errors) }}
+          </mat-error>
+        </mat-form-field>
+
+      </div>
 
       <div class="section">
         <h3>Endereços</h3>
         <div formArrayName="enderecos">
           <div *ngFor="let endereco of enderecos.controls; let i = index" [formGroupName]="i" class="address-card">
             <mat-card>
-              <div class="address-fields">
-                <<mat-form-field appearance="outline">
+              <div class="form-grid">
+                <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Rua</mat-label>
                   <input matInput formControlName="rua" />
-                  <!-- Troque o formControlName para "rua" se quiser deixar idêntico -->
-                  </mat-form-field>
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Número</mat-label>
-                    <input matInput formControlName="numero" />
-                  </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Número</mat-label>
+                  <input matInput formControlName="numero" />
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Complemento</mat-label>
-                    <input matInput formControlName="complemento" />
-                  </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Complemento</mat-label>
+                  <input matInput formControlName="complemento" />
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Bairro</mat-label>
-                    <input matInput formControlName="bairro" />
-                  </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Bairro</mat-label>
+                  <input matInput formControlName="bairro" />
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Cidade</mat-label>
-                    <input matInput formControlName="cidade" />
-                  </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Cidade</mat-label>
+                  <input matInput formControlName="cidade" />
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>Estado</mat-label>
-                    <input matInput formControlName="estado" />
-                  </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width-input">
+                  <mat-label>Estado</mat-label>
+                  <input matInput formControlName="estado" />
+                </mat-form-field>
 
-                  <mat-form-field appearance="outline">
-                    <mat-label>CEP</mat-label>
-                    <input matInput formControlName="cep" />
-                  </mat-form-field>
+                <mat-form-field appearance="fill" class="small-width-input">
+                  <mat-label>CEP</mat-label>
+                  <input matInput formControlName="cep" />
+                </mat-form-field>
               </div>
 
-              <button mat-icon-button color="warn" type="button" (click)="removerEndereco(i)">
+              <button mat-icon-button color="warn" class="add" type="button" (click)="removerEndereco(i)">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-card>
           </div>
         </div>
-        <button mat-button color="primary" type="button" (click)="adicionarEndereco()">
+        <button mat-button color="primary" class="add" type="button" (click)="adicionarEndereco()">
           <mat-icon>add</mat-icon> Adicionar Endereço
         </button>
       </div>
@@ -80,25 +86,25 @@
         <div formArrayName="telefones">
           <div *ngFor="let telefone of telefones.controls; let i = index" [formGroupName]="i" class="telefone-card">
             <mat-card>
-              <div class="telefone-fields">
-                <mat-form-field appearance="outline">
+              <div class="form-grid">
+                <mat-form-field appearance="fill" class="cod-width-input">
+                  <mat-label>DDD</mat-label>
+                  <input matInput formControlName="codigoArea" />
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="tel-width-input">
                   <mat-label>Número</mat-label>
                   <input matInput formControlName="numero" />
                 </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Código de Área</mat-label>
-                  <input matInput formControlName="codigoArea" /> <!-- Ou altere para codigoArea e no TS também -->
-                </mat-form-field>
               </div>
 
-              <button mat-icon-button color="warn" type="button" (click)="removerTelefone(i)">
+              <button mat-icon-button color="warn" class="add" type="button" (click)="removerTelefone(i)">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-card>
           </div>
         </div>
-        <button mat-button color="primary" type="button" (click)="adicionarTelefone()">
+        <button mat-button color="primary" type="button" class="add" (click)="adicionarTelefone()">
           <mat-icon>add</mat-icon> Adicionar Telefone
         </button>
       </div>

@@ -2,11 +2,11 @@ import { Endereco } from './endereco.model';
 import { TelefoneCliente } from './telefone-cliente.model';
 import { Cartao } from './cartao.model';
 
-export interface Cliente {
+export class Cliente {
   id?: number;
-  nome: string;
-  dataNascimento: string;  // yyyy-MM-dd
-  enderecos: Endereco[];
-  telefones: TelefoneCliente[];
+  nome!: string;
+  dataNascimento!: string;  // yyyy-MM-dd
+  enderecos!: Endereco[];
+  telefones!: TelefoneCliente[];
   cartoes?: Cartao[];
 }

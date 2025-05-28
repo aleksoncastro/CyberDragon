@@ -1,0 +1,155 @@
+<div class="profile-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-menu">
+      <button 
+        *ngFor="let item of sidebarItems" 
+        class="sidebar-item"
+        [class.active]="activeSection === item.id"
+        (click)="setActiveSection(item.id)">
+        <i [class]="item.icon"></i>
+        {{ item.label }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="breadcrumb">
+        <i class="fas fa-home"></i>
+        <span>Minha Conta</span>
+      </div>
+
+      <div class="user-greeting">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="greeting-text">
+          <h1>Olá, {{ getFirstName() }}</h1>
+          <p>Aqui você encontra todas as informações relacionadas a sua conta, como acompanhar seus últimos pedidos, adicionar novos endereços...</p>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="action-card" *ngFor="let action of quickActions" (click)="setActiveSection(action.id)">
+        <i [class]="action.icon"></i>
+        <h3>{{ action.title }}</h3>
+      </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="content-grid">
+      <!-- Últimos Pedidos -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fas fa-shopping-bag"></i>
+            ÚLTIMOS PEDIDOS
+          </div>
+          <button class="btn-secondary">VER TODOS</button>
+        </div>
+        <div class="card-content">
+          <div class="order-item" *ngFor="let pedido of mockPedidos">
+            <div class="order-details">
+              <div class="order-info-grid">
+                <div class="info-item">
+                  <span class="label">Número do Pedido</span>
+                  <span class="value">{{ pedido.id }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Pagamento</span>
+                  <span class="value">{{ pedido.pagamento }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Data</span>
+                  <span class="value">{{ pedido.data }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Valor Total</span>
+                  <span class="value">{{ pedido.valor }}</span>
+                </div>
+              </div>
+              
+              <div class="order-actions">
+                <div class="status-badge">Status: {{ pedido.status }}</div>
+                <div class="action-buttons">
+                  <button class="btn-primary">VER PEDIDO</button>
+                  <button class="btn-outline">RASTREAR PEDIDO</button>
+                  <button class="btn-outline">CONTATAR SUPORTE</button>
+                </div>
+              </div>
+              
+              <div class="order-status">
+                <div class="status-indicator"></div>
+                <span>{{ pedido.produto }} {{ pedido.dataEnvio }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meus Dados -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">
+            <i class="fas fa-user"></i>
+            MEUS DADOS
+          </div>
+          <button class="btn-secondary">VER TODOS</button>
+        </div>
+        <div class="card-content">
+          <div class="user-info">
+            <h4>Informações de Acesso</h4>
+            <div class="info-list">
+              <div class="info-row">
+                <i class="fas fa-user"></i>
+                <span>{{ cliente.nome }}</span>
+              </div>
+              <div class="info-row">
+                <i class="fas fa-envelope"></i>
+                <span>alekson12123gmail.com</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-actions">
+            <button class="btn-danger">EDITAR</button>
+            <button class="btn-primary">MUDAR SENHA</button>
+          </div>
+
+          <button class="btn-delete">EXCLUIR MINHA CONTA</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endereços -->
+    <div class="card addresses-card">
+      <div class="card-header">
+        <div class="card-title">
+          <i class="fas fa-map-marker-alt"></i>
+          ENDEREÇOS
+        </div>
+        <button class="btn-secondary">VER TODOS</button>
+      </div>
+      <div class="card-content">
+        <div class="addresses-grid">
+          <div class="address-item" *ngFor="let endereco of cliente.enderecos; let i = index">
+            <h4>{{ i === 0 ? 'Endereço de Entrega Padrão' : 'Endereço de Cobrança Padrão' }}</h4>
+            <div class="address-details">
+              <p>{{ cliente.nome }}</p>
+              <p>{{ endereco.rua }}, {{ endereco.numero }}</p>
+              <p>{{ endereco.bairro }}</p>
+              <p>{{ endereco.cidade }}, {{ endereco.estado }} - {{ endereco.cep }}</p>
+              <p *ngIf="cliente.telefones.length > 0">Tel: {{ cliente.telefones[0].numero }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

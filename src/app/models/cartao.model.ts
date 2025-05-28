@@ -1,8 +1,8 @@
-export interface Cartao {
+export class Cartao {
   id?: number; // DefaultEntity possui id
-  numero: string;
-  titular: string;
-  dataValidade: string; // LocalDate no backend, usar string (yyyy-MM-dd) no frontend
-  cvv: string;
-  cpf: string;
+  numero!: string;
+  titular!: string;
+  dataValidade!: string; // LocalDate no backend, usar string (yyyy-MM-dd) no frontend
+  cvv!: string;
+  cpf!: string;
 }

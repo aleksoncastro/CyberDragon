@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 function extrairEstado(estadoCompleto: string): string {
   // Exemplo: "TO - TOCANTINS" vira "TOCANTINS"
@@ -37,7 +39,9 @@ function extrairCodigoArea(codigoArea: string): string {
     MatInputModule,
     MatButtonModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   templateUrl: './cliente-form.component.html',
   styleUrls: ['./cliente-form.component.css'],

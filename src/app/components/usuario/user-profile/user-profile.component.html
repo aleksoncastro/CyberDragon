@@ -1,155 +1,246 @@
-<div class="profile-container">
-  <!-- Sidebar -->
+<div class="profile-layout">
+  <!-- Sidebar Navigation -->
   <div class="sidebar">
-    <div class="sidebar-menu">
-      <button 
-        *ngFor="let item of sidebarItems" 
-        class="sidebar-item"
-        [class.active]="activeSection === item.id"
-        (click)="setActiveSection(item.id)">
-        <i [class]="item.icon"></i>
-        {{ item.label }}
-      </button>
+    <div class="sidebar-item" 
+         [class.active]="activeSection === 'conta'"
+         (click)="setActiveSection('conta')">
+      <mat-icon class="sidebar-icon">person</mat-icon>
+      <span class="sidebar-text">Minha Conta</span>
+    </div>
+    <div class="sidebar-item" 
+         [class.active]="activeSection === 'pedidos'"
+         (click)="setActiveSection('pedidos')">
+      <mat-icon class="sidebar-icon">local_shipping</mat-icon>
+      <span class="sidebar-text">Meus Pedidos</span>
+    </div>
+    <div class="sidebar-item" 
+         [class.active]="activeSection === 'favoritos'"
+         (click)="setActiveSection('favoritos')">
+      <mat-icon class="sidebar-icon">favorite</mat-icon>
+      <span class="sidebar-text">Meus Favoritos</span>
+    </div>
+    <div class="sidebar-item" 
+         [class.active]="activeSection === 'enderecos'"
+         (click)="setActiveSection('enderecos')">
+      <mat-icon class="sidebar-icon">place</mat-icon>
+      <span class="sidebar-text">Endereços</span>
+    </div>
+    <div class="sidebar-item" 
+         [class.active]="activeSection === 'dados'"
+         (click)="setActiveSection('dados')">
+      <mat-icon class="sidebar-icon">assignment</mat-icon>
+      <span class="sidebar-text">Meus dados</span>
     </div>
   </div>
 
   <!-- Main Content -->
   <div class="main-content">
-    <!-- Header -->
-    <div class="header">
-      <div class="breadcrumb">
-        <i class="fas fa-home"></i>
-        <span>Minha Conta</span>
-      </div>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+  <a class="caminhos" routerLink="/"><mat-icon>home</mat-icon></a>
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+    <span class="breadcrumb-separator">></span>
+    <a *ngIf="!last" [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+    <span *ngIf="last">{{ breadcrumb.label }}</span>
+  </ng-container>
+</div>
 
-      <div class="user-greeting">
-        <div class="user-avatar">
-          <i class="fas fa-user"></i>
+
+    <!-- Minha Conta Dashboard -->
+    <div *ngIf="activeSection === 'conta'" class="dashboard-section">
+      <!-- Header com saudação -->
+      <div class="welcome-header">
+        <div class="welcome-avatar">
+          <div class="avatar-circle">
+            <span class="avatar-initial">{{ getFirstName().charAt(0).toUpperCase() }}</span>
+          </div>
         </div>
-        <div class="greeting-text">
-          <h1>Olá, {{ getFirstName() }}</h1>
-          <p>Aqui você encontra todas as informações relacionadas a sua conta, como acompanhar seus últimos pedidos, adicionar novos endereços...</p>
+        <div class="welcome-content">
+          <h1 class="welcome-title">Olá, {{ getFirstName() }}</h1>
+          <p class="welcome-description">
+            Aqui você encontra todas as informações relacionadas a sua conta, como acompanhar seus últimos pedidos, adicionar novos endereços...
+          </p>
         </div>
       </div>
-      <div class="divider"></div>
-    </div>
 
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-      <div class="action-card" *ngFor="let action of quickActions" (click)="setActiveSection(action.id)">
-        <i [class]="action.icon"></i>
-        <h3>{{ action.title }}</h3>
+      <!-- Grid de Cards Principais -->
+      <div class="main-cards-grid">
+        <div class="main-card" (click)="setActiveSection('dados')">
+          <mat-icon class="card-icon">person</mat-icon>
+          <span class="card-title">MEUS DADOS</span>
+        </div>
+        <div class="main-card" (click)="setActiveSection('pedidos')">
+          <mat-icon class="card-icon">local_shipping</mat-icon>
+          <span class="card-title">MEUS PEDIDOS</span>
+        </div>
+        <div class="main-card" (click)="setActiveSection('enderecos')">
+          <mat-icon class="card-icon">place</mat-icon>
+          <span class="card-title">ENDEREÇOS</span>
+        </div>
+        <div class="main-card" (click)="setActiveSection('favoritos')">
+          <mat-icon class="card-icon">favorite</mat-icon>
+          <span class="card-title">FAVORITOS</span>
+        </div>
       </div>
-    </div>
 
-    <!-- Content Grid -->
-    <div class="content-grid">
       <!-- Últimos Pedidos -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <i class="fas fa-shopping-bag"></i>
+      <div class="recent-orders-section" *ngIf="pedidos.length > 0">
+        <div class="section-header">
+          <h2 class="section-title">
+            <mat-icon class="section-icon">local_shipping</mat-icon>
             ÚLTIMOS PEDIDOS
-          </div>
-          <button class="btn-secondary">VER TODOS</button>
+          </h2>
+          <button class="view-all-btn" (click)="setActiveSection('pedidos')">VER TODOS</button>
         </div>
-        <div class="card-content">
-          <div class="order-item" *ngFor="let pedido of mockPedidos">
-            <div class="order-details">
-              <div class="order-info-grid">
-                <div class="info-item">
-                  <span class="label">Número do Pedido</span>
-                  <span class="value">{{ pedido.id }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Pagamento</span>
-                  <span class="value">{{ pedido.pagamento }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Data</span>
-                  <span class="value">{{ pedido.data }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Valor Total</span>
-                  <span class="value">{{ pedido.valor }}</span>
-                </div>
-              </div>
-              
-              <div class="order-actions">
-                <div class="status-badge">Status: {{ pedido.status }}</div>
-                <div class="action-buttons">
-                  <button class="btn-primary">VER PEDIDO</button>
-                  <button class="btn-outline">RASTREAR PEDIDO</button>
-                  <button class="btn-outline">CONTATAR SUPORTE</button>
-                </div>
-              </div>
-              
-              <div class="order-status">
-                <div class="status-indicator"></div>
-                <span>{{ pedido.produto }} {{ pedido.dataEnvio }}</span>
-              </div>
+        
+        <div class="order-card-detailed" *ngFor="let pedido of pedidos.slice(0, 3)">
+          <div class="order-main-info">
+            <div class="order-detail">
+              <strong>Número do Pedido</strong>
+              <span>#{{ pedido.id }}</span>
             </div>
+            <div class="order-detail">
+              <strong>Pagamento</strong>
+              <span>{{ pedido.tipoPagamento }}</span>
+            </div>
+            <div class="order-detail">
+              <strong>Data</strong>
+              <span>{{ pedido.data | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+            </div>
+            <div class="order-detail">
+              <strong>Valor Total</strong>
+              <span>{{ pedido.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="order-detail">
+              <strong>Status: {{ getUltimoStatus(pedido) }}</strong>
+            </div>
+          </div>
+          
+          <div class="order-actions">
+            <button class="action-btn primary">VER PEDIDO</button>
+            <button class="action-btn secondary">RASTREAR PEDIDO</button>
+            <button class="action-btn secondary">CONTATAR SUPORTE</button>
+          </div>
+          
+          <div class="order-status">
+            <mat-icon class="status-icon">local_shipping</mat-icon>
+            <span class="status-text">Produto Enviado</span>
+            <span class="status-date">{{ pedido.data | date:'dd/MM/yyyy HH:mm:ss' }}</span>
           </div>
         </div>
       </div>
 
-      <!-- Meus Dados -->
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">
-            <i class="fas fa-user"></i>
-            MEUS DADOS
+      <!-- Grid Inferior: Endereços e Dados -->
+      <div class="bottom-grid">
+        <!-- Endereços -->
+        <div class="bottom-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <mat-icon class="section-icon">place</mat-icon>
+              ENDEREÇOS
+            </h2>
+            <button class="view-all-btn" (click)="setActiveSection('enderecos')">VER TODOS</button>
           </div>
-          <button class="btn-secondary">VER TODOS</button>
-        </div>
-        <div class="card-content">
-          <div class="user-info">
-            <h4>Informações de Acesso</h4>
-            <div class="info-list">
-              <div class="info-row">
-                <i class="fas fa-user"></i>
-                <span>{{ cliente.nome }}</span>
-              </div>
-              <div class="info-row">
-                <i class="fas fa-envelope"></i>
-                <span>alekson12123gmail.com</span>
+          
+          <div class="address-cards" *ngIf="usuario.enderecos.length > 0">
+            <div class="address-card-compact" *ngFor="let endereco of usuario.enderecos.slice(0, 2)">
+              <h4 class="address-title">Endereço de Entrega Padrão</h4>
+              <div class="address-info-compact">
+                <p><strong>{{ usuario.nome }}</strong></p>
+                <p>{{ endereco.rua }}, {{ endereco.numero }}</p>
+                <p>{{ endereco.bairro }}</p>
+                <p>{{ endereco.cidade }}, {{ endereco.estado }} - {{ endereco.cep }}</p>
+                <p *ngIf="usuario.telefones.length > 0">
+                  Tel: ({{ usuario.telefones[0].codigoArea }}) {{ usuario.telefones[0].numero }}
+                </p>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="user-actions">
-            <button class="btn-danger">EDITAR</button>
-            <button class="btn-primary">MUDAR SENHA</button>
+        <!-- Meus Dados -->
+        <div class="bottom-section">
+          <div class="section-header">
+            <h2 class="section-title">
+              <mat-icon class="section-icon">person</mat-icon>
+              MEUS DADOS
+            </h2>
+            <button class="view-all-btn" (click)="setActiveSection('dados')">VER TODOS</button>
           </div>
-
-          <button class="btn-delete">EXCLUIR MINHA CONTA</button>
+          
+          <div class="user-data-compact">
+            <h4 class="data-title">Informações de Acesso</h4>
+            <div class="user-info-compact">
+              <p><mat-icon class="info-icon">person</mat-icon> {{ usuario.nome }}</p>
+              <p><mat-icon class="info-icon">email</mat-icon> {{ usuario.usuario?.email }}</p>
+            </div>
+            
+            <div class="user-actions">
+              <button class="action-btn primary">EDITAR</button>
+              <button class="action-btn primary">MUDAR SENHA</button>
+              <button class="action-btn danger">EXCLUIR MINHA CONTA</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Endereços -->
-    <div class="card addresses-card">
-      <div class="card-header">
-        <div class="card-title">
-          <i class="fas fa-map-marker-alt"></i>
-          ENDEREÇOS
+    <!-- Outras Seções -->
+    <div *ngIf="activeSection === 'dados'" class="content-section">
+      <h2 class="page-title">Meus Dados</h2>
+      <div class="data-grid">
+        <div class="data-item">
+          <label>Nome Completo</label>
+          <p>{{ usuario.nome || 'Não informado' }}</p>
         </div>
-        <button class="btn-secondary">VER TODOS</button>
+        <div class="data-item">
+          <label>Email</label>
+          <p>{{ usuario.usuario?.email || 'Não informado' }}</p>
+        </div>
+        <div class="data-item">
+          <label>CPF</label>
+          <p>{{ usuario.usuario?.cpf || 'Não informado' }}</p>
+        </div>
+        <div class="data-item">
+          <label>Data de Nascimento</label>
+          <p>{{ usuario.dataNascimento || 'Não informado' }}</p>
+        </div>
       </div>
-      <div class="card-content">
-        <div class="addresses-grid">
-          <div class="address-item" *ngFor="let endereco of cliente.enderecos; let i = index">
-            <h4>{{ i === 0 ? 'Endereço de Entrega Padrão' : 'Endereço de Cobrança Padrão' }}</h4>
-            <div class="address-details">
-              <p>{{ cliente.nome }}</p>
-              <p>{{ endereco.rua }}, {{ endereco.numero }}</p>
-              <p>{{ endereco.bairro }}</p>
-              <p>{{ endereco.cidade }}, {{ endereco.estado }} - {{ endereco.cep }}</p>
-              <p *ngIf="cliente.telefones.length > 0">Tel: {{ cliente.telefones[0].numero }}</p>
-            </div>
+    </div>
+
+    <div *ngIf="activeSection === 'pedidos'" class="content-section">
+      <h2 class="page-title">Meus Pedidos</h2>
+      <div class="orders-list" *ngIf="pedidos.length > 0; else noPedidos">
+        <div class="order-item" *ngFor="let pedido of pedidos">
+          <div class="order-summary">
+            <h3>Pedido #{{ pedido.id }}</h3>
+            <p>{{ pedido.data | date:'dd/MM/yyyy' }} - {{ pedido.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</p>
+            <span class="status">{{ pedido.listaStatus }}</span>
           </div>
         </div>
       </div>
+      <ng-template #noPedidos>
+        <div class="empty-state">Nenhum pedido encontrado</div>
+      </ng-template>
+    </div>
+
+    <div *ngIf="activeSection === 'enderecos'" class="content-section">
+      <h2 class="page-title">Endereços</h2>
+      <div class="addresses-list" *ngIf="usuario.enderecos.length > 0; else noAddresses">
+        <div class="address-item" *ngFor="let endereco of usuario.enderecos">
+          <h3>{{ endereco.rua }}, {{ endereco.numero }}</h3>
+          <p>{{ endereco.bairro }} - {{ endereco.cidade }}/{{ endereco.estado }}</p>
+          <p>CEP: {{ endereco.cep }}</p>
+        </div>
+      </div>
+      <ng-template #noAddresses>
+        <div class="empty-state">Nenhum endereço cadastrado</div>
+      </ng-template>
+    </div>
+
+    <div *ngIf="activeSection === 'favoritos'" class="content-section">
+      <h2 class="page-title">Meus Favoritos</h2>
+      <div class="empty-state">Nenhum item favoritado</div>
     </div>
   </div>
 </div>

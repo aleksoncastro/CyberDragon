@@ -76,17 +76,16 @@ export const routes: Routes = [
     },
 
     {
-        path:'cliente',
+        path: 'cliente',
         component: UserTemplateComponent,
         title: 'Usuario',
         canActivate: [ClienteGuard],
         children: [
-            { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video' },
-            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho'},
-            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos'},
-            { path: 'informacoes', component: ClienteFormComponent, title: 'Informações do Cliente' },
-            { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário'}
-
+            { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video', data: { breadcrumb: 'Placas Vitrine' } },
+            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', data: { breadcrumb: 'Carrinho' } },
+            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', data: { breadcrumb: 'Favoritos' } },
+            { path: 'informacoes', component: ClienteFormComponent, title: 'Informações do Cliente', data: { breadcrumb: 'Informações' } },
+            { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário', data: { breadcrumb: 'Perfil' } }
         ]
     },
 

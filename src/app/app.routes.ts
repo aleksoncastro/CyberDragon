@@ -34,6 +34,7 @@ import { PlacaDeVideoDetailComponent } from './components/placadevideo/placadevi
 import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
 import { UserProfileComponent } from './components/usuario/user-profile/user-profile.component';
 import { PlacadevideoSearchComponent } from './components/placadevideo/placadevideo-search/placadevideo-search.component';
+import { PedidoPagamentoComponent } from './components/pedido/pedido-pagamento/pedido-pagamento.component';
 
 export const routes: Routes = [
 
@@ -88,7 +89,9 @@ export const routes: Routes = [
             { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', data: { breadcrumb: 'Carrinho' } },
             { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', data: { breadcrumb: 'Favoritos' } },
             { path: 'informacoes', component: ClienteFormComponent, title: 'Informações do Cliente', data: { breadcrumb: 'Informações' } },
-            { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário', data: { breadcrumb: 'Perfil' } }
+            { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário', data: { breadcrumb: 'Perfil' } },
+            { path: 'pedido-pagamento', component: PedidoPagamentoComponent, title: 'Criação do Pedido e Pagamento' }
+        
         ]
     },
 

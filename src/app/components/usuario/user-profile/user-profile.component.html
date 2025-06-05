@@ -101,7 +101,7 @@
             </div>
             <div class="order-detail">
               <strong>Pagamento</strong>
-              <span>{{ pedido.tipoPagamento }}</span>
+              <span>{{ getTipoPagamentoLabel(pedido.tipoPagamento) }}</span>
             </div>
             <div class="order-detail">
               <strong>Data</strong>
@@ -118,13 +118,13 @@
           
           <div class="order-actions">
             <button class="action-btn primary">VER PEDIDO</button>
-            <button class="action-btn secondary">RASTREAR PEDIDO</button>
-            <button class="action-btn secondary">CONTATAR SUPORTE</button>
+            <button class="action-btn primary">RASTREAR PEDIDO</button>
+            <button class="action-btn primary">CONTATAR SUPORTE</button>
           </div>
           
           <div class="order-status">
             <mat-icon class="status-icon">local_shipping</mat-icon>
-            <span class="status-text">Produto Enviado</span>
+            <span class="status-text">{{ getUltimoStatus(pedido) }}</span>
             <span class="status-date">{{ pedido.data | date:'dd/MM/yyyy HH:mm:ss' }}</span>
           </div>
         </div>
@@ -215,7 +215,7 @@
           <div class="order-summary">
             <h3>Pedido #{{ pedido.id }}</h3>
             <p>{{ pedido.data | date:'dd/MM/yyyy' }} - {{ pedido.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</p>
-            <span class="status">{{ pedido.listaStatus }}</span>
+            <span class="status">{{ pedido.statusPedido }}</span>
           </div>
         </div>
       </div>

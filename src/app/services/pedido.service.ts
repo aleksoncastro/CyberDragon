@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PedidoService {
 
-  private readonly baseUrl = '/api/pedidos';
+  private readonly baseUrl = 'http://localhost:8080/pedidos';
 
   constructor(private http: HttpClient) { }
 

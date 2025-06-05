@@ -9,7 +9,7 @@ export class Pedido {
   cliente!: Cliente;
   listaItemPedido!: ItemPedido[];
   valorTotal!: number;
-  listaStatus!: UpdateStatusPedido[];
+  statusPedido!: UpdateStatusPedido[];
   enderecoEntrega!: EnderecoEntrega;
   pagamento!: Pagamento;
   tipoPagamento!: number;

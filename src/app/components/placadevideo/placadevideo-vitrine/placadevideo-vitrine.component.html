@@ -1,69 +1,89 @@
+<!-- Barra de ações -->
+<div class="actions-bar">
+  <button mat-raised-button color="primary" (click)="irParaPesquisaAvancada()">
+    <mat-icon>search</mat-icon>
+    Pesquisa Avançada
+  </button>
+</div>
 
-  
-  <!-- Spinner de carregamento -->
-  <div *ngIf="isLoading" class="spinner-container">
-    <mat-spinner diameter="50"></mat-spinner>
-  </div>
-  
-  <!-- Tabela de resultados -->
-  <div *ngIf="!isLoading">
-    <table mat-table [dataSource]="placasDeVideoFiltradas" class="table">
-  
-      <!-- Modelo Column -->
-      <ng-container matColumnDef="modelo">
-        <th mat-header-cell *matHeaderCellDef> Modelo </th>
-        <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
-      </ng-container>
-  
-      <!-- Categoria Column -->
-      <ng-container matColumnDef="categoria">
-        <th mat-header-cell *matHeaderCellDef> Categoria </th>
-        <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
-      </ng-container>
-  
-      <!-- Preço Column -->
-      <ng-container matColumnDef="preco">
-        <th mat-header-cell *matHeaderCellDef> Preço </th>
-        <td mat-cell *matCellDef="let element"> R$ {{element.preco | number:'1.2-2'}} </td>
-      </ng-container>
-  
-      <!-- Resolução Column -->
-      <ng-container matColumnDef="resolucao">
-        <th mat-header-cell *matHeaderCellDef> Resolução </th>
-        <td mat-cell *matCellDef="let element"> {{element.resolucao}} </td>
-      </ng-container>
-  
-      <!-- Memória Column -->
-      <ng-container matColumnDef="memoria">
-        <th mat-header-cell *matHeaderCellDef> Memória </th>
-        <td mat-cell *matCellDef="let element"> {{element.memoria.tipo}} - {{element.memoria.capacidade}} GB </td>
-      </ng-container>
-  
-      <!-- Fornecedor Column -->
-      <ng-container matColumnDef="fornecedor">
-        <th mat-header-cell *matHeaderCellDef> Fornecedor </th>
-        <td mat-cell *matCellDef="let element"> {{element.fornecedor.nome}} </td>
-      </ng-container>
-  
-      <!-- Lista de Imagens Column -->
-      <ng-container matColumnDef="listaImagem">
-        <th mat-header-cell *matHeaderCellDef> Imagens </th>
-        <td mat-cell *matCellDef="let element">
-          <img *ngIf="element.listaImagem?.length > 0" [src]="element.listaImagem[0]" alt="Imagem" width="50">
-        </td>
-      </ng-container>
-  
-      <!-- Header/Footer row definitions -->
-      <tr mat-header-row *matHeaderRowDef="['modelo', 'categoria', 'preco', 'resolucao', 'memoria', 'fornecedor', 'listaImagem']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['modelo', 'categoria', 'preco', 'resolucao', 'memoria', 'fornecedor', 'listaImagem'];"></tr>
-    </table>
-  
-    <mat-paginator
-      [pageSizeOptions]="[5, 10, 20, 50]"
-      [pageSize]="pageSize"
-      [length]="totalRecords"
-      [pageIndex]="page"
-      (page)="paginar($event)">
-    </mat-paginator>
-  </div>
-  
+<!-- Spinner de carregamento -->
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<!-- Tabela de resultados -->
+<div *ngIf="!isLoading">
+  <table mat-table [dataSource]="placasDeVideoFiltradas" class="table">
+
+    <!-- Modelo Column -->
+    <ng-container matColumnDef="modelo">
+      <th mat-header-cell *matHeaderCellDef> Modelo </th>
+      <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+    </ng-container>
+
+    <!-- Categoria Column -->
+    <ng-container matColumnDef="categoria">
+      <th mat-header-cell *matHeaderCellDef> Categoria </th>
+      <td mat-cell *matCellDef="let element"> {{element.categoria}} </td>
+    </ng-container>
+
+    <!-- Preço Column -->
+    <ng-container matColumnDef="preco">
+      <th mat-header-cell *matHeaderCellDef> Preço </th>
+      <td mat-cell *matCellDef="let element"> R$ {{element.preco | number:'1.2-2'}} </td>
+    </ng-container>
+
+    <!-- Resolução Column -->
+    <ng-container matColumnDef="resolucao">
+      <th mat-header-cell *matHeaderCellDef> Resolução </th>
+      <td mat-cell *matCellDef="let element"> {{element.resolucao}} </td>
+    </ng-container>
+
+    <!-- Memória Column -->
+    <ng-container matColumnDef="memoria">
+      <th mat-header-cell *matHeaderCellDef> Memória </th>
+      <td mat-cell *matCellDef="let element"> {{element.memoria.tipoMemoria}} - {{element.memoria.capacidade}} GB </td>
+    </ng-container>
+
+    <!-- Fornecedor Column -->
+    <ng-container matColumnDef="fornecedor">
+      <th mat-header-cell *matHeaderCellDef> Fornecedor </th>
+      <td mat-cell *matCellDef="let element"> {{element.fornecedor?.nome}} </td>
+    </ng-container>
+
+    <!-- Lista de Imagens Column -->
+    <ng-container matColumnDef="listaImagem">
+      <th mat-header-cell *matHeaderCellDef> Imagens </th>
+      <td mat-cell *matCellDef="let element">
+        <img *ngIf="element.listaImagem?.length > 0" 
+             [src]="getImageUrl(element.listaImagem[0])" 
+             alt="Imagem" 
+             width="50"
+             height="50"
+             style="object-fit: cover;">
+      </td>
+    </ng-container>
+
+    <!-- Ações Column -->
+    <ng-container matColumnDef="acoes">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button [routerLink]="['/placasdevideo', element.id]">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header/Footer row definitions -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    [pageSize]="pageSize"
+    [length]="totalRecords"
+    [pageIndex]="page"
+    (page)="paginar($event)">
+  </mat-paginator>
+</div>

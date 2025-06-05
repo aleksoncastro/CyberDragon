@@ -53,7 +53,7 @@ export class HeaderCliComponent implements OnInit {
   onSearch() {
     const query = this.searchQuery.trim();
     if (query) {
-      this.router.navigate(['placas-vitrine'], {
+      this.router.navigate(['placasdevideo-search'], {
         queryParams: { q: query }
       });
     }

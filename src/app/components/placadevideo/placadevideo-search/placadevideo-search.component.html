@@ -1,0 +1,224 @@
+<div class="search-container">
+  <div class="page-header">
+    <h1 class="page-title">Placas de Vídeo</h1>
+    
+    <!-- Exibir termo de pesquisa atual se existir -->
+    <div *ngIf="searchText" class="search-info">
+      <mat-chip-set>
+        <mat-chip (removed)="clearSearch()">
+          <mat-icon matChipAvatar>search</mat-icon>
+          Pesquisando por: "{{ searchText }}"
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </div>
+
+  <!-- Painel de filtros -->
+  <mat-card class="filter-card">
+    <mat-card-header>
+      <mat-card-title>
+        <button mat-stroked-button (click)="toggleFilters()" class="filter-toggle-btn">
+          <mat-icon>tune</mat-icon>
+          {{ isFilterOpen ? 'Ocultar Filtros' : 'Mostrar Filtros' }}
+          <mat-icon *ngIf="getActiveFiltersCount() > 0" 
+                    matBadge="{{getActiveFiltersCount()}}" 
+                    matBadgeColor="accent" 
+                    class="icon-pulse">
+            filter_list
+          </mat-icon>
+        </button>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="isFilterOpen">
+      <form [formGroup]="filterForm" class="filter-form">
+        <div class="filter-row">
+          <!-- Categoria -->
+          <mat-form-field appearance="outline">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoria">
+              <mat-option [value]="null">Todas as categorias</mat-option>
+              <mat-option *ngFor="let categoria of categorias" [value]="categoria">
+                {{ categoria }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Memória Mínima -->
+          <mat-form-field appearance="outline">
+            <mat-label>Memória Mínima (GB)</mat-label>
+            <input matInput type="number" formControlName="memoriaMin" min="2" max="32">
+          </mat-form-field>
+
+          <!-- Memória Máxima -->
+          <mat-form-field appearance="outline">
+            <mat-label>Memória Máxima (GB)</mat-label>
+            <input matInput type="number" formControlName="memoriaMax" min="2" max="32">
+          </mat-form-field>
+        </div>
+
+        <div class="filter-row">
+          <!-- Preço Mínimo -->
+          <mat-form-field appearance="outline">
+            <mat-label>Preço Mínimo</mat-label>
+            <input matInput type="number" formControlName="precoMin" min="0">
+            <span matPrefix>R$ </span>
+          </mat-form-field>
+
+          <!-- Preço Máximo -->
+          <mat-form-field appearance="outline">
+            <mat-label>Preço Máximo</mat-label>
+            <input matInput type="number" formControlName="precoMax" min="0">
+            <span matPrefix>R$ </span>
+          </mat-form-field>
+
+          <!-- Ray Tracing -->
+          <div class="ray-tracing-toggle">
+            <mat-slide-toggle formControlName="rayTracing">
+              Suporte a Ray Tracing
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button mat-stroked-button type="button" (click)="onClearFilters()">
+            <mat-icon>clear</mat-icon>
+            Limpar Filtros
+          </button>
+          <button mat-raised-button color="primary" type="button" (click)="onApplyFilters()">
+            <mat-icon>search</mat-icon>
+            Aplicar Filtros
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando placas de vídeo...</p>
+  </div>
+
+  <!-- Resultados -->
+  <div *ngIf="!loading" class="results-container">
+    <!-- Mensagem quando não há resultados -->
+    <div *ngIf="placasDeVideo.length === 0" class="no-results">
+      <mat-icon>search_off</mat-icon>
+      <h3>Nenhuma placa de vídeo encontrada</h3>
+      <p *ngIf="searchText || getActiveFiltersCount() > 0">
+        Tente ajustar os critérios de pesquisa ou filtros.
+      </p>
+      <p *ngIf="!searchText && getActiveFiltersCount() === 0">
+        Use a pesquisa no header ou os filtros para encontrar placas de vídeo.
+      </p>
+    </div>
+
+    <!-- Informações dos resultados -->
+    <div *ngIf="placasDeVideo.length > 0" class="results-info">
+      <p class="results-count">
+        {{ totalItems }} resultado(s) encontrado(s)
+        <span *ngIf="searchText"> para "{{ searchText }}"</span>
+      </p>
+    </div>
+
+    <!-- Grid de resultados -->
+    <div class="results-grid" *ngIf="placasDeVideo.length > 0">
+      <mat-card *ngFor="let placa of placasDeVideo" class="placa-card">
+        <!-- Container da imagem -->
+        <div class="card-image">
+          <img [src]="getImageUrl(placa)" [alt]="placa.modelo" class="placa-image">
+          
+          <!-- Badges -->
+          <mat-chip-set class="card-badges">
+            <mat-chip [color]="placa.suporteRayTracing ? 'primary' : 'accent'">
+              {{ placa.suporteRayTracing ? 'Ray Tracing' : 'Sem Ray Tracing' }}
+            </mat-chip>
+          </mat-chip-set>
+
+          <!-- Ícones de ação -->
+          <div class="action-icons">
+            <button mat-icon-button (click)="verDetalhes(placa.id!)" 
+                    matTooltip="Ver detalhes">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button 
+                    (click)="adicionarOuRemoverFavorito(placa)" 
+                    [color]="getFavoritoColor(placa.id!)"
+                    matTooltip="{{ isFavorito(placa.id!) ? 'Remover dos favoritos' : 'Adicionar aos favoritos' }}">
+              <mat-icon>{{ getFavoritoIcon(placa.id!) }}</mat-icon>
+            </button>
+            <button mat-icon-button (click)="adicionarAoCarrinho(placa)" 
+                    matTooltip="Adicionar ao carrinho">
+              <mat-icon>shopping_cart</mat-icon>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Header do card -->
+        <mat-card-header>
+          <mat-card-title class="card-info">{{ placa.modelo }}</mat-card-title>
+          <mat-card-subtitle>{{ placa.fornecedor?.nome }} • {{ placa.categoria }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <!-- Conteúdo do card -->
+        <mat-card-content>
+          <div class="specs-grid">
+            <div class="spec-item">
+              <span class="spec-label">Memória:</span>
+              <span class="spec-value">{{ placa.memoria.capacidade }} GB {{ placa.memoria.tipoMemoria }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Clock:</span>
+              <span class="spec-value">{{ placa.clockBase }} MHz / {{ placa.clockBoost }} MHz</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Interface:</span>
+              <span class="spec-value">{{ placa.barramento }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Resolução:</span>
+              <span class="spec-value">{{ placa.resolucao }}</span>
+            </div>
+          </div>
+
+          <!-- Linha decorativa -->
+          <div class="line"></div>
+
+          <!-- Informações de preço -->
+          <div class="avista">À vista no PIX</div>
+          <div class="price">R$ {{ placa.preco | number:'1.2-2' }}</div>
+          <div class="parcelamento">ou em até 12x de</div>
+          <div class="parcelamento2">
+            <span class="valor-parcela">R$ {{ (placa.preco / 12) | number:'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+
+        <!-- Ações do card -->
+        <mat-card-actions class="card-actions">
+          <button mat-stroked-button (click)="adicionarAoCarrinho(placa)" class="add-cart-btn">
+            <mat-icon>shopping_cart</mat-icon>
+            Carrinho
+          </button>
+          <button mat-raised-button color="primary" (click)="verDetalhes(placa.id!)">
+            Ver Detalhes
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <!-- Paginação -->
+    <mat-paginator 
+      *ngIf="placasDeVideo.length > 0"
+      [pageSizeOptions]="pageSizeOptions"
+      [pageSize]="pageSize"
+      [length]="totalItems"
+      [pageIndex]="currentPage"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

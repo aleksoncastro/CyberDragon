@@ -33,6 +33,7 @@ import { loginredirectGuard } from './guards/loginredirect.guard';
 import { PlacaDeVideoDetailComponent } from './components/placadevideo/placadevideo-detail/placadevideo-detail.component';
 import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-form.component';
 import { UserProfileComponent } from './components/usuario/user-profile/user-profile.component';
+import { PlacadevideoSearchComponent } from './components/placadevideo/placadevideo-search/placadevideo-search.component';
 
 export const routes: Routes = [
 
@@ -45,6 +46,8 @@ export const routes: Routes = [
             { path: '', pathMatch: 'full', redirectTo: 'placasdevideo' },
             { path: 'placasdevideo', component: PlacaCardListComponent, title: 'Cards de Placa' },
             { path: 'placadevideo-detail/:id', component: PlacaDeVideoDetailComponent, title: 'Detalhes da Placa de Video' },
+            { path: 'placasdevideo-vitrine', component: PlacadevideoVitrineComponent, title: 'Placas de Video Vitrine' },
+            { path: 'placasdevideo-search', component: PlacadevideoSearchComponent, title: 'Pesquisa Placas de Video' },
         ]
     },
     {

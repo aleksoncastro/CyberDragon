@@ -75,4 +75,20 @@ export class PlacaDeVideoService {
     const url = `${this.baseUrl}/search/lancamentos/${prefixo1}/${prefixo2}/${valor1}/${valor2}`;
     return this.httpClient.get<PlacaDeVideo[]>(url);
   }
+
+  findByFiltros(filtro: any, page: number = 0, pageSize: number = 20): Observable<PlacaDeVideo[]> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('page_size', pageSize.toString());
+
+    return this.httpClient.post<PlacaDeVideo[]>(`${this.baseUrl}/filtro`, filtro, { params });
+  }
+
+  findByTexto(texto: string, page: number = 0, pageSize: number = 10): Observable<PlacaDeVideo[]> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.httpClient.get<PlacaDeVideo[]>(`${this.baseUrl}/search/texto/${texto}`, { params });
+  }
 }

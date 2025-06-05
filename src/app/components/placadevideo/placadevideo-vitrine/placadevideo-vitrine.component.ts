@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 import { MatInputModule } from '@angular/material/input';
@@ -17,7 +17,18 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-placadevideo-vitrine',
   standalone: true,
-  imports: [MatInputModule, MatPaginatorModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTableModule, CommonModule, MatProgressSpinnerModule, FormsModule],
+  imports: [
+    MatInputModule, 
+    MatPaginatorModule, 
+    MatToolbarModule, 
+    MatIconModule, 
+    MatButtonModule, 
+    MatTableModule, 
+    CommonModule, 
+    MatProgressSpinnerModule, 
+    FormsModule,
+    RouterLink
+  ],
   templateUrl: './placadevideo-vitrine.component.html',
   styleUrl: './placadevideo-vitrine.component.css'
 })
@@ -30,8 +41,9 @@ export class PlacadevideoVitrineComponent implements OnInit {
     'memoria',
     'fornecedor',
     'listaImagem',
-
+    'acoes'
   ];
+  
   placasDeVideo: PlacaDeVideo[] = [];
   placasDeVideoFiltradas: PlacaDeVideo[] = [];
   fornecedores: Fornecedor[] = [];
@@ -42,13 +54,13 @@ export class PlacadevideoVitrineComponent implements OnInit {
   page = 0;
 
   termoBusca = '';
-  isLoading= false;
-
+  isLoading = false;
 
   constructor(
     private placaService: PlacaDeVideoService,
     private fornecedorService: FornecedorService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -60,48 +72,52 @@ export class PlacadevideoVitrineComponent implements OnInit {
       const query = params['q'];
       if (query) {
         this.termoBusca = query;
-        this.buscarPlacas(); // chama o método de busca com o termo
+        this.buscarPlacasPorTexto(); // Usar o método do backend
+      } else {
+        this.carregarTodasPlacas();
       }
     });
   }
 
-  buscarPlacas(): void {
-    const busca = this.termoBusca.toLowerCase().trim();
+  // Método atualizado para usar o serviço do backend
+  buscarPlacasPorTexto(): void {
+    const busca = this.termoBusca.trim();
   
     if (!busca) {
       this.placasDeVideoFiltradas = [];
       return;
     }
 
-    this.isLoading = false;
+    this.isLoading = true;
 
-    // Tenta buscar o fornecedor pelo nome
-    this.fornecedorService.findByNome(busca).subscribe({
-      next: fornecedor => {
-        const idFornecedor = fornecedor.id;
-  
-        this.placaService.findAll(0, 1000).subscribe(placas => {
-          this.placasDeVideo = placas.filter(p =>
-            p.modelo.toLowerCase().includes(busca) ||
-            p.categoria.toLowerCase().includes(busca) ||
-            p.idFornecedor === idFornecedor
-          );
-  
-          this.page = 0;
-          this.atualizarPagina();
-        });
+    // Usar o método findByTexto do serviço
+    this.placaService.findByTexto(busca, this.page, this.pageSize).subscribe({
+      next: (data) => {
+        this.placasDeVideo = data;
+        this.totalRecords = data.length; // Em um cenário real, viria do backend
+        this.atualizarPagina();
+        this.isLoading = false;
       },
-      error: () => {
-        // Se não encontrar fornecedor, busca só por modelo/categoria
-        this.placaService.findAll(0, 1000).subscribe(placas => {
-          this.placasDeVideo = placas.filter(p =>
-            p.modelo.toLowerCase().includes(busca) ||
-            p.categoria.toLowerCase().includes(busca)
-          );
-  
-          this.page = 0;
-          this.atualizarPagina();
-        });
+      error: (error) => {
+        console.error('Erro ao buscar placas de vídeo:', error);
+        this.placasDeVideoFiltradas = [];
+        this.isLoading = false;
+      }
+    });
+  }
+
+  carregarTodasPlacas(): void {
+    this.isLoading = true;
+    this.placaService.findAll(this.page, this.pageSize).subscribe({
+      next: (data) => {
+        this.placasDeVideo = data;
+        this.totalRecords = data.length;
+        this.atualizarPagina();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar placas de vídeo:', error);
+        this.isLoading = false;
       }
     });
   }
@@ -115,7 +131,22 @@ export class PlacadevideoVitrineComponent implements OnInit {
   paginar(event: PageEvent): void {
     this.page = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.atualizarPagina();
+    
+    if (this.termoBusca) {
+      this.buscarPlacasPorTexto();
+    } else {
+      this.carregarTodasPlacas();
+    }
   }
-  
+
+  // Método para navegar para pesquisa avançada
+  irParaPesquisaAvancada(): void {
+    this.router.navigate(['/placasdevideo/search'], {
+      queryParams: this.termoBusca ? { q: this.termoBusca } : {}
+    });
+  }
+
+  getImageUrl(nomeImagem: string): string {
+    return this.placaService.getImagemUrl(nomeImagem);
+  }
 }

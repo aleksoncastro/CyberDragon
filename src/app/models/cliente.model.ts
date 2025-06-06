@@ -10,5 +10,6 @@ export class Cliente {
   enderecos!: Endereco[];
   telefones!: TelefoneCliente[];
   cartoes?: Cartao[];
-  usuario?: Usuario
+  usuario?: Usuario;
+  listaImagem?: string[];
 }

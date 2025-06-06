@@ -8,6 +8,7 @@ import { Usuario } from '../models/usuario.model';
 })
 export class UsuarioService {
   private baseUrl: string = 'http://localhost:8080/usuarios/clientes';
+  private imageBaseUrl: string = 'http://localhost:8080/usuarios';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -16,12 +17,12 @@ export class UsuarioService {
   }
 
   getImagemUrl(nomeImagem: string): string {
-      return `${this.baseUrl}/image/download/${nomeImagem}`;
+      return `${this.imageBaseUrl}/image/download/${nomeImagem}`;
     }
   
     deleteImage(idUsuario: number, nomeImagem: string): Observable<any> {
     return this.httpClient.patch<Usuario>(
-      `${this.baseUrl}/image/delete/${nomeImagem}/usuario/${idUsuario}`,
+      `${this.imageBaseUrl}/image/delete/${nomeImagem}/usuario/${idUsuario}`,
       null
     );
   }
@@ -32,6 +33,6 @@ export class UsuarioService {
       formData.append('nomeImagem', imagem.name);
       formData.append('imagem', imagem, imagem.name);
       
-      return this.httpClient.patch<Usuario>(`${this.baseUrl}/image/upload`, formData);
+      return this.httpClient.patch<Usuario>(`${this.imageBaseUrl}/image/upload`, formData);
     }
 }

@@ -63,4 +63,16 @@ export class HeaderCliComponent implements OnInit {
     this.authService.removeToken();
     this.authService.removeUsuarioLogado();
   }
+
+  buscarPorCategoria(categoria: string) {
+    this.router.navigate(['placasdevideo-search'], {
+      queryParams: { categoria }
+    });
+  }
+
+  buscarPorFornecedor(nomeFornecedor: string) {
+    this.router.navigate(['placasdevideo-search'], {
+      queryParams: { q: nomeFornecedor }
+    });
+  }
 }

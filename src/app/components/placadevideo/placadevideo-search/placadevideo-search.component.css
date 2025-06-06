@@ -36,54 +36,175 @@
   font-size: 14px;
 }
 
-/* Card de filtros */
-.filter-card {
-  margin-bottom: 20px;
-  background-color: var(--fundo-principal, #fff);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Layout principal com sidebar e conteúdo */
+.main-layout {
+  display: flex;
+  gap: 20px;
+  position: relative;
 }
 
-.filter-toggle-btn {
+/* Sidebar de filtros */
+.filter-sidebar {
+  width: 280px;
+  background-color: var(--fundo-principal, #333); /* Cor escura para fundo */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  color: white; /* Força o texto branco */
+}
+
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-gap,
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  stroke: white !important;
+}
+
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-start,
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-gap,
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-end {
+  stroke: var(--icone-destaque, #ffd700) !important;
+}
+
+.filter-sidebar ::ng-deep input.mat-input-element,
+.filter-sidebar ::ng-deep textarea.mat-input-element,
+.filter-sidebar ::ng-deep .mat-select-trigger,
+.filter-sidebar ::ng-deep .mat-select-placeholder,
+.filter-sidebar ::ng-deep .mat-form-field-label,
+.filter-sidebar ::ng-deep .mat-form-field-prefix,
+.filter-sidebar ::ng-deep .mat-form-field-suffix {
+  color: white !important;
+}
+
+.filter-sidebar .mat-form-field-label,
+.filter-sidebar .mat-select-placeholder,
+.filter-sidebar .mat-form-field-underline,
+.filter-sidebar .mat-input-element,
+.filter-sidebar .mat-select-value-text,
+.filter-sidebar .mat-slide-toggle-label,
+.filter-sidebar .mat-slide-toggle-content,
+.filter-sidebar mat-label,
+.filter-sidebar mat-icon {
+  color: white !important;
+}
+
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: white !important;
+}
+
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  border-color: var(--icone-destaque, #ffd700) !important;
+}
+
+.filter-sidebar ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  border-color: var(--icone-destaque, #ffd700) !important;
+}
+
+.filter-sidebar ::ng-deep .mat-form-field-label {
+  color: white !important;
+}
+
+.filter-sidebar ::ng-deep input.mat-input-element,
+.filter-sidebar ::ng-deep .mat-select-trigger {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+/* Se quiser fundo mais escuro dentro do input: */
+.filter-sidebar ::ng-deep input.mat-input-element {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Placeholder e label */
+.filter-sidebar ::ng-deep .mat-form-field-label {
+  color: white !important;
+}
+
+/* Cor do prefixo (R$) */
+.filter-sidebar ::ng-deep .mat-form-field-prefix {
+  color: white !important;
+}
+
+/* Slide toggle texto */
+.filter-sidebar ::ng-deep .mat-slide-toggle-label-content {
+  color: white !important;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--texto-primario, #333);
+  margin: 0;
+}
+
+.clear-filters-btn {
   border-color: var(--icone-destaque, #ffd700);
   color: var(--icone-destaque, #ffd700);
-  transition: all 0.3s ease;
-}
-
-.filter-toggle-btn:hover {
-  background-color: var(--icone-destaque, #ffd700);
-  color: #333;
-  transform: scale(1.05);
+  font-size: 12px;
+  padding: 0 8px;
 }
 
 /* Formulário de filtros */
 .filter-form {
-  padding: 20px 0;
-}
-
-.filter-row {
   display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-.filter-row mat-form-field {
-  flex: 1;
-  min-width: 200px;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
 }
 
 .ray-tracing-toggle {
   display: flex;
   align-items: center;
-  min-width: 200px;
+  margin: 8px 0;
 }
 
 .filter-actions {
-  display: flex;
-  gap: 15px;
-  justify-content: flex-end;
   margin-top: 20px;
+}
+
+.filter-actions button {
+  width: 100%;
+  background-color: var(--icone-destaque, #ffd700);
+  color: var(--texto-primario, #333);
+}
+
+/* Conteúdo principal */
+.main-content {
+  flex: 1;
+  min-width: 0; /* Importante para evitar overflow */
+}
+
+/* Botão de toggle de filtros (apenas mobile) */
+.filter-toggle-btn {
+  margin-bottom: 20px;
+  border-color: var(--icone-destaque, #ffd700);
+  color: var(--icone-destaque, #ffd700);
+}
+
+::ng-deep .mat-mdc-select-min-line {
+  color: white !important;
+}
+
+::ng-deep label.mdc-label {
+  color: white !important;
+}
+
+::ng-deep input.mat-mdc-input-element {
+  color: white !important;
+  background-color: transparent !important; /* Se quiser fundo transparente */
+}
+
+.mobile-only {
+  display: none;
 }
 
 /* Informações dos resultados */
@@ -123,55 +244,31 @@
   color: var(--icone-destaque, #ffd700);
 }
 
-/* Grid de resultados - seguindo o modelo fornecido */
+/* Grid de resultados */
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 1.5rem;
   margin-bottom: 30px;
-  padding: 2rem 0;
 }
 
-@media (max-width: 1200px) {
-  .results-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 900px) {
-  .results-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .results-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* Cards das placas - seguindo o modelo fornecido */
+/* Cards das placas - novo design */
 .placa-card {
   position: relative;
   overflow: hidden;
   border: 1px solid transparent;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: var(--fundo-principal, #fff);
   color: var(--texto-primario, #333);
-  width: 100%;
-  max-width: 300px;
-  height: auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-  margin: 0 auto;
-  justify-content: center;
-  padding-top: 0 !important;
+  height: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .placa-card:hover {
-  transform: scale(1.1) translateY(-4px);
-  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.15);
   border: 1px solid var(--icone-destaque, #ffd700);
 }
 
@@ -180,47 +277,55 @@
   transform: translateY(0);
 }
 
-/* Container da imagem - seguindo o modelo */
+/* Container da imagem */
 .card-image {
-  position: relative;
-  height: 250px;
+  width: 100%;
+  height: auto; /* ou outro valor conforme o layout */
   overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .placa-image {
-  max-width: 100%;
-  max-height: 200%;
-  object-fit: contain;
   width: 100%;
-  border-radius: 5px;
+  height: 100%;
+  object-fit: cover; /* Preenche cortando, se necessário */
+  display: block;
+  transition: transform 0.3s ease;
 }
 
-/* Badges dos cards */
-.card-badges {
+.placa-card:hover .placa-image {
+  transform: scale(1.05);
+}
+
+/* Ícones de ação */
+.action-icons {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  opacity: 1; /* Para que fiquem sempre visíveis, remova se quiser manter hover */
+  transform: none; /* Remove a animação de subida */
   z-index: 2;
 }
 
-/* Ícones de ação - seguindo o modelo */
-.action-icons {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  display: flex;
-  gap: 8px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 3;
-}
-
-.action-icons button {
-  background: rgba(0, 0, 0, 0.7);
+/* Ajustes visuais dos botões */
+.action-btn {
+  background: black;
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -228,58 +333,80 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.action-icons button mat-icon {
+.action-btn mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 20px;
-  color: white;
-  transition: transform 0.3s ease, color 0.3s ease;
+  color: var(--texto-secundario, #666);
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.action-icons button:hover mat-icon {
-  transform: scale(1.2);
+.action-btn:hover mat-icon {
+  transform: scale(1.1);
   color: var(--icone-destaque, #ffd700);
 }
 
-/* Header e conteúdo do card */
-.placa-card mat-card-header {
-  padding: 16px 16px 8px 16px;
+.action-btn.favorite-active mat-icon {
+  color: #f44336;
 }
 
-.placa-card mat-card-content {
-  padding: 0 16px 8px 16px;
+/* Conteúdo do card */
+.card-content {
+  padding: 20px !important;
 }
 
-.placa-card mat-card-actions {
-  padding: 8px 16px 16px 16px;
+/* Badges */
+.card-badges {
+  margin-bottom: 12px;
 }
 
-/* Informações do card - seguindo o modelo */
-.card-info {
+.card-badges mat-chip-set {
+  display: flex;
+  gap: 8px;
+}
+
+.category-chip {
+  background-color: var(--icone-destaque, #ffd700) !important;
+  color: var(--texto-primario, #333) !important;
+  font-size: 12px;
   font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.4;
-  font-size: 16px;
-  margin-bottom: 0;
+}
+
+.brand-chip {
+  background-color: #e3f2fd !important;
+  color: #1976d2 !important;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Título do card */
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: var(--texto-primario, #333);
+  line-height: 1.3;
 }
 
 /* Grid de especificações */
 .specs-grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
-  margin: 15px 0;
+  margin-bottom: 16px;
 }
 
 .spec-item {
   display: flex;
   justify-content: space-between;
-  padding: 5px 0;
-  border-bottom: 1px solid #eee;
+  align-items: center;
+  padding: 6px 0;
   font-size: 14px;
 }
 
@@ -291,45 +418,114 @@
 .spec-value {
   font-weight: 600;
   color: var(--texto-primario, #333);
+  text-align: right;
 }
 
-/* Ações do card */
-.card-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  gap: 10px;
+.rt-chip {
+  background-color: #e8f5e8 !important;
+  color: #2e7d32 !important;
+  font-size: 11px;
+  padding: 4px 8px;
+  height: auto;
+  font-weight: 500;
 }
 
-.card-actions button {
-  flex: 1;
-  min-width: 0;
+/* Divisor de preço */
+.price-divider {
+  margin: 16px 0;
+  background-color: #eee;
 }
 
-/* Botão de adicionar ao carrinho nas ações do card */
-.add-cart-btn {
-  border-color: var(--icone-destaque, #ffd700);
-  color: var(--icone-destaque, #ffd700);
-  transition: all 0.3s ease;
+/* Seção de preços */
+.price-section {
+  text-align: left;
 }
 
-.add-cart-btn:hover {
-  background-color: var(--icone-destaque, #ffd700);
-  color: #333;
-  transform: scale(1.05);
-}
-
-/* Preços - seguindo o modelo */
-.price {
+.price-label {
   color: #00a202;
-  font-weight: bolder;
-  font-size: 24px;
+  font-size: 13px;
+  margin: 0 0 4px 0;
+  font-weight: 500;
 }
 
+.main-price {
+  color: #00a202;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0 0 8px 0;
+  line-height: 1;
+}
+
+.installment-info {
+  font-size: 13px;
+  margin: 0 0 2px 0;
+  color: var(--texto-secundario, #666);
+}
+
+.installment-value {
+  color: var(--icone-destaque, #ffd700);
+  font-weight: 600;
+}
+
+.installment-detail {
+  font-size: 12px;
+  margin: 0;
+  color: var(--texto-secundario, #666);
+}
+
+/* Responsividade para cards */
+@media (max-width: 1200px) {
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+
+  .card-image {
+    height: 180px;
+  }
+
+  .card-content {
+    padding: 16px !important;
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .main-price {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .placa-card {
+    max-width: 100%;
+  }
+}
+/* Preços - mantendo o estilo original */
 .avista {
   color: #00a202;
   font-size: 13px;
+  padding: 0 16px;
+  margin-bottom: 0;
+}
+
+.preco {
+  color: #00a202;
+  font-weight: bolder;
+  font-size: 24px;
+  padding: 0 16px !important;
+  margin-bottom: 8px;
 }
 
 .valor-parcela {
@@ -339,37 +535,28 @@
 .parcelamento {
   font-size: 13px;
   margin-bottom: 0px;
+  padding: 0 16px;
 }
 
 .parcelamento2 {
   font-size: 13px;
   margin-top: 0px;
+  padding: 0 16px;
+  margin-bottom: 16px;
 }
 
-.valor-desconto {
-  font-size: 13px;
-  color: #e90313;
-}
-
-/* Linha decorativa */
 .line {
-  margin-top: 10px;
+  margin: 10px 16px;
   height: 2px;
   width: 30%;
   background-color: var(--icone-destaque, #ffd700);
 }
 
-/* Ícone de favorito com cor */
-.action-icons button[color="warn"] mat-icon {
-  color: #f44336 !important;
-}
-
-/* Paginação */
-::ng-deep .mat-mdc-paginator {
-  background-color: var(--fundo-principal, #fff);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+.valor-desconto {
+  font-size: 13px;
+  color: #e90313;
+  padding: 0 16px;
+  display: block;
 }
 
 /* Animações */
@@ -389,85 +576,48 @@
 }
 
 /* Responsividade */
+@media (max-width: 992px) {
+  .main-layout {
+    flex-direction: column;
+  }
+
+  .filter-sidebar {
+    width: 100%;
+    position: static;
+    margin-bottom: 20px;
+    display: none;
+  }
+
+  .filter-sidebar-open {
+    display: block;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .search-container {
     padding: 10px;
   }
-  
-  .filter-form {
-    padding: 15px;
+
+  .page-title {
+    font-size: 1.5rem;
   }
-  
-  .filter-row {
-    flex-direction: column;
-  }
-  
-  .filter-row mat-form-field {
-    min-width: 100%;
-  }
-  
+
   .results-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
-    padding: 1rem 0;
-  }
-  
-  .placa-card {
-    max-width: 100%;
-  }
-  
-  .card-actions {
-    flex-direction: column;
-    gap: 8px;
-    align-items: stretch;
-  }
-  
-  .card-actions button {
-    width: 100%;
-  }
-  
-  .price {
-    text-align: center;
-    font-size: 20px;
   }
 }
 
 @media (max-width: 480px) {
   .results-grid {
     grid-template-columns: 1fr;
-  }
-  
-  .page-title {
-    font-size: 1.5rem;
-  }
-  
-  .filter-actions {
-    flex-direction: column;
-  }
-  
-  .filter-actions button {
-    width: 100%;
-  }
-}
-
-/* Variáveis CSS customizáveis */
-:root {
-  --fundo-principal: #ffffff;
-  --texto-primario: #333333;
-  --texto-secundario: #666666;
-  --icone-destaque: #ffd700;
-  --borda-destaque: #ffd700;
-  --amarelo-destaque: #ffd700;
-}
-
-/* Tema escuro (opcional) */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fundo-principal: #1e1e1e;
-    --texto-primario: #ffffff;
-    --texto-secundario: #cccccc;
-    --icone-destaque: #ffd700;
-    --borda-destaque: #ffd700;
-    --amarelo-destaque: #ffd700;
   }
 }

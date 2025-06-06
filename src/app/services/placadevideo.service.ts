@@ -17,39 +17,39 @@ export class PlacaDeVideoService {
     if (page !== undefined && pageSize !== undefined) {
       params = params.set('page', page.toString()).set('page_size', pageSize.toString());
     }
-  
+
     return this.httpClient.get<PlacaDeVideo[]>(this.baseUrl + '/page', { params });
   }
-  
+
   getPaginacao(page: number, pageSize: number): Observable<PaginacaoDTO> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('page_size', pageSize.toString());
-  
+
     return this.httpClient.get<PaginacaoDTO>(this.baseUrl, { params });
   }
-  
+
 
   getImagemUrl(nomeImagem: string): string {
     return `${this.baseUrl}/image/download/${nomeImagem}`;
   }
 
   deleteImage(idPlaca: number, nomeImagem: string): Observable<any> {
-  return this.httpClient.patch<PlacaDeVideo>(
-    `${this.baseUrl}/image/delete/${nomeImagem}/placa/${idPlaca}`,
-    null
-  );
-}
+    return this.httpClient.patch<PlacaDeVideo>(
+      `${this.baseUrl}/image/delete/${nomeImagem}/placa/${idPlaca}`,
+      null
+    );
+  }
 
   uploadImage(id: number, nomeImagem: string, imagem: File): Observable<any> {
     const formData: FormData = new FormData();
     formData.append('id', id.toString());
     formData.append('nomeImagem', imagem.name);
     formData.append('imagem', imagem, imagem.name);
-    
+
     return this.httpClient.patch<PlacaDeVideo>(`${this.baseUrl}/image/upload`, formData);
   }
-  
+
 
   count(): Observable<number> {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);
@@ -90,5 +90,26 @@ export class PlacaDeVideoService {
       .set('pageSize', pageSize.toString());
 
     return this.httpClient.get<PlacaDeVideo[]>(`${this.baseUrl}/search/texto/${texto}`, { params });
+  }
+
+  searchPlacas(
+    texto: string,
+    filtro: any,
+    page: number = 0,
+    pageSize: number = 10
+  ): Observable<PlacaDeVideo[]> {
+    let params = new HttpParams()
+      .set('q', texto)
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    // Adiciona os campos do filtro como parâmetros
+    for (const key in filtro) {
+      if (filtro[key] !== null && filtro[key] !== undefined) {
+        params = params.set(key, filtro[key]);
+      }
+    }
+
+    return this.httpClient.get<PlacaDeVideo[]>(`${this.baseUrl}/search`, { params });
   }
 }

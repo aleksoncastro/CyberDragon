@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteService } from '../../../services/cliente.service';
-import { SnackbarService } from '../../snackbar/snackbar.component';
 import { Cliente } from '../../../models/cliente.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgIf, NgForOf } from '@angular/common';
@@ -15,6 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 function extrairEstado(estadoCompleto: string): string {
   // Exemplo: "TO - TOCANTINS" vira "TOCANTINS"

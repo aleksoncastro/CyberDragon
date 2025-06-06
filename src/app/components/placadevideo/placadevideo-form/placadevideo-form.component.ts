@@ -15,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlacaDeVideo } from '../../../models/placadevideo.model';
 import { FornecedorService } from '../../../services/fornecedor.service';
 import { PlacaDeVideoService } from '../../../services/placadevideo.service';
-import { SnackbarService } from '../../snackbar/snackbar.component';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-placadevideo-form',

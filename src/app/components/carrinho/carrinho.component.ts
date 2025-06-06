@@ -69,7 +69,8 @@ export class CarrinhoComponent implements OnInit {
 
   finalizarCompra() {
     // Implementação futura
-    alert("Compra finalizada com sucesso! Total: R$ " + this.calcularTotal().toFixed(2))
+    //alert("Compra finalizada com sucesso! Total: R$ " + this.calcularTotal().toFixed(2))
+  this.router.navigate(['/cliente/pedido-pagamento'])
   }
 
   continuarComprando() {

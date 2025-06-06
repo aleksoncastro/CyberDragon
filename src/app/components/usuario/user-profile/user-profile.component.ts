@@ -10,7 +10,7 @@ import { ActivatedRoute, RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-user-profile",
-  imports: [CommonModule, MatIconModule, RouterModule ],
+  imports: [CommonModule, MatIconModule, RouterModule],
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
@@ -19,20 +19,20 @@ export class UserProfileComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
 
   usuario!: Cliente;
-  activeSection: string = 'dados';
+  activeSection: string = 'conta';
   pedidos: Pedido[] = [];
 
 
   constructor(private clienteService: ClienteService,
     private pedidoService: PedidoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.clienteService.findByMe().subscribe({
       next: data => {
         console.log("Usuário carregado:", data);
         this.usuario = data;
-        this.carregarPedidos(); 
+        this.carregarPedidos();
       },
       error: err => {
         console.error("Erro ao carregar usuário", err);
@@ -40,17 +40,32 @@ export class UserProfileComponent implements OnInit {
     });
   }
   carregarPedidos(): void {
-  this.pedidoService.findByUsername().subscribe({
-    next: data => {
-      this.pedidos = data;
-    },
-    error: err => {
-      console.error("Erro ao carregar pedidos", err);
-    }
-  });
-}
+    this.pedidoService.findByUsername().subscribe({
+      next: data => {
+        console.log("Pedidos: ", data)
+        this.pedidos = data;
+      },
+      error: err => {
+        console.error("Erro ao carregar pedidos", err);
+      }
+    });
+  }
 
-private buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Array<{ label: string; url: string }> = []): Array<{ label: string; url: string }> {
+  getTipoPagamentoLabel(tipo: number): string {
+    switch (tipo) {
+      case 1:
+        return 'PIX';
+      case 2:
+        return 'Boleto';
+      case 3:
+        return 'Cartão de Crédito';
+      default:
+        return 'Desconhecido';
+    }
+  }
+
+
+  private buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Array<{ label: string; url: string }> = []): Array<{ label: string; url: string }> {
     let children: ActivatedRoute[] = route.children;
 
     if (children.length === 0) {
@@ -72,12 +87,13 @@ private buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Ar
     return breadcrumbs;
   }
 
-getUltimoStatus(pedido: Pedido): string {
-    if (pedido.listaStatus && pedido.listaStatus.length > 0) {
-      return pedido.listaStatus[pedido.listaStatus.length - 1].status.label
-    }
-    return "CONCLUÍDO"
+  getUltimoStatus(pedido: Pedido): string {
+  if (pedido.statusPedido && pedido.statusPedido.length > 0) {
+    return pedido.statusPedido[pedido.statusPedido.length - 1].status.label;
   }
+  return 'Status não disponível';
+}
+
 
 
   setActiveSection(section: string): void {

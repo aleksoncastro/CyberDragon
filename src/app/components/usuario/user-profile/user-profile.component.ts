@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Cliente } from "../../../models/cliente.model";
 import { ClienteService } from "../../../services/cliente.service";
 import { CommonModule } from "@angular/common";
@@ -9,6 +9,8 @@ import { ActivatedRoute, RouterModule } from "@angular/router";
 import { UsuarioService } from "../../../services/usuario.service";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { MatMenuModule } from "@angular/material/menu";
+import { PlacaDeVideoService } from "../../../services/placadevideo.service";
+import { PlacaDeVideo } from "../../../models/placadevideo.model";
 
 
 @Component({
@@ -24,6 +26,8 @@ export class UserProfileComponent implements OnInit {
   usuario!: Cliente;
   activeSection: string = 'conta';
   pedidos: Pedido[] = [];
+  imagensPorPedido: { [pedidoId: number]: string[] } = {};
+  placasDoPedido: PlacaDeVideo[] = [];
   imagemUrl: string = '';
   fileName: string = '';
   selectedFile: File | null = null;
@@ -34,6 +38,8 @@ export class UserProfileComponent implements OnInit {
     private usuarioService: UsuarioService,
     private pedidoService: PedidoService,
     private snackbarService: SnackbarService,
+    private placaService: PlacaDeVideoService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -41,7 +47,7 @@ export class UserProfileComponent implements OnInit {
       next: data => {
         console.log("Usuário carregado:", data);
         this.usuario = data;
-        
+
         const imagens = this.usuario?.usuario?.listaImagem;
 
         if (imagens && imagens.length > 0) {
@@ -49,6 +55,7 @@ export class UserProfileComponent implements OnInit {
           this.imagemUrl = this.usuarioService.getImagemUrl(nomeImagem);
         }
         this.carregarPedidos();
+        this.pedidos.forEach(pedido => this.carregarImagensDoPedido(pedido));
       },
       error: err => {
         console.error("Erro ao carregar usuário", err);
@@ -60,6 +67,7 @@ export class UserProfileComponent implements OnInit {
       next: data => {
         console.log("Pedidos: ", data)
         this.pedidos = data;
+        this.pedidos.forEach(pedido => this.carregarImagensDoPedido(pedido));
       },
       error: err => {
         console.error("Erro ao carregar pedidos", err);
@@ -78,7 +86,48 @@ export class UserProfileComponent implements OnInit {
       default:
         return 'Desconhecido';
     }
+
   }
+  getImagensPedido(pedido: Pedido): string[] {
+    if (typeof pedido.id !== 'number') return [];
+    return this.imagensPorPedido[pedido.id] ?? [];
+  }
+
+  temImagensPedido(pedido: Pedido): boolean {
+    if (!pedido.id) return false;
+    const imagens = this.imagensPorPedido[pedido.id];
+    return Array.isArray(imagens) && imagens.length > 0;
+  }
+
+  getListaItemPedido(pedido: Pedido): string {
+  return pedido.listaItemPedido
+    .map((item: any) => {
+      const nome = item.nome ?? 'Modelo desconhecido';
+      return `${item.quantidade}x ${nome} (R$ ${item.preco.toFixed(2)})`;
+    })
+    .join(', ');
+}
+
+
+
+  carregarImagensDoPedido(pedido: Pedido): void {
+  const ids = pedido.listaItemPedido.map((item: any) => item.idProduto);
+
+  ids.forEach(id => {
+    this.placaService.findById(id).subscribe(placa => {
+      if (!this.imagensPorPedido[pedido.id!]) {
+        this.imagensPorPedido[pedido.id!] = [];
+      }
+
+      if (placa.listaImagem && placa.listaImagem.length > 0) {
+        const urls = placa.listaImagem.map(nome => this.placaService.getImagemUrl(nome));
+        this.imagensPorPedido[pedido.id!].push(...urls);
+      }
+    });
+  });
+}
+
+
 
 
   private buildBreadcrumb(route: ActivatedRoute, url: string = '', breadcrumbs: Array<{ label: string; url: string }> = []): Array<{ label: string; url: string }> {

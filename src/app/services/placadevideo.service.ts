@@ -50,6 +50,9 @@ export class PlacaDeVideoService {
     return this.httpClient.patch<PlacaDeVideo>(`${this.baseUrl}/image/upload`, formData);
   }
 
+  buscarPlacasPorPedido(id: number): Observable<PlacaDeVideo[]> {
+    return this.httpClient.get<PlacaDeVideo[]>(`${this.baseUrl}/pedido/${id}`);
+  }
 
   count(): Observable<number> {
     return this.httpClient.get<number>(`${this.baseUrl}/count`);

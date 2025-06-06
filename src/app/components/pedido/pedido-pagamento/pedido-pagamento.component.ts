@@ -45,7 +45,7 @@ export class PedidoPagamentoComponent implements OnInit {
 
     this.pagamentoForm = this.fb.group({
       enderecoId: [null, Validators.required],
-      tipoPagamento: [1, Validators.required] // 1 - Pix, 2 - Boleto, 3 - Cartão
+      tipoPagamento: [null, Validators.required] // 1 - Pix, 2 - Boleto, 3 - Cartão
     });
 
     this.clienteService.findByMe().subscribe({
@@ -83,8 +83,15 @@ export class PedidoPagamentoComponent implements OnInit {
     return;
   }
 
-  const { enderecoId, tipoPagamento } = this.pagamentoForm.value;
-  const enderecoSelecionado = this.enderecos.find(e => e.id === Number(enderecoId));
+  const enderecoIdSelecionado: number = this.pagamentoForm.get('enderecoId')?.value;
+  const tipoPagamentoSelecionado: number = this.pagamentoForm.get('tipoPagamento')?.value;
+
+  if (!enderecoIdSelecionado || !tipoPagamentoSelecionado) {
+    alert('Selecione um endereço e método de pagamento.');
+    return;
+  }
+
+  const enderecoSelecionado = this.enderecos.find(e => e.id === enderecoIdSelecionado);
 
   if (!enderecoSelecionado) {
     alert('Endereço inválido.');
@@ -96,15 +103,13 @@ export class PedidoPagamentoComponent implements OnInit {
     quantidade: item.quantidade
   }));
 
-  // 👇 Aqui definimos o idCartao dinamicamente
-  const idCartao = tipoPagamento === 3 ? this.obterIdCartaoSelecionado() : 0;
-  // Se você ainda não tem um método para isso, pode ser fixo por enquanto.
+  const idCartao = tipoPagamentoSelecionado === 3 ? this.obterIdCartaoSelecionado() : 0;
 
   const pedido = {
     valorTotal: this.calcularTotal(),
     listaItemPedido: itensPedido,
-    idEndereco: Number(enderecoId),
-    tipoPagamento: Number(tipoPagamento),
+    idEndereco: enderecoIdSelecionado,
+    tipoPagamento: tipoPagamentoSelecionado,
     idCartao: idCartao
   };
 
@@ -118,10 +123,11 @@ export class PedidoPagamentoComponent implements OnInit {
     },
     error: (err) => {
       console.error(err);
-      alert('Erro ao processar pagamento.');
+      alert('Erro ao processar o pedido. Tente novamente.');
     }
   });
 }
+
 
 
 }

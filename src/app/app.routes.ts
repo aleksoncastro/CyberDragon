@@ -35,6 +35,7 @@ import { ClienteFormComponent } from './components/cliente/cliente-form/cliente-
 import { UserProfileComponent } from './components/usuario/user-profile/user-profile.component';
 import { PlacadevideoSearchComponent } from './components/placadevideo/placadevideo-search/placadevideo-search.component';
 import { PedidoPagamentoComponent } from './components/pedido/pedido-pagamento/pedido-pagamento.component';
+import { ForbiddenComponent } from './pages/without-permission/without-permission.component';
 
 export const routes: Routes = [
 
@@ -99,6 +100,6 @@ export const routes: Routes = [
     { path: 'usuarios/new', component: UsuarioFormClienteComponent, title: 'Novo Cliente' },
     { path: 'login', component: LoginCliComponent, title: 'Login Cliente', canActivate: [loginredirectGuard] },
     { path: 'loginadmin', component: LoginAdminComponent, title: 'Login Administração', canActivate: [loginredirectGuard] },
-    { path: '**', component: NotFoundComponent, title: 'Página não encontrada' }
-
+    { path: 'forbidden', component: ForbiddenComponent, title: 'Acesso Negado' },
+    { path: '**', component: NotFoundComponent, title: 'Página não encontrada' },
 ];

@@ -483,7 +483,7 @@ export class PlacaDeVideoFormComponent {
         this.uploadImage(placaCadastrada.id);
       } else {
         this.snackbarService.showMessage("Placa salva com sucesso!", true);
-        this.router.navigate(['/admin/placasdevideo']);
+        this.router.navigate(['/admin/placasdevideo-lista']);
       }
     } else {
       console.error('Erro: ID da placa retornada está indefinido ou null.');
@@ -493,7 +493,7 @@ export class PlacaDeVideoFormComponent {
 
 
   cancelar() {
-    this.router.navigateByUrl('/admin/placasdevideo');
+    this.router.navigateByUrl('/admin/placasdevideo-lista');
   }
 
   tratarErros(httpError: HttpErrorResponse): void {
@@ -625,7 +625,7 @@ export class PlacaDeVideoFormComponent {
       this.placaDeVideoService.delete(placaDeVideo).subscribe({
         next: () => {
           this.snackbarService.showMessage('Placa de Vídeo Excluída!', true);
-          this.router.navigateByUrl('/admin/placasdevideo')
+          this.router.navigateByUrl('/admin/placasdevideo-lista')
         },
         error: (err) => {
           this.snackbarService.showMessage('Erro ao excluir a placa de vídeo!', false);

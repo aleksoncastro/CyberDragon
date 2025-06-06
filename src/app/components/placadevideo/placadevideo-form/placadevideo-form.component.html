@@ -133,10 +133,10 @@
                 <mat-form-field appearance="fill" class="full-width-input">
                   <mat-label>Energia (W)</mat-label>
                   <input matInput type="number" formControlName="energia">
-                  <mat-error *ngIf="formGroup.get('energia')?.invalid && formGroup.get('energia')?.touched">
-                    {{ getErrorMessage('energia', formGroup.get('energia')?.errors) }}
-                    @if (formGroup.get('energia')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('energia')?.getError('apiError') }}</span>
+                  <mat-error *ngIf="formArray.at(1).get('energia')?.invalid && formArray.at(1).get('energia')?.touched">
+                    {{ getErrorMessage('energia', formArray.at(1).get('energia')?.errors) }}
+                    @if (formArray.at(1).get('energia')?.hasError('apiError')) {
+                    <span>{{ formArray.at(1).get('energia')?.getError('apiError') }}</span>
                     }
                   </mat-error>
                 </mat-form-field>
@@ -145,10 +145,10 @@
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Clock Base (MHz)</mat-label>
                 <input matInput type="number" formControlName="clockBase">
-                <mat-error *ngIf="formGroup.get('clockBase')?.invalid && formGroup.get('clockBase')?.touched">
-                  {{ getErrorMessage('clockBase', formGroup.get('clockBase')?.errors) }}
-                  @if (formGroup.get('clockBase')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('clockBase')?.getError('apiError') }}</span>
+                <mat-error *ngIf="formArray.at(1).get('clockBase')?.invalid && formArray.at(1).get('clockBase')?.touched">
+                  {{ getErrorMessage('clockBase', formArray.at(1).get('clockBase')?.errors) }}
+                  @if (formArray.at(1).get('clockBase')?.hasError('apiError')) {
+                  <span>{{ formArray.at(1).get('clockBase')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
@@ -156,10 +156,10 @@
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Clock Boost (MHz)</mat-label>
                 <input matInput type="number" formControlName="clockBoost">
-                <mat-error *ngIf="formGroup.get('clockBoost')?.invalid && formGroup.get('clockBoost')?.touched">
-                  {{ getErrorMessage('clockBoost', formGroup.get('clockBoost')?.errors) }}
-                  @if (formGroup.get('clockBoost')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('clockBoost')?.getError('apiError') }}</span>
+                <mat-error *ngIf="formArray.at(1).get('clockBoost')?.invalid && formArray.at(1).get('clockBoost')?.touched">
+                  {{ getErrorMessage('clockBoost', formArray.at(1).get('clockBoost')?.errors) }}
+                  @if (formArray.at(1).get('clockBoost')?.hasError('apiError')) {
+                  <span>{{ formArray.at(1).get('clockBoost')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
@@ -171,10 +171,10 @@
                   <mat-label>Tipo de Memória</mat-label>
                   <input matInput type="text" formControlName="tipoMemoria" #inputTipoMemoria>
                   <mat-error
-                    *ngIf="formGroup.get('memoria.tipoMemoria')?.invalid && formGroup.get('memoria.tipoMemoria')?.touched">
-                    {{ getErrorMessage('tipoMemoria', formGroup.get('memoria.tipoMemoria')?.errors) }}
-                    @if (formGroup.get('memoria.tipoMemoria')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('memoria.tipoMemoria')?.getError('apiError') }}</span>
+                    *ngIf="formArray.at(1).get('memoria.tipoMemoria')?.invalid && formArray.at(1).get('memoria.tipoMemoria')?.touched">
+                    {{ getErrorMessage('tipoMemoria', formArray.at(1).get('memoria.tipoMemoria')?.errors) }}
+                    @if (formArray.at(1).get('memoria.tipoMemoria')?.hasError('apiError')) {
+                    <span>{{ formArray.at(1).get('memoria.tipoMemoria')?.getError('apiError') }}</span>
                     }
                   </mat-error>
                 </mat-form-field>
@@ -183,10 +183,10 @@
                   <mat-label>Capacidade (GB)</mat-label>
                   <input matInput type="number" formControlName="capacidade" #inputCapacidade>
                   <mat-error
-                    *ngIf="formGroup.get('memoria.capacidade')?.invalid && formGroup.get('memoria.capacidade')?.touched">
-                    {{ getErrorMessage('capacidade', formGroup.get('memoria.capacidade')?.errors) }}
-                    @if (formGroup.get('memoria.capacidade')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('memoria.capacidade')?.getError('apiError') }}</span>
+                    *ngIf="formArray.at(1).get('memoria.capacidade')?.invalid && formArray.at(1).get('memoria.capacidade')?.touched">
+                    {{ getErrorMessage('capacidade', formArray.at(1).get('memoria.capacidade')?.errors) }}
+                    @if (formArray.at(1).get('memoria.capacidade')?.hasError('apiError')) {
+                    <span>{{ formArray.at(1).get('memoria.capacidade')?.getError('apiError') }}</span>
                     }
                   </mat-error>
                 </mat-form-field>
@@ -195,10 +195,10 @@
                   <mat-label>Largura de Banda (GB/s)</mat-label>
                   <input matInput type="number" formControlName="larguraBanda" #inputLarguraBanda>
                   <mat-error
-                    *ngIf="formGroup.get('memoria.larguraBanda')?.invalid && formGroup.get('memoria.larguraBanda')?.touched">
-                    {{ getErrorMessage('larguraBanda', formGroup.get('memoria.larguraBanda')?.errors) }}
-                    @if (formGroup.get('memoria.larguraBanda')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('memoria.larguraBanda')?.getError('apiError') }}</span>
+                    *ngIf="formArray.at(1).get('memoria.larguraBanda')?.invalid && formArray.at(1).get('memoria.larguraBanda')?.touched">
+                    {{ getErrorMessage('larguraBanda', formArray.at(1).get('memoria.larguraBanda')?.errors) }}
+                    @if (formArray.at(1).get('memoria.larguraBanda')?.hasError('apiError')) {
+                    <span>{{ formArray.at(1).get('memoria.larguraBanda')?.getError('apiError') }}</span>
                     }
                   </mat-error>
                 </mat-form-field>
@@ -207,10 +207,10 @@
                   <mat-label>Velocidade da Memória (MHz)</mat-label>
                   <input matInput type="number" formControlName="velocidadeMemoria">
                   <mat-error
-                    *ngIf="formGroup.get('memoria.velocidadeMemoria')?.invalid && formGroup.get('memoria.velocidadeMemoria')?.touched">
-                    {{ getErrorMessage('velocidadeMemoria', formGroup.get('memoria.velocidadeMemoria')?.errors) }}
-                    @if (formGroup.get('memoria.velocidadeMemoria')?.hasError('apiError')) {
-                    <span>{{ formGroup.get('memoria.velocidadeMemoria')?.getError('apiError') }}</span>
+                    *ngIf="formArray.at(1).get('memoria.velocidadeMemoria')?.invalid && formArray.at(1).get('memoria.velocidadeMemoria')?.touched">
+                    {{ getErrorMessage('velocidadeMemoria', formArray.at(1).get('memoria.velocidadeMemoria')?.errors) }}
+                    @if (formArray.at(1).get('memoria.velocidadeMemoria')?.hasError('apiError')) {
+                    <span>{{ formArray.at(1).get('memoria.velocidadeMemoria')?.getError('apiError') }}</span>
                     }
                   </mat-error>
                 </mat-form-field>
@@ -236,10 +236,10 @@
                 <mat-label>Largura (mm)</mat-label>
                 <input matInput type="number" formControlName="largura">
                 <mat-error
-                  *ngIf="formGroup.get('tamanho.largura')?.invalid && formGroup.get('tamanho.largura')?.touched">
-                  {{ getErrorMessage('largura', formGroup.get('tamanho.largura')?.errors) }}
-                  @if (formGroup.get('tamanho.largura')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('tamanho.largura')?.getError('apiError') }}</span>
+                  *ngIf="formArray.at(2).get('tamanho.largura')?.invalid && formArray.at(2).get('tamanho.largura')?.touched">
+                  {{ getErrorMessage('largura', formArray.at(2).get('tamanho.largura')?.errors) }}
+                  @if (formArray.at(2).get('tamanho.largura')?.hasError('apiError')) {
+                  <span>{{ formArray.at(2).get('tamanho.largura')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
@@ -247,10 +247,10 @@
               <mat-form-field appearance="fill" class="full-width-input">
                 <mat-label>Altura (mm)</mat-label>
                 <input matInput type="number" formControlName="altura">
-                <mat-error *ngIf="formGroup.get('tamanho.altura')?.invalid && formGroup.get('tamanho.altura')?.touched">
-                  {{ getErrorMessage('altura', formGroup.get('tamanho.altura')?.errors) }}
-                  @if (formGroup.get('tamanho.altura')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('tamanho.altura')?.getError('apiError') }}</span>
+                <mat-error *ngIf="formArray.at(2).get('tamanho.altura')?.invalid && formArray.at(2).get('tamanho.altura')?.touched">
+                  {{ getErrorMessage('altura', formArray.at(2).get('tamanho.altura')?.errors) }}
+                  @if (formArray.at(2).get('tamanho.altura')?.hasError('apiError')) {
+                  <span>{{ formArray.at(2).get('tamanho.altura')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>
@@ -259,10 +259,10 @@
                 <mat-label>Comprimento (mm)</mat-label>
                 <input matInput type="number" formControlName="comprimento">
                 <mat-error
-                  *ngIf="formGroup.get('tamanho.comprimento')?.invalid && formGroup.get('tamanho.comprimento')?.touched">
-                  {{ getErrorMessage('comprimento', formGroup.get('tamanho.comprimento')?.errors) }}
-                  @if (formGroup.get('tamanho.comprimento')?.hasError('apiError')) {
-                  <span>{{ formGroup.get('tamanho.comprimento')?.getError('apiError') }}</span>
+                  *ngIf="formArray.at(2).get('tamanho.comprimento')?.invalid && formArray.at(2).get('tamanho.comprimento')?.touched">
+                  {{ getErrorMessage('comprimento', formArray.at(2).get('tamanho.comprimento')?.errors) }}
+                  @if (formArray.at(2).get('tamanho.comprimento')?.hasError('apiError')) {
+                  <span>{{ formArray.at(2).get('tamanho.comprimento')?.getError('apiError') }}</span>
                   }
                 </mat-error>
               </mat-form-field>

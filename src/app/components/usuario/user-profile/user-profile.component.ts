@@ -12,11 +12,15 @@ import { MatMenuModule } from "@angular/material/menu";
 import { PlacaDeVideoService } from "../../../services/placadevideo.service";
 import { PlacaDeVideo } from "../../../models/placadevideo.model";
 import { FornecedorService } from "../../../services/fornecedor.service";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 
 
 @Component({
   selector: "app-user-profile",
-  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule],
+  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatButtonModule, MatCardModule],
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
@@ -34,6 +38,7 @@ export class UserProfileComponent implements OnInit {
   selectedFile: File | null = null;
   isUploading: boolean = false;
   placaItem: PlacaDeVideo | null = null;
+  pedidoItem!: Pedido;
 
   placasMap: Map<number, PlacaDeVideo> = new Map();
   fornecedoresMap: Map<number, string> = new Map();
@@ -97,6 +102,48 @@ export class UserProfileComponent implements OnInit {
     }
 
   }
+
+  getStatusClass(pedido: any): string
+{
+  const status = this.getUltimoStatus(pedido)?.toLowerCase()
+
+  switch (status) {
+    case "pendente":
+      return 'status-pendente';
+    case "processando":
+      return 'status-processando';
+    case "enviado":
+      return 'status-enviado';
+    case "entregue":
+      return 'status-entregue';
+    case "cancelado":
+      return 'status-cancelado';
+    default:
+      return 'status-pendente';
+  }
+}
+
+getStatusIcon(pedido: any)
+: string
+{
+  const status = this.getUltimoStatus(pedido)?.toLowerCase()
+
+  switch (status) {
+    case "pendente":
+      return 'schedule';
+    case "processando":
+      return 'autorenew';
+    case "enviado":
+      return 'local_shipping';
+    case "entregue":
+      return 'check_circle';
+    case "cancelado":
+      return 'cancel';
+    default:
+      return 'help_outline';
+  }
+}
+
   getImagensPedido(pedido: Pedido): string[] {
     if (typeof pedido.id !== 'number') return [];
     return this.imagensPorPedido[pedido.id] ?? [];
@@ -136,11 +183,6 @@ export class UserProfileComponent implements OnInit {
     }
   }
   
-  
-  
-  
-  
-
 
   carregarImagensDoPedido(pedido: Pedido): void {
     const ids = pedido.listaItemPedido.map((item: any) => item.idProduto);

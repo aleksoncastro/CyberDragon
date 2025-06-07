@@ -1526,7 +1526,9 @@
 
 /* Estilos para ícones do Material Design */
 mat-icon {
-  font-size: 1.2em;
+  height: 30px;
+  width: 30px;
+  font-size: 30px;
   vertical-align: middle;
   margin-right: 8px;
 }
@@ -1534,11 +1536,11 @@ mat-icon {
 /* Ajustes específicos para ícones em diferentes contextos */
 .payment-title mat-icon,
 .receipt-header h2 mat-icon {
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 .section-title mat-icon {
-  font-size: 1.3em;
+  font-size: 1.3rem;
 }
 
 .btn-copy mat-icon,

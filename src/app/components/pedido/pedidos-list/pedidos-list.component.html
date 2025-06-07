@@ -1,0 +1,70 @@
+<mat-toolbar color="primary">
+    <div class="flex-container">
+      <span class="toolbar-title">Controle de Pedidos</span>
+      <button mat-fab class="mais" routerLink="/admin/pedidos/new">
+        <mat-icon class="mais">add</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+  
+  <mat-form-field appearance="outline" style="margin: 16px; width: 300px;" class="pesquisa">
+    <mat-label>Pesquisar</mat-label>
+    <input matInput (keyup)="filtrar($event)">
+    <button mat-icon-button matSuffix disabled>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  
+  <div class="tabela-container">
+    <table mat-table [dataSource]="pedidosFiltrados" class="mat-elevation-z8">
+  
+      <!-- ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let pedido">{{ pedido.id }}</td>
+      </ng-container>
+  
+      <!-- Cliente -->
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef>Cliente</th>
+        <td mat-cell *matCellDef="let pedido">{{ pedido.cliente?.nome }}</td>
+      </ng-container>
+  
+      <!-- Data do Pedido -->
+      <ng-container matColumnDef="dataPedido">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let pedido">{{ pedido.dataPedido | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
+  
+      <!-- Valor Total -->
+      <ng-container matColumnDef="valorTotal">
+        <th mat-header-cell *matHeaderCellDef>Valor Total</th>
+        <td mat-cell *matCellDef="let pedido">R$ {{ pedido.valorTotal | number:'1.2-2' }}</td>
+      </ng-container>
+  
+      <!-- Ações -->
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let pedido">
+          <button mat-icon-button color="primary" [routerLink]="['/admin/pedidos/edit', pedido.id]">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluir(pedido.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  
+  <mat-paginator
+    [length]="totalRecords"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="paginar($event)">
+  </mat-paginator>
+  

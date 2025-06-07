@@ -36,6 +36,7 @@ import { UserProfileComponent } from './components/usuario/user-profile/user-pro
 import { PlacadevideoSearchComponent } from './components/placadevideo/placadevideo-search/placadevideo-search.component';
 import { PedidoPagamentoComponent } from './components/pedido/pedido-pagamento/pedido-pagamento.component';
 import { ForbiddenComponent } from './pages/without-permission/without-permission.component';
+import { PedidoListComponent } from './components/pedido/pedidos-list/pedidos-list.component';
 
 export const routes: Routes = [
 
@@ -76,6 +77,7 @@ export const routes: Routes = [
             { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote' },
             { path: 'lotes/edit/:id', component: LoteFormComponent, title: 'Edição de Lote', resolve: { lote: loteResolver } },
             { path: 'funcionarios', component: FuncionarioListComponent, title: 'Novo Funcionário' },
+            { path: 'pedidos-list', component: PedidoListComponent, title: 'Lista pedidos'},
             { path: 'home', component: HomeComponent, title: 'Painel Administrativo' },
         ]
     },

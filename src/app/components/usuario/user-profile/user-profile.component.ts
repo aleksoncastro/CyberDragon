@@ -12,11 +12,12 @@ import { MatMenuModule } from "@angular/material/menu";
 import { PlacaDeVideoService } from "../../../services/placadevideo.service";
 import { PlacaDeVideo } from "../../../models/placadevideo.model";
 import { FornecedorService } from "../../../services/fornecedor.service";
+import { MatCardModule } from "@angular/material/card";
 
 
 @Component({
   selector: "app-user-profile",
-  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule],
+  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatCardModule],
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })

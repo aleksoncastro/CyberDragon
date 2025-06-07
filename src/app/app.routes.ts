@@ -36,6 +36,7 @@ import { UserProfileComponent } from './components/usuario/user-profile/user-pro
 import { PlacadevideoSearchComponent } from './components/placadevideo/placadevideo-search/placadevideo-search.component';
 import { PedidoPagamentoComponent } from './components/pedido/pedido-pagamento/pedido-pagamento.component';
 import { ForbiddenComponent } from './pages/without-permission/without-permission.component';
+import { CartaoFormComponent } from './components/cartao/cartao-form/cartao-form.component';
 
 export const routes: Routes = [
 
@@ -46,6 +47,8 @@ export const routes: Routes = [
         title: 'E-commerce',
         children: [
             { path: '', pathMatch: 'full', redirectTo: 'placasdevideo' },
+            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', data: { breadcrumb: 'Carrinho' } },
+            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', data: { breadcrumb: 'Favoritos' } },
             { path: 'placasdevideo', component: PlacaCardListComponent, title: 'Cards de Placa' },
             { path: 'placadevideo-detail/:id', component: PlacaDeVideoDetailComponent, title: 'Detalhes da Placa de Video' },
             { path: 'placasdevideo-vitrine', component: PlacadevideoVitrineComponent, title: 'Placas de Video Vitrine' },
@@ -87,12 +90,10 @@ export const routes: Routes = [
         canActivate: [ClienteGuard],
         children: [
             { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video', data: { breadcrumb: 'Placas Vitrine' } },
-            { path: 'carrinho', component: CarrinhoComponent, title: 'Carrinho', data: { breadcrumb: 'Carrinho' } },
-            { path: 'favoritos', component: FavoritosComponent, title: 'Favoritos', data: { breadcrumb: 'Favoritos' } },
             { path: 'informacoes', component: ClienteFormComponent, title: 'Informações do Cliente', data: { breadcrumb: 'Informações' } },
             { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário', data: { breadcrumb: 'Perfil' } },
-            { path: 'pedido-pagamento', component: PedidoPagamentoComponent, title: 'Criação do Pedido e Pagamento' }
-        
+            { path: 'pedido-pagamento', component: PedidoPagamentoComponent, title: 'Criação do Pedido e Pagamento' },
+            { path: 'cartao-form', component: CartaoFormComponent, title: 'Criação de Cartão' },
         ]
     },
 

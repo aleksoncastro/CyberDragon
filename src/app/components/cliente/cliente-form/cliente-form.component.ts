@@ -27,7 +27,6 @@ function extrairCodigoArea(codigoArea: string): string {
   return codigoArea;
 }
 
-
 @Component({
   selector: 'app-cliente-form',
   imports: [

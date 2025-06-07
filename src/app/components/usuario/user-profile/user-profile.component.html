@@ -262,9 +262,6 @@
               </div>
 
               <div class="order-info">
-               <span>{{ getListaItemPedido(pedido) }}</span>
-              </div>
-              <div class="order-info">
                 <span class="order-label">Pagamento:</span>
                 <span class="order-value">{{ getTipoPagamentoLabel(pedido.tipoPagamento) }}</span>
               </div>
@@ -275,17 +272,30 @@
                   {{ getUltimoStatus(pedido) || 'Indefinido' }}
                 </span>
               </div>
+
+              <!-- ✅ Quando há imagens -->
+                <div class="order-images" *ngIf="temImagensPedido(pedido)">
+                  <h4>Produtos:</h4>
+                  <div >
+                    <button (click)="verDetalhes(pedido)">Ver detalhes</button>
+                  </div>
+                  
+                  <div class="image-gallery">
+                    <div class="image-info-pair" *ngFor="let imgUrl of getImagensPedido(pedido); let i = index">
+                      <img [src]="imgUrl" alt="Imagem da placa de vídeo" class="produto-img" />
+                      <div class="info-placa1">
+                        <span class="info"> </span>
+                        <span class="info-placa">{{ getListaItemPedido(pedido) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
             </section>
 
             <!-- ✅ Imagens dos produtos -->
-            <!-- ✅ Quando há imagens -->
-            <div class="order-images" *ngIf="temImagensPedido(pedido)">
-              <h4>Produtos:</h4>
-              <div class="image-gallery">
-                <img *ngFor="let imgUrl of getImagensPedido(pedido)" [src]="imgUrl" alt="Imagem da placa de vídeo"
-                  class="produto-img" />
-              </div>
-            </div>
+
 
             <!-- ❌ Quando não há imagens -->
             <div class="order-images" *ngIf="pedido.id !== undefined && (!getImagensPedido(pedido)?.length)">

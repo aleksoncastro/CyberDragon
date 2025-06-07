@@ -2,15 +2,16 @@ import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Cliente } from "../../../models/cliente.model";
 import { ClienteService } from "../../../services/cliente.service";
 import { CommonModule } from "@angular/common";
-import { Pedido } from "../../../models/pedido.model";
+import { ItemPedido, Pedido } from "../../../models/pedido.model";
 import { PedidoService } from "../../../services/pedido.service";
 import { MatIconModule } from "@angular/material/icon";
-import { ActivatedRoute, RouterModule } from "@angular/router";
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { UsuarioService } from "../../../services/usuario.service";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { MatMenuModule } from "@angular/material/menu";
 import { PlacaDeVideoService } from "../../../services/placadevideo.service";
 import { PlacaDeVideo } from "../../../models/placadevideo.model";
+import { FornecedorService } from "../../../services/fornecedor.service";
 
 
 @Component({
@@ -32,13 +33,21 @@ export class UserProfileComponent implements OnInit {
   fileName: string = '';
   selectedFile: File | null = null;
   isUploading: boolean = false;
+  placaItem: PlacaDeVideo | null = null;
+
+  placasMap: Map<number, PlacaDeVideo> = new Map();
+  fornecedoresMap: Map<number, string> = new Map();
+
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private clienteService: ClienteService,
     private usuarioService: UsuarioService,
     private pedidoService: PedidoService,
     private snackbarService: SnackbarService,
     private placaService: PlacaDeVideoService,
+    private fornecedorService: FornecedorService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -100,32 +109,58 @@ export class UserProfileComponent implements OnInit {
   }
 
   getListaItemPedido(pedido: Pedido): string {
-  return pedido.listaItemPedido
-    .map((item: any) => {
-      const nome = item.nome ?? 'Modelo desconhecido';
-      return `${item.quantidade}x ${nome} (R$ ${item.preco.toFixed(2)})`;
-    })
-    .join(', ');
-}
+    return pedido.listaItemPedido
+      .map((item: any) => {
+        const placa = this.placaService.findById(item.idProduto);
+        const nome = item.nome ?? 'Modelo desconhecido';
 
+        console.log(item);
+        return `Quantidade: ${item.quantidade}x 
+        Modelo: ${nome}`;
+      })
+      .join(', ');
+  }
+
+  getListaId(pedido: Pedido): number[] {
+    return pedido.listaItemPedido.map((item: any) => item.idProduto);
+  }
+  
+  verDetalhes(pedido: Pedido): void {
+    const ids = this.getListaId(pedido);
+    const idItem = ids[0]; // usa o primeiro ID da lista
+  
+    if (idItem != null) {
+      this.router.navigate(['placadevideo-detail', idItem]);
+    } else {
+      console.error('Nenhum ID de placa de vídeo encontrado no pedido.');
+    }
+  }
+  
+  
+  
+  
+  
 
 
   carregarImagensDoPedido(pedido: Pedido): void {
-  const ids = pedido.listaItemPedido.map((item: any) => item.idProduto);
+    const ids = pedido.listaItemPedido.map((item: any) => item.idProduto);
 
-  ids.forEach(id => {
-    this.placaService.findById(id).subscribe(placa => {
-      if (!this.imagensPorPedido[pedido.id!]) {
-        this.imagensPorPedido[pedido.id!] = [];
-      }
+    ids.forEach(id => {
+      this.placaService.findById(id).subscribe(placa => {
+        if (!this.imagensPorPedido[pedido.id!]) {
+          this.imagensPorPedido[pedido.id!] = [];
+        }
 
-      if (placa.listaImagem && placa.listaImagem.length > 0) {
-        const urls = placa.listaImagem.map(nome => this.placaService.getImagemUrl(nome));
-        this.imagensPorPedido[pedido.id!].push(...urls);
-      }
+        // Pega só a imagem da posição 0 (se existir)
+        const primeiraImagem = placa.listaImagem?.[0];
+        if (primeiraImagem) {
+          const url = this.placaService.getImagemUrl(primeiraImagem);
+          this.imagensPorPedido[pedido.id!].push(url);
+        }
+      });
     });
-  });
-}
+  }
+
 
 
 

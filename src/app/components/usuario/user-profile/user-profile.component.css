@@ -688,9 +688,15 @@ mat-icon{
 
 .image-gallery {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
   padding: 8px 0;
+}
+
+.image-info-pair {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .produto-img {
@@ -700,10 +706,17 @@ mat-icon{
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
 
-.no-img {
-  color: #888;
-  font-style: italic;
+.info-placa1 {
+  display: flex;
+  flex-direction: column;
 }
+
+.info-placa {
+  font-weight: bold;
+  color: #fff;
+}
+
+
 
 
 

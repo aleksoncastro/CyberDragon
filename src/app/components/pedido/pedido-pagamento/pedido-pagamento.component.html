@@ -1,252 +1,488 @@
 <div class="payment-container">
-  <!-- Header -->
-  <div class="payment-header">
-    <h1 class="payment-title">Finalizar Pedido</h1>
-    <p class="payment-subtitle">Revise seus itens e complete o pagamento</p>
-  </div>
 
-  <div class="payment-content">
-    <!-- Resumo do Pedido -->
-    <div class="order-summary">
-      <h2 class="section-title">
-        <i class="icon-cart">🛒</i>
-        Resumo do Pedido
-      </h2>
-      
-      <div class="cart-items" *ngIf="carrinhoItens.length > 0">
-        <div class="cart-item" *ngFor="let item of carrinhoItens; let i = index">
-          <div class="item-info">
-            <h3 class="item-name">{{ item.modelo }}</h3>
-            <div class="item-details">
-              <span class="item-quantity">Qtd: {{ item.quantidade }}</span>
-              <span class="item-unit-price">Unit: R$ {{ item.preco.toFixed(2) }}</span>
-            </div>
-          </div>
-          <div class="item-price">
-            <span class="price">R$ {{ (item.preco * item.quantidade).toFixed(2) }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cart-empty" *ngIf="carrinhoItens.length === 0">
-        <div class="empty-icon">🛒</div>
-        <p>Seu carrinho está vazio</p>
-        <small>Adicione produtos para continuar</small>
-      </div>
-
-      <div class="order-total" *ngIf="carrinhoItens.length > 0">
-        <div class="total-breakdown">
-          <div class="total-row subtotal">
-            <span class="total-label">Subtotal ({{ carrinhoItens.length }} {{ carrinhoItens.length === 1 ? 'item' : 'itens' }}):</span>
-            <span class="total-value">R$ {{ calcularTotal().toFixed(2) }}</span>
-          </div>
-          <div class="total-row shipping">
-            <span class="total-label">Frete:</span>
-            <span class="total-value free">Grátis</span>
-          </div>
-        </div>
-        <div class="final-total">
-          <div class="total-row">
-            <span class="total-label">Total:</span>
-            <span class="total-value">R$ {{ calcularTotal().toFixed(2) }}</span>
-          </div>
-        </div>
-      </div>
+  <!-- TELA INICIAL - SELEÇÃO DE PAGAMENTO -->
+  <div *ngIf="activeSection === 'payment'">
+    <!-- Header -->
+    <div class="payment-header">
+      <h1 class="payment-title">Finalizar Pedido</h1>
+      <p class="payment-subtitle">Revise seus itens e complete o pagamento</p>
     </div>
 
-    <!-- Formulário de Pagamento -->
-    <div class="payment-form-container">
-      <form [formGroup]="pagamentoForm" (ngSubmit)="confirmarPagamento()" class="payment-form">
-        
-        <!-- Seleção de Endereço -->
-        <div class="form-section">
-          <h2 class="section-title">
-            <i class="icon-location">📍</i>
-            Endereço de Entrega
-          </h2>
-          
-          <div class="form-group">
-            <label for="endereco" class="form-label">Selecione o endereço de entrega:</label>
-            <div class="select-wrapper">
-              <select 
-                id="endereco" 
-                formControlName="enderecoId" 
-                class="form-select"
-                [class.error]="pagamentoForm.get('enderecoId')?.invalid && pagamentoForm.get('enderecoId')?.touched">
-                <option value="">Escolha um endereço</option>
-                <option *ngFor="let endereco of enderecos" [value]="endereco.id">
-                  {{ endereco.rua }}, {{ endereco.numero }} - {{ endereco.bairro }}
-                  <br>{{ endereco.cidade }}/{{ endereco.estado }} - CEP: {{ endereco.cep }}
-                </option>
-              </select>
+    <div class="payment-content">
+      <!-- Resumo do Pedido -->
+      <div class="order-summary">
+        <h2 class="section-title">
+          <mat-icon class="icon-cart">shopping_cart</mat-icon>
+          Resumo do Pedido
+        </h2>
+
+        <div class="cart-items" *ngIf="carrinhoItens.length > 0">
+          <div class="cart-item" *ngFor="let item of carrinhoItens; let i = index">
+            <div class="item-info">
+              <h3 class="item-name">{{ item.modelo }}</h3>
+              <div class="item-details">
+                <span class="item-quantity">Qtd: {{ item.quantidade }}</span>
+                <span class="item-unit-price">Unit: R$ {{ item.preco.toFixed(2) }}</span>
+              </div>
             </div>
-            <div class="error-message" *ngIf="pagamentoForm.get('enderecoId')?.invalid && pagamentoForm.get('enderecoId')?.touched">
-              <span class="error-icon">⚠️</span>
-              Por favor, selecione um endereço de entrega
+            <div class="item-price">
+              <span class="price">R$ {{ (item.preco * item.quantidade).toFixed(2) }}</span>
             </div>
-            
-            <!-- Endereço Selecionado Preview -->
-            <div class="selected-address" *ngIf="pagamentoForm.get('enderecoId')?.value">
-              <div class="address-preview">
-                <h4>Endereço selecionado:</h4>
-                <div class="address-details" *ngFor="let endereco of enderecos">
-                  <div *ngIf="endereco.id == pagamentoForm.get('enderecoId')?.value">
-                    <p><strong>{{ endereco.rua }}, {{ endereco.numero }}</strong></p>
-                    <p>{{ endereco.bairro }} - {{ endereco.cidade }}/{{ endereco.estado }}</p>
-                    <p>CEP: {{ endereco.cep }}</p>
+          </div>
+        </div>
+
+        <div class="cart-empty" *ngIf="carrinhoItens.length === 0">
+          <div class="empty-icon"><mat-icon>shopping_cart</mat-icon></div>
+          <p>Seu carrinho está vazio</p>
+          <small>Adicione produtos para continuar</small>
+        </div>
+
+        <div class="order-total" *ngIf="carrinhoItens.length > 0">
+          <div class="total-breakdown">
+            <div class="total-row subtotal">
+              <span class="total-label">Subtotal ({{ carrinhoItens.length }} {{ carrinhoItens.length === 1 ? 'item' :
+                'itens' }}):</span>
+              <span class="total-value">R$ {{ calcularTotal().toFixed(2) }}</span>
+            </div>
+            <div class="total-row shipping">
+              <span class="total-label">Frete:</span>
+              <span class="total-value free">Grátis</span>
+            </div>
+          </div>
+          <div class="final-total">
+            <div class="total-row">
+              <span class="total-label">Total:</span>
+              <span class="total-value">R$ {{ calcularTotal().toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário de Pagamento -->
+      <div class="payment-form-container">
+        <form [formGroup]="pagamentoForm" (ngSubmit)="confirmarPagamento()" class="payment-form">
+
+          <!-- Seleção de Endereço -->
+          <div class="form-section">
+            <h2 class="section-title">
+              <mat-icon class="icon-location">location_on</mat-icon>
+              Endereço de Entrega
+            </h2>
+
+            <div class="form-group">
+              <label for="endereco" class="form-label">Selecione o endereço de entrega:</label>
+              <div class="select-wrapper">
+                <select id="endereco" formControlName="enderecoId" class="form-select"
+                  [class.error]="pagamentoForm.get('enderecoId')?.invalid && pagamentoForm.get('enderecoId')?.touched">
+                  <option value="">Escolha um endereço</option>
+                  <option *ngFor="let endereco of enderecos" [value]="endereco.id">
+                    {{ endereco.rua }}, {{ endereco.numero }} - {{ endereco.bairro }}
+                    <br>{{ endereco.cidade }}/{{ endereco.estado }} - CEP: {{ endereco.cep }}
+                  </option>
+                </select>
+              </div>
+              <div class="error-message"
+                *ngIf="pagamentoForm.get('enderecoId')?.invalid && pagamentoForm.get('enderecoId')?.touched">
+                <mat-icon class="error-icon">warning</mat-icon>
+                Por favor, selecione um endereço de entrega
+              </div>
+
+              <!-- Endereço Selecionado Preview -->
+              <div class="selected-address" *ngIf="pagamentoForm.get('enderecoId')?.value">
+                <div class="address-preview">
+                  <h4>Endereço selecionado:</h4>
+                  <div class="address-details" *ngFor="let endereco of enderecos">
+                    <div *ngIf="endereco.id == pagamentoForm.get('enderecoId')?.value">
+                      <p><strong>{{ endereco.rua }}, {{ endereco.numero }}</strong></p>
+                      <p>{{ endereco.bairro }} - {{ endereco.cidade }}/{{ endereco.estado }}</p>
+                      <p>CEP: {{ endereco.cep }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Método de Pagamento -->
-        <div class="form-section">
-          <h2 class="section-title">
-            <i class="icon-payment">💳</i>
-            Método de Pagamento
-          </h2>
-          
-          <div class="payment-methods">
-            <div class="payment-option">
-              <input 
-                type="radio" 
-                id="pix" 
-                formControlName="tipoPagamento" 
-                value="1" 
-                class="payment-radio">
-              <label for="pix" class="payment-label">
-                <div class="payment-icon pix-icon">PIX</div>
-                <div class="payment-info">
-                  <h3>PIX</h3>
-                  <p>Pagamento instantâneo e seguro</p>
-                  <small class="payment-benefit">✓ Aprovação imediata</small>
+          <!-- Método de Pagamento -->
+          <div class="form-section">
+            <h2 class="section-title">
+              <mat-icon class="icon-payment">payment</mat-icon>
+              Método de Pagamento
+            </h2>
+
+            <input type="checkbox" id="toggle-metodos" class="toggle-checkbox" hidden>
+
+            <div class="metodo-pagamento-toggle">
+
+              <!-- Cabeçalho -->
+              <label for="toggle-metodos" class="toggle-header">
+                <div class="selecionado">
+                  <ng-container [ngSwitch]="pagamentoForm.get('tipoPagamento')?.value">
+                    <span *ngSwitchCase="'1'"><mat-icon>pix</mat-icon> PIX</span>
+                    <span *ngSwitchCase="'2'"><mat-icon>receipt</mat-icon> Boleto</span>
+                    <span *ngSwitchCase="'3'"><mat-icon>credit_card</mat-icon> Cartão de Crédito</span>
+                    <span *ngSwitchDefault>Selecione um método de pagamento</span>
+                  </ng-container>
                 </div>
-                <div class="payment-badge instant">Instantâneo</div>
+                <div class="toggle-icon"><mat-icon>expand_more</mat-icon></div>
               </label>
-            </div>
 
-            <div class="payment-option">
-              <input 
-                type="radio" 
-                id="boleto" 
-                formControlName="tipoPagamento" 
-                value="2" 
-                class="payment-radio">
-              <label for="boleto" class="payment-label">
-                <div class="payment-icon boleto-icon">BOL</div>
-                <div class="payment-info">
-                  <h3>Boleto Bancário</h3>
-                  <p>Pague em qualquer banco ou lotérica</p>
-                  <small class="payment-benefit">✓ Vencimento em 3 dias úteis</small>
+              <!-- Corpo do caixote -->
+              <div class="caixote">
+                <div class="payment-option">
+                  <input type="radio" id="pix" formControlName="tipoPagamento" value="1" class="payment-radio">
+                  <label for="pix" class="payment-label"><mat-icon>pix</mat-icon> PIX</label>
                 </div>
-                <div class="payment-badge traditional">Tradicional</div>
-              </label>
-            </div>
 
-            <div class="payment-option">
-              <input 
-                type="radio" 
-                id="cartao" 
-                formControlName="tipoPagamento" 
-                value="3" 
-                class="payment-radio">
-              <label for="cartao" class="payment-label">
-                <div class="payment-icon cartao-icon">💳</div>
-                <div class="payment-info">
-                  <h3>Cartão de Crédito</h3>
-                  <p>Parcelamento em até 12x sem juros</p>
-                  <small class="payment-benefit">✓ Proteção contra fraude</small>
+                <div class="payment-option">
+                  <input type="radio" id="boleto" formControlName="tipoPagamento" value="2" class="payment-radio">
+                  <label for="boleto" class="payment-label"><mat-icon>receipt</mat-icon> Boleto</label>
                 </div>
-                <div class="payment-badge flexible">Flexível</div>
-              </label>
-            </div>
-          </div>
 
-          <div class="error-message" *ngIf="pagamentoForm.get('tipoPagamento')?.invalid && pagamentoForm.get('tipoPagamento')?.touched">
-            <span class="error-icon">⚠️</span>
-            Por favor, selecione um método de pagamento
-          </div>
-        </div>
-
-        <!-- Informações Adicionais do Pagamento -->
-        <div class="payment-details" *ngIf="pagamentoForm.get('tipoPagamento')?.value">
-          <div class="payment-info-card">
-            <div *ngIf="pagamentoForm.get('tipoPagamento')?.value === '1'" class="pix-info">
-              <h4>🔒 Pagamento via PIX</h4>
-              <ul>
-                <li>Após confirmar, você receberá o QR Code</li>
-                <li>Escaneie com o app do seu banco</li>
-                <li>Pagamento processado instantaneamente</li>
-              </ul>
-            </div>
-            
-            <div *ngIf="pagamentoForm.get('tipoPagamento')?.value === '2'" class="boleto-info">
-              <h4>📄 Pagamento via Boleto</h4>
-              <ul>
-                <li>Boleto será enviado por email</li>
-                <li>Pague em qualquer banco ou app</li>
-                <li>Prazo de vencimento: 3 dias úteis</li>
-              </ul>
-            </div>
-            
-            <div *ngIf="pagamentoForm.get('tipoPagamento')?.value === '3'" class="cartao-info">
-              <h4>💳 Pagamento via Cartão</h4>
-              <ul>
-                <li>Aceitamos Visa, Mastercard e Elo</li>
-                <li>Parcelamento sem juros disponível</li>
-                <li>Dados protegidos com criptografia</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Resumo Final -->
-        <div class="order-confirmation" *ngIf="carrinhoItens.length > 0">
-          <div class="confirmation-details">
-            <h3>Confirmação do Pedido</h3>
-            <div class="confirmation-row">
-              <span>Itens:</span>
-              <span>{{ carrinhoItens.length }} {{ carrinhoItens.length === 1 ? 'produto' : 'produtos' }}</span>
-            </div>
-            <div class="confirmation-row">
-              <span>Valor Total:</span>
-              <span class="highlight">R$ {{ calcularTotal().toFixed(2) }}</span>
-            </div>
-            <div class="confirmation-row" *ngIf="pagamentoForm.get('tipoPagamento')?.value">
-              <span>Pagamento:</span>
-              <span>
-                {{ pagamentoForm.get('tipoPagamento')?.value === '1' ? 'PIX' : 
-                   pagamentoForm.get('tipoPagamento')?.value === '2' ? 'Boleto' : 'Cartão de Crédito' }}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botão de Confirmação -->
-        <div class="form-actions">
-          <button 
-            type="submit" 
-            class="btn-confirm"
-            [disabled]="pagamentoForm.invalid || carrinhoItens.length === 0">
-            <div class="btn-content">
-              <span class="btn-icon">🔒</span>
-              <div class="btn-text-container">
-                <span class="btn-text">Finalizar Pedido</span>
-                <span class="btn-amount">R$ {{ calcularTotal().toFixed(2) }}</span>
+                <div class="payment-option">
+                  <input type="radio" id="cartao" formControlName="tipoPagamento" value="3" class="payment-radio">
+                  <label for="cartao" class="payment-label"><mat-icon>credit_card</mat-icon> Cartão de Crédito</label>
+                </div>
               </div>
             </div>
-          </button>
-          
-          <div class="security-info">
-            <small>
-              <span class="security-icon">🛡️</span>
-              Seus dados estão protegidos com criptografia SSL
-            </small>
+
+            <div class="error-message"
+              *ngIf="pagamentoForm.get('tipoPagamento')?.invalid && pagamentoForm.get('tipoPagamento')?.touched">
+              <mat-icon class="error-icon">warning</mat-icon>
+              Por favor, selecione um método de pagamento
+            </div>
+          </div>
+
+          <!-- Informações Adicionais do Pagamento -->
+          <div class="payment-details" *ngIf="pagamentoForm.get('tipoPagamento')?.value">
+            <div class="payment-info-card">
+              <div *ngIf="pagamentoForm.get('tipoPagamento')?.value === '1'" class="pix-info">
+                <h4><mat-icon>lock</mat-icon> Pagamento via PIX</h4>
+                <ul>
+                  <li>Após confirmar, você receberá o QR Code</li>
+                  <li>Escaneie com o app do seu banco</li>
+                  <li>Pagamento processado instantaneamente</li>
+                </ul>
+              </div>
+
+              <div *ngIf="pagamentoForm.get('tipoPagamento')?.value === '2'" class="boleto-info">
+                <h4><mat-icon>receipt</mat-icon> Pagamento via Boleto</h4>
+                <ul>
+                  <li>Boleto será gerado na próxima tela</li>
+                  <li>Pague em qualquer banco ou app</li>
+                  <li>Prazo de vencimento: 3 dias úteis</li>
+                </ul>
+              </div>
+
+              <div *ngIf="pagamentoForm.get('tipoPagamento')?.value === '3'" class="cartao-info">
+                <h4><mat-icon>credit_card</mat-icon> Pagamento via Cartão</h4>
+                <ul>
+                  <li>Aceitamos Visa, Mastercard e Elo</li>
+                  <li>Parcelamento sem juros disponível</li>
+                  <li>Dados protegidos com criptografia</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumo Final -->
+          <div class="order-confirmation" *ngIf="carrinhoItens.length > 0">
+            <div class="confirmation-details">
+              <h3>Confirmação do Pedido</h3>
+              <div class="confirmation-row">
+                <span>Itens:</span>
+                <span>{{ carrinhoItens.length }} {{ carrinhoItens.length === 1 ? 'produto' : 'produtos' }}</span>
+              </div>
+              <div class="confirmation-row">
+                <span>Valor Total:</span>
+                <span class="highlight">R$ {{ calcularTotal().toFixed(2) }}</span>
+              </div>
+              <div class="confirmation-row" *ngIf="pagamentoForm.get('tipoPagamento')?.value">
+                <span>Pagamento:</span>
+                <span>
+                  {{ pagamentoForm.get('tipoPagamento')?.value === '1' ? 'PIX' :
+                  pagamentoForm.get('tipoPagamento')?.value === '2' ? 'Boleto' : 'Cartão de Crédito' }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão de Confirmação -->
+          <div class="form-actions">
+            <button type="submit" class="btn-confirm" [disabled]="pagamentoForm.invalid || carrinhoItens.length === 0">
+              <div class="btn-content">
+                <mat-icon class="btn-icon">lock</mat-icon>
+                <div class="btn-text-container">
+                  <span class="btn-text">Finalizar Pedido</span>
+                  <span class="btn-amount">R$ {{ calcularTotal().toFixed(2) }}</span>
+                </div>
+              </div>
+            </button>
+
+            <div class="security-info">
+              <small>
+                <mat-icon class="security-icon">security</mat-icon>
+                Seus dados estão protegidos com criptografia SSL
+              </small>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA PIX -->
+  <div *ngIf="activeSection === 'pix'" class="pix-container">
+    <div class="payment-header">
+      <h1 class="payment-title">Pagamento via PIX</h1>
+      <p class="payment-subtitle">Escaneie o QR Code ou copie o código</p>
+    </div>
+
+    <div class="pix-content">
+      <div class="pix-card">
+        <div class="pix-timer">
+          <h3><mat-icon>schedule</mat-icon> Tempo restante: {{ formatarTempo(pixTimer) }}</h3>
+          <p>O código PIX expira em {{ formatarTempo(pixTimer) }}</p>
+        </div>
+
+        <div class="pix-qr-section">
+          <div class="qr-code-container">
+            <img src="assets/QRCODE.png" alt="QRCODE-PIX" class="qr-code"/>
+          </div>
+
+          <div class="pix-instructions">
+            <h3>Como pagar:</h3>
+            <ol>
+              <li>Abra o app do seu banco</li>
+              <li>Escolha a opção PIX</li>
+              <li>Escaneie o QR Code acima</li>
+              <li>Confirme o pagamento</li>
+            </ol>
           </div>
         </div>
-      </form>
+
+        <div class="pix-copy-section">
+          <h4>Ou copie o código PIX:</h4>
+          <div class="copy-container">
+            <textarea readonly class="pix-code">{{ pixCopiaECola }}</textarea>
+            <button type="button" class="btn-copy" (click)="copiarCodigoPixParaClipboard()">
+              <mat-icon>content_copy</mat-icon> Copiar
+            </button>
+          </div>
+        </div>
+
+        <div class="pix-value-info">
+          <div class="value-row">
+            <span>Valor a pagar:</span>
+            <span class="value-highlight">R$ {{ calcularTotal().toFixed(2) }}</span>
+          </div>
+        </div>
+
+        <div class="pix-actions">
+          <button type="button" class="btn-confirm-pix" (click)="confirmarPagamentoPix()">
+            <mat-icon>check_circle</mat-icon> Já paguei
+          </button>
+          <button type="button" class="btn-back" (click)="voltarParaPagamento()">
+            <mat-icon>arrow_back</mat-icon> Voltar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA BOLETO -->
+  <div *ngIf="activeSection === 'boleto'" class="boleto-container">
+    <div class="payment-header">
+      <h1 class="payment-title">Boleto Bancário</h1>
+      <p class="payment-subtitle">Seu boleto foi gerado com sucesso</p>
+    </div>
+
+    <div class="boleto-content">
+      <div class="boleto-card">
+        <div class="boleto-header">
+          <div class="bank-info">
+            <h2><mat-icon>account_balance</mat-icon> BANCO EXEMPLO S.A.</h2>
+            <p>001-9</p>
+          </div>
+          <div class="boleto-number">
+            <strong>{{ boletoNumero }}</strong>
+          </div>
+        </div>
+
+        <div class="boleto-details">
+          <div class="detail-row">
+            <div class="detail-item">
+              <label>Vencimento:</label>
+              <span>{{ boletoVencimento }}</span>
+            </div>
+            <div class="detail-item">
+              <label>Valor:</label>
+              <span class="value-highlight">R$ {{ calcularTotal().toFixed(2) }}</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-item full-width">
+              <label>Beneficiário:</label>
+              <span>CYBERDRAGON</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-item full-width">
+              <label>Pagador:</label>
+              <span>{{ cliente.nome }}</span>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-item full-width">
+              <label>Descrição:</label>
+              <span>Pedido de {{ carrinhoItens.length }} {{ carrinhoItens.length === 1 ? 'item' : 'itens' }} - Placas de
+                Vídeo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="codigo-barras-section">
+          <label>Código de Barras:</label>
+          <div class="codigo-barras">
+            <div class="barras">
+              <div class="barra" *ngFor="let digit of boletoCodigoBarras.split(''); let i = index"
+                [style.width.px]="i % 2 === 0 ? 2 : 1" [style.background]="i % 2 === 0 ? '#000' : '#fff'">
+              </div>
+            </div>
+            <div class="codigo-numerico">{{ boletoCodigoBarras }}</div>
+          </div>
+        </div>
+
+        <div class="boleto-instructions">
+          <h4>Instruções de Pagamento:</h4>
+          <ul>
+            <li>Pague este boleto em qualquer banco, lotérica ou app bancário</li>
+            <li>Não receba este boleto em casa, pague somente com o código de barras</li>
+            <li>Após o vencimento, será cobrada multa de 2% + juros de 1% ao mês</li>
+            <li>Em caso de dúvidas, entre em contato conosco</li>
+          </ul>
+        </div>
+
+        <div class="boleto-actions">
+          <button type="button" class="btn-confirm-boleto" (click)="confirmarPagamentoBoleto()">
+            <mat-icon>check_circle</mat-icon> Confirmar Pedido
+          </button>
+          <button type="button" class="btn-back" (click)="voltarParaPagamento()">
+            <mat-icon>arrow_back</mat-icon> Voltar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TELA RECIBO -->
+  <div *ngIf="activeSection === 'receipt'" class="receipt-container">
+    <div class="payment-header">
+      <h1 class="payment-title"><mat-icon>check_circle</mat-icon> Pedido Confirmado!</h1>
+      <p class="payment-subtitle">Seu pedido foi processado com sucesso</p>
+    </div>
+
+    <div class="receipt-content">
+      <div class="receipt-card">
+        <div class="receipt-header">
+          <h2><mat-icon>receipt_long</mat-icon> RECIBO DE COMPRA</h2>
+          <div class="receipt-number">
+            <strong>Pedido #{{ pedidoCriado.id }}</strong>
+          </div>
+        </div>
+
+        <div class="receipt-section">
+          <h3><mat-icon>assignment</mat-icon> Dados do Pedido</h3>
+          <div class="receipt-row">
+            <span>Data do Pedido:</span>
+            <span>{{ pedidoCriado.data | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="receipt-row">
+            <span>Método de Pagamento:</span>
+            <span>{{ obterNomeMetodoPagamento(pedidoCriado.tipoPagamento) }}</span>
+          </div>
+          <div class="receipt-row">
+            <span>Status:</span>
+            <span class="status-badge">Confirmado</span>
+          </div>
+        </div>
+
+        <div class="receipt-section" *ngIf="pedidoCriado?.cliente">
+          <h3><mat-icon>person</mat-icon> Dados do Cliente</h3>
+          <div class="receipt-row">
+            <span>Nome:</span>
+            <span>{{ pedidoCriado.cliente.nome }}</span>
+          </div><div class="receipt-row">
+            <span>CPF:</span>
+            <span>{{ pedidoCriado.cliente.usuario?.cpf }}</span>
+          </div>
+          <div class="receipt-row">
+            <span>Data de Nascimento:</span>
+            <span>{{ pedidoCriado.cliente.dataNascimento | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+        
+        <div class="receipt-section" *ngIf="pedidoCriado?.enderecoEntrega">
+          <h3><mat-icon>location_on</mat-icon> Endereço de Entrega</h3>
+          <div class="receipt-address">
+            <p>{{ obterEnderecoCompleto() }}</p>
+          </div>
+        </div>
+        
+
+        <div class="receipt-section">
+          <h3><mat-icon>shopping_cart</mat-icon> Itens do Pedido</h3>
+          <div class="receipt-items">
+            <div class="receipt-item" *ngFor="let item of pedidoCriado?.listaItemPedido">
+              <div class="item-details">
+                <span class="item-name">{{ item.lote.placaDeVideo!.modelo }}</span>
+                <span class="item-qty">Qtd: {{ item.quantidade }}</span>
+              </div>
+              <div class="item-values">
+                <span class="item-unit">R$ {{ item.preco.toFixed(2) }}</span>
+                <span class="item-total">R$ {{ (item.preco * item.quantidade).toFixed(2) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="receipt-section">
+          <h3><mat-icon>attach_money</mat-icon> Resumo Financeiro</h3>
+          <div class="receipt-row">
+            <span>Subtotal:</span>
+            <span>R$ {{ pedidoCriado.valorTotal.toFixed(2) }}</span>
+          </div>
+          <div class="receipt-row">
+            <span>Frete:</span>
+            <span class="free-shipping">Grátis</span>
+          </div>
+          <div class="receipt-row total-row">
+            <span><strong>Total Pago:</strong></span>
+            <span class="total-value"><strong>R$ {{ pedidoCriado.valorTotal.toFixed(2) }}</strong></span>
+          </div>
+        </div>
+
+        <div class="receipt-footer">
+          <p class="receipt-thanks">
+            <mat-icon>celebration</mat-icon> Obrigado pela sua compra! Seu pedido será processado em breve.
+          </p>
+          <p class="receipt-contact">
+            <mat-icon>phone</mat-icon> Em caso de dúvidas, entre em contato: (11) 1234-5678
+          </p>
+        </div>
+
+        <div class="receipt-actions">
+          <button type="button" class="btn-print" (click)="imprimirRecibo()">
+            <mat-icon>print</mat-icon> Imprimir Recibo
+          </button>
+          <button type="button" class="btn-continue" (click)="voltarParaLoja()">
+            <mat-icon>shopping_cart</mat-icon> Continuar Comprando
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

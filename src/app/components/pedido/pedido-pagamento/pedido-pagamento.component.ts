@@ -1,5 +1,5 @@
 import { Component, type OnInit } from "@angular/core"
-import { FormBuilder,FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
 import { Router } from "@angular/router"
 import { CommonModule, NgIf } from "@angular/common"
 import { MatFormFieldModule } from "@angular/material/form-field"
@@ -61,7 +61,7 @@ export class PedidoPagamentoComponent implements OnInit {
     private clienteService: ClienteService,
     private pedidoService: PedidoService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.carrinhoItens = this.carrinhoService.obter()
@@ -84,7 +84,6 @@ export class PedidoPagamentoComponent implements OnInit {
       },
     })
 
-    this.buscarPedidoCompleto();
   }
 
   calcularTotal(): number {
@@ -95,9 +94,9 @@ export class PedidoPagamentoComponent implements OnInit {
     return 123
   }
 
-  
-  
-  
+
+
+
 
   confirmarPagamento() {
     if (this.pagamentoForm.invalid) {
@@ -147,7 +146,7 @@ export class PedidoPagamentoComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' }); // ou 'auto'
   }
 
- 
+
 
   gerarCopiaCola(): string {
     const valor = this.calcularTotal().toFixed(2).replace(".", "")
@@ -166,18 +165,18 @@ export class PedidoPagamentoComponent implements OnInit {
     return `${Math.floor(Math.random() * 99999)
       .toString()
       .padStart(5, "0")}.${Math.floor(Math.random() * 99999)
-      .toString()
-      .padStart(5, "0")} ${Math.floor(Math.random() * 99999)
-      .toString()
-      .padStart(5, "0")}.${Math.floor(Math.random() * 999999)
-      .toString()
-      .padStart(6, "0")} ${Math.floor(Math.random() * 99999)
-      .toString()
-      .padStart(5, "0")}.${Math.floor(Math.random() * 999999)
-      .toString()
-      .padStart(6, "0")} ${Math.floor(Math.random() * 9)} ${Math.floor(Math.random() * 99999999999999)
-      .toString()
-      .padStart(14, "0")}`
+        .toString()
+        .padStart(5, "0")} ${Math.floor(Math.random() * 99999)
+          .toString()
+          .padStart(5, "0")}.${Math.floor(Math.random() * 999999)
+            .toString()
+            .padStart(6, "0")} ${Math.floor(Math.random() * 99999)
+              .toString()
+              .padStart(5, "0")}.${Math.floor(Math.random() * 999999)
+                .toString()
+                .padStart(6, "0")} ${Math.floor(Math.random() * 9)} ${Math.floor(Math.random() * 99999999999999)
+                  .toString()
+                  .padStart(14, "0")}`
   }
 
   gerarDataVencimento(): string {
@@ -254,16 +253,19 @@ export class PedidoPagamentoComponent implements OnInit {
       idCartao: idCartao,
     }
 
+    console.log("Enviando pedido com dados:", pedido);
+
     this.pedidoService.create(pedido).subscribe({
       next: () => {
+        console.log("Pedido criado com sucesso. Buscando pedidos do usuário...");
         // Depois de criar, busca todos os pedidos do usuário
         this.pedidoService.findByUsername().subscribe({
           next: (pedidos) => {
             // Assumimos que o último pedido é o mais recente
-            const ultimoPedido = pedidos.sort((a, b) => 
+            const ultimoPedido = pedidos.sort((a, b) =>
               new Date(b.data).getTime() - new Date(a.data).getTime()
             )[0];
-    
+
             if (ultimoPedido) {
               this.pedidoCriado = ultimoPedido;
               console.log("Pedido retornado:", this.pedidoCriado);
@@ -287,19 +289,21 @@ export class PedidoPagamentoComponent implements OnInit {
   }
 
   buscarPedidoCompleto() {
+    console.log("Buscando pedidos do cliente...");
+
     this.pedidoService.findByUsername().subscribe({
       next: (pedidos) => {
         if (!pedidos || pedidos.length === 0) {
           alert("Nenhum pedido encontrado.");
           return;
         }
-  
+
         // Ordena os pedidos por data decrescente
         const pedidosOrdenados = pedidos.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
-  
+
         // Pega o mais recente
         this.pedidoCriado = pedidosOrdenados[0];
-  
+
         console.log("Pedido mais recente:", this.pedidoCriado);
       },
       error: (err) => {

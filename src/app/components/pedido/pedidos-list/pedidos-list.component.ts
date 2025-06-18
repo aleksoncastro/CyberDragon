@@ -28,11 +28,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     FormsModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    NgClass,
-    CurrencyPipe,
-    DatePipe,
-    NgFor,
-    NgIf,
     MatTooltipModule,
     MatToolbarModule,
     CommonModule

@@ -84,10 +84,15 @@
           </mat-card-content>
 
           <mat-card-actions>
-            <button mat-raised-button color="primary" class="finalizar-btn" (click)="finalizarCompra()">
+            <!-- Card para avisar usuário se cliente não cadastrado -->
+
+            <!-- Botão Finalizar Compra só aparece se o card não estiver aparecendo -->
+            <button class="finalizar-btn" mat-raised-button color="primary" 
+            (click)="verificarCliente()">
               <mat-icon>shopping_cart_checkout</mat-icon>
               Finalizar Compra
             </button>
+
 
             <button mat-stroked-button color="primary" class="continuar-btn" (click)="continuarComprando()">
               <mat-icon>arrow_back</mat-icon>

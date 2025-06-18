@@ -31,6 +31,10 @@ export class ClienteService {
     return this.httpClient.get<Cliente>(`${this.baseUrl}/me`);
   }
 
+  findByIdUsuario( id: number): Observable<Cliente> {
+    return this.httpClient.get<Cliente>(`${this.baseUrl}/usuario/${id}`);
+  }
+
   insert(cliente: Cliente): Observable<Cliente> {
     return this.httpClient.post<Cliente>(this.baseUrl, cliente);
   }

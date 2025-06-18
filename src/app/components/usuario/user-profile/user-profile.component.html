@@ -45,7 +45,7 @@
             <!-- Avatar with upload overlay -->
             <div class="avatar-wrapper">
               <div class="avatar-circle mat-elevation-z3">
-                <ng-container *ngIf="usuario?.usuario?.listaImagem && imagemUrl; else inicial">
+                <ng-container *ngIf="usuario?.listaImagem && imagemUrl; else inicial">
                   <img [src]="imagemUrl" alt="Imagem de perfil" class="profile-image" />
                 </ng-container>
                 <ng-template #inicial>
@@ -66,7 +66,7 @@
             <input type="file" hidden #fileInput accept="image/*" (change)="carregarImagemSelecionada($event)" />
 
             <!-- Image options menu -->
-            <div class="avatar-actions" *ngIf="usuario?.usuario?.listaImagem">
+            <div class="avatar-actions" *ngIf="usuario?.listaImagem">
               <button mat-button color="primary" [matMenuTriggerFor]="photoMenu" class="photo-options-button">
                 <mat-icon>more_horiz</mat-icon>
                 <span>Opções</span>
@@ -141,13 +141,13 @@
               <strong>Status: {{ getUltimoStatus(pedido) }}</strong>
             </div>
           </div>
-      
+
           <div class="order-actions">
             <button class="action-btn primary">VER PEDIDO</button>
             <button class="action-btn primary">RASTREAR PEDIDO</button>
             <button class="action-btn primary">CONTATAR SUPORTE</button>
           </div>
-      
+
           <div class="order-status">
             <mat-icon class="status-icon">local_shipping</mat-icon>
             <span class="status-text">{{ getUltimoStatus(pedido) }}</span>
@@ -155,35 +155,52 @@
           </div>
         </ng-container>
       </div>
-      
+
 
       <!-- Grid Inferior: Endereços e Dados -->
       <div class="bottom-grid">
         <!-- Endereços -->
         <div class="bottom-section">
-          <div class="section-header">
-            <h2 class="section-title">
-              <mat-icon class="section-icon">place</mat-icon>
-              ENDEREÇOS
-            </h2>
-            <button class="view-all-btn" (click)="setActiveSection('enderecos')">VER TODOS</button>
-          </div>
+  <div class="section-header">
+    <h2 class="section-title">
+      <mat-icon class="section-icon">place</mat-icon>
+      ENDEREÇOS
+    </h2>
+    <button class="view-all-btn" (click)="setActiveSection('enderecos')">VER TODOS</button>
+  </div>
 
-          <div class="address-cards" *ngIf="usuario.enderecos.length > 0">
-            <div class="address-card-compact" *ngFor="let endereco of usuario.enderecos.slice(0, 2)">
-              <h4 class="address-title">Endereço de Entrega Padrão</h4>
-              <div class="address-info-compact">
-                <p><strong>{{ usuario.nome }}</strong></p>
-                <p>{{ endereco.rua }}, {{ endereco.numero }}</p>
-                <p>{{ endereco.bairro }}</p>
-                <p>{{ endereco.cidade }}, {{ endereco.estado }} - {{ endereco.cep }}</p>
-                <p *ngIf="usuario.telefones.length > 0">
-                  Tel: ({{ usuario.telefones[0].codigoArea }}) {{ usuario.telefones[0].numero }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+  <ng-container *ngIf="enderecosVisiveis && enderecosVisiveis.length > 0; else semEnderecos">
+  <div class="address-cards">
+    <div class="address-card-compact" *ngFor="let endereco of enderecosVisiveis">
+      <h4 class="address-title">Endereço de Entrega Padrão</h4>
+      <div class="address-info-compact">
+        <p><strong>{{ cliente?.nome || 'Sem dados' }}</strong></p>
+        <p>{{ endereco?.rua || 'Sem dados' }}, {{ endereco?.numero || 'Sem dados' }}</p>
+        <p>{{ endereco?.bairro || 'Sem dados' }}</p>
+        <p>
+          {{ endereco?.cidade || 'Sem dados' }},
+          {{ endereco?.estado || 'Sem dados' }} -
+          {{ endereco?.cep || 'Sem dados' }}
+        </p>
+        <p *ngIf="telefonePrincipal; else semTelefone">
+          Tel: ({{ telefonePrincipal.codigoArea || '--' }}) {{ telefonePrincipal.numero || 'Sem dados' }}
+        </p>
+        <ng-template #semTelefone>
+          <p>Tel: Sem dados</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #semEnderecos>
+  <div class="empty-state">Nenhum endereço cadastrado</div>
+</ng-template>
+
+
+  
+</div>
+
 
         <!-- Meus Dados -->
         <div class="bottom-section">
@@ -198,8 +215,8 @@
           <div class="user-data-compact">
             <h4 class="data-title">Informações de Acesso</h4>
             <div class="user-info-compact">
-              <p><mat-icon class="info-icon">person</mat-icon> {{ usuario.nome }}</p>
-              <p><mat-icon class="info-icon">email</mat-icon> {{ usuario.usuario?.email }}</p>
+              <p><mat-icon class="info-icon">person</mat-icon> {{ cliente?.nome || 'Sem dados' }}</p>
+              <p><mat-icon class="info-icon">email</mat-icon> {{ usuario.email }}</p>
             </div>
 
             <div class="user-actions">
@@ -216,24 +233,30 @@
     <div *ngIf="activeSection === 'dados'" class="content-section">
       <h2 class="page-title">Meus Dados</h2>
       <div class="data-grid">
+
         <div class="data-item">
           <label>Nome Completo</label>
-          <p>{{ usuario.nome || 'Não informado' }}</p>
+          <p>{{ cliente?.nome || 'Não informado' }}</p>
         </div>
+
         <div class="data-item">
           <label>Email</label>
-          <p>{{ usuario.usuario?.email || 'Não informado' }}</p>
+          <p>{{ usuario.email }}</p>
         </div>
+
         <div class="data-item">
           <label>CPF</label>
-          <p>{{ usuario.usuario?.cpf || 'Não informado' }}</p>
+          <p>{{ usuario.cpf }}</p>
         </div>
+
         <div class="data-item">
           <label>Data de Nascimento</label>
-          <p>{{ usuario.dataNascimento || 'Não informado' }}</p>
+          <p>{{ cliente?.dataNascimento || 'Não informado' }}</p>
         </div>
+
       </div>
     </div>
+
 
     <div *ngIf="activeSection === 'pedidos'" class="pedidos-container">
       <div class="page-header">
@@ -242,10 +265,10 @@
           Meus Pedidos
         </h2>
       </div>
-    
+
       <div class="orders-wrapper" *ngIf="pedidos.length > 0; else noPedidos">
         <div class="order-card" *ngFor="let pedido of pedidos">
-          
+
           <!-- Header do Pedido -->
           <div class="order-header">
             <div class="order-number">
@@ -263,7 +286,7 @@
               {{ getUltimoStatus(pedido) || 'Indefinido' }}
             </div>
           </div>
-    
+
           <!-- Resumo Financeiro -->
           <div class="order-summary">
             <div class="summary-item">
@@ -281,7 +304,7 @@
               <span class="value">{{ getTipoPagamentoLabel(pedido.tipoPagamento) }}</span>
             </div>
           </div>
-    
+
           <!-- Informações do Cliente -->
           <div class="customer-info">
             <h4 class="section-title">
@@ -294,18 +317,18 @@
                   <mat-icon class="info-icon">badge</mat-icon>
                   Nome Completo
                 </label>
-                <p>{{ usuario.nome || 'Não informado' }}</p>
+                <p>{{ cliente?.nome || 'Não informado' }}</p>
               </div>
               <div class="info-item">
                 <label>
                   <mat-icon class="info-icon">credit_card</mat-icon>
                   CPF
                 </label>
-                <p>{{ usuario.usuario?.cpf || 'Não informado' }}</p>
+                <p>{{ usuario.cpf || 'Não informado' }}</p>
               </div>
             </div>
           </div>
-    
+
           <!-- Endereço de Entrega -->
           <div class="delivery-info">
             <h4 class="section-title">
@@ -319,7 +342,8 @@
               </p>
               <p class="address-line">
                 <mat-icon class="address-icon">location_city</mat-icon>
-                {{ pedido.enderecoEntrega.bairro }} - {{ pedido.enderecoEntrega.cidade }}/{{ pedido.enderecoEntrega.estado }}
+                {{ pedido.enderecoEntrega.bairro }} - {{ pedido.enderecoEntrega.cidade }}/{{
+                pedido.enderecoEntrega.estado }}
               </p>
               <p class="address-line">
                 <mat-icon class="address-icon">markunread_mailbox</mat-icon>
@@ -327,23 +351,22 @@
               </p>
             </div>
           </div>
-    
+
           <!-- Produtos do Pedido -->
           <div class="products-section">
             <h4 class="section-title">
               <mat-icon class="section-icon">inventory_2</mat-icon>
               Produtos do Pedido
-              <span class="products-count">({{ pedido.listaItemPedido.length }} {{ pedido.listaItemPedido.length === 1 ? 'item' : 'itens' }})</span>
+              <span class="products-count">({{ pedido.listaItemPedido.length }} {{ pedido.listaItemPedido.length === 1 ?
+                'item' : 'itens' }})</span>
             </h4>
-            
+
             <div class="products-list" *ngIf="temImagensPedido(pedido); else noImages">
               <div class="product-item" *ngFor="let item of pedido.listaItemPedido; let i = index">
                 <div class="product-image">
-                  <img [src]="getImagensPedido(pedido)[i]" 
-                       alt="Imagem do produto" 
-                       class="product-img" />
+                  <img [src]="getImagensPedido(pedido)[i]" alt="Imagem do produto" class="product-img" />
                 </div>
-                
+
                 <div class="product-details">
                   <h5 class="product-name">
                     <mat-icon class="product-icon">memory</mat-icon>
@@ -359,7 +382,7 @@
                     <span class="quantity-value">{{ item.quantidade }}</span>
                   </div>
                 </div>
-                
+
                 <div class="product-actions">
                   <button mat-raised-button class="btn-details" (click)="verDetalhes(pedido)">
                     <mat-icon>visibility</mat-icon>
@@ -368,7 +391,7 @@
                 </div>
               </div>
             </div>
-    
+
             <ng-template #noImages>
               <div class="no-images-message">
                 <mat-icon class="no-image-icon">image_not_supported</mat-icon>
@@ -376,7 +399,7 @@
               </div>
             </ng-template>
           </div>
-    
+
           <!-- Ações do Pedido -->
           <div class="order-actions">
             <button mat-stroked-button class="action-btn">
@@ -388,10 +411,10 @@
               Suporte
             </button>
           </div>
-    
+
         </div>
       </div>
-    
+
       <ng-template #noPedidos>
         <div class="empty-state">
           <mat-icon class="empty-icon">shopping_cart_checkout</mat-icon>
@@ -404,26 +427,36 @@
         </div>
       </ng-template>
     </div>
-    
-    
+
+
 
 
     <div *ngIf="activeSection === 'enderecos'" class="content-section">
       <h2 class="page-title">Endereços</h2>
-      <div class="addresses-list" *ngIf="usuario.enderecos.length > 0; else noAddresses">
-        <div class="address-item" *ngFor="let endereco of usuario.enderecos">
-          <h3>{{ endereco.rua }}, {{ endereco.numero }}</h3>
-          <p>{{ endereco.bairro }} - {{ endereco.cidade }}/{{ endereco.estado }}</p>
-          <p>CEP: {{ endereco.cep }}</p>
-          <p *ngIf="usuario.telefones.length > 0">
-            Tel: ({{ usuario.telefones[0].codigoArea }}) {{ usuario.telefones[0].numero }}
+
+      <div class="address-cards" *ngIf="enderecosVisiveis.length > 0">
+        <div class="address-card-compact" *ngFor="let endereco of enderecosVisiveis">
+          <h3>{{ endereco?.rua || 'Sem dados' }}, {{ endereco?.numero || 'Sem dados' }}</h3>
+          <p>
+            {{ endereco?.bairro || 'Sem dados' }} -
+            {{ endereco?.cidade || 'Sem dados' }}/{{ endereco?.estado || 'Sem dados' }}
           </p>
+          <p>CEP: {{ endereco?.cep || 'Sem dados' }}</p>
+
+          <p *ngIf="telefonePrincipal; else semTelefone">
+            Tel: ({{ telefonePrincipal.codigoArea || '--' }}) {{ telefonePrincipal.numero || 'Sem dados' }}
+          </p>
+          <ng-template #semTelefone>
+            <p>Tel: Sem dados</p>
+          </ng-template>
         </div>
       </div>
+
       <ng-template #noAddresses>
         <div class="empty-state">Nenhum endereço cadastrado</div>
       </ng-template>
     </div>
+
 
     <div *ngIf="activeSection === 'favoritos'" class="content-section">
       <h2 class="page-title">Meus Favoritos</h2>

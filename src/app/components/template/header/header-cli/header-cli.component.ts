@@ -11,6 +11,10 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../../../services/auth.service';
 import { MatDrawer } from '@angular/material/sidenav';
+import { ClienteService } from '../../../../services/cliente.service';
+import { Cliente } from '../../../../models/cliente.model';
+import { DialogCadastrarClienteComponent } from '../../../usuario/dialog-cadastrar-cliente/dialog-cadastrar-cliente.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header-cli',
@@ -24,7 +28,8 @@ import { MatDrawer } from '@angular/material/sidenav';
     MatInputModule,
     FormsModule,
     CommonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   templateUrl: './header-cli.component.html',
   styleUrl: './header-cli.component.css'
@@ -32,11 +37,14 @@ import { MatDrawer } from '@angular/material/sidenav';
 export class HeaderCliComponent implements OnInit {
   searchQuery: string = '';
   isLogado: boolean = false;
+  cliente: Cliente | null = null;
 
   constructor(
     private sidebarService: SidebarService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private clienteService: ClienteService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +56,30 @@ export class HeaderCliComponent implements OnInit {
 
   clickMenu() {
     this.sidebarService.toggle();
+  }
+
+  verificarCliente() {
+    this.clienteService.findByMe().subscribe({
+      next: data => {
+        this.cliente = data;
+  
+        if (!this.cliente) {
+          this.dialog.open(DialogCadastrarClienteComponent, {
+            width: '400px',
+            disableClose: true
+          });
+        } else {
+          this.router.navigate(['cliente/perfil'])
+        }
+      },
+      error: err => {
+        console.error("Erro ao carregar usuário", err);
+        this.dialog.open(DialogCadastrarClienteComponent, {
+          width: '400px',
+          disableClose: true
+        });
+      }
+    });
   }
 
   onSearch() {

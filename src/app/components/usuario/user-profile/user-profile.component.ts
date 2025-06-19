@@ -19,11 +19,13 @@ import { MatCardModule } from "@angular/material/card";
 import { Usuario } from "../../../models/usuario.model";
 import { TelefoneCliente } from "../../../models/telefone-cliente.model";
 import { Endereco } from "../../../models/endereco.model";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { DialogCadastrarClienteComponent } from "../dialog-cadastrar-cliente/dialog-cadastrar-cliente.component";
 
 
 @Component({
   selector: "app-user-profile",
-  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatButtonModule, MatCardModule, MatDialogModule],
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
@@ -59,7 +61,8 @@ export class UserProfileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private placaService: PlacaDeVideoService,
     private fornecedorService: FornecedorService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
   ) { }
 
   usuarioFinal: { nome?: string, username?: string, listaImagem?: string[] } | null = null;
@@ -76,7 +79,14 @@ export class UserProfileComponent implements OnInit {
           if (!clienteData) {
             console.warn("Cliente retornado é null");
             this.cliente = null;
-            return; // Encerra o fluxo se cliente for null
+          
+            // Abre o diálogo
+            this.dialog.open(DialogCadastrarClienteComponent, {
+              width: '400px', // ajuste como quiser
+              disableClose: true
+            });
+          
+            return;
           }
 
           this.cliente = clienteData;

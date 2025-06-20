@@ -155,7 +155,7 @@ export class ClienteFormComponent {
       operacao.subscribe({
         next: () => {
           this.snackbarService.showMessage('Cliente salvo com sucesso!', true);
-          this.router.navigateByUrl('/admin/clientes');
+          this.router.navigateByUrl('/cliente/perfil');
         },
         error: (erroResponse) => {
           this.snackbarService.showMessage('Erro ao salvar o cliente!', false);

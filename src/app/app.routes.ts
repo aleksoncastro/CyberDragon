@@ -38,6 +38,7 @@ import { PedidoPagamentoComponent } from './components/pedido/pedido-pagamento/p
 import { ForbiddenComponent } from './pages/without-permission/without-permission.component';
 import { PedidoListComponent } from './components/pedido/pedidos-list/pedidos-list.component';
 import { CartaoFormComponent } from './components/cartao/cartao-form/cartao-form.component';
+import { ClienteResolver } from './components/cliente/cliente.resolver';
 
 
 export const routes: Routes = [
@@ -81,7 +82,7 @@ export const routes: Routes = [
             { path: 'lotes/new', component: LoteFormComponent, title: 'Novo Lote' },
             { path: 'lotes/edit/:id', component: LoteFormComponent, title: 'Edição de Lote', resolve: { lote: loteResolver } },
             { path: 'funcionarios', component: FuncionarioListComponent, title: 'Novo Funcionário' },
-            { path: 'pedidos-list', component: PedidoListComponent, title: 'Lista pedidos'},
+            { path: 'pedidos-list', component: PedidoListComponent, title: 'Lista pedidos' },
             { path: 'home', component: HomeComponent, title: 'Painel Administrativo' },
         ]
     },
@@ -94,6 +95,7 @@ export const routes: Routes = [
         children: [
             { path: 'placas-vitrine', component: PlacadevideoVitrineComponent, title: 'Lista de Placas de Video', data: { breadcrumb: 'Placas Vitrine' } },
             { path: 'informacoes', component: ClienteFormComponent, title: 'Informações do Cliente', data: { breadcrumb: 'Informações' } },
+            { path: ':id/editar', component: ClienteFormComponent, resolve: { cliente: ClienteResolver } },
             { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário', data: { breadcrumb: 'Perfil' } },
             { path: 'pedido-pagamento', component: PedidoPagamentoComponent, title: 'Criação do Pedido e Pagamento' },
             { path: 'cartao-form', component: CartaoFormComponent, title: 'Criação de Cartão' },

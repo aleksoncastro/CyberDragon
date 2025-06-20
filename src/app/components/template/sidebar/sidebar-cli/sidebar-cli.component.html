@@ -4,16 +4,11 @@
     <mat-nav-list>
 
       <!-- Seção: Conta do Usuário -->
-      <div class="menu-section">
+      <div class="menu-section" *ngIf="isLogado">
         <div class="section-header">
-          <ng-container *ngIf="isLogado; else saudacaoPublica">
-            Olá, {{ usuarioNome }}
-          </ng-container>
-          <ng-template #saudacaoPublica>
-            Olá. Acesse sua conta
-          </ng-template>
+          Olá, {{ usuarioNome }}
         </div>
-        <mat-list-item routerLink="/cliente/perfil">
+        <mat-list-item routerLink="/cliente/perfil" (click)="verificarCliente()">
           <mat-icon matListIcon>account_circle</mat-icon>
           <span style="color: #bbb;">Minha Conta</span>
         </mat-list-item>

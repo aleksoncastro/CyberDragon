@@ -1,25 +1,16 @@
 <div class="flex-container">
-  <video
-#video404
-muted
-autoplay
-playsinline
-(ended)="onVideoEnded()"
-class="video-bg"
->
-<source src="assets/videos/fundo_404.mp4" type="video/mp4" />
-Seu navegador não suporta vídeo.
-</video>
+  <video #video404 muted autoplay playsinline (ended)="onVideoEnded()" class="video-bg">
+    <source src="assets/videos/fundo_404.mp4" type="video/mp4" />
+    Seu navegador não suporta vídeo.
+  </video>
 
-<div class="message-wrapper">
-  <div class="message" [class.show]="showMessage">
+  <div class="message-wrapper">
+    <div class="message" [class.show]="showMessage">
       <h1 class="codigo">404</h1>
       <p>Page not Found</p>
-      <a href="/placasdevideo">
-        <button class="botao">
-          Voltar para o início
+        <button class="botao" (click)="voltarParaUltimaPagina()">
+          Voltar para a página anterior
         </button>
-      </a>
     </div>
-</div>
+  </div>
 </div>

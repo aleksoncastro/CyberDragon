@@ -24,7 +24,7 @@ export class NotFoundComponent implements OnInit, AfterViewInit {
     video.currentTime = 0;
     video.muted = true;        // <- Isso precisa estar garantido antes
     video.load();
-  
+
     // Tenta tocar, mas com fallback em caso de bloqueio
     video.play().catch((err) => {
       console.warn('Vídeo bloqueado pelo navegador:', err);
@@ -35,5 +35,9 @@ export class NotFoundComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.showMessage = true;
     }, 0); // mostra mensagem 6s depois do vídeo acabar
+  }
+
+  voltarParaUltimaPagina(): void {
+    window.history.back();
   }
 }

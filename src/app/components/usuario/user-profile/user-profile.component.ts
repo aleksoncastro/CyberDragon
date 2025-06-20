@@ -16,11 +16,16 @@ import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
+import { Usuario } from "../../../models/usuario.model";
+import { TelefoneCliente } from "../../../models/telefone-cliente.model";
+import { Endereco } from "../../../models/endereco.model";
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { DialogCadastrarClienteComponent } from "../dialog-cadastrar-cliente/dialog-cadastrar-cliente.component";
 
 
 @Component({
   selector: "app-user-profile",
-  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, MatIconModule, RouterModule, MatMenuModule, MatButtonModule, MatCardModule, MatDialogModule],
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
@@ -28,7 +33,7 @@ export class UserProfileComponent implements OnInit {
 
   breadcrumbs: Array<{ label: string; url: string }> = [];
 
-  usuario!: Cliente;
+  cliente: Cliente | null = null;
   activeSection: string = 'conta';
   pedidos: Pedido[] = [];
   imagensPorPedido: { [pedidoId: number]: string[] } = {};
@@ -39,6 +44,9 @@ export class UserProfileComponent implements OnInit {
   isUploading: boolean = false;
   placaItem: PlacaDeVideo | null = null;
   pedidoItem!: Pedido;
+  usuario!: Usuario;
+  enderecosVisiveis2: Endereco[] = [];
+
 
   placasMap: Map<number, PlacaDeVideo> = new Map();
   fornecedoresMap: Map<number, string> = new Map();
@@ -53,29 +61,71 @@ export class UserProfileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private placaService: PlacaDeVideoService,
     private fornecedorService: FornecedorService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
   ) { }
 
+  usuarioFinal: { nome?: string, username?: string, listaImagem?: string[] } | null = null;
+
   ngOnInit(): void {
-    this.clienteService.findByMe().subscribe({
-      next: data => {
-        console.log("Usuário carregado:", data);
-        this.usuario = data;
+  this.usuarioService.findByMe().subscribe({
+    next: data => {
+      console.log("Usuario carregado: ", data);
+      this.usuario = data;
 
-        const imagens = this.usuario?.usuario?.listaImagem;
+      // Buscar cliente pelo id do usuario
+      this.clienteService.findByIdUsuario(data.id).subscribe({
+        next: clienteData => {
+          if (!clienteData) {
+            console.warn("Cliente retornado é null");
+            this.cliente = null;
+          
+            // Abre o diálogo
+            this.dialog.open(DialogCadastrarClienteComponent, {
+              width: '400px', // ajuste como quiser
+              disableClose: true
+            });
+          
+            return;
+          }
 
-        if (imagens && imagens.length > 0) {
-          const nomeImagem = imagens[0];
-          this.imagemUrl = this.usuarioService.getImagemUrl(nomeImagem);
+          this.cliente = clienteData;
+
+          if (!this.usuarioFinal) {
+            this.usuarioFinal = this.usuario;
+          }
+
+          const imagens: string[] = data?.listaImagem ?? [];
+          if (imagens.length > 0 && !this.imagemUrl) {
+            const nomeImagem = imagens[0];
+            this.imagemUrl = this.usuarioService.getImagemUrl(nomeImagem);
+          }
+
+          this.carregarPedidos();
+          this.pedidos.forEach(pedido => this.carregarImagensDoPedido(pedido));
+        },
+        error: err => {
+          console.error("Erro ao buscar cliente pelo id do usuário", err);
         }
-        this.carregarPedidos();
-        this.pedidos.forEach(pedido => this.carregarImagensDoPedido(pedido));
-      },
-      error: err => {
-        console.error("Erro ao carregar usuário", err);
-      }
-    });
-  }
+      });
+    },
+    error: err => {
+      console.error("Erro ao carregar usuário", err);
+    }
+  });
+}
+
+get telefonePrincipal(): TelefoneCliente | null {
+  return this.cliente?.telefones?.length ? this.cliente.telefones[0] : null;
+}
+
+get enderecosVisiveis(): Endereco[] {
+  return this.cliente?.enderecos?.length ? this.cliente.enderecos.slice(0, 2) : [];
+}
+
+
+
+
   carregarPedidos(): void {
     this.pedidoService.findByUsername().subscribe({
       next: data => {
@@ -103,46 +153,44 @@ export class UserProfileComponent implements OnInit {
 
   }
 
-  getStatusClass(pedido: any): string
-{
-  const status = this.getUltimoStatus(pedido)?.toLowerCase()
+  getStatusClass(pedido: any): string {
+    const status = this.getUltimoStatus(pedido)?.toLowerCase()
 
-  switch (status) {
-    case "pendente":
-      return 'status-pendente';
-    case "processando":
-      return 'status-processando';
-    case "enviado":
-      return 'status-enviado';
-    case "entregue":
-      return 'status-entregue';
-    case "cancelado":
-      return 'status-cancelado';
-    default:
-      return 'status-pendente';
+    switch (status) {
+      case "pendente":
+        return 'status-pendente';
+      case "processando":
+        return 'status-processando';
+      case "enviado":
+        return 'status-enviado';
+      case "entregue":
+        return 'status-entregue';
+      case "cancelado":
+        return 'status-cancelado';
+      default:
+        return 'status-pendente';
+    }
   }
-}
 
-getStatusIcon(pedido: any)
-: string
-{
-  const status = this.getUltimoStatus(pedido)?.toLowerCase()
+  getStatusIcon(pedido: any)
+    : string {
+    const status = this.getUltimoStatus(pedido)?.toLowerCase()
 
-  switch (status) {
-    case "pendente":
-      return 'schedule';
-    case "processando":
-      return 'autorenew';
-    case "enviado":
-      return 'local_shipping';
-    case "entregue":
-      return 'check_circle';
-    case "cancelado":
-      return 'cancel';
-    default:
-      return 'help_outline';
+    switch (status) {
+      case "pendente":
+        return 'schedule';
+      case "processando":
+        return 'autorenew';
+      case "enviado":
+        return 'local_shipping';
+      case "entregue":
+        return 'check_circle';
+      case "cancelado":
+        return 'cancel';
+      default:
+        return 'help_outline';
+    }
   }
-}
 
   getImagensPedido(pedido: Pedido): string[] {
     if (typeof pedido.id !== 'number') return [];
@@ -171,18 +219,18 @@ getStatusIcon(pedido: any)
   getListaId(pedido: Pedido): number[] {
     return pedido.listaItemPedido.map((item: any) => item.idProduto);
   }
-  
+
   verDetalhes(pedido: Pedido): void {
     const ids = this.getListaId(pedido);
     const idItem = ids[0]; // usa o primeiro ID da lista
-  
+
     if (idItem != null) {
       this.router.navigate(['placadevideo-detail', idItem]);
     } else {
       console.error('Nenhum ID de placa de vídeo encontrado no pedido.');
     }
   }
-  
+
 
   carregarImagensDoPedido(pedido: Pedido): void {
     const ids = pedido.listaItemPedido.map((item: any) => item.idProduto);
@@ -235,8 +283,8 @@ getStatusIcon(pedido: any)
       const file = input.files[0];
       this.processarArquivo(file);
 
-      if (this.usuario?.usuario?.id) {
-        this.uploadImage(this.usuario.usuario.id);
+      if (this.usuario?.id) {
+        this.uploadImage(this.usuario.id);
       }
     }
   }
@@ -309,6 +357,9 @@ getStatusIcon(pedido: any)
   }
 
   getFirstName(): string {
-    return this.usuario?.nome?.split(" ")[0] ?? '';
+    return this.usuario?.username?.split(" ")[0] ?? '';
   }
+
+
+
 }

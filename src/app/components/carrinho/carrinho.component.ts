@@ -11,6 +11,10 @@ import { MatBadgeModule } from "@angular/material/badge"
 import { MatTooltipModule } from "@angular/material/tooltip"
 import { MatRippleModule } from "@angular/material/core"
 import { trigger, transition, style, animate } from "@angular/animations"
+import { ClienteService } from "../../services/cliente.service"
+import { Cliente } from "../../models/cliente.model"
+import { DialogCadastrarClienteComponent } from "../usuario/dialog-cadastrar-cliente/dialog-cadastrar-cliente.component"
+import { MatDialog, MatDialogModule } from "@angular/material/dialog"
 
 @Component({
   selector: "app-carrinho",
@@ -24,6 +28,7 @@ import { trigger, transition, style, animate } from "@angular/animations"
     MatBadgeModule,
     MatTooltipModule,
     MatRippleModule,
+    MatDialogModule,
   ],
   templateUrl: "./carrinho.component.html",
   styleUrl: "./carrinho.component.css",
@@ -37,19 +42,57 @@ import { trigger, transition, style, animate } from "@angular/animations"
     ]),
   ],
 })
+
+
 export class CarrinhoComponent implements OnInit {
   carrinhoItens: ItemCarrinho[] = []
+  cliente: Cliente | null = null;
+  mostrarCardCadastro = false;
+
 
   constructor(
     private carrinhoService: CarrinhoService,
+    private clienteService: ClienteService,
     private router: Router,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.carrinhoService.carrinho$.subscribe((itens) => {
       this.carrinhoItens = itens
     })
+
   }
+
+  irParaInformacoes() {
+    this.router.navigate(['cliente/informacoes']);
+  }
+
+  verificarCliente() {
+  this.clienteService.findByMe().subscribe({
+    next: data => {
+      this.cliente = data;
+
+      if (!this.cliente) {
+        this.dialog.open(DialogCadastrarClienteComponent, {
+          width: '400px',
+          disableClose: true
+        });
+      } else {
+        this.finalizarCompra();
+      }
+    },
+    error: err => {
+      console.error("Erro ao carregar usuário", err);
+      this.dialog.open(DialogCadastrarClienteComponent, {
+        width: '400px',
+        disableClose: true
+      });
+    }
+  });
+}
+
+
 
   removerItem(item: ItemCarrinho): void {
     this.carrinhoService.remover(item)

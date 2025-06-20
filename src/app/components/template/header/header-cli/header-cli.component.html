@@ -46,7 +46,7 @@
     </button>
 
     <mat-menu #menuConta="matMenu">
-      <button mat-menu-item [routerLink]="['/cliente/perfil']">
+      <button mat-menu-item [routerLink]="['/cliente/perfil']" (click)="verificarCliente()">
         <mat-icon>account_circle</mat-icon>
         Minha Conta
       </button>

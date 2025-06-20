@@ -146,6 +146,53 @@
   font-size: 1.2rem;
 }
 
+mat-card-title,
+.cartao-item mat-icon,
+.numero-cartao,
+.nome-cartao,
+.validade-cartao {
+  color: var(--cor-principal);
+}
+
+.cartao-conteudo {
+  background-color: var(--cartao-container); /* #2A2A2A */
+  padding: 16px;
+  color: var(--cor-principal); /* #C4A000 */
+}
+
+.cartao-conteudo-interno {
+  color: var(--cor-principal); /* #C4A000 */
+  font-size: 14px;
+}
+
+.cartao-item {
+  background-color: var(--cartao-container);
+  border: 1px solid var(--borda-sombra);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px var(--borda-sombra);
+}
+
+.cartao-icon {
+  font-size: 32px;
+  margin-right: 16px;
+  color: var(--cor-principal);
+}
+
+.cartao-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.numero-cartao,
+.nome-cartao,
+.validade-cartao {
+  font-size: 14px;
+}
+
 /* Recent Orders Section */
 .recent-orders-section {
   margin-bottom: 2rem;

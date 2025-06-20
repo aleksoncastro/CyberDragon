@@ -14,8 +14,13 @@ export class CarrinhoService {
 
   constructor(private localStorageService: LocalStorageService) {
     const carrinhoArmazenado = this.localStorageService.getItem('carrinho');
-    const itens = carrinhoArmazenado ? JSON.parse(carrinhoArmazenado) : [];
-    this.carrinhoSubject.next(itens);
+
+    if (carrinhoArmazenado && Array.isArray(carrinhoArmazenado)) {
+      this.carrinhoSubject.next(carrinhoArmazenado);
+    } else {
+      this.carrinhoSubject.next([]);
+      this.localStorageService.removeItem('carrinho'); // limpa valor inválido
+    }
   }
 
   adicionar(item: ItemCarrinho): void {
@@ -34,7 +39,7 @@ export class CarrinhoService {
 
 
   private atualizarArmazenamentoLocal() {
-    this.localStorageService.setItem('carrinho', JSON.stringify(this.carrinhoSubject.value));
+    this.localStorageService.setItem('carrinho', this.carrinhoSubject.value);
   }
 
   // resolver o problema da quantidade

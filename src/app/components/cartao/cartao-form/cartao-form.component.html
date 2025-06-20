@@ -1,0 +1,190 @@
+<div class="cartao-form-container">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Editar Cartão' : 'Novo Cartão' }}</h2>
+    <div class="loading-user-data" *ngIf="loadingUserData">
+      <span class="loading-spinner-small"></span>
+      Carregando seus dados...
+    </div>
+  </div>
+
+  <form [formGroup]="cartaoForm" (ngSubmit)="onSubmit()" class="cartao-form">
+    <!-- Número do Cartão -->
+    <div class="form-group">
+      <label for="numero" class="form-label">
+        Número do Cartão <span class="required">*</span>
+      </label>
+      <input
+        type="text"
+        id="numero"
+        formControlName="numero"
+        class="form-input"
+        [class.error]="isFieldInvalid('numero')"
+        placeholder="0000 0000 0000 0000"
+        maxlength="19"
+        (input)="formatCardNumber($event)"
+      />
+      <div class="error-message" *ngIf="isFieldInvalid('numero')">
+        <span *ngIf="cartaoForm.get('numero')?.errors?.['required']">
+          Número do cartão é obrigatório
+        </span>
+        <span *ngIf="cartaoForm.get('numero')?.errors?.['pattern']">
+          Número do cartão deve ter 16 dígitos
+        </span>
+      </div>
+    </div>
+
+    <!-- Titular -->
+    <div class="form-group">
+      <label for="titular" class="form-label">
+        Nome do Titular <span class="required">*</span>
+        <span class="auto-filled-badge" *ngIf="dadosPreenchidosAutomaticamente && cartaoForm.get('titular')?.value">
+          Preenchido automaticamente
+        </span>
+      </label>
+      <div class="input-with-action">
+        <input
+          type="text"
+          id="titular"
+          formControlName="titular"
+          class="form-input"
+          [class.error]="isFieldInvalid('titular')"
+          [class.auto-filled]="dadosPreenchidosAutomaticamente && cartaoForm.get('titular')?.value"
+          placeholder="Nome como está no cartão"
+          (input)="formatTitular($event)"
+        />
+        <button
+          type="button"
+          class="clear-btn"
+          *ngIf="dadosPreenchidosAutomaticamente && cartaoForm.get('titular')?.value"
+          (click)="limparDadosPreenchidos()"
+          title="Limpar dados preenchidos automaticamente"
+        >
+          ✕
+        </button>
+      </div>
+      <div class="error-message" *ngIf="isFieldInvalid('titular')">
+        <span *ngIf="cartaoForm.get('titular')?.errors?.['required']">
+          Nome do titular é obrigatório
+        </span>
+        <span *ngIf="cartaoForm.get('titular')?.errors?.['minlength']">
+          Nome deve ter pelo menos 2 caracteres
+        </span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Data de Validade -->
+      <div class="form-group">
+        <label for="dataValidade" class="form-label">
+          Validade <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          id="dataValidade"
+          formControlName="dataValidade"
+          class="form-input"
+          [class.error]="isFieldInvalid('dataValidade')"
+          placeholder="MM/AA"
+          maxlength="5"
+          (input)="formatExpiryDate($event)"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('dataValidade')">
+          <span *ngIf="cartaoForm.get('dataValidade')?.errors?.['required']">
+            Data de validade é obrigatória
+          </span>
+          <span *ngIf="cartaoForm.get('dataValidade')?.errors?.['pattern']">
+            Formato inválido (MM/AA)
+          </span>
+          <span *ngIf="cartaoForm.get('dataValidade')?.errors?.['expired']">
+            Cartão expirado
+          </span>
+        </div>
+      </div>
+
+      <!-- CVV -->
+      <div class="form-group">
+        <label for="cvv" class="form-label">
+          CVV <span class="required">*</span>
+        </label>
+        <input
+          type="text"
+          id="cvv"
+          formControlName="cvv"
+          class="form-input"
+          [class.error]="isFieldInvalid('cvv')"
+          placeholder="123"
+          maxlength="4"
+          (input)="formatCVV($event)"
+        />
+        <div class="error-message" *ngIf="isFieldInvalid('cvv')">
+          <span *ngIf="cartaoForm.get('cvv')?.errors?.['required']">
+            CVV é obrigatório
+          </span>
+          <span *ngIf="cartaoForm.get('cvv')?.errors?.['pattern']">
+            CVV deve ter 3 ou 4 dígitos
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CPF -->
+    <div class="form-group">
+      <label for="cpf" class="form-label">
+        CPF do Titular <span class="required">*</span>
+        <span class="auto-filled-badge" *ngIf="dadosPreenchidosAutomaticamente && cartaoForm.get('cpf')?.value">
+          Preenchido automaticamente
+        </span>
+      </label>
+      <input
+        type="text"
+        id="cpf"
+        formControlName="cpf"
+        class="form-input"
+        [class.error]="isFieldInvalid('cpf')"
+        [class.auto-filled]="dadosPreenchidosAutomaticamente && cartaoForm.get('cpf')?.value"
+        placeholder="000.000.000-00"
+        maxlength="14"
+        (input)="formatCPF($event)"
+      />
+      <div class="error-message" *ngIf="isFieldInvalid('cpf')">
+        <span *ngIf="cartaoForm.get('cpf')?.errors?.['required']">
+          CPF é obrigatório
+        </span>
+        <span *ngIf="cartaoForm.get('cpf')?.errors?.['pattern']">
+          CPF deve ter formato válido
+        </span>
+        <span *ngIf="cartaoForm.get('cpf')?.errors?.['invalidCpf']">
+          CPF inválido
+        </span>
+      </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onCancel()"
+        [disabled]="loading"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="cartaoForm.invalid || loading"
+      >
+        <span *ngIf="loading" class="loading-spinner"></span>
+        {{ loading ? 'Salvando...' : (isEditMode ? 'Atualizar' : 'Salvar') }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Mensagens de erro/sucesso -->
+  <div class="alert alert-error" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+  <div class="alert alert-success" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+</div>

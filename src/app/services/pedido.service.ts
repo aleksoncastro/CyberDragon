@@ -23,7 +23,6 @@ export class PedidoService {
   create(pedido: any): Observable<Pedido> {
     return this.http.post<Pedido>(this.baseUrl, pedido);
   }
-
  
   editEnderecoEntrega(idPedido: number, endereco: EnderecoEntrega): Observable<EnderecoEntrega> {
     return this.http.patch<EnderecoEntrega>(`${this.baseUrl}/${idPedido}`, endereco);

@@ -50,7 +50,7 @@ export class FavoritosService {
     return this.favoritosSubject.value
   }
 
-  private atualizarArmazenamentoLocal(): void {
-    this.localStorageService.setItem('favoritos', JSON.stringify(this.favoritosSubject.value))
+  private atualizarArmazenamentoLocal() {
+    this.localStorageService.setItem('favoritos', this.favoritosSubject.value);
   }
 }

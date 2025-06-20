@@ -68,6 +68,12 @@ export class UserProfileComponent implements OnInit {
   usuarioFinal: { nome?: string, username?: string, listaImagem?: string[] } | null = null;
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const secao = params['secao'];
+      if (secao === 'pedidos') {
+        this.setActiveSection('pedidos');
+      }
+    });
   this.usuarioService.findByMe().subscribe({
     next: data => {
       console.log("Usuario carregado: ", data);

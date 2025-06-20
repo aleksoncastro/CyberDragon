@@ -71,6 +71,30 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  irParaPedidos() {this.clienteService.findByMe().subscribe({
+    next: data => {
+      this.cliente = data;
+      if (!this.cliente) {
+        this.dialog.open(DialogCadastrarClienteComponent, {
+          width: '400px',
+          disableClose: true
+        });
+      } else {
+        this.router.navigate(['/cliente/perfil'], {
+          queryParams: { secao: 'pedidos' }
+        });
+      }
+    },
+    error: err => {
+      console.error("Erro ao carregar cliente", err);
+      this.dialog.open(DialogCadastrarClienteComponent, {
+        width: '400px',
+        disableClose: true
+      });
+    }
+  });
+  }
+
   ngAfterViewInit() {
     // Certifique-se de que o drawer está fechado após a inicialização da view
     setTimeout(() => {

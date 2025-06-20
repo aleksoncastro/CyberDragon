@@ -215,14 +215,14 @@
           <div class="user-data-compact">
             <h4 class="data-title">Informações de Acesso</h4>
             <div class="user-info-compact">
-              <p><mat-icon class="info-icon">person</mat-icon> {{ usuario!.username }}</p>
-              <p><mat-icon class="info-icon">email</mat-icon> {{ usuario.email }}</p>
+              <p><mat-icon class="info-icon">person</mat-icon>Username: {{ usuario!.username }}</p>
+              <p><mat-icon class="info-icon">email</mat-icon>Nome: {{ cliente?.nome || 'Não informado' }}</p>
             </div>
 
             <div class="user-actions">
               <button routerLink="/cliente/alterar-username" class="action-btn primary">EDITAR USERNAME</button>
               <button routerLink="/cliente/alterar-senha" class="action-btn primary">MUDAR SENHA</button>
-              <button class="action-btn danger">EXCLUIR MINHA CONTA</button>
+              <button  routerLink="/cliente/{{cliente?.id}}/editar" class="action-btn danger">EDITAR INFORMAÇÕES</button>
             </div>
           </div>
         </div>

@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
+import { AlterarSenhaComponent } from '../components/usuario/alterar-senha/alterar-senha.component';
+import { SenhaPatchRequestDTO } from '../models/senha-patch-request-dto.model';
+import { UsernamePatchRequestDTO } from '../models/username-patch-request-dto.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,4 +44,18 @@ export class UsuarioService {
 
     return this.httpClient.patch<Usuario>(`${this.imageBaseUrl}/image/upload`, formData);
   }
+
+  updateSenha(dto: SenhaPatchRequestDTO): Observable<any> {
+    return this.httpClient.patch(`${this.padraoUrl}/update/senha`, dto);
+  }
+
+  updateUsername(dto: UsernamePatchRequestDTO): Observable<any> {
+    return this.httpClient.patch(`${this.padraoUrl}/update/username`, dto);
+  }
+
+  
+  
+
+
+
 }

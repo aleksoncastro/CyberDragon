@@ -72,6 +72,12 @@ export class UserProfileComponent implements OnInit {
     next: data => {
       console.log("Usuario carregado: ", data);
       this.usuario = data;
+      
+      const imagens: string[] = data?.listaImagem ?? [];
+          if (imagens.length > 0 && !this.imagemUrl) {
+            const nomeImagem = imagens[0];
+            this.imagemUrl = this.usuarioService.getImagemUrl(nomeImagem);
+      }
 
       // Buscar cliente pelo id do usuario
       this.clienteService.findByIdUsuario(data.id).subscribe({
@@ -93,12 +99,6 @@ export class UserProfileComponent implements OnInit {
 
           if (!this.usuarioFinal) {
             this.usuarioFinal = this.usuario;
-          }
-
-          const imagens: string[] = data?.listaImagem ?? [];
-          if (imagens.length > 0 && !this.imagemUrl) {
-            const nomeImagem = imagens[0];
-            this.imagemUrl = this.usuarioService.getImagemUrl(nomeImagem);
           }
 
           this.carregarPedidos();

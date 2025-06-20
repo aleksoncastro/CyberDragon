@@ -1,0 +1,44 @@
+<div class="login-page">
+    <div class="login-container">
+      <div class="login-box">
+        <div class="login-header">
+          <div class="logo-container">
+            <img class="login-icon" src="/assets/logo01.png" alt="Passkey">
+          </div>
+          <h1 class="login-title">Alterar Username</h1>
+          <p class="login-subtitle">Atualize seu nome de usuário</p>
+        </div>
+  
+        <div class="login-form-container">
+          <form [formGroup]="form" (ngSubmit)="alterarUsername()">
+  
+            <!-- Novo username -->
+            <mat-form-field appearance="outline" class="login-input">
+              <mat-label>Novo Username</mat-label>
+              <input matInput placeholder="Digite o novo username" formControlName="novoUsername">
+              <mat-icon matPrefix>person</mat-icon>
+              <mat-error *ngIf="form.get('novoUsername')?.hasError('required')">
+                O username é obrigatório.
+              </mat-error>
+              <mat-error *ngIf="form.get('novoUsername')?.hasError('minlength')">
+                O username deve ter pelo menos 3 caracteres.
+              </mat-error>
+              <mat-error *ngIf="form.get('novoUsername')?.hasError('maxlength')">
+                O username pode ter no máximo 20 caracteres.
+              </mat-error>
+            </mat-form-field>
+  
+            <!-- Botão de submit -->
+            <button mat-raised-button class="login-button" type="submit" [disabled]="form.invalid" [routerLink]="['/login']">
+              Alterar Username
+            </button>
+          </form>
+        </div>
+  
+        <div class="login-footer">
+          <p>Voltar para <a class="register-link" routerLink="/">Página Inicial</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

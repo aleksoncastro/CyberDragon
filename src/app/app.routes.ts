@@ -39,6 +39,8 @@ import { ForbiddenComponent } from './pages/without-permission/without-permissio
 import { PedidoListComponent } from './components/pedido/pedidos-list/pedidos-list.component';
 import { CartaoFormComponent } from './components/cartao/cartao-form/cartao-form.component';
 import { ClienteResolver } from './components/cliente/cliente.resolver';
+import { AlterarSenhaComponent } from './components/usuario/alterar-senha/alterar-senha.component';
+import { AlterarUsernameComponent } from './components/usuario/alterar-username/alterar-username.component';
 
 
 export const routes: Routes = [
@@ -99,6 +101,8 @@ export const routes: Routes = [
             { path: 'perfil', component: UserProfileComponent, title: 'Perfil do Usuário', data: { breadcrumb: 'Perfil' } },
             { path: 'pedido-pagamento', component: PedidoPagamentoComponent, title: 'Criação do Pedido e Pagamento' },
             { path: 'cartao-form', component: CartaoFormComponent, title: 'Criação de Cartão' },
+            { path: 'alterar-senha', component: AlterarSenhaComponent, title: 'Alterar senha do Usuario' },
+            { path: 'alterar-username', component: AlterarUsernameComponent, title: 'Alterar username do Usuario' }
         ]
     },
 

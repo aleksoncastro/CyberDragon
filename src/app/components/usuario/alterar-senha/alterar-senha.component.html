@@ -1,0 +1,75 @@
+<div class="login-page">
+  <div class="login-container">
+    <div class="login-box">
+      <div class="login-header">
+        <div class="logo-container">
+          <img class="login-icon" src="/assets/logo01.png" alt="Passkey">
+        </div>
+        <h1 class="login-title">Alterar Senha</h1>
+        <p class="login-subtitle">Atualize sua senha de forma segura</p>
+      </div>
+
+      <div class="login-form-container">
+        <form [formGroup]="form" (ngSubmit)="alterarSenha()">
+          
+          <!-- Senha atual -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Senha Atual</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="senhaAtual" placeholder="Digite sua senha atual">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()" [attr.aria-label]="'Mostrar senha atual'">
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('senhaAtual')?.hasError('required')">
+              A senha atual é obrigatória.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Nova senha -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Nova Senha</mat-label>
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="novaSenha" placeholder="Digite sua nova senha">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()" [attr.aria-label]="'Mostrar nova senha'">
+              <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('novaSenha')?.hasError('required')">
+              A nova senha é obrigatória.
+            </mat-error>
+            <mat-error *ngIf="form.get('novaSenha')?.hasError('minlength')">
+              A senha deve ter no mínimo 6 caracteres.
+            </mat-error>
+            <mat-error *ngIf="form.get('novaSenha')?.hasError('maxlength')">
+              A senha pode ter no máximo 20 caracteres.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Confirmar nova senha -->
+          <mat-form-field appearance="outline" class="login-input">
+            <mat-label>Repetir Nova Senha</mat-label>
+            <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="repetirNovaSenha" placeholder="Repita a nova senha">
+            <mat-icon matPrefix>lock</mat-icon>
+            <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()" [attr.aria-label]="'Mostrar confirmação da nova senha'">
+              <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="form.get('repetirNovaSenha')?.hasError('required')">
+              Repetir a nova senha é obrigatório.
+            </mat-error>
+            <mat-error *ngIf="form.errors?.['senhasDiferentes']">
+              As senhas não conferem.
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Botão de submit -->
+          <button mat-raised-button class="login-button" type="submit" [disabled]="form.invalid" [routerLink]="['/login']" >
+            Alterar Senha
+          </button>
+        </form>
+      </div>
+
+      <div class="login-footer">
+        <p>Voltar para <a class="register-link" routerLink="/">Página Inicial</a></p>
+      </div>
+    </div>
+  </div>
+</div>

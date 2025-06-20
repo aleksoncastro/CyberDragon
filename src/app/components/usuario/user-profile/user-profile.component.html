@@ -66,7 +66,7 @@
             <input type="file" hidden #fileInput accept="image/*" (change)="carregarImagemSelecionada($event)" />
 
             <!-- Image options menu -->
-            <div class="avatar-actions" *ngIf="usuario?.listaImagem">
+            <div class="avatar-actions" *ngIf="usuario!.listaImagem?.[0]">
               <button mat-button color="primary" [matMenuTriggerFor]="photoMenu" class="photo-options-button">
                 <mat-icon>more_horiz</mat-icon>
                 <span>Opções</span>
@@ -215,13 +215,13 @@
           <div class="user-data-compact">
             <h4 class="data-title">Informações de Acesso</h4>
             <div class="user-info-compact">
-              <p><mat-icon class="info-icon">person</mat-icon> {{ cliente?.nome || 'Sem dados' }}</p>
+              <p><mat-icon class="info-icon">person</mat-icon> {{ usuario!.username }}</p>
               <p><mat-icon class="info-icon">email</mat-icon> {{ usuario.email }}</p>
             </div>
 
             <div class="user-actions">
-              <button routerLink="/cliente/{{cliente?.id}}/editar" class="action-btn primary">EDITAR</button>
-              <button class="action-btn primary">MUDAR SENHA</button>
+              <button routerLink="/cliente/alterar-username" class="action-btn primary">EDITAR USERNAME</button>
+              <button routerLink="/cliente/alterar-senha" class="action-btn primary">MUDAR SENHA</button>
               <button class="action-btn danger">EXCLUIR MINHA CONTA</button>
             </div>
           </div>

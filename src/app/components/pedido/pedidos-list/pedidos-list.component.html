@@ -1,70 +1,159 @@
 <mat-toolbar color="primary">
-    <div class="flex-container">
-      <span class="toolbar-title">Controle de Pedidos</span>
-      <button mat-fab class="mais" routerLink="/admin/pedidos/new">
-        <mat-icon class="mais">add</mat-icon>
-      </button>
-    </div>
-  </mat-toolbar>
-  
-  <mat-form-field appearance="outline" style="margin: 16px; width: 300px;" class="pesquisa">
-    <mat-label>Pesquisar</mat-label>
-    <input matInput (keyup)="filtrar($event)">
-    <button mat-icon-button matSuffix disabled>
-      <mat-icon>search</mat-icon>
+  <div class="flex-container">
+    <span class="toolbar-title">Controle de Pedidos</span>
+    <button mat-fab class="mais" routerLink="/admin/pedidos/new">
+      <mat-icon class="mais">add</mat-icon>
     </button>
-  </mat-form-field>
-  
-  <div class="tabela-container">
-    <table mat-table [dataSource]="pedidosFiltrados" class="mat-elevation-z8">
-  
-      <!-- ID -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let pedido">{{ pedido.id }}</td>
-      </ng-container>
-  
-      <!-- Cliente -->
-      <ng-container matColumnDef="cliente">
-        <th mat-header-cell *matHeaderCellDef>Cliente</th>
-        <td mat-cell *matCellDef="let pedido">{{ pedido.cliente?.nome }}</td>
-      </ng-container>
-  
-      <!-- Data do Pedido -->
-      <ng-container matColumnDef="dataPedido">
-        <th mat-header-cell *matHeaderCellDef>Data</th>
-        <td mat-cell *matCellDef="let pedido">{{ pedido.dataPedido | date:'dd/MM/yyyy' }}</td>
-      </ng-container>
-  
-      <!-- Valor Total -->
-      <ng-container matColumnDef="valorTotal">
-        <th mat-header-cell *matHeaderCellDef>Valor Total</th>
-        <td mat-cell *matCellDef="let pedido">R$ {{ pedido.valorTotal | number:'1.2-2' }}</td>
-      </ng-container>
-  
-      <!-- Ações -->
-      <ng-container matColumnDef="acoes">
-        <th mat-header-cell *matHeaderCellDef>Ações</th>
-        <td mat-cell *matCellDef="let pedido">
-          <button mat-icon-button color="primary" [routerLink]="['/admin/pedidos/edit', pedido.id]">
+  </div>
+</mat-toolbar>
+
+<mat-form-field appearance="outline" style="margin: 16px; width: 300px;" class="pesquisa">
+  <mat-label class="search-bar">Pesquisar</mat-label>
+  <input matInput (keyup)="filtrar($event)" class="input">
+  <button mat-icon-button matSuffix disabled>
+    <mat-icon>search</mat-icon>
+  </button>
+</mat-form-field>
+
+<div class="overlay" *ngIf="pedidoSelecionado" (click)="pedidoSelecionado = null"></div>
+
+<div [class.bloqueado]="pedidoSelecionado">
+  <table mat-table [dataSource]="pedidosFiltrados" class="mat-elevation-z8 demo-table tabela-com-label">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id" class="dados">
+      <th mat-header-cell *matHeaderCellDef class="header-table">ID</th>
+      <td mat-cell *matCellDef="let pedido" class="colunas">{{ pedido.id }}</td>
+    </ng-container>
+
+    <!-- Cliente -->
+    <ng-container matColumnDef="cliente" class="dados">
+      <th mat-header-cell *matHeaderCellDef class="header-table">Cliente</th>
+      <td mat-cell *matCellDef="let pedido" class="colunas">{{ pedido.cliente?.nome }}</td>
+    </ng-container>
+
+    <!-- Data do Pedido -->
+    <ng-container matColumnDef="data" class="dados">
+      <th mat-header-cell *matHeaderCellDef class="header-table">Data</th>
+      <td mat-cell *matCellDef="let pedido" class="colunas">{{ pedido.data | date:'dd/MM/yyyy' }}</td>
+    </ng-container>
+
+    <!-- Valor Total -->
+    <ng-container matColumnDef="valorTotal" class="dados">
+      <th mat-header-cell *matHeaderCellDef class="header-table">Valor Total</th>
+      <td mat-cell *matCellDef="let pedido" class="colunas">R$ {{ pedido.valorTotal | number:'1.2-2' }}</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="status" class="dados">
+      <th mat-header-cell *matHeaderCellDef class="header-table">Status</th>
+      <td mat-cell *matCellDef="let pedido" class="colunas">
+        <div *ngIf="pedido.statusPedido && pedido.statusPedido.length > 0; else semStatus">
+          <div *ngFor="let status of pedido.statusPedido">
+            {{status.status.label}} ({{status.dataAtualizacao | date:'dd/MM/yyyy'}})
+          </div>
+        </div>
+        <ng-template #semStatus>
+          <span>Sem status</span>
+        </ng-template>
+      </td>
+    </ng-container>
+
+
+
+    <!-- Ações -->
+    <ng-container matColumnDef="acoes" class="dados">
+      <th mat-header-cell *matHeaderCellDef class="header-table acao">Ações</th>
+      <td mat-cell *matCellDef="let pedido" class="colunas">
+        <div class="acoes-container">
+          <button mat-icon-button color="primary" routerLink="/admin/pedidos/edit/{{pedido.id}}" class="botoes">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="excluir(pedido.id)">
+          <button mat-icon-button color="warn" (click)="excluir(pedido.id)" class="botoes">
             <mat-icon>delete</mat-icon>
           </button>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
-  
-  <mat-paginator
-    [length]="totalRecords"
-    [pageSize]="pageSize"
-    [pageIndex]="pageIndex"
-    [pageSizeOptions]="[5, 10, 20]"
-    (page)="paginar($event)">
-  </mat-paginator>
-  
+          <button mat-icon-button color="accent" class="botoes" (click)="verDetalhes(pedido.id)">
+            <mat-icon>info</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></tr>
+  </table>
+</div>
+
+<mat-card *ngIf="pedidoSelecionado" class="detalhes-card">
+  <mat-card-header>
+    <mat-card-title>Detalhes do Pedido: #{{ pedidoSelecionado.id }}</mat-card-title>
+    <button mat-icon-button (click)="pedidoSelecionado = null" style="margin-left: auto;">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content class="card-placa">
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 16px;">
+
+      <!-- Cliente e valores -->
+      <div class="card-section">
+        <h4>Informações Gerais</h4>
+        <p><strong>Cliente:</strong> {{ pedidoSelecionado.cliente.nome }}</p>
+        <p><strong>Valor Total:</strong> R$ {{ pedidoSelecionado.valorTotal | number:'1.2-2' }}</p>
+        <p><strong>Data:</strong> {{ pedidoSelecionado.data | date:'dd/MM/yyyy HH:mm' }}</p>
+        <p><strong>Tipo de Pagamento:</strong> {{ pedidoSelecionado.tipoPagamento === 1 ? 'Crédito' : 'Boleto' }}</p>
+      </div>
+
+      <!-- Itens do pedido -->
+      <div class="card-section">
+        <h4>Itens do Pedido</h4>
+        <div *ngIf="pedidoSelecionado.listaItemPedido.length > 0; else semItens">
+          <ul>
+            <li *ngFor="let item of pedidoSelecionado.listaItemPedido">
+              <p>
+                <strong>Placa:</strong> {{ item.lote.placaDeVideo?.modelo || 'Placa não carregada' }} <br>
+                <strong>Lote:</strong> #{{ item.lote.id }} ({{ item.lote.codigo }}) <br>
+                <strong>Quantidade:</strong> {{ item.quantidade }} un. <br>
+                <strong>Preço Unitário:</strong> R$ {{ item.preco | number:'1.2-2' }}
+              </p>
+            </li>
+
+          </ul>
+        </div>
+        <ng-template #semItens>
+          <p>Nenhum item no pedido.</p>
+        </ng-template>
+      </div>
+
+      <!-- Status do pedido -->
+      <div class="card-section">
+        <h4>Status do Pedido</h4>
+        <div *ngIf="pedidoSelecionado.statusPedido.length > 0; else semStatus">
+          <ul>
+            <li *ngFor="let s of pedidoSelecionado.statusPedido">
+              {{ s.status.label }} - {{ s.dataAtualizacao | date:'dd/MM/yyyy HH:mm' }}
+            </li>
+          </ul>
+        </div>
+        <ng-template #semStatus>
+          <p>Status não informado.</p>
+        </ng-template>
+      </div>
+
+      <!-- Endereço de Entrega -->
+      <div class="card-section">
+        <h4>Endereço de Entrega</h4>
+        <p>{{ pedidoSelecionado.enderecoEntrega.rua }}, {{ pedidoSelecionado.enderecoEntrega.numero }}</p>
+        <p>{{ pedidoSelecionado.enderecoEntrega.bairro }} - {{ pedidoSelecionado.enderecoEntrega.cidade }}/{{
+          pedidoSelecionado.enderecoEntrega.estado }}</p>
+        <p>CEP: {{ pedidoSelecionado.enderecoEntrega.cep }}</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
+
+<mat-paginator [length]="totalRecords" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 20]"
+  showFirstLastButtons (page)="paginar($event)">
+</mat-paginator>

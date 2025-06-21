@@ -41,6 +41,8 @@ import { CartaoFormComponent } from './components/cartao/cartao-form/cartao-form
 import { ClienteResolver } from './components/cliente/cliente.resolver';
 import { AlterarSenhaComponent } from './components/usuario/alterar-senha/alterar-senha.component';
 import { AlterarUsernameComponent } from './components/usuario/alterar-username/alterar-username.component';
+import { PedidoEditarComponent } from './components/pedido/pedido-editar/pedido-editar.component';
+import { pedidoResolver } from './components/pedido/pedido.resolver';
 
 
 export const routes: Routes = [
@@ -85,6 +87,7 @@ export const routes: Routes = [
             { path: 'lotes/edit/:id', component: LoteFormComponent, title: 'Edição de Lote', resolve: { lote: loteResolver } },
             { path: 'funcionarios', component: FuncionarioListComponent, title: 'Novo Funcionário' },
             { path: 'pedidos-list', component: PedidoListComponent, title: 'Lista pedidos' },
+            { path: 'pedidos/edit/:id', component: PedidoEditarComponent, title: 'Edição de Pedido', resolve: { pedido: pedidoResolver }},
             { path: 'home', component: HomeComponent, title: 'Painel Administrativo' },
         ]
     },

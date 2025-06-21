@@ -54,6 +54,12 @@ export class HomeComponent {
       description: 'Dados de localização utilizados nos cadastros.',
       icon: 'location_city',
       link: '/admin/municipios'
+    },
+    {
+      name: 'Pedidos',
+      description: 'Controle dos pedidos e atualizações',
+      icon: 'admin_panel_settings',
+      link: '/admin/pedidos-list'
     }
   ];
 }

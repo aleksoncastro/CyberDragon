@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pedido } from '../../../models/pedido.model';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { PedidoService } from '../../../services/pedidoADM.service';
+import { PedidoADMService} from '../../../services/pedidoADM.service';
 import { MatTableModule } from '@angular/material/table';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule, CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { PlacaDeVideoService } from '../../../services/placadevideo.service';
 
 @Component({
   selector: 'app-pedido-list',
@@ -30,22 +32,26 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatToolbarModule,
+    MatCardModule,
     CommonModule
   ],
   templateUrl: './pedidos-list.component.html',
   styleUrls: ['./pedidos-list.component.css']  // corrigido aqui
 })
 export class PedidoListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'cliente', 'dataPedido', 'valorTotal', 'acoes'];
+  displayedColumns: string[] = ['id', 'cliente', 'data', 'valorTotal', 'status', 'acoes'];
+
   pedidos: Pedido[] = [];
   pedidosFiltrados: Pedido[] = [];
+  pedidoSelecionado: Pedido | null = null;
 
   // Paginação
   totalRecords = 0;
   pageSize = 10;
   pageIndex = 0;
 
-  constructor(private pedidoService: PedidoService) {}
+  constructor(private pedidoService: PedidoADMService, 
+    public placaService: PlacaDeVideoService,) {}
 
   ngOnInit(): void {
     this.carregarPedidos();
@@ -79,6 +85,13 @@ export class PedidoListComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.carregarPedidos();
+  }
+
+  verDetalhes(id: number): void {
+    this.pedidoService.findById(id).subscribe(data => {
+      console.log("Detalhes da placa:", data);
+      this.pedidoSelecionado = data;
+    });
   }
 
   excluir(id: number): void {

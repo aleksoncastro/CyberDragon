@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="toolbar-title">
+    <span>Editar Pedido #{{ pedido.id }}</span>
+  </mat-toolbar>
+  
+  <div class="form-container" *ngIf="pedido">
+    <mat-card>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  
+        <div class="section">
+          <h3>Status do Pedido</h3>
+          <mat-form-field appearance="fill" class="full-width-input">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let s of statusOptions" [value]="s.id">
+                {{ s.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+  
+        <div class="button-group">
+          <button mat-raised-button color="primary" type="submit"  [disabled]="form.invalid">Atualizar Status</button>
+          <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+        </div>
+  
+      </form>
+    </mat-card>
+  </div>
+  

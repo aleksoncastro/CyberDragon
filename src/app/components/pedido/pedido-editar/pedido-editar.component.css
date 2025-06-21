@@ -1,0 +1,142 @@
+.form-container{
+    background: linear-gradient(135deg, #5e5e5e, #000000, #5e5e5e);
+  }
+  .toolbar-title {
+    display: flex;
+    justify-content: center;
+    font-size: x-large;
+    padding: 1rem 0;
+    color: white;
+  }
+  
+  mat-card {
+    background-color: var(--fundo-principal);
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  mat-form-field {
+    background-color: var(--icone-destaque);
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  mat-label {
+    color: var(--cartao-container);
+  }
+  
+  mat-error {
+    font-size: 0.875rem;
+    color: red;
+  }
+  
+  h3 {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--texto-principal);
+  }
+  
+  button[mat-raised-button] {
+    background-color: var(--icone-destaque);
+    color: var(--texto-principal);
+    width: 120px;
+    margin-right: 1rem;
+  }
+  
+  button[mat-raised-button]:last-child {
+    background-color: red;
+    margin-right: 0;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .section {
+    margin-top: 0rem;
+  }
+  
+  .address-card, .telefone-card {
+    margin-bottom: 1rem;
+  }
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 10px;
+  }
+  
+  .form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  
+  .full-width-input {
+    flex: 1 1 calc(50% - 16px);
+    min-width: 250px;
+    background-color: var(--fundo-secundario);
+    color: var(--texto-principal);
+    margin-bottom: 20px;
+  }
+  
+  .small-width-input {
+    width: 20%;
+    background-color: var(--fundo-secundario);
+    color: var(--texto-principal);
+    margin-bottom: 20px;
+  }
+  .tel-width-input{
+    width: 20%;
+    background-color: var(--fundo-secundario);
+    color: var(--texto-principal);
+    margin-bottom: 20px;
+  }
+  .cod-width-input{
+    width: 10%;
+    background-color: var(--fundo-secundario);
+    color: var(--texto-principal);
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .toolbar-title {
+      font-size: 1.5rem;
+    }
+  
+    mat-card {
+      width: 100%;
+      max-width: 100%;
+      margin: 1rem;
+    }
+  
+    button[mat-raised-button] {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    mat-form-field {
+      width: 100%;
+    }
+  }
+  
+  
+  
+  .add{
+    margin-top: -10px;
+    background-color: var(--icone-destaque);
+    color: var(--fundo-preto);
+  }
+  
+  
+  

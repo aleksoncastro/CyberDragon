@@ -92,6 +92,10 @@ mat-drawer-content {
   background-color: #121212 !important;
 }
 
+:host ::ng-deep .mat-drawer-container {
+  background-color: #121212;
+}
+
 mat-paginator,
 mat-paginator * {
   color: #FFFF !important;

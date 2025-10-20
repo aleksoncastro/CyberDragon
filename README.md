@@ -56,20 +56,20 @@ Este projeto foi criado como **demonstração de portfólio**, para apresentar o
 ## 🖼️ Demonstração Visual
 
 ### 🔐 Tela de Login
-![Tela de Login](./imagens/login.png)
+![Tela de Login](./public/apresentacao/login.png)
 
 ### 📝 Tela de Cadastro
-![Tela de Cadastro](./imagens/cadastro.png)
+![Tela de Cadastro](./public/apresentacao/register.png)
 
 ### 🏠 Página Inicial
-![Página Inicial](./imagens/home1.png)
-![Página Inicial - Parte 2](./imagens/home2.png)
+![Página Inicial](./public/apresentacao/home.png)
+![Página Inicial - Parte 2](./public/apresentacao/produtos.png)
 
 ### 🧾 Detalhes do Produto
-![Detalhes do Produto](./imagens/produto-detalhe.png)
+![Detalhes do Produto](./public/apresentacao/produto_details.png)
 
 ### 👤 Página de Perfil do Usuário
-![Página de Perfil](./imagens/perfil.png)
+![Página de Perfil](./public/apresentacao/profile.png)
 
 > As imagens acima demonstram o fluxo principal do site e sua interface moderna, construída com Angular Material e SCSS.
 
@@ -80,3 +80,64 @@ Este projeto foi criado como **demonstração de portfólio**, para apresentar o
 1. **Clone o repositório**
    ```bash
    git clone https://github.com/aleksoncastro/CyberDragon.git
+
+2. **Entre na pasta do projeto**
+
+    cd CyberDragon
+
+
+3. **Instale as dependências**
+
+    npm install
+
+
+4. **Execute o projeto**
+
+    ng serve --open
+
+
+5. **Acesse no navegador**
+
+    http://localhost:4200/
+
+
+## 🧠 Objetivo do Projeto
+
+O **CyberDragon** foi desenvolvido com o propósito de demonstrar:
+
+Estrutura e arquitetura de um front-end completo em Angular
+
+Uso de **boas práticas de componentização e tipagem forte** com TypeScript
+
+Integração visual moderna com **Angular Material**
+
+Uma simulação realista de loja virtual de placas de vídeo
+
+
+## 📂 Estrutura do Projeto
+
+```plaintext
+CyberDragon/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   ├── guards/
+│   │   ├── interceptors/
+│   │   ├── interfaces/
+│   │   ├── models/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── validators/
+│   ├── assets/
+│   └── environments/
+├── angular.json
+├── package.json
+└── README.md
+````
+
+
+## 🧑‍💻 Autor
+
+Desenvolvido por Alekson Castro e Hallan Christian
+
+💼 Projeto de portfólio — Demonstração de front-end com Angular e TypeScript

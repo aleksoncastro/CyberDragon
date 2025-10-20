@@ -31,7 +31,15 @@ Este projeto foi criado como **demonstração de portfólio**, para apresentar o
 - Exibe informações pessoais e configurações  
 - Área visualmente agradável e organizada  
 
----
+⚙️ **Gerência de Produto**
+- Cadastro de produtos e suas informações
+- Vizualização e edição dos produtos
+- Controle de estoque
+
+📝 **GerÊncia de Funcionários**
+- Cadstro de funcionários
+- Edição das informações do funcionário
+- Desativação dos funcionários
 
 ## 🧰 Tecnologias Utilizadas
 

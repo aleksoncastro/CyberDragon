@@ -1,59 +1,74 @@
-# CyberDragon
+# 🐉 CyberDragon  
+### Um e-commerce moderno de placas de vídeo desenvolvido com Angular e TypeScript
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+O **CyberDragon** é um projeto front-end que simula uma loja online especializada em **placas de vídeo**.  
+Foi desenvolvido com **Angular** e **TypeScript**, com foco em **design limpo**, **componentização**, **responsividade** e **boas práticas de desenvolvimento**.
 
-## Development server
+Este projeto foi criado como **demonstração de portfólio**, para apresentar o fluxo completo de um e-commerce — desde o login até a visualização detalhada dos produtos e gerenciamento do perfil do usuário.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🚀 Funcionalidades
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+🔐 **Autenticação de Usuário**  
+- Login e cadastro com design moderno  
+- Validação de formulários  
+- Feedback visual em tempo real  
 
-## Code scaffolding
+🏠 **Página Inicial (Home)**  
+- Exibe banners e produtos em destaque  
+- Layout responsivo e intuitivo  
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+🧾 **Catálogo de Produtos**  
+- Listagem de placas de vídeo com informações de preço e marca  
+- Interface pensada para exibir vários produtos de forma limpa e organizada  
 
-```bash
-ng generate component component-name
-```
+🔍 **Detalhes do Produto**  
+- Página individual com informações completas  
+- Galeria de imagens e botão de compra  
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+👤 **Perfil do Usuário**  
+- Exibe informações pessoais e configurações  
+- Área visualmente agradável e organizada  
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 🧰 Tecnologias Utilizadas
 
-To build the project run:
+| Categoria | Tecnologia |
+|------------|-------------|
+| **Linguagem** | TypeScript |
+| **Framework Front-end** | Angular |
+| **Estilização** | SCSS / Angular Material |
+| **Gerenciador de pacotes** | Node.js (npm) |
+| **Estrutura de Componentes** | Modularização e Reutilização de Componentes |
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🖼️ Demonstração Visual
 
-## Running unit tests
+### 🔐 Tela de Login
+![Tela de Login](./imagens/login.png)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### 📝 Tela de Cadastro
+![Tela de Cadastro](./imagens/cadastro.png)
 
-```bash
-ng test
-```
+### 🏠 Página Inicial
+![Página Inicial](./imagens/home1.png)
+![Página Inicial - Parte 2](./imagens/home2.png)
 
-## Running end-to-end tests
+### 🧾 Detalhes do Produto
+![Detalhes do Produto](./imagens/produto-detalhe.png)
 
-For end-to-end (e2e) testing, run:
+### 👤 Página de Perfil do Usuário
+![Página de Perfil](./imagens/perfil.png)
 
-```bash
-ng e2e
-```
+> As imagens acima demonstram o fluxo principal do site e sua interface moderna, construída com Angular Material e SCSS.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## ⚙️ Como Executar o Projeto
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/aleksoncastro/CyberDragon.git
